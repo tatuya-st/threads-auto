@@ -1,0 +1,25 @@
+name: トークンの延長
+on:
+  schedule:
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: threads
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 延長
+        env:
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+          THREADS_APP_SECRET: ${{ secrets.THREADS_APP_SECRET }}
+        run: python3 tools/publish.py refresh
+      - name: 保存
+        run: |
+          git config user.name "threads-bot"; git config user.email "threads-bot@users.noreply.github.com"
+          git add state
+          git diff --cached --quiet || (git commit -qm "トークンを延長" && git push -q)
