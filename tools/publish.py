@@ -80,6 +80,8 @@ def token():
 
 def refresh():
     if not SECRET:
+        _, me = token()
+        print(f"::notice::トークンOK（@{me.get('username')}）")
         print('::notice::THREADS_APP_SECRET が未登録のため延長はお休み（投稿はできます。トークンは約60日有効）')
         return
     tok, _ = token()
