@@ -14,7 +14,15 @@ API = 'https://graph.threads.net/v1.0'
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 ENC = os.path.join(ROOT, 'state', 'token.enc')
 JST = timezone(timedelta(hours=9))
+import re as _re
 SECRET = os.environ.get('THREADS_APP_SECRET', '').strip()
+# 「TOKEN」に app secret（32桁の英数字）が入っている場合は、鍵として使う
+_t2 = os.environ.get('TOKEN2', '').strip()
+if not SECRET and _re.fullmatch(r'[0-9a-f]{32}', _t2):
+    SECRET = _t2
+    os.environ['THREADS_APP_SECRET'] = _t2
+if os.environ.get('THREADS_TOKEN', '').strip() == SECRET:
+    os.environ['THREADS_TOKEN'] = ''
 
 
 def call(method, url, params):
