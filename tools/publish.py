@@ -74,6 +74,8 @@ def token():
             if decrypt() != tok:
                 encrypt(tok)
         return tok, me
+    _t = os.environ.get('THREADS_TOKEN', '').strip()
+    print(f"::error::中身の形: 長さ{len(_t)} 先頭{_t[:2]!r} 英数字のみ={_t.isalnum()}")
     print(f"::error::トークン確認: secret={'あり' if os.environ.get('THREADS_TOKEN','').strip() else 'なし'} 鍵={'あり' if SECRET else 'なし'} 保存={'あり' if os.path.exists(ENC) else 'なし'} 応答={' / '.join(ERRS)}")
     raise SystemExit('Threadsのトークンが使えません。トークンを作り直して GitHub の THREADS_ACCESS_TOKEN に貼り直してください。')
 
