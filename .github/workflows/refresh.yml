@@ -13,6 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: 確認
+        env:
+          V1: ${{ vars.THREADS_APP_SECRET }}
+          V2: ${{ vars.THREADS_ACCESS_TOKEN }}
+          S1: ${{ secrets.THREADS_APP_SECRET }}
+        run: echo "::notice::変数secret=${V1:+あり} 変数token=${V2:+あり} 金庫secret=${S1:+あり}"
       - name: 延長
         env:
           THREADS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN || secrets.THREADS_TOKEN }}
