@@ -70,7 +70,7 @@ def token():
             if decrypt() != tok:
                 encrypt(tok)
         return tok, me
-    raise SystemExit('Threadsのトークンが使えません。トークンを作り直して GitHub の THREADS_TOKEN に貼り直してください。')
+    raise SystemExit('Threadsのトークンが使えません。トークンを作り直して GitHub の THREADS_ACCESS_TOKEN に貼り直してください。')
 
 
 def refresh():
