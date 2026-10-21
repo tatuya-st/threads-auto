@@ -79,6 +79,9 @@ def token():
 
 
 def refresh():
+    if not SECRET:
+        print('::notice::THREADS_APP_SECRET が未登録のため延長はお休み（投稿はできます。トークンは約60日有効）')
+        return
     tok, _ = token()
     try:
         new = call('GET', 'https://graph.threads.net/refresh_access_token', {'grant_type': 'th_refresh_token', 'access_token': tok})['access_token']
