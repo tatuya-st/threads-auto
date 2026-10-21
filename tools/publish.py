@@ -45,10 +45,14 @@ def encrypt(tok):
         raise RuntimeError('トークンを保存できませんでした')
 
 
+ERRS = []
+
+
 def works(tok):
     try:
         return call('GET', f'{API}/me', {'fields': 'id,username', 'access_token': tok})
-    except Exception:
+    except Exception as e:
+        ERRS.append(str(e).replace(tok, '***')[:200])
         return None
 
 
@@ -70,6 +74,7 @@ def token():
             if decrypt() != tok:
                 encrypt(tok)
         return tok, me
+    print(f"::error::トークン確認: secret={'あり' if os.environ.get('THREADS_TOKEN','').strip() else 'なし'} 鍵={'あり' if SECRET else 'なし'} 保存={'あり' if os.path.exists(ENC) else 'なし'} 応答={' / '.join(ERRS)}")
     raise SystemExit('Threadsのトークンが使えません。トークンを作り直して GitHub の THREADS_ACCESS_TOKEN に貼り直してください。')
 
 
