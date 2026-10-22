@@ -182,7 +182,8 @@ def main():
         gid, p, c = it.get('_gid', ''), price_num(it.get('price')), cat_of(it, it.get('_gid', ''))
         likes = it.get('likes') or 0
         proven = -3 if (gid == 'likepop' or likes > 0) else -2 if gid == 'fanpop' else -1 if gid == 'roompop' else None
-        sc = proven if proven is not None else (0 if c in ('gadget', 'kaden') else 1) if 0 < p <= 10000 else 2 if 0 < p <= 30000 else 3
+        # Threads向き：話のネタになる「神社・旅・ラーメン」の商品を最優先（1本に2件まで）
+        sc = -4 if gid == 'tabi' else proven if proven is not None else (0 if c in ('gadget', 'kaden') else 1) if 0 < p <= 10000 else 2 if 0 < p <= 30000 else 3
         it['_c'] = c
         cands.append((sc, -likes, -it['_t'], it))
     cands.sort(key=lambda x: x[:3])
@@ -194,6 +195,8 @@ def main():
         # quip（ひと言）が無い・「やつ」を含む・重複する商品は使わない
         q = it.get('quip') or ''
         if not q or 'やつ' in q or any(q == o.get('quip') for o in items):
+            continue
+        if it.get('_gid') == 'tabi' and sum(1 for o in items if o.get('_gid') == 'tabi') >= 2:
             continue
         seen.add(k)
         items.append(it)
