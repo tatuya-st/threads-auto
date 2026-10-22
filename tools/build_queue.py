@@ -14,7 +14,7 @@ from datetime import datetime, timezone, timedelta
 JST = timezone(timedelta(hours=9))
 ROOM_URL = 'https://room.rakuten.co.jp/room_a9a129c5a9/items'
 ROOM_COLS_URL = 'https://room.rakuten.co.jp/room_a9a129c5a9/collections'
-LOOKBACK_DAYS = 4
+LOOKBACK_DAYS = 14
 PER_POST = 3
 
 THEMES = {
