@@ -138,6 +138,54 @@ def clip(s, n):
     return s if len(s) <= n else s[:n - 1] + '…'
 
 
+# 昼は商品を出さない「会話」投稿（宣伝が続くと見てもらえなくなるため）。テーマは日替わり、同じ文は二度使わない
+TALKS = [
+    'スマホの充電、何%から焦り始めますか？\n私は40%で「そろそろか…」ってなります🔋',
+    'ケーブルって、なんで使いたい時だけ1本も見つからないんでしょうね。\n家に何本あるか、数えたら負けな気がしてます🔌',
+    '朝の脱衣所、もはや修行の場。\n冬の朝いちばんつらい場所、どこですか？🥶',
+    '暖房のスイッチ、もう入れました？\nまだ我慢してる派の人、仲間です🔥',
+    '詰め替えるとき、毎回ちょっとこぼす派です。\nこぼさない人、コツ教えてください🙏',
+    '買い忘れて一番困るもの、トイレットペーパー説。\nみなさんは何ですか？🧻',
+    'イヤホン、片方だけ行方不明になる現象に名前つけたい。\n経験ある人いますか？🎧',
+    'iPhoneの「残りわずか」通知、心臓に悪すぎません？📱',
+    '「これ便利だった！」って買って本当に使い続けてるもの、ひとつ教えてください👇\n参考にさせてもらいます',
+    '休みの日は弾丸で神社巡りしてます⛩️\n最近行ってよかった神社、ありますか？',
+    'お守り、気づいたら増える一方です。\n何個持ってるか、正直に教えてください😂',
+    '旅先で毎回ラーメン食べちゃう人、手を挙げて🙋‍♂️\nご当地のおすすめあれば知りたい',
+    '楽天のカート、入れっぱなしの商品が何個ありますか？\n私は数えるのをやめました🛒',
+    'お買い物マラソン、何店舗まで回る派ですか？\n毎回「今回は控えめに」と言ってる気がします',
+    '布団から出るまでの時間、冬になると倍になりません？\nみなさん何分かかってます？⏰',
+    '加湿器のお手入れ、ちゃんとやれてる人を尊敬してます。\nコツありますか？💧',
+    'ガジェット買うとき、レビューどこまで読みますか？\n私は星1から読む派です🔍',
+    '家電って「買ってよかった」と「買わなきゃよかった」が極端ですよね。\nみなさんの一番の当たりは？',
+    'スマホ、何年使ってますか？\n私は電池が持たなくなるまで粘る派です📱',
+    '在宅のとき、首と肩がガチガチになる問題。\nみなさんどう対策してます？',
+    '冬になると静電気でドアノブと戦ってます⚡\n対策してる人いますか？',
+    'ネットで買い物するとき、送料無料じゃないと急に冷める現象、わかる人いますか？📦',
+    '朝のコーヒー派？お茶派？\nちなみに私はその日の気分です☕',
+    '寝る前のスマホ、やめなきゃと思いながら今日も見てます🌙\n同じ人いますか？',
+]
+
+
+def talk(repo):
+    used_p = os.path.join(repo, 'state', 'talk.json')
+    used = json.load(open(used_p, encoding='utf-8')) if os.path.exists(used_p) else []
+    left = [t for t in TALKS if t not in used]
+    if not left:
+        used, left = [], TALKS[:]
+    text = left[h31(datetime.now(JST).strftime('%Y%m%d')) % len(left)]
+    used.append(text)
+    os.makedirs(os.path.dirname(used_p), exist_ok=True)
+    json.dump(used, open(used_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    stamp = datetime.now(JST)
+    qid = stamp.strftime('%Y%m%d-%H%M') + '-noon'
+    q = {'id': qid, 'slot': 'noon', 'kind': 'talk', 'created': stamp.isoformat(timespec='minutes'), 'text': text, 'items': []}
+    os.makedirs(os.path.join(repo, 'queue'), exist_ok=True)
+    with open(os.path.join(repo, 'queue', qid + '.json'), 'w', encoding='utf-8') as f:
+        json.dump(q, f, ensure_ascii=False, indent=1)
+    print(f'{qid} 会話投稿')
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--html', required=True)
@@ -145,6 +193,8 @@ def main():
     ap.add_argument('--repo', required=True)
     ap.add_argument('--slot', choices=['morning', 'noon', 'night'], default='night')
     a = ap.parse_args()
+    if a.slot == 'noon':
+        return talk(a.repo)
 
     room = load_room(a.html)
     by_code = {}
@@ -253,7 +303,8 @@ def main():
 
     def build(with_ax, with_link):
         axl = AXES[ax]['open'].format(n=n) + '\n\n' if (with_ax and ax) else ''
-        return f"【PR・楽天ROOM】\n{hook}\n\n{axl}{body(with_ax)}\n\n{ask}\n{link_line if with_link else '詳細はプロフィールのリンクから'}\n{link}\n※価格は投稿時点のものです"
+        # URLは本文に入れない（リンク付きは広がりにくいため、リンクは自分の返信に付ける）
+        return f"【PR・楽天ROOM】\n{hook}\n\n{axl}{body(with_ax)}\n\n{ask}\n{link_line if with_link else '詳細はプロフィールのリンクから'}\n※価格は投稿時点のものです"
 
     text = build(True, True)
     if len(text) > 490:
@@ -267,6 +318,7 @@ def main():
     q = {
         'id': qid, 'slot': a.slot, 'created': stamp.isoformat(timespec='minutes'),
         'title': title, 'footer': footer, 'axis': ax, 'theme': th, 'topic': topic, 'text': text,
+        'reply': f"▼楽天ROOMはこちら\n{link}",
         'items': [{'itemcode': it['itemcode'], 'name': it['name'], 'hook': it.get('hook', ''), 'price': it.get('price', ''), 'quip': it.get('quip', '')} for it in items],
     }
     os.makedirs(os.path.join(a.repo, 'queue'), exist_ok=True)

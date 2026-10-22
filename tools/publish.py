@@ -136,12 +136,18 @@ def publish():
         if dup:
             rec.update(skipped='二重投稿になるため公開せず', dup=dup)
         else:
-            img = f'https://raw.githubusercontent.com/{repo}/main/images/{qid}.png'
-            params = {'media_type': 'IMAGE', 'image_url': img, 'text': q['text'], 'access_token': tok}
+            if q.get('kind') == 'talk':
+                params = {'media_type': 'TEXT', 'text': q['text'], 'access_token': tok}
+            else:
+                img = f'https://raw.githubusercontent.com/{repo}/main/images/{qid}.png'
+                params = {'media_type': 'IMAGE', 'image_url': img, 'text': q['text'], 'access_token': tok}
             if q.get('topic'):
                 params['topic_tag'] = q['topic']
             cid = call('POST', f"{API}/{me['id']}/threads", params)['id']
-            wait_ready(cid, tok)
+            if q.get('kind') != 'talk':
+                wait_ready(cid, tok)
+            else:
+                time.sleep(3)
             mid = call('POST', f"{API}/{me['id']}/threads_publish", {'creation_id': cid, 'access_token': tok})['id']
             try:
                 link = call('GET', f'{API}/{mid}', {'fields': 'permalink', 'access_token': tok}).get('permalink', '')
@@ -149,6 +155,17 @@ def publish():
                 link = ''
             now = datetime.now(JST).isoformat(timespec='minutes')
             rec.update(media_id=mid, permalink=link, at=now)
+            # リンクは本文ではなく自分の返信に付ける（失敗しても投稿本体はそのまま）
+            if q.get('reply'):
+                try:
+                    time.sleep(20)
+                    rid = call('POST', f"{API}/{me['id']}/threads", {'media_type': 'TEXT', 'text': q['reply'], 'reply_to_id': mid, 'access_token': tok})['id']
+                    time.sleep(3)
+                    call('POST', f"{API}/{me['id']}/threads_publish", {'creation_id': rid, 'access_token': tok})
+                    rec['reply'] = 'ok'
+                except Exception as e:
+                    rec['reply'] = 'ng'
+                    print(f"::warning::リンクの返信は付けられませんでした（本文はプロフィールのリンク案内のみ）: {str(e).replace(tok, '***')[:150]}")
             for it in q['items']:
                 sent[it['itemcode']] = {'name': it['name'], 'at': now, 'post': qid}
         os.makedirs(os.path.join(ROOT, 'state', 'posted'), exist_ok=True)

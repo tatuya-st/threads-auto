@@ -12,7 +12,7 @@ concurrency:
 jobs:
   post:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -28,6 +28,7 @@ jobs:
         run: |
           for q in queue/*.json; do
             id=$(basename "$q" .json)
+            grep -q '"kind": "talk"' "$q" && continue
             [ -f "state/posted/$id.json" ] || [ -f "images/$id.png" ] || python tools/render.py "$q" "images/$id.png"
           done
       - name: 画像を公開する
@@ -36,6 +37,9 @@ jobs:
           git add images fonts
           git diff --cached --quiet || (git commit -qm "画像を追加" && git push -q)
           sleep 5
+      - name: 投稿時間を毎日少しずらす（0〜20分）
+        if: github.event_name == 'push'
+        run: sleep $(( RANDOM % 1200 ))
       - name: Threadsに投稿
         env:
           THREADS_TOKEN: ${{ secrets.THREADS || secrets.THREADS_ACCESS_TOKEN || secrets.TOKEN || secrets.THREADS_TOKEN }}
