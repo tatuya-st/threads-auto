@@ -2,7 +2,7 @@
 """投稿ノートのデータから、Threads のまとめ投稿（3件・画像つき）を1本作って queue/ に置く。
 
 使い方:
-  python3 tools/build_queue.py --html <投稿ノートの保存HTML> --posts <posts を保存したフォルダ> --repo <このリポジトリ> --slot morning|night
+  python3 tools/build_queue.py --html <投稿ノートの保存HTML> --posts <posts を保存したフォルダ> --repo <このリポジトリ> --slot morning|noon|night
 
 - ROOM に投稿済み（posts）の商品から選ぶ。Threads に一度出した商品（state/sent.json）は二度と選ばない。
 - 投稿ノートの「まとめてThreadsへ」と同じ考え方：ROOMで反応が確かめられた商品 → 1万円以下のガジェット・家電 → 1万円以下 → 3万円以下 → それ以外。
@@ -35,6 +35,7 @@ THEMES = {
         open=lambda n: [f'財布「やめて」\n私「見るだけだから」\n\n…という言い訳つきの{n}選です👇', f'ランキングを見すぎて、楽天ポイントが夢に出てきた男の{n}選です', f'物欲のみなさん、お疲れさまです。\n本日の議題は{n}件。異議なしで可決されそうです🫡', f'「何も買わない日」を作ろうとした結果、\n気になるものが{n}つ増えました🔍', f'カートに入れては消す反復横跳び、今日も元気にやってます。\n本日の候補{n}つ👇', f'寝る前の楽天パトロール、本日の成果{n}件です🌙'],
         ask=['あなたなら何番？番号だけのリプでも喜びます👇', '「うちもそれ困ってる」って人はリプで教えてください😂', 'この中で一番気になるの、何番ですか？👇']),
 }
+NOON_OPEN = lambda n: [f'お昼休みのみなさん、おつかれさまです。\nごはんのお供に物欲会議、議題は{n}件です🍙', f'昼休み、スマホ片手に楽天パトロールした成果{n}件です🥪', f'午後もがんばるためのご褒美候補{n}つ。\n買うのは仕事が終わってからでOK☕']
 MORNING_OPEN = lambda n: [f'通勤中のみなさん、おはようございます。\n今日の物欲会議、議題は{n}件です🫡', f'朝の満員電車で見る用の{n}選です🚃\n買うかどうかは帰ってから決めてOK', f'おはようございます。\n寝ぼけたまま楽天パトロールした成果{n}件です☕']
 LINK_LINES = ['詳細はプロフィールのリンクから🔍', '保存しておくと、あとで探さずに済みます📌\n詳細はプロフィールのリンクから', '迷ったらカートで一晩寝かせるのがおすすめ💤\n詳細はプロフィールのリンクから', '見るだけでも大歓迎👀 プロフィールのリンクから楽天ROOMへ']
 FOOTERS = ['▶ 財布と相談のうえ、プロフィールのリンクから', '▶ 見るだけでもどうぞ。プロフィールのリンクから楽天ROOMへ', '▶ レビューも見てから決めてね（プロフィールのリンクから）', '▶ 気になった番号はリプで教えてね（詳細はプロフのリンク）']
@@ -138,7 +139,7 @@ def main():
     ap.add_argument('--html', required=True)
     ap.add_argument('--posts', required=True)
     ap.add_argument('--repo', required=True)
-    ap.add_argument('--slot', choices=['morning', 'night'], default='night')
+    ap.add_argument('--slot', choices=['morning', 'noon', 'night'], default='night')
     a = ap.parse_args()
 
     room = load_room(a.html)
@@ -199,7 +200,7 @@ def main():
         return
 
     n = len(items)
-    dn = int(now // 864e5) * 2 + (0 if a.slot == 'morning' else 1)
+    dn = int(now // 864e5) * 3 + ['morning', 'noon', 'night'].index(a.slot)
     th = theme_of(items)
     # 切り口（時短・コスパ・見た目・口コミ）は合う商品が多いものから、前回と同じにならないよう日替わりで
     last_ax = ''
@@ -219,7 +220,7 @@ def main():
 
     T = THEMES[th]
     title = pick(T['title'], dn) if (th != 'base' or not ax) else pick(AXES[ax]['title'], dn)
-    opens = MORNING_OPEN(n) if (a.slot == 'morning' and th == 'base') else T['open'](n)
+    opens = (MORNING_OPEN(n) if a.slot == 'morning' else NOON_OPEN(n) if a.slot == 'noon' else T['open'](n)) if th == 'base' else T['open'](n)
     hook = pick(opens, dn)
     ask = pick(T['ask'], dn * 3 + 1)
     link_line = pick(LINK_LINES, dn * 7 + 2)
