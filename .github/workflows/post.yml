@@ -6,13 +6,14 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  issues: write
 concurrency:
   group: threads
   cancel-in-progress: false
 jobs:
   post:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 130
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -37,9 +38,12 @@ jobs:
           git add images fonts
           git diff --cached --quiet || (git commit -qm "画像を追加" && (git push -q || (git pull -q --rebase && git push -q)))
           sleep 5
-      - name: 投稿時間を毎日少しずらす（0〜20分）
+      - name: 投稿時間（反応が良い時間帯を数字から選ぶ）
         if: github.event_name == 'push'
-        run: sleep $(( RANDOM % 1200 ))
+        run: |
+          out=$(python tools/timing.py)
+          echo "$out" | head -n -1
+          sleep $(echo "$out" | tail -1)
       - name: Threadsに投稿
         env:
           THREADS_TOKEN: ${{ secrets.THREADS || secrets.THREADS_ACCESS_TOKEN || secrets.TOKEN || secrets.THREADS_TOKEN }}
@@ -51,3 +55,8 @@ jobs:
         run: |
           git add state
           git diff --cached --quiet || (git commit -qm "投稿の記録" && git pull -q --rebase && git push -q)
+      - name: 失敗をGitHubアプリに知らせる
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash tools/alert.sh "⚠️ Threadsに投稿できませんでした" "投稿の処理が失敗しました。ルイが次の実行で原因を確認します。"

@@ -233,8 +233,50 @@ def insights():
         except Exception as e:
             print(f"::warning::{rec['id']} の数字は読めませんでした: {str(e).replace(tok, '***')[:120]}")
     json.dump(out, open(os.path.join(ROOT, 'state', 'insights.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    # 日ごとの記録（ダッシュボードと投稿時間の調整に使う）。60日分だけ残す
+    log_p = os.path.join(ROOT, 'state', 'insights_log.json')
+    log = json.load(open(log_p, encoding='utf-8')) if os.path.exists(log_p) else {}
+    log[out['at'][:10]] = {'account': out['account'], 'posts': out['posts']}
+    log = dict(sorted(log.items())[-60:])
+    json.dump(log, open(log_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(f"::notice::数字を保存しました（投稿{len(out['posts'])}件・フォロワー{out['account'].get('followers_count')}）")
 
 
+def comments():
+    """直近7日の投稿に来たコメントのうち、まだ自分が返していないものを state/comments.json に保存する。"""
+    tok, me = token()
+    mine = me.get('username')
+    since = datetime.now(JST) - timedelta(days=7)
+    todo = []
+    for f in sorted(glob.glob(os.path.join(ROOT, 'state', 'posted', '*.json'))):
+        rec = json.load(open(f, encoding='utf-8'))
+        try:
+            made = datetime.strptime(rec['id'][:13], '%Y%m%d-%H%M').replace(tzinfo=JST)
+        except (ValueError, KeyError):
+            continue
+        if not rec.get('media_id') or made < since:
+            continue
+        try:
+            r = call('GET', f"{API}/{rec['media_id']}/replies", {'fields': 'id,text,username,timestamp,permalink,has_replies', 'access_token': tok})
+        except Exception as e:
+            print(f"::error::コメントを読めません（threads_read_replies の許可が必要）: {str(e).replace(tok, '***')[:200]}")
+            raise SystemExit(1)
+        for c in r.get('data', []):
+            if c.get('username') == mine:
+                continue
+            answered = False
+            if c.get('has_replies'):
+                try:
+                    rr = call('GET', f"{API}/{c['id']}/replies", {'fields': 'username', 'access_token': tok})
+                    answered = any(x.get('username') == mine for x in rr.get('data', []))
+                except Exception:
+                    pass
+            if not answered:
+                todo.append({'id': c['id'], 'post': rec['id'], 'user': c.get('username'), 'text': c.get('text', ''), 'at': c.get('timestamp'), 'link': c.get('permalink')})
+    out = {'at': datetime.now(JST).isoformat(timespec='minutes'), 'unanswered': todo}
+    json.dump(out, open(os.path.join(ROOT, 'state', 'comments.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    print(f"::notice::返信待ちのコメント {len(todo)}件")
+
+
 if __name__ == '__main__':
-    {'publish': publish, 'refresh': refresh, 'insights': insights}[sys.argv[1] if len(sys.argv) > 1 else 'publish']()
+    {'publish': publish, 'refresh': refresh, 'insights': insights, 'comments': comments}[sys.argv[1] if len(sys.argv) > 1 else 'publish']()

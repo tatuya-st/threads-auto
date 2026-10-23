@@ -1,0 +1,18 @@
+name: コメント返信の下書きを届ける
+on:
+  push:
+    branches: [main]
+    paths: ['state/drafts.json']
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Issueで届ける
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/drafts_issue.py

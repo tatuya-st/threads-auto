@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ルイの成績表</title>
+<style>
+:root{--bg:#f4f4f2;--surface:#fcfcfb;--grid:#e4e3df;--t1:#0b0b0b;--t2:#52514e;--t3:#7a7975;--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--crit:#d03b3b}
+@media (prefers-color-scheme:dark){:root{--bg:#111110;--surface:#1a1a19;--grid:#2e2e2c;--t1:#f0efec;--t2:#c3c2b7;--t3:#8f8e88;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--crit:#e66767}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t1);font:15px/1.5 -apple-system,"Hiragino Sans","Noto Sans JP",sans-serif}
+main{max-width:760px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:22px;margin:0 0 2px}
+.sub{color:var(--t2);font-size:13px;margin:0 0 16px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.tile,.card{background:var(--surface);border-radius:12px;padding:12px 14px}
+.tile .k{color:var(--t2);font-size:12px}
+.tile .v{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+.tile .v.alert{color:var(--crit)}
+.card{margin-bottom:12px}
+.card h2{font-size:15px;margin:0 0 2px}
+.card p{color:var(--t2);font-size:12px;margin:0 0 8px}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--t2);margin-bottom:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{fill:var(--t3);font-size:10px}
+.tip{position:fixed;pointer-events:none;background:var(--t1);color:var(--bg);font-size:12px;padding:6px 8px;border-radius:6px;opacity:0;transition:opacity .1s;max-width:220px}
+table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+th,td{padding:6px 4px;border-bottom:1px solid var(--grid);text-align:right}
+th:first-child,td:first-child,th:nth-child(2),td:nth-child(2){text-align:left}
+th{color:var(--t2);font-weight:600;font-size:12px}
+a{color:var(--s1)}
+.msg{color:var(--t2);font-size:13px}
+</style>
+</head>
+<body>
+<main>
+<h1>ルイの成績表</h1>
+<p class="sub" id="upd">読み込み中…</p>
+<div class="tiles">
+  <div class="tile"><div class="k">フォロワー</div><div class="v" id="fol">–</div></div>
+  <div class="tile"><div class="k">直近14日の閲覧</div><div class="v" id="vw">–</div></div>
+  <div class="tile"><div class="k">返信待ち</div><div class="v" id="cm">–</div></div>
+</div>
+<div class="card">
+  <h2>投稿ごとの閲覧数</h2>
+  <p>1本ずつの棒。色は投稿した時間帯。</p>
+  <div class="legend"><span><i style="background:var(--s1)"></i>朝（商品）</span><span><i style="background:var(--s2)"></i>昼（会話）</span><span><i style="background:var(--s3)"></i>夜（商品）</span></div>
+  <div id="bars"></div>
+</div>
+<div class="card">
+  <h2>時間帯ごとの平均閲覧数</h2>
+  <p>どの時間帯の投稿が一番見られているか。</p>
+  <div id="avg"></div>
+</div>
+<div class="card">
+  <h2>フォロワーの推移</h2>
+  <p>毎日23:37ごろに記録。</p>
+  <div id="line"></div>
+</div>
+<div class="card">
+  <h2>投稿の一覧</h2>
+  <table><thead><tr><th>日時</th><th>枠</th><th>閲覧</th><th>いいね</th><th>返信</th></tr></thead><tbody id="tb"></tbody></table>
+</div>
+</main>
+<div class="tip" id="tip"></div>
+<script>
+const SLOT={morning:['朝','var(--s1)'],noon:['昼','var(--s2)'],night:['夜','var(--s3)']};
+const tip=document.getElementById('tip');
+function showTip(e,html){tip.innerHTML=html;tip.style.opacity=1;const x=Math.min(e.clientX+12,innerWidth-230);tip.style.left=x+'px';tip.style.top=(e.clientY+12)+'px'}
+function hideTip(){tip.style.opacity=0}
+const fmt=n=>n==null?'–':Number(n).toLocaleString('ja-JP');
+const label=id=>`${+id.slice(4,6)}/${+id.slice(6,8)} ${id.slice(9,11)}:${id.slice(11,13)}`;
+const NS='http://www.w3.org/2000/svg';
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);parent&&parent.appendChild(e);return e}
+function wid(id){return Math.max(document.getElementById(id).clientWidth,280)}
+function niceMax(v){if(v<=5)return 5;const p=Math.pow(10,Math.floor(Math.log10(v)));return Math.ceil(v/p)*p}
+function axis(svg,W,H,L,B,max){for(let i=0;i<=4;i++){const y=H-B-(H-B-8)*i/4;el('line',{x1:L,x2:W,y1:y,y2:y,stroke:'var(--grid)','stroke-width':1},svg);el('text',{x:L-6,y:y+3,'text-anchor':'end'},svg).textContent=fmt(Math.round(max*i/4))}}
+function bar(svg,x,y,w,h,color){const r=Math.min(4,w/2,h);el('path',{d:`M${x},${y+h}V${y+r}Q${x},${y} ${x+r},${y}H${x+w-r}Q${x+w},${y} ${x+w},${y+r}V${y+h}Z`,fill:color},svg)}
+async function j(u){try{const r=await fetch(u+'?t='+Date.now());return r.ok?r.json():null}catch(e){return null}}
+(async()=>{
+  const log=await j('state/insights_log.json')||{};const cm=await j('state/comments.json');
+  const days=Object.keys(log).sort();
+  if(!days.length){document.getElementById('upd').textContent='まだ記録がありません（毎日23:37ごろに記録されます）';return}
+  const last=log[days[days.length-1]];
+  document.getElementById('upd').textContent='最終更新 '+days[days.length-1];
+  document.getElementById('fol').textContent=fmt(last.account&&last.account.followers_count);
+  const posts={};for(const d of days)for(const [id,m] of Object.entries(log[d].posts||{}))posts[id]=m;
+  const ids=Object.keys(posts).sort();
+  document.getElementById('vw').textContent=fmt(ids.reduce((a,i)=>a+(posts[i].views||0),0));
+  const n=cm?cm.unanswered.length:null;const c=document.getElementById('cm');c.textContent=n==null?'–':n;if(n)c.classList.add('alert');
+  // 投稿ごとの棒
+  {const W=wid('bars'),H=220,L=36,B=22,svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':'投稿ごとの閲覧数'},document.getElementById('bars'));
+   const max=niceMax(Math.max(...ids.map(i=>posts[i].views||0),1));axis(svg,W,H,L,B,max);
+   const slotW=(W-L)/Math.max(ids.length,1),bw=Math.max(Math.min(slotW-2,28),2);
+   ids.forEach((id,k)=>{const v=posts[id].views||0,h=(H-B-8)*v/max,x=L+k*slotW+(slotW-bw)/2,s=SLOT[id.split('-').pop()]||['?','var(--t3)'];
+     if(h>0)bar(svg,x,H-B-h,bw,h,s[1]);
+     const hit=el('rect',{x:L+k*slotW,y:0,width:slotW,height:H-B,fill:'transparent'},svg);
+     const html=`<b>${label(id)}（${s[0]}）</b><br>閲覧 ${fmt(v)}・いいね ${fmt(posts[id].likes)}・返信 ${fmt(posts[id].replies)}`;
+     hit.addEventListener('mousemove',e=>showTip(e,html));hit.addEventListener('touchstart',e=>showTip(e.touches[0],html),{passive:true});hit.addEventListener('mouseleave',hideTip);
+     if(k%Math.max(1,Math.ceil(ids.length/6))===0)el('text',{x:L+k*slotW+slotW/2,y:H-6,'text-anchor':'middle'},svg).textContent=`${+id.slice(4,6)}/${+id.slice(6,8)}`});}
+  // 時間帯ごとの平均
+  {const keys=['morning','noon','night'],avg=keys.map(k=>{const a=ids.filter(i=>i.endsWith('-'+k)).map(i=>posts[i].views||0);return a.length?a.reduce((x,y)=>x+y,0)/a.length:0});
+   const W=wid('avg'),H=130,L=40,R=60,svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':'時間帯ごとの平均閲覧数'},document.getElementById('avg'));
+   const max=Math.max(...avg,1);
+   keys.forEach((k,i)=>{const y=10+i*40,w=(W-L-R)*avg[i]/max;el('text',{x:L-8,y:y+16,'text-anchor':'end',style:'font-size:12px;fill:var(--t2)'},svg).textContent=SLOT[k][0];
+     if(w>0){const r=Math.min(4,w);el('path',{d:`M${L},${y}H${L+w-r}Q${L+w},${y} ${L+w},${y+r}V${y+24-r}Q${L+w},${y+24} ${L+w-r},${y+24}H${L}Z`,fill:SLOT[k][1]},svg)}
+     el('text',{x:L+w+6,y:y+16,style:'font-size:12px;fill:var(--t1)'},svg).textContent=fmt(Math.round(avg[i]))});}
+  // フォロワー推移
+  {const pts=days.map(d=>[d,log[d].account&&log[d].account.followers_count]).filter(p=>p[1]!=null);
+   const box=document.getElementById('line');
+   if(pts.length<2){box.innerHTML='<p class="msg">2日分たまると線になります。</p>'}else{
+   const W=wid('line'),H=180,L=40,B=22,svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':'フォロワーの推移'},box);
+   const vs=pts.map(p=>p[1]),lo=Math.floor(Math.min(...vs)*0.98),hi=Math.ceil(Math.max(...vs)*1.02)+1;
+   for(let i=0;i<=4;i++){const y=H-B-(H-B-8)*i/4;el('line',{x1:L,x2:W,y1:y,y2:y,stroke:'var(--grid)'},svg);el('text',{x:L-6,y:y+3,'text-anchor':'end'},svg).textContent=fmt(Math.round(lo+(hi-lo)*i/4))}
+   const X=i=>L+(W-L-8)*i/(pts.length-1),Y=v=>H-B-(H-B-8)*(v-lo)/(hi-lo);
+   el('path',{d:pts.map((p,i)=>(i?'L':'M')+X(i)+','+Y(p[1])).join(''),fill:'none',stroke:'var(--s1)','stroke-width':2,'stroke-linejoin':'round'},svg);
+   pts.forEach((p,i)=>{if(i===0||i===pts.length-1||i%7===0)el('text',{x:X(i),y:H-6,'text-anchor':'middle'},svg).textContent=`${+p[0].slice(5,7)}/${+p[0].slice(8,10)}`;
+     const dot=el('circle',{cx:X(i),cy:Y(p[1]),r:4,fill:'var(--s1)',stroke:'var(--surface)','stroke-width':2,opacity:i===pts.length-1?1:0},svg);
+     const hit=el('rect',{x:X(i)-(W-L)/pts.length/2,y:0,width:(W-L)/pts.length,height:H-B,fill:'transparent'},svg);
+     const html=`<b>${p[0]}</b><br>フォロワー ${fmt(p[1])}`;
+     hit.addEventListener('mousemove',e=>{dot.setAttribute('opacity',1);showTip(e,html)});hit.addEventListener('touchstart',e=>showTip(e.touches[0],html),{passive:true});hit.addEventListener('mouseleave',()=>{hideTip();if(i<pts.length-1)dot.setAttribute('opacity',0)})});}}
+  // 表
+  const tb=document.getElementById('tb');
+  for(const id of ids.slice().reverse()){const rec=await j('state/posted/'+id+'.json'),m=posts[id],s=SLOT[id.split('-').pop()]||['?'];
+    const t=rec&&rec.permalink?`<a href="${rec.permalink}">${label(id)}</a>`:label(id);
+    tb.insertAdjacentHTML('beforeend',`<tr><td>${t}</td><td>${s[0]}</td><td>${fmt(m.views)}</td><td>${fmt(m.likes)}</td><td>${fmt(m.replies)}</td></tr>`)}
+})();
+document.addEventListener('touchstart',e=>{if(!e.target.closest('svg'))hideTip()},{passive:true});
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+name: コメントの確認
+on:
+  schedule:
+    - cron: '23 10 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  issues: write
+concurrency:
+  group: threads-comments
+  cancel-in-progress: false
+jobs:
+  comments:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 返信待ちのコメントを集める
+        env:
+          THREADS_TOKEN: ${{ secrets.THREADS || secrets.THREADS_ACCESS_TOKEN || secrets.TOKEN || secrets.THREADS_TOKEN }}
+          THREADS_APP_SECRET: ${{ secrets.THREADS_APP_SECRET || secrets.KEY }}
+          TOKEN2: ${{ secrets.TOKEN }}
+        run: python3 tools/publish.py comments
+      - name: 保存
+        run: |
+          git config user.name "threads-bot"; git config user.email "threads-bot@users.noreply.github.com"
+          git add state/comments.json
+          git diff --cached --quiet || (git commit -qm "コメントの記録" && git pull -q --rebase && git push -q)
+      - name: 失敗をGitHubアプリに知らせる
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash tools/alert.sh "⚠️ コメントを確認できませんでした" "threads_read_replies の許可が無いか、トークンの問題です。"
