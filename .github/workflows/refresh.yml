@@ -23,4 +23,4 @@ jobs:
         run: |
           git config user.name "threads-bot"; git config user.email "threads-bot@users.noreply.github.com"
           git add state
-          git diff --cached --quiet || (git commit -qm "トークンを延長" && git push -q)
+          git diff --cached --quiet || (git commit -qm "トークンを延長" && git pull -q --rebase && git push -q)
