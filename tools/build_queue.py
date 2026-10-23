@@ -167,12 +167,25 @@ TALKS = [
 ]
 
 
+TALK_KEYS = ['充電', 'ケーブル', '寒い', '暖房', '詰め替え', '買い忘れ', 'イヤホン', 'iPhone', '神社', 'お守り', 'ラーメン', 'カート',
+             'マラソン', '布団', '加湿器', 'レビュー', '家電', 'コーヒー', 'スマホ', '旅']
+
+
 def talk(repo):
     used_p = os.path.join(repo, 'state', 'talk.json')
     used = json.load(open(used_p, encoding='utf-8')) if os.path.exists(used_p) else []
     left = [t for t in TALKS if t not in used]
     if not left:
         used, left = [], TALKS[:]
+    # 同じ日の朝の投稿と話題がかぶらないようにする（例：朝「お守り何個？」→昼もお守り、を避ける）
+    today = datetime.now(JST).strftime('%Y%m%d')
+    seen = ''
+    for f in glob.glob(os.path.join(repo, 'queue', today + '-*.json')):
+        d = json.load(open(f, encoding='utf-8'))
+        if d.get('slot') != 'noon':
+            seen += d.get('text', '') + d.get('reply', '')
+    fresh = [t for t in left if not any(k in t and k in seen for k in TALK_KEYS)]
+    left = fresh or left
     text = left[h31(datetime.now(JST).strftime('%Y%m%d')) % len(left)]
     used.append(text)
     os.makedirs(os.path.dirname(used_p), exist_ok=True)
