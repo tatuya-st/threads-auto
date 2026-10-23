@@ -73,6 +73,25 @@ def pick(arr, seed):
     return arr[seed % len(arr)]
 
 
+def recent_texts(repo, days=3):
+    # 直近の投稿（朝・昼・夜）の本文。書き出し・問いかけ・締めの文が続けて同じにならないように使う
+    since = (datetime.now(JST) - timedelta(days=days - 1)).strftime('%Y%m%d')
+    out = ''
+    for f in glob.glob(os.path.join(repo, 'queue', '*.json')):
+        if os.path.basename(f)[:8] >= since:
+            try:
+                out += json.load(open(f, encoding='utf-8')).get('text', '') + '\n'
+            except Exception:
+                pass
+    return out
+
+
+def pick_fresh(arr, seed, recent, keys=()):
+    # 直近3日に出た文（1行目で判定）と、同じ話題の言葉を含む文を避けて選ぶ。全部かぶるときは元のまま
+    ok = [s for s in arr if s.split('\n')[0] not in recent and not any(k in s and k in recent for k in keys)]
+    return pick(ok or arr, seed)
+
+
 def load_room(html_path):
     html = open(html_path, encoding='utf-8').read()
     m = re.search(r'<script id="room-data" type="application/json">(.*?)</script>', html, re.S)
@@ -291,9 +310,11 @@ def main():
     T = THEMES[th]
     title = pick(T['title'], dn) if (th != 'base' or not ax) else pick(AXES[ax]['title'], dn)
     opens = (MORNING_OPEN(n) if a.slot == 'morning' else NOON_OPEN(n) if a.slot == 'noon' else T['open'](n)) if th == 'base' else T['open'](n)
-    hook = pick(opens, dn)
-    ask = pick(T['ask'], dn * 3 + 1)
-    link_line = pick(LINK_LINES, dn * 7 + 2)
+    recent = recent_texts(a.repo)
+    today_txt = recent_texts(a.repo, 1)
+    hook = pick_fresh(opens, dn, recent)
+    ask = pick_fresh(T['ask'], dn * 3 + 1, recent, [k for k in TALK_KEYS if k in today_txt])
+    link_line = pick_fresh(LINK_LINES, dn * 7 + 2, recent)
     footer = pick(FOOTERS, dn * 7 + 3)
     link = ROOM_COLS_URL if n > 1 else ROOM_URL
     topic = 'ガジェット' if any(it['_c'] in ('gadget', 'kaden') for it in items) else '楽天ROOM'
