@@ -200,5 +200,41 @@ def publish():
         raise SystemExit(1)
 
 
+def insights():
+    """直近の投稿の反応（閲覧・いいね・返信・再投稿）とアカウント全体の数字を state/insights.json に保存する。"""
+    tok, me = token()
+    out = {'at': datetime.now(JST).isoformat(timespec='minutes'), 'posts': {}}
+    try:
+        r = call('GET', f"{API}/{me['id']}/threads_insights", {'metric': 'views,likes,replies,reposts,followers_count', 'access_token': tok})
+        acc = {}
+        for m in r.get('data', []):
+            v = m.get('total_value', {}).get('value')
+            if v is None and m.get('values'):
+                v = sum(x.get('value', 0) for x in m['values'])
+            acc[m['name']] = v
+        out['account'] = acc
+    except Exception as e:
+        print(f"::error::アカウントの数字を読めません（threads_manage_insights の許可が必要）: {str(e).replace(tok, '***')[:200]}")
+        raise SystemExit(1)
+    since = datetime.now(JST) - timedelta(days=14)
+    for f in sorted(glob.glob(os.path.join(ROOT, 'state', 'posted', '*.json'))):
+        rec = json.load(open(f, encoding='utf-8'))
+        if not rec.get('media_id'):
+            continue
+        try:
+            made = datetime.strptime(rec['id'][:13], '%Y%m%d-%H%M').replace(tzinfo=JST)
+        except ValueError:
+            continue
+        if made < since:
+            continue
+        try:
+            r = call('GET', f"{API}/{rec['media_id']}/insights", {'metric': 'views,likes,replies,reposts,quotes', 'access_token': tok})
+            out['posts'][rec['id']] = {m['name']: (m.get('values') or [{}])[0].get('value', m.get('total_value', {}).get('value')) for m in r.get('data', [])}
+        except Exception as e:
+            print(f"::warning::{rec['id']} の数字は読めませんでした: {str(e).replace(tok, '***')[:120]}")
+    json.dump(out, open(os.path.join(ROOT, 'state', 'insights.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    print(f"::notice::数字を保存しました（投稿{len(out['posts'])}件・フォロワー{out['account'].get('followers_count')}）")
+
+
 if __name__ == '__main__':
-    {'publish': publish, 'refresh': refresh}[sys.argv[1] if len(sys.argv) > 1 else 'publish']()
+    {'publish': publish, 'refresh': refresh, 'insights': insights}[sys.argv[1] if len(sys.argv) > 1 else 'publish']()

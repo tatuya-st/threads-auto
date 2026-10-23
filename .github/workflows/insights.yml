@@ -1,0 +1,27 @@
+name: 反応の記録
+on:
+  schedule:
+    - cron: '37 14 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: threads
+  cancel-in-progress: false
+jobs:
+  insights:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 数字を読む
+        env:
+          THREADS_TOKEN: ${{ secrets.THREADS || secrets.THREADS_ACCESS_TOKEN || secrets.TOKEN || secrets.THREADS_TOKEN }}
+          THREADS_APP_SECRET: ${{ secrets.THREADS_APP_SECRET || secrets.KEY }}
+          TOKEN2: ${{ secrets.TOKEN }}
+        run: python3 tools/publish.py insights
+      - name: 保存
+        if: always()
+        run: |
+          git config user.name "threads-bot"; git config user.email "threads-bot@users.noreply.github.com"
+          git add state
+          git diff --cached --quiet || (git commit -qm "反応の記録" && git pull -q --rebase && git push -q)
