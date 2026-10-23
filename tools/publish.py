@@ -247,7 +247,7 @@ def comments():
     tok, me = token()
     mine = me.get('username')
     since = datetime.now(JST) - timedelta(days=7)
-    todo = []
+    todo, fails, ok = [], [], 0
     for f in sorted(glob.glob(os.path.join(ROOT, 'state', 'posted', '*.json'))):
         rec = json.load(open(f, encoding='utf-8'))
         try:
@@ -259,8 +259,10 @@ def comments():
         try:
             r = call('GET', f"{API}/{rec['media_id']}/replies", {'fields': 'id,text,username,timestamp,permalink,has_replies', 'access_token': tok})
         except Exception as e:
-            print(f"::error::コメントを読めません（threads_read_replies の許可が必要）: {str(e).replace(tok, '***')[:200]}")
-            raise SystemExit(1)
+            fails.append(rec['id'])
+            print(f"::warning::{rec['id']} のコメントを読めません: {str(e).replace(tok, '***')[:200]}")
+            continue
+        ok += 1
         for c in r.get('data', []):
             if c.get('username') == mine:
                 continue
@@ -273,6 +275,9 @@ def comments():
                     pass
             if not answered:
                 todo.append({'id': c['id'], 'post': rec['id'], 'user': c.get('username'), 'text': c.get('text', ''), 'at': c.get('timestamp'), 'link': c.get('permalink')})
+    if fails and not ok:
+        print('::error::どの投稿のコメントも読めません（threads_read_replies の許可が入ったトークンが必要）')
+        raise SystemExit(1)
     out = {'at': datetime.now(JST).isoformat(timespec='minutes'), 'unanswered': todo}
     json.dump(out, open(os.path.join(ROOT, 'state', 'comments.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(f"::notice::返信待ちのコメント {len(todo)}件")
