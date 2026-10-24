@@ -1,22 +1,43 @@
 {
- "at": "2026-10-24T00:12+09:00",
+ "at": "2026-10-25T00:01+09:00",
  "posts": {
   "20261023-0743-morning": {
-   "views": 6,
+   "views": 8,
    "likes": 0,
    "replies": 1,
    "reposts": 0,
    "quotes": 0
   },
   "20261023-1244-noon": {
-   "views": 245,
+   "views": 253,
    "likes": 2,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261023-2044-night": {
-   "views": 15,
+   "views": 20,
+   "likes": 0,
+   "replies": 1,
+   "reposts": 0,
+   "quotes": 0
+  },
+  "20261024-0744-morning": {
+   "views": 13,
+   "likes": 0,
+   "replies": 1,
+   "reposts": 0,
+   "quotes": 0
+  },
+  "20261024-1244-noon": {
+   "views": 88,
+   "likes": 6,
+   "replies": 0,
+   "reposts": 0,
+   "quotes": 0
+  },
+  "20261024-2044-night": {
+   "views": 20,
    "likes": 0,
    "replies": 1,
    "reposts": 0,
@@ -24,10 +45,10 @@
   }
  },
  "account": {
-  "views": 299,
+  "views": 205,
   "likes": 1,
   "replies": 0,
   "reposts": 0,
-  "followers_count": 389
+  "followers_count": 393
  }
 }
