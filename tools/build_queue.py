@@ -50,7 +50,7 @@ AXES = {
     'trust': dict(label='口コミ', kw=re.compile(r'レビュー|公式|正規|1位|人気|いいね'), title=['口コミで選ぶ3つ', 'レビューが背中を押す3つ'], open='今日は「口コミ」目線で{n}つ。'),
 }
 STRONG_GIDS = {'senen', 'refill', 'cosme', 'plant', 'x-skin', 'x-kitchen'}
-STRONG_RE = re.compile(r'ポッキリ|tower|山崎実業|詰め替え|つめかえ|詰替|観葉|ガジュマル|サボテン|多肉|美容液|化粧水|乳液|エマルジョン|スイーツ|焼き菓子|ロールケーキ|チロリアン')
+STRONG_RE = re.compile(r'iFace|スマホケース|iPhone.{0,6}ケース|充電器|モバイルバッテリー|ケーブル|ポッキリ|tower|山崎実業|詰め替え|つめかえ|詰替|観葉|ガジュマル|サボテン|多肉|美容液|化粧水|乳液|エマルジョン|スイーツ|焼き菓子|ロールケーキ|チロリアン')
 NUM = ['1️⃣', '2️⃣', '3️⃣', '4️⃣']
 
 
@@ -268,7 +268,7 @@ def main():
         likes = it.get('likes') or 0
         proven = -3 if (gid == 'likepop' or likes > 0) else -2 if gid == 'fanpop' else -1 if gid == 'roompop' else None
         # Threads向き：話のネタになる「神社・旅・ラーメン」の商品を最優先（1本に2件まで）
-        # ROOMで実際にいいねが多いジャンル（10/24確認：千円スイーツ・tower収納・コスメ・詰め替え・観葉植物）。1,000〜10,000円を優先
+        # いいねが多いジャンル（千円スイーツ・tower収納・コスメ・詰め替え・観葉植物）と、実際に売れたスマホケース・充電まわり（10/24確認）。1,000〜10,000円を優先
         strong = 1000 <= p <= 10000 and (gid in STRONG_GIDS or STRONG_RE.search(it['name']))
         sc = -4 if gid == 'tabi' else -3.5 if strong else proven if proven is not None else (0 if c in ('gadget', 'kaden') else 1) if 0 < p <= 10000 else 2 if 0 < p <= 30000 else 3
         it['_c'] = c
