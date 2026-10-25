@@ -283,5 +283,38 @@ def comments():
     print(f"::notice::返信待ちのコメント {len(todo)}件")
 
 
+# 他の人のThreads投稿から、楽天ROOM・ガジェット系で伸びている投稿を集める（ルイの情報収集用）
+# threads_keyword_search の審査が通るまでは、自分の投稿しか返ってこない（それで正常）
+WORDS = [('楽天ROOM', 'KEYWORD'), ('楽天ルーム', 'KEYWORD'), ('楽天ROOM', 'TAG'), ('楽天アフィリエイト', 'KEYWORD'), ('買ってよかった', 'KEYWORD'), ('ガジェット', 'TAG')]
+
+
+def search():
+    tok, me = token()
+    mine = me.get('username')
+    since = int((datetime.now(JST) - timedelta(days=3)).timestamp())
+    found, seen, fails = [], set(), []
+    for q, mode in WORDS:
+        try:
+            r = call('GET', f'{API}/keyword_search', {'q': q, 'search_type': 'TOP', 'search_mode': mode, 'since': since, 'limit': 25,
+                                                    'fields': 'id,text,media_type,permalink,timestamp,username,has_replies,is_reply', 'access_token': tok})
+        except Exception as e:
+            fails.append(q)
+            print(f"::warning::「{q}」を検索できません: {str(e).replace(tok, '***')[:200]}")
+            continue
+        for x in r.get('data', []):
+            if x['id'] in seen or x.get('is_reply'):
+                continue
+            seen.add(x['id'])
+            found.append({'q': q, 'mode': mode, 'user': x.get('username'), 'mine': x.get('username') == mine, 'text': (x.get('text') or '')[:400],
+                          'type': x.get('media_type'), 'at': x.get('timestamp'), 'link': x.get('permalink')})
+    others = sum(1 for f in found if not f['mine'])
+    out = {'at': datetime.now(JST).isoformat(timespec='minutes'), 'approved': others > 0, 'posts': found}
+    json.dump(out, open(os.path.join(ROOT, 'state', 'search.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    print(f"::notice::検索 {len(found)}件（他の人の投稿 {others}件）")
+    if fails and len(fails) == len(WORDS):
+        print('::error::検索できません（threads_keyword_search の許可が入ったトークンが必要）')
+        raise SystemExit(1)
+
+
 if __name__ == '__main__':
-    {'publish': publish, 'refresh': refresh, 'insights': insights, 'comments': comments}[sys.argv[1] if len(sys.argv) > 1 else 'publish']()
+    {'publish': publish, 'refresh': refresh, 'insights': insights, 'comments': comments, 'search': search}[sys.argv[1] if len(sys.argv) > 1 else 'publish']()
