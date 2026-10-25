@@ -1,7 +1,5 @@
 name: Threadsの情報収集
 on:
-  schedule:
-    - cron: '13 9 * * *'
   workflow_dispatch:
 permissions:
   contents: write
