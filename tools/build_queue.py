@@ -204,7 +204,30 @@ NAKAMA = [
     'ROOMで「これ紹介してよかった」って商品、ありますか？\nROOM仲間さんのおすすめ、知りたいです👇',
     '仕事しながら楽天ROOMやってます💼\n時間がない中でどう続けてるか、みなさんの工夫を教えてください🙏\nフォロー返しに行きます！',
     '楽天ROOMやってる方、いますか？🌱\nまだまだ勉強中なので、一緒に頑張れる仲間を探してます🤝\n気軽に絡んでください！',
+    # 10/25 他の人の投稿で反応が多かった形：運用ログ（本当の数字だけ）・みんなへの質問・一喜一憂の共感
+    '{log}',
+    '楽天ROOM・アフィリエイトやってる皆さん、\n今月の調子どうですか？📊\n良かった人も、そうでもない人も、ゆるく話しましょう🤝',
+    'ROOMもThreadsも、数字に一喜一憂しがちです😂\n0の日が続いてもめげない方法、\nみなさんどうしてますか？',
+    'お買い物マラソンと5と0のつく日、\nやっぱり動きが違いますよね🛒\nみなさんはセールの日、何を意識してますか？',
 ]
+
+
+def log_text(repo):
+    """Threads運用ログ：insights の本当の数字だけで作る。数字がそろわなければ空文字。"""
+    try:
+        lg = json.load(open(os.path.join(repo, 'state', 'insights_log.json'), encoding='utf-8'))
+        days = sorted(lg)
+        cur = lg[days[-1]]['account']['followers_count']
+        prev = lg[days[-2]]['account']['followers_count'] if len(days) > 1 else None
+        posts = lg[days[-1]].get('posts', {})
+        best = max(posts.items(), key=lambda kv: kv[1].get('views', 0)) if posts else None
+    except Exception:
+        return ''
+    n = (datetime.now(JST).date() - datetime(2026, 10, 21, tzinfo=JST).date()).days + 1
+    diff = '' if prev is None else f'（前日比 {cur - prev:+d}）'
+    kind = {'morning': '朝の投稿', 'noon': '昼の会話投稿', 'night': '夜の投稿'}
+    line = f"\n最近いちばん見られたのは{kind.get(best[0].split('-')[-1], '投稿')}（{best[1].get('views', 0)}回）" if best and best[1].get('views') else ''
+    return f'Threads運用ログ {n}日目📊\nフォロワー {cur}人{diff}{line}\n同じくROOMやってる方、一緒にコツコツいきましょう🤝'
 
 
 def followers(repo):
@@ -225,7 +248,7 @@ def talk(repo):
     f = followers(repo)
     pool = TALKS
     if datetime.now(JST).toordinal() % 2 == 0:
-        pool = [t for t in NAKAMA if '{f}' not in t or f >= 100]
+        pool = [t for t in NAKAMA if ('{f}' not in t or f >= 100) and (t != '{log}' or log_text(repo))]
     left = [t for t in pool if t not in used]
     if not left:
         used = [t for t in used if t not in pool]
@@ -241,7 +264,7 @@ def talk(repo):
     left = fresh or left
     text = left[h31(datetime.now(JST).strftime('%Y%m%d')) % len(left)]
     used.append(text)
-    text = text.replace('{f}', str(f))
+    text = log_text(repo) if text == '{log}' else text.replace('{f}', str(f))
     os.makedirs(os.path.dirname(used_p), exist_ok=True)
     json.dump(used, open(used_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     stamp = datetime.now(JST)
