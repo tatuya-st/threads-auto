@@ -189,6 +189,25 @@ TALKS = [
 ]
 
 
+# ROOM仲間募集の投稿（他の人の「初報酬報告＋仲間募集」がいいね149・コメント87だったので取り入れる）。
+# 1日おきに昼の会話投稿をこちらにする。売上などの数字は作らない（本当の数字だけ使う）
+NAKAMA = [
+    '楽天ROOM、コツコツ続けてます📦\nまだまだ手探りなので、同じように頑張ってる方と繋がりたいです🤝\nコメントもらえたらフォロー返しに行きます！',
+    'Threadsのフォロワーさんが{f}人になりました🙏\nいつも見てくれてありがとうございます！\n楽天ROOMやってる方、ゆるく情報交換しませんか？',
+    '楽天ROOM、続けるのが一番むずかしい気がしてます😂\n同じく頑張ってる方、一緒に励まし合いましょう🔥\nコメント・フォロー大歓迎です',
+    'ROOMで「これ紹介してよかった」って商品、ありますか？\nROOM仲間さんのおすすめ、知りたいです👇',
+    '仕事しながら楽天ROOMやってます💼\n時間がない中でどう続けてるか、みなさんの工夫を教えてください🙏\nフォロー返しに行きます！',
+    '楽天ROOMやってる方、いますか？🌱\nまだまだ勉強中なので、一緒に頑張れる仲間を探してます🤝\n気軽に絡んでください！',
+]
+
+
+def followers(repo):
+    try:
+        return int(json.load(open(os.path.join(repo, 'state', 'insights.json'), encoding='utf-8'))['account']['followers_count'])
+    except Exception:
+        return 0
+
+
 TALK_KEYS = ['充電', 'ケーブル', '寒い', '暖房', '詰め替え', '買い忘れ', 'イヤホン', 'iPhone', '神社', 'お守り', 'ラーメン', 'カート',
              'マラソン', '布団', '加湿器', 'レビュー', '家電', 'コーヒー', 'スマホ', '旅']
 
@@ -196,9 +215,15 @@ TALK_KEYS = ['充電', 'ケーブル', '寒い', '暖房', '詰め替え', '買�
 def talk(repo):
     used_p = os.path.join(repo, 'state', 'talk.json')
     used = json.load(open(used_p, encoding='utf-8')) if os.path.exists(used_p) else []
-    left = [t for t in TALKS if t not in used]
+    # 1日おきに仲間募集の投稿にする
+    f = followers(repo)
+    pool = TALKS
+    if datetime.now(JST).toordinal() % 2 == 0:
+        pool = [t for t in NAKAMA if '{f}' not in t or f >= 100]
+    left = [t for t in pool if t not in used]
     if not left:
-        used, left = [], TALKS[:]
+        used = [t for t in used if t not in pool]
+        left = pool[:]
     # 同じ日の朝の投稿と話題がかぶらないようにする（例：朝「お守り何個？」→昼もお守り、を避ける）
     today = datetime.now(JST).strftime('%Y%m%d')
     seen = ''
@@ -210,6 +235,7 @@ def talk(repo):
     left = fresh or left
     text = left[h31(datetime.now(JST).strftime('%Y%m%d')) % len(left)]
     used.append(text)
+    text = text.replace('{f}', str(f))
     os.makedirs(os.path.dirname(used_p), exist_ok=True)
     json.dump(used, open(used_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     stamp = datetime.now(JST)
