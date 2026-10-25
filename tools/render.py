@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""queue/<id>.json から 1080×1350 のまとめ画像（images/<id>.png）を作る。投稿ノートの「まとめてThreadsへ」と同じデザイン。"""
+"""queue/<id>.json から 1080×1350 の画像（images/<id>.png）を作る。
+3件まとめ（投稿ノートの「まとめてThreadsへ」と同じデザイン）と、商品1件の形（kind: single）の2種類。
+どの画像にも右下の隅に「財布欠席くん」（ルイのオリジナル）が小さく入る。"""
 import json, os, sys
 from PIL import Image, ImageDraw, ImageFont
 
@@ -75,7 +77,7 @@ def render(q, out):
     text(d, (W - 110, 155), '※価格は投稿時点のものです', font('medium', 28), SUB, 'rs')
     text(d, (110, 280), q['title'], fit(d, q['title'], 'display', 60, W - 220, 40), INK)
     items = q['items']
-    top, bottom = 330, 1170
+    top, bottom = 330, 1130
     rh = (bottom - top) / len(items)
     for i, it in enumerate(items):
         y0 = top + i * rh
@@ -103,11 +105,103 @@ def render(q, out):
             fq = fit(d, '← ' + quip, 'medium', 30, mx, 20)
             if tw(d, '← ' + quip, fq) <= mx:
                 text(d, (px, y + 18), '← ' + quip, fq, SUB)
-    text(d, (110, 1240), q['footer'], fit(d, q['footer'], 'medium', 34, W - 220, 24), MUTED)
+    text(d, (110, 1240), q['footer'], fit(d, q['footer'], 'medium', 34, FOOT_W, 22), MUTED)
+    draw_saifu(im)
+    im.save(out, optimize=True)
+
+
+FOOT_W = 700  # 下の一言の最大幅（右下の財布欠席くんに重ならない）
+
+# ───────── 財布欠席くん（ルイのオリジナル）─────────
+# いつも同じ形・色・大きさ・位置（横幅の約14%、カードの右下の隅）。供養投稿だけ札が「見送り」になり、線香が付く
+SAIFU_W, SAIFU_H = 150, 140
+SAIFU_XY = (W - 60 - 18 - SAIFU_W, H - 60 - 12 - SAIFU_H)
+S_BODY, S_EDGE, S_FLAP, S_IN = '#a0632e', '#5b3415', '#8a5226', '#f4e6d3'
+
+
+def draw_saifu(im, variant='kesseki'):
+    k = 4  # 4倍で描いて縮小（線をなめらかに）
+    c = Image.new('RGBA', (SAIFU_W * k, SAIFU_H * k), (0, 0, 0, 0))
+    d = ImageDraw.Draw(c)
+
+    def P(*xy):
+        return [v * k for v in xy]
+    miokuri = variant == 'miokuri'
+    # 線香（供養のときだけ）：細い棒と煙の曲線1本
+    if miokuri:
+        d.rectangle(P(30, 92, 33, 132), fill='#6b4f2a')
+        d.ellipse(P(28.5, 89, 34.5, 95), fill='#d9481c')
+        pts = [(31.5 + 4 * __import__('math').sin(t / 3.0), 88 - t) for t in range(0, 30)]
+        d.line([(x * k, y * k) for x, y in pts], fill='#9a9a9a', width=2 * k, joint='curve')
+    # 腕と札
+    sx0, sx1 = (2, 74) if miokuri else (6, 62)
+    d.line(P(66, 96, (sx0 + sx1) / 2 + 6, 50), fill=S_EDGE, width=3 * k)
+    d.rounded_rectangle(P(sx0, 16, sx1, 52), radius=4 * k, fill='#ffffff', outline=S_EDGE, width=3 * k)
+    label = '見送り' if miokuri else '欠席'
+    f = font('bold', (18 if miokuri else 21) * k)
+    d.text(((sx0 + sx1) / 2 * k, 34 * k), label, font=f, fill='#221a2b', anchor='mm')
+    # 財布のふた（少し開いて、中は空っぽ＝薄い色だけ）
+    d.polygon(P(66, 70, 144, 70, 137, 50, 73, 50), fill=S_FLAP, outline=S_EDGE)
+    d.line(P(66, 70, 73, 50, 137, 50, 144, 70), fill=S_EDGE, width=3 * k)
+    d.polygon(P(70, 70, 140, 70, 135, 58, 75, 58), fill=S_IN)
+    # 体（角の丸い長方形・ふちに濃い茶色の線）
+    d.rounded_rectangle(P(62, 68, 148, 134), radius=12 * k, fill=S_BODY, outline=S_EDGE, width=3 * k)
+    # 目（白目に黒い点）と、への字の口
+    for ex in (90, 120):
+        d.ellipse(P(ex - 8, 86, ex + 8, 102), fill='#ffffff', outline=S_EDGE, width=2 * k)
+        d.ellipse(P(ex - 3.5, 91, ex + 3.5, 98), fill='#111111')
+    d.line(P(97, 120, 105, 113, 113, 120), fill=S_EDGE, width=3 * k, joint='curve')
+    c = c.resize((SAIFU_W, SAIFU_H), Image.LANCZOS)
+    im.paste(c, SAIFU_XY, c)
+
+
+def render_single(q, out):
+    """商品1件の形（朝の会話・発見型・逆レビュー・供養など）。"""
+    im = Image.new('RGB', (W, H), '#fdf1e2')
+    d = ImageDraw.Draw(im)
+    d.rounded_rectangle((60, 60, W - 60, H - 60), 48, fill='#ffffff')
+    fb = font('bold', 38)
+    t = '【PR】楽天ROOM'
+    bw = int(tw(d, t, fb)) + 64
+    d.rounded_rectangle((110, 110, 110 + bw, 180), 35, fill=ACC)
+    text(d, (142, 147), t, fb, '#ffffff', 'lm')
+    text(d, (W - 110, 155), '※価格は投稿時点のものです', font('medium', 28), SUB, 'rs')
+    text(d, (110, 290), q['title'], fit(d, q['title'], 'display', 72, W - 220, 40), INK)
+    d.line((110, 330, W - 110, 330), fill=LINE, width=3)
+    it = q['items'][0]
+    y = 420
+    fh = font('bold', 50)
+    for l in wrap(d, it.get('hook') or it['name'], fh, W - 220, 3):
+        text(d, (110, y), l, fh, INK)
+        y += 66
+    fn = font('medium', 30)
+    if it.get('hook'):
+        for l in wrap(d, it['name'], fn, W - 220, 2):
+            text(d, (110, y + 4), l, fn, MUTED)
+            y += 42
+    y += 96
+    price = str(it.get('price', ''))
+    text(d, (110, y), price, fit(d, price, 'display', 84, W - 220, 50), ACC)
+    y += 70
+    if it.get('quip'):
+        fq = fit(d, it['quip'], 'medium', 36, W - 220, 24)
+        text(d, (110, y), it['quip'], fq, SUB)
+        y += 40
+    pts = [p for p in it.get('points', []) if p][:3]
+    if pts:
+        y += 30
+        box_h = 40 + 62 * len(pts)
+        d.rounded_rectangle((110, y, W - 110, y + box_h), 28, fill='#fbf3ea')
+        fp = font('bold', 38)
+        for i, p in enumerate(pts):
+            s = '・' + p
+            text(d, (150, y + 70 + 62 * i), s, fit(d, s, 'bold', 38, W - 300, 24), INK)
+    text(d, (110, 1240), q['footer'], fit(d, q['footer'], 'medium', 34, FOOT_W, 22), MUTED)
+    draw_saifu(im, 'miokuri' if q.get('form') == 'kuyou' else 'kesseki')
     im.save(out, optimize=True)
 
 
 if __name__ == '__main__':
     q = json.load(open(sys.argv[1], encoding='utf-8'))
-    render(q, sys.argv[2])
+    (render_single if q.get('kind') == 'single' else render)(q, sys.argv[2])
     print(sys.argv[2])

@@ -59,6 +59,11 @@ def main():
         b = max(BUCKETS, key=lambda x: sum(samples[x]) / len(samples[x]))
     # 古すぎる投稿は publish.py が見送るので、用意から2時間半を超えないようにする
     left = 150 * 60 - (datetime.now(JST) - made_at(qid)).total_seconds()
+    if slot == 'late':
+        # 深夜のつぶやきは 0:30 までに出す
+        m = made_at(qid)
+        end = (m + timedelta(days=1 if m.hour >= 12 else 0)).replace(hour=0, minute=30, second=0)
+        left = min(left, (end - datetime.now(JST)).total_seconds())
     sec = int(min(b * 60 + random.randint(0, 1199), max(left, 0)))
     print(f'::notice::{slot} は {b}〜{b + 20}分の枠で投稿（{sec // 60}分待つ）', flush=True)
     print(sec)

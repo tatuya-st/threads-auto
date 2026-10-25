@@ -2,7 +2,7 @@
 """投稿ノートのデータから、Threads のまとめ投稿（3件・画像つき）を1本作って queue/ に置く。
 
 使い方:
-  python3 tools/build_queue.py --html <投稿ノートの保存HTML> --posts <posts を保存したフォルダ> --repo <このリポジトリ> --slot morning|noon|night
+  python3 tools/build_queue.py --html <投稿ノートの保存HTML> --posts <posts を保存したフォルダ> --repo <このリポジトリ> --slot morning|noon|night|late [--form 形]
 
 - ROOM に投稿済み（posts）の商品から選ぶ。Threads に一度出した商品（state/sent.json）は二度と選ばない。
 - 投稿ノートの「まとめてThreadsへ」と同じ考え方：ROOMで反応が確かめられた商品 → 1万円以下のガジェット・家電 → 1万円以下 → 3万円以下 → それ以外。
@@ -186,6 +186,12 @@ TALKS = [
     'ネットで買い物するとき、送料無料じゃないと急に冷める現象、わかる人いますか？📦',
     '朝のコーヒー派？お茶派？\nちなみに私はその日の気分です☕',
     '寝る前のスマホ、やめなきゃと思いながら今日も見てます🌙\n同じ人いますか？',
+    # 10/25 方針(2)：ROOMを実際にやっている人が共感する本人の実体験（事実だけ）
+    '楽天ROOM、一度凍結されてから再開しました📦\n同じ経験ある方いますか？再開してから気をつけてること、情報交換したいです',
+    '楽天ROOMって、いいねは付くのに売れない問題ありません？🤔\nROOMやってる方、「買いたい人」にどうやって届けてますか？',
+    'ROOMで意外だったこと。\n派手な新商品より、詰め替えや定番の消耗品がおすすめに乗りました🧴\nみなさんは何がおすすめに乗りました？',
+    '楽天ROOMの投稿、毎日の流れを決めてコツコツ続けてます📱\nROOMやってる方、1日のルーティンありますか？',
+    'ガジェット好きとして聞きたいです🔌\nここ1年で「これは買ってよかった」ガジェット、ひとつだけ挙げるなら何ですか？',
 ]
 
 
@@ -209,7 +215,7 @@ def followers(repo):
 
 
 TALK_KEYS = ['充電', 'ケーブル', '寒い', '暖房', '詰め替え', '買い忘れ', 'イヤホン', 'iPhone', '神社', 'お守り', 'ラーメン', 'カート',
-             'マラソン', '布団', '加湿器', 'レビュー', '家電', 'コーヒー', 'スマホ', '旅']
+             'マラソン', '布団', '加湿器', 'レビュー', '家電', 'コーヒー', 'スマホ', '旅', '凍結', 'おすすめに乗', 'ルーティン', 'ガジェット']
 
 
 def talk(repo):
@@ -240,23 +246,15 @@ def talk(repo):
     json.dump(used, open(used_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     stamp = datetime.now(JST)
     qid = stamp.strftime('%Y%m%d-%H%M') + '-noon'
-    q = {'id': qid, 'slot': 'noon', 'kind': 'talk', 'created': stamp.isoformat(timespec='minutes'), 'text': text, 'items': []}
+    q = {'id': qid, 'slot': 'noon', 'form': 'talk', 'kind': 'talk', 'created': stamp.isoformat(timespec='minutes'), 'text': text, 'items': []}
     os.makedirs(os.path.join(repo, 'queue'), exist_ok=True)
     with open(os.path.join(repo, 'queue', qid + '.json'), 'w', encoding='utf-8') as f:
         json.dump(q, f, ensure_ascii=False, indent=1)
     print(f'{qid} 会話投稿')
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument('--html', required=True)
-    ap.add_argument('--posts', required=True)
-    ap.add_argument('--repo', required=True)
-    ap.add_argument('--slot', choices=['morning', 'noon', 'night'], default='night')
-    a = ap.parse_args()
-    if a.slot == 'noon':
-        return talk(a.repo)
-
+def gather(a):
+    """ROOMに投稿済みで、まだThreadsに出していない商品を、選ぶ順に並べて返す。"""
     room = load_room(a.html)
     by_code = {}
     for g in room.get('genres', []):
@@ -300,8 +298,14 @@ def main():
         it['_c'] = c
         cands.append((sc, -likes, -it['_t'], it))
     cands.sort(key=lambda x: x[:3])
+    return [c[-1] for c in cands]
+
+
+def summary(a, cands):
+    """夜（と、以前の朝）の「3件まとめ」投稿。"""
+    now = time.time() * 1000
     items, seen = [], set()
-    for *_, it in cands:
+    for it in cands:
         k = norm(it['name'])
         if k in seen:
             continue
@@ -320,7 +324,7 @@ def main():
         return
 
     n = len(items)
-    dn = int(now // 864e5) * 3 + ['morning', 'noon', 'night'].index(a.slot)
+    dn = int(now // 864e5) * 3 + SLOTS.index(a.slot)
     th = theme_of(items)
     # 切り口（時短・コスパ・見た目・口コミ）は合う商品が多いものから、前回と同じにならないよう日替わりで
     last_ax = ''
@@ -381,7 +385,7 @@ def main():
     stamp = datetime.now(JST)
     qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot
     q = {
-        'id': qid, 'slot': a.slot, 'created': stamp.isoformat(timespec='minutes'),
+        'id': qid, 'slot': a.slot, 'form': 'summary', 'created': stamp.isoformat(timespec='minutes'),
         'title': title, 'footer': footer, 'axis': ax, 'theme': th, 'topic': topic, 'text': text,
         'reply': f"▼楽天ROOMはこちら\n{link}",
         'items': [{'itemcode': it['itemcode'], 'name': it['name'], 'hook': it.get('hook', ''), 'price': it.get('price', ''), 'quip': it.get('quip', '')} for it in items],
@@ -390,6 +394,313 @@ def main():
     with open(os.path.join(a.repo, 'queue', qid + '.json'), 'w', encoding='utf-8') as f:
         json.dump(q, f, ensure_ascii=False, indent=1)
     print(f'{qid} {n}件')
+
+
+# ───────── 形（ネタ帳）─────────
+# 時間帯ごとに使える形。BASE_FORMS はその時間帯の基本形で「3日以内に繰り返さない」の対象外
+SLOTS = ['morning', 'noon', 'night', 'late']
+FORMS = {
+    'morning': ['basic', 'discover', 'n1', 'n5', 'n2'],
+    'noon': ['talk', 'n2'],
+    'night': ['summary', 'kuyou'],
+    'late': ['n15'],
+}
+ALL_FORMS = {f for v in FORMS.values() for f in v}
+BASE_FORMS = {'basic', 'talk', 'summary', 'n15'}
+OLD_FORM = {'morning': 'summary', 'noon': 'talk', 'night': 'summary', 'late': 'n15'}  # form が無い昔の投稿
+PR_LINE = '※PR：返信に楽天ROOMのリンクがあります'
+
+# 商品の「種類」。本文には商品名を出さず、この種類で書く（並びは細かいものから）
+TYPES = [
+    (r'ロボット掃除機|ルンバ|Roomba|DEEBOT', 'ロボット掃除機', 0), (r'水拭き', '水拭きクリーナー', 0),
+    (r'掃除機|クリーナー', 'コードレス掃除機', 0), (r'イヤホン|イヤフォン', 'ワイヤレスイヤホン', 1),
+    (r'ヘッドホン|ヘッドフォン', 'ヘッドホン', 1), (r'スピーカー', 'スピーカー', 1), (r'マイク', 'ワイヤレスマイク', 1),
+    (r'スマートウォッチ|WATCH|GPSウォッチ|vivoactive', 'スマートウォッチ', 1), (r'モバイルバッテリー', 'モバイルバッテリー', 1),
+    (r'充電器', '充電器', 1), (r'ケーブル', '充電ケーブル', 1), (r'スマホケース|iFace|iPhone.{0,12}ケース', 'スマホケース', 1),
+    (r'タブレット', 'タブレット', 1), (r'ミラーレス|一眼|カメラ', 'カメラ', 1), (r'プロジェクター', 'プロジェクター', 0),
+    (r'SIMフリー|スマホ|iPhone|Pixel', 'スマホ', 1), (r'加湿器', '加湿器', 0), (r'除湿機', '除湿機', 0),
+    (r'空気清浄', '空気清浄機', 0), (r'ドライヤー', 'ドライヤー', 0), (r'電気毛布', '電気毛布', 0), (r'こたつ', 'こたつ', 0),
+    (r'ヒーター|ストーブ', 'ヒーター', 0), (r'ケトル', '電気ケトル', 0), (r'炊飯器', '炊飯器', 0), (r'フライパン', 'フライパン', 0),
+    (r'ハンディガン', 'ハンディガン', 1), (r'ルーター', 'Wi-Fiルーター', 0), (r'キーボード', 'キーボード', 1), (r'マウス', 'マウス', 1),
+    (r'モニター', 'モニター', 0), (r'コンポ', 'コンポ', 0), (r'タオル', 'タオル', 0), (r'観葉植物|鉢植え|\d号鉢', '観葉植物', 0),
+    (r'化粧水|ローション', '化粧水', 0), (r'美容液', '美容液', 0),
+]
+SPEC_RE = re.compile(r'IP[X\d]\d|Bluetooth\s*\d|\d+(?:\.\d+)?\s*(?:時間|畳|mm|cm|インチ|W|mAh|GB|TB|℃|ml|mL|L|kg|g|色|段階|台|枚|個|Hz|dB|万画素|号)')
+NOT_SPEC = re.compile(r'円|レビュー|件|★|送料|発送|お届け|ポイント|OFF|位|保証|公式|正規|予約|出荷|年')
+
+
+def type_of(it):
+    for rx, label, portable in TYPES:
+        if re.search(rx, it.get('name', '')):
+            return label, portable
+    return None, 0
+
+
+def spec_facts(it):
+    """数字の入った事実（投稿ノートの points と商品名から）。最大2つ。"""
+    out = []
+    for p in it.get('points', []):
+        if SPEC_RE.search(p) and not NOT_SPEC.search(p):
+            out.append(clip(p.strip(), 26))
+    if len(out) < 2:
+        for seg in re.split(r'[\s　【】\[\]（）()/／]+', it.get('name', '')):
+            if 2 <= len(seg) <= 16 and SPEC_RE.search(seg) and not NOT_SPEC.search(seg) and seg not in ' '.join(out):
+                out.append(seg)
+    return out[:2]
+
+
+def free_ship(it):
+    return '送料無料' in ' '.join(it.get('points', []) + it.get('badges', []) + [it.get('desc', '')])
+
+
+# 朝の基本形：会話の書き出し＋問いかけ（本文に商品名は出さない）。商品は返信に1件
+BASIC_OPEN = {
+    'gadget': ['ガジェット好きあるある。\n箱を開ける前に、スペック表をもう一回読み直す。\nみなさんは開封の儀、じっくり派？即開け派？📦',
+               'ガジェットの保護フィルム、気泡ゼロで貼れた日は一日中機嫌がいいです📱\nみなさんは自分で貼る派？お店で貼ってもらう派？',
+               'ガジェット選びで最後の決め手になるの、スペック？見た目？\n私はだいたい「充電端子が何か」で決まります🔌',
+               'ガジェット好きの朝は、まず全部の充電残量チェックから🔋\nみなさんの朝イチの儀式、何ですか？'],
+    'kaden': ['家電って、買う前はスペック表を毎日眺めるのに、届いたら説明書は読まない不思議。\nみなさんは説明書読む派？読まない派？📖',
+              '家電の「型落ち」と「最新」、毎回ここで30分迷います。\nみなさんはどっち派ですか？🔌',
+              '一番「買ってよかった」家電、ひとつだけ挙げるなら何ですか？\nみなさんの答えを参考にさせてください🙏',
+              '家電の箱って、なぜか捨てられずに押し入れに積んでしまう。\nみなさんは箱、取っておく派？すぐ捨てる派？📦'],
+    'beauty': ['朝の支度、何分でできますか？\n5分のつもりが、毎回15分かかってます⏰',
+               '季節の変わり目、スキンケアを変える派？ずっと同じ派？\nガジェット好きなのに、ここだけは保守派です',
+               '洗面台に並ぶボトル、気づいたら増えてません？\nみなさんの家、何本ありますか？🧴'],
+    'life': ['「これ、もっと早く買えばよかった」って思った日用品、ありますか？\nみなさんの当たりを知りたいです👇',
+             '休みの日の朝、最初にやること何ですか？\nとりあえず楽天のカートを確認してしまいます🛒',
+             '家の中で「ここだけは整えたい」場所、どこですか？\n充電コーナーだけは死守してます🔌'],
+}
+BASIC_TAIL = ['今朝の1品は返信に置いておきます👇', '今日の1品、返信にそっと置いておきます👇', '気になる1品を返信に置いておきますね👇']
+
+# 発見型（10/25 本人提案）：書き出し・ツッコミ・二択はそれぞれ8個以上
+DISC_SCENE = [  # (場面, 持ち歩く物だけか, 二択)
+    ('通勤にも在宅にも', 1, 'みんなは出社派？在宅派？'),
+    ('キャンプにも部屋にも', 1, 'みんなはアウトドア派？インドア派？'),
+    ('旅行にも近所のカフェにも', 1, '休みの日は遠出派？近場派？'),
+    ('ジムにも散歩にも', 1, '体を動かすならジム派？外を歩く派？'),
+    ('出張にも帰省にも', 1, '移動中は寝る派？起きてる派？'),
+    ('朝のランニングにも夜の散歩にも', 1, '体を動かすなら朝派？夜派？'),
+    ('平日にも休日にも', 0, '平日にがんばる派？休日に本気出す派？'),
+    ('朝にも夜にも', 0, 'みんなは朝型？夜型？'),
+    ('リビングにも寝室にも', 0, '家で一番長くいるの、リビング派？寝室派？'),
+    ('ひとり時間にも家族時間にも', 0, 'ひとり時間がほしい派？みんなでわいわい派？'),
+    ('仕事の日にもだらだらの日にも', 0, 'オンオフの切り替え、得意派？苦手派？'),
+    ('自分用にもプレゼントにも', 0, '買うなら自分用派？贈り物派？'),
+]
+DISC_OPEN = ['{scene}{verb}{type}、見つけてしまった…。', '見つけてしまった…。{scene}{verb}{type}。',
+             '楽天パトロール中、{scene}{verb}{type}を見つけてしまった…。', '朝から{scene}{verb}{type}を見つけてしまった…。今日の集中力、ここで使い切りそう。',
+             '{scene}{verb}{type}、見つけてしまいました…（小声）', 'ちょっと聞いてください。{scene}{verb}{type}、見つけてしまった…。',
+             '見なかったことにしたい。でも見つけてしまった。{scene}{verb}{type}。', '{type}を探してたわけじゃないのに、{scene}{verb}一品を見つけてしまった…。']
+DISC_TSUKKOMI = ['{spec}って、物欲会議が開会してしまう。', '{spec}…財布欠席くんが耳をふさいでる。', '{spec}と聞いて、ガジェット好きの血が騒いでいる。',
+                 '{spec}。この数字だけでごはんが進む。', '{spec}って書いてあるだけで、スペック表を3回読み返した。', '{spec}…ガジェット好きには、この数字がごちそう。',
+                 '{spec}って、カートの前で腕組みが止まらない。', '{spec}って、それはもう反則では。']
+
+# N1「買ってないのに詳しい」選手権
+N1_OPEN = ['{type}について、語らせてください。', '今日のお題は{type}です。', '{type}の話になると、急に早口になります。', '聞かれてないけど、{type}を語ります。',
+           '本日のエントリーは{type}。', '{type}のことなら、持ち主より詳しいかもしれません。', '{type}、スペック表なら暗記しました。', '{type}について、持ってる人のふりをして語ります。']
+N1_CLOSE = ['これはもう、実質持ってる。', '語れば語るほど欲しくなる仕組み、誰か止めて。', 'ここまで詳しいなら、もう買ってもいい気がしてきた。', '…と語り終わった今、カートが温まってきました。',
+            '我ながら完璧なプレゼンでした。', '持ち主の方、答え合わせお願いします。', '熱量だけなら持ち主に負けません。', '財布欠席くん、今の聞いてた？']
+N1_ASK = ['持ってる人、答え合わせお願いします👇', 'みなさんの「買ってないのに詳しいもの」も教えてください👇', 'あなたが買ってないのに語れるもの、何ですか？👇', '持ってる人の本音、こっそり教えてください👇',
+          '同じく「買う前に詳しくなる派」の人、いますか？👇', '詳しくなるだけで満足しちゃう派、いますか？👇', 'あなたなら、ここまで調べたら買いますか？👇', '次に語ってほしいジャンル、リプで募集中👇']
+
+# N5 逆レビュー
+N5_HEAD = ['【逆レビュー】{type}', '【辛口レビュー（のつもり）】{type}', '【逆レビュー】{type}、正直に言います', '【逆レビュー】{type}の悪いところ',
+           '【本音レビュー】{type}', '【逆レビュー】{type}、心を鬼にして', '【逆レビュー】{type}、厳しめに', '【逆レビュー】{type}に物申す']
+N5_BAD = ['悪いところ：買う理由が多すぎる。', '悪いところ：断る理由が見つからない。', '悪いところ：スペック表を読むと欲しくなる。', '悪いところ：見れば見るほど欠点が見つからない。',
+          '悪いところ：財布欠席くんの立場がない。', '悪いところ：迷う時間が長くなる。', '悪いところ：数字を見ると冷静でいられない。', '悪いところ：他の候補がかすむ。']
+N5_ASK = ['あなたの「悪いところが見つからないもの」、教えてください👇', '逆レビューしてほしい物、リプで募集中👇', '持ってる人、本当の悪いところ教えてください👇', 'あなたなら、どこにツッコみますか？👇',
+          '最近「欠点が見つからない」と思った物、ありますか？👇', 'これ以上の悪いところ、思いつく人いますか？👇', 'みなさんの辛口レビュー、待ってます👇', '次に逆レビューしてほしいジャンル、教えてください👇']
+
+# N2 擬人化の会話劇（商品×財布欠席くん）。商品のセリフは事実のスペックだけ
+N2_PROD = ['俺、{f}やで', 'ちなみに{f}です', '{f}、知ってた？', '聞いて。{f}なんよ', '{f}って、すごない？', 'ほな言わせてもらうけど、{f}', 'もう一回言うで。{f}', '{f}、これが実力です']
+N2_WALLET = ['聞こえません', '本日は欠席です', 'その話、また今度で', '耳をふさいでます', '中身がありません', '…（ふたを閉じる音）', '検討します（しない）', '心が揺れてるけど欠席です']
+N2_ASK = ['この勝負、どっちの勝ちですか？👇', 'あなたの財布はどっち派？👇', '財布、そろそろ負けそうです。みなさんの財布は？👇', '次は何と財布を戦わせますか？👇',
+          '財布が一番弱くなる時間帯、いつですか？👇', 'あなたの家の財布、出席率どれくらいですか？👇', '財布欠席くんに一言お願いします👇', 'あなたなら、どっちの味方をしますか？👇']
+
+# 供養投稿（10/25 本人提案）。語り手は財布欠席くん。商品をけなさない・買わないことを強く勧めない
+KU_OPEN = ['🕯 本日の供養', '🕯 本日の見送り報告', '🕯 今日の供養コーナー', '🕯 本日、見送られた物', '🕯 今夜の供養', '🕯 見送り速報', '🕯 本日の供養（財布欠席くん調べ）', '🕯 今日も見送りました']
+KU_SERIF = ['今日は欠席です。見送りましょう', 'カートの前まで来ましたね。今日はここまでです', 'いい物なのは知ってます。でも今日は欠席で', '中身がないので、今日は見送りです',
+            '心は出席、体は欠席です', '見送るのも、立派な判断です', 'また会える日まで、そっとカートに', '今日はお気持ちだけ受け取ります']
+KU_PRAISE = ['見送ったあなたも、えらい。', '見送れた人、今日いちばんえらい。', '見るだけで済ませたあなた、立派です。', '今日も耐えた。それだけで100点。',
+             '見送り、それもまた愛。', 'ポチらなかった指に、拍手。', '欲しい気持ちは本物。見送った判断も本物。', '迷えるのは、良い物を知っている証拠。']
+KU_ASK = ['今週の見送り報告、待ってます👇', 'あなたが最近見送った物、教えてください👇', '今日見送った物、ここで供養していきませんか？👇', '見送り仲間、リプで集まりましょう🕯',
+          'みなさんの「えらかった見送り」、聞かせてください👇', '最近いちばん悩んで見送った物、何ですか？👇', '見送ったけど、まだ気になってる物ありますか？👇', '今月の見送り記録、更新した人いますか？👇']
+
+# N15 深夜の物欲つぶやき（2〜4行・商品名やリンクなし・画像なし）
+N15 = ['夜の楽天は、\n昼の私とは別人が見ている。\n朝の私、先に謝っておきます。', '「見るだけ」と言って開いたアプリ、\n閉じ方を忘れました。',
+       '理性はもう寝ました。\n起きているのは物欲だけです。', 'カートの中身が増えるたび、\n財布欠席くんの目が遠くなる。', '夜のスペック表は、\nなぜかいつもより輝いて見える。',
+       'お気に入り登録は無料。\nそう言い聞かせて、今夜も増えていく。', 'ポチる前に寝る。\nそれが今夜の唯一の目標です。', '夜は判断力が下がるらしい。\nだからカートに入れるだけにしておく。\n…入れるだけ。',
+       '財布「もう寝なよ」\n私「あと1ページだけ」', '明日の私へ。\nカートの中身は、夜の私が勝手にやりました。', '物欲にも、\n消灯時間がほしい。', 'おやすみなさい。\nカートは開けっぱなしで寝ます。']
+
+TITLES = {'basic': '今朝の1品', 'discover': '見つけてしまった…', 'n1': '買ってないのに詳しい選手権', 'n5': '逆レビュー', 'n2': '財布欠席くんとの攻防', 'kuyou': '本日の供養'}
+
+
+def form_history(repo):
+    """これまでの投稿の (id, 形, 閲覧数)。"""
+    views = {}
+    for name in ('insights_log.json', 'insights.json'):
+        p = os.path.join(repo, 'state', name)
+        if not os.path.exists(p):
+            continue
+        try:
+            d = json.load(open(p, encoding='utf-8'))
+        except Exception:
+            continue
+        days = [d] if name == 'insights.json' else [d[k] for k in sorted(d)]
+        for day in days:
+            for pid, m in (day.get('posts') or {}).items():
+                if isinstance(m.get('views'), (int, float)):
+                    views[pid] = m['views']
+    out = []
+    for f in sorted(glob.glob(os.path.join(repo, 'queue', '*.json'))):
+        qid = os.path.splitext(os.path.basename(f))[0]
+        try:
+            q = json.load(open(f, encoding='utf-8'))
+        except Exception:
+            continue
+        out.append((qid, q.get('form') or OLD_FORM.get(q.get('slot') or qid.rsplit('-', 1)[-1], ''), views.get(qid)))
+    return out
+
+
+def choose_form(repo, slot, feasible, seed):
+    """3日以内に使っていない形から、反応（閲覧数）が良かった形を少し多めに選ぶ。まだ試していない形も試す。"""
+    import random
+    hist = form_history(repo)
+    since = (datetime.now(JST) - timedelta(days=2)).strftime('%Y%m%d')
+    recent = {fm for qid, fm, _ in hist if qid[:8] >= since}
+    opts = [f for f in FORMS[slot] if f in feasible and (f in BASE_FORMS or f not in recent)]
+    if not opts:
+        opts = [f for f in FORMS[slot] if f in feasible and f in BASE_FORMS] or [f for f in FORMS[slot] if f in feasible]
+    if not opts:
+        return None
+    vs = {}
+    for _, fm, v in hist:
+        if v is not None:
+            vs.setdefault(fm, []).append(v)
+    avg = {k: sum(v) / len(v) for k, v in vs.items()}
+    top = max(avg.values()) if avg else 50
+    w = [(avg[f] if f in avg else top) + 15 for f in opts]
+    return random.Random(seed).choices(opts, w)[0]
+
+
+def single_ok(it, form):
+    t, _ = type_of(it)
+    if not t:
+        return False
+    facts = spec_facts(it)
+    if form == 'kuyou':
+        return len(facts) >= 1
+    if form in ('discover', 'n1', 'n5', 'n2'):
+        return len(facts) >= 1 and cat_of(it, it.get('_gid', '')) != 'beauty'
+    return True
+
+
+def write_q(a, q, note):
+    os.makedirs(os.path.join(a.repo, 'queue'), exist_ok=True)
+    with open(os.path.join(a.repo, 'queue', q['id'] + '.json'), 'w', encoding='utf-8') as f:
+        json.dump(q, f, ensure_ascii=False, indent=1)
+    print(f"{q['id']} {note}")
+
+
+def rotate(repo, pool, seed):
+    """pool から、まだ使っていない文を選ぶ（state/talk.json に記録。全部使ったらその pool だけやり直す）。"""
+    used_p = os.path.join(repo, 'state', 'talk.json')
+    used = json.load(open(used_p, encoding='utf-8')) if os.path.exists(used_p) else []
+    left = [t for t in pool if t not in used]
+    if not left:
+        used = [t for t in used if t not in pool]
+        left = pool[:]
+    text = left[seed % len(left)]
+    used.append(text)
+    os.makedirs(os.path.dirname(used_p), exist_ok=True)
+    json.dump(used, open(used_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    return text
+
+
+def late(a):
+    stamp = datetime.now(JST)
+    text = rotate(a.repo, N15, h31(stamp.strftime('%Y%m%d') + 'late'))
+    qid = stamp.strftime('%Y%m%d-%H%M') + '-late'
+    write_q(a, {'id': qid, 'slot': 'late', 'form': 'n15', 'kind': 'talk', 'created': stamp.isoformat(timespec='minutes'), 'text': text, 'items': []}, '深夜のつぶやき')
+
+
+def single(a, form, it):
+    """商品1件を使う形（本文に商品名は出さない。商品は返信に1件だけリンク付きで）。"""
+    stamp = datetime.now(JST)
+    seed = h31(stamp.strftime('%Y%m%d') + a.slot + form)
+    recent = recent_texts(a.repo)
+    t, portable = type_of(it)
+    facts = spec_facts(it)
+    price = it.get('price', '')
+
+    def pf(arr, k):
+        return pick_fresh(arr, seed * 7 + k, recent)
+
+    if form == 'basic':
+        text = pf(BASIC_OPEN[cat_of(it, it.get('_gid', ''))], 1) + '\n\n' + pf(BASIC_TAIL, 2)
+    elif form == 'discover':
+        sc = [s for s in DISC_SCENE if s[1] == portable]  # 持ち歩く物は外の場面、置く物は家の場面
+        scene = pick_fresh([s[0] for s in sc], seed, recent)
+        ask = next(s[2] for s in sc if s[0] == scene)
+        verb = '連れていきたい' if portable else '置きたい' if t not in ('コードレス掃除機', 'ロボット掃除機', '水拭きクリーナー', 'ドライヤー') else '使いたい'
+        op = pf(DISC_OPEN, 1).format(scene=scene, verb=verb, type=t)
+        text = op + '\n' + pf(DISC_TSUKKOMI, 2).format(spec='、'.join(facts)) + '\n' + ask
+    elif form == 'n1':
+        rows = '\n'.join('・' + x for x in facts + ([price] if price else []))
+        text = '【買ってないのに詳しい選手権】\n' + pf(N1_OPEN, 1).format(type=t) + '\n' + rows + '\n' + pf(N1_CLOSE, 2) + '\n※まだ買ってません\n\n' + pf(N1_ASK, 3)
+    elif form == 'n5':
+        rows = '\n'.join('・' + x for x in facts + ([price + ('・送料無料' if free_ship(it) else '')] if price else []))
+        text = pf(N5_HEAD, 1).format(type=t) + '\n' + pf(N5_BAD, 2) + '\n理由：\n' + rows + '\n以上。\n\n' + pf(N5_ASK, 3)
+    elif form == 'n2':
+        f2 = facts[1] if len(facts) > 1 else (price if price else facts[0])
+        p1, p2 = pick(N2_PROD, seed), pick(N2_PROD, seed + 3)
+        w1, w2 = pick(N2_WALLET, seed), pick(N2_WALLET, seed + 5)
+        text = (f'【{t}と財布欠席くん】\n{t}「{p1.format(f=facts[0])}」\n財布「{w1}」\n{t}「{p2.format(f=f2)}」\n財布「{w2}」\n\n' + pf(N2_ASK, 3))
+    elif form == 'kuyou':
+        text = (f'{pf(KU_OPEN, 1)}：{t}（{facts[0]}）。\n財布欠席くん「{pf(KU_SERIF, 2)}」\n{pf(KU_PRAISE, 3)}\n\n{pf(KU_ASK, 4)}')
+    text = clip(text + '\n\n' + PR_LINE, 490)
+    reply = f"【PR】今日の1品はこちら👇\n{it['name']}\n{price}{'・送料無料' if free_ship(it) else ''}\n楽天ROOM：{ROOM_URL}"
+    qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot
+    title = TITLES.get(form, '今日の1品')
+    q = {'id': qid, 'slot': a.slot, 'form': form, 'kind': 'talk' if a.slot == 'noon' else 'single', 'created': stamp.isoformat(timespec='minutes'),
+         'title': title, 'footer': pick(FOOTERS, seed), 'topic': 'ガジェット' if cat_of(it, it.get('_gid', '')) in ('gadget', 'kaden') else '楽天ROOM',
+         'text': text, 'reply': reply,
+         'items': [{'itemcode': it['itemcode'], 'name': it['name'], 'hook': it.get('hook', ''), 'price': price, 'quip': it.get('quip', ''), 'points': facts}]}
+    write_q(a, q, f'{form} 1件')
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--html', required=True)
+    ap.add_argument('--posts', required=True)
+    ap.add_argument('--repo', required=True)
+    ap.add_argument('--slot', choices=SLOTS, default='night')
+    ap.add_argument('--form', choices=sorted(ALL_FORMS), default=None, help='形を指定（使えないときは自動で選ぶ）')
+    a = ap.parse_args()
+    if a.slot == 'late':
+        return late(a)
+    has_data = os.path.isfile(a.html) and os.path.getsize(a.html) > 0
+    cands = gather(a) if has_data else []
+    singles = [it for it in cands if it.get('quip') and 'やつ' not in it.get('quip', '')]
+    feasible = {'talk'} if a.slot == 'noon' else set()
+    if len(singles) >= 2:
+        feasible.add('summary')
+    if singles:
+        feasible.add('basic')
+    for fm in ('discover', 'n1', 'n5', 'n2', 'kuyou'):
+        if any(single_ok(it, fm) for it in singles):
+            feasible.add(fm)
+    seed = h31(datetime.now(JST).strftime('%Y%m%d') + a.slot)
+    form = a.form if (a.form in FORMS[a.slot] and a.form in feasible) else choose_form(a.repo, a.slot, feasible, seed)
+    if not form:
+        print('なし')
+        return
+    if form == 'talk':
+        return talk(a.repo)
+    if form == 'summary':
+        return summary(a, cands)
+    it = next(x for x in singles if single_ok(x, form))
+    return single(a, form, it)
 
 
 if __name__ == '__main__':
