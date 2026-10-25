@@ -89,6 +89,7 @@ def token():
                 pass
             if decrypt() != tok:
                 encrypt(tok)
+        os.environ['TOKEN_SRC'] = src
         return tok, me
     _t = os.environ.get('THREADS_TOKEN', '').strip()
     print(f"::error::中身の形: 長さ{len(_t)} 先頭{_t[:2]!r} 英数字のみ={_t.isalnum()}")
@@ -290,6 +291,7 @@ WORDS = [('楽天ROOM', 'KEYWORD'), ('楽天ルーム', 'KEYWORD'), ('楽天ROOM
 
 def search():
     tok, me = token()
+    print(f"::notice::使ったトークン：{'GitHubに貼ったもの' if os.environ.get('TOKEN_SRC') == 'secret' else '保存済みの古いもの'}（長さ{len(tok)}）")
     mine = me.get('username')
     since = int((datetime.now(JST) - timedelta(days=3)).timestamp())
     found, seen, fails = [], set(), []

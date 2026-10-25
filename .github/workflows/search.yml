@@ -14,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: どの鍵が入っているか
+        run: echo "::notice::THREADS=${{ secrets.THREADS != '' }} THREADS_ACCESS_TOKEN=${{ secrets.THREADS_ACCESS_TOKEN != '' }} TOKEN=${{ secrets.TOKEN != '' }} THREADS_TOKEN=${{ secrets.THREADS_TOKEN != '' }}"
       - name: 伸びている投稿を集める
         env:
           THREADS_TOKEN: ${{ secrets.THREADS || secrets.THREADS_ACCESS_TOKEN || secrets.TOKEN || secrets.THREADS_TOKEN }}
