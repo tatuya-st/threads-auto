@@ -318,5 +318,21 @@ def search():
         print('::notice::検索の許可がまだ有効になっていません（threads_keyword_search）')
 
 
+def oauth():
+    """許可コード（CODE）からトークンを作って暗号化して保存する。スマホでトークン生成ツールが使えないとき用。"""
+    code, app = os.environ.get('CODE', '').strip().replace('#_', ''), os.environ.get('APP_ID', '').strip()
+    if not (code and app and SECRET):
+        raise SystemExit('コード・アプリID・鍵のどれかがありません')
+    r = call('POST', 'https://graph.threads.net/oauth/access_token', {'client_id': app, 'client_secret': SECRET, 'code': code,
+                                                                     'grant_type': 'authorization_code', 'redirect_uri': 'https://tatuya-st.github.io/threads-auto/callback.html'})
+    tok = r['access_token']
+    tok = call('GET', 'https://graph.threads.net/access_token', {'grant_type': 'th_exchange_token', 'client_secret': SECRET, 'access_token': tok})['access_token']
+    me = works(tok)
+    if not me:
+        raise SystemExit('作ったトークンが使えません')
+    encrypt(tok)
+    print(f"::notice::トークンを作り直しました（{me.get('username')}・60日有効、毎週自動で延長）")
+
+
 if __name__ == '__main__':
-    {'publish': publish, 'refresh': refresh, 'insights': insights, 'comments': comments, 'search': search}[sys.argv[1] if len(sys.argv) > 1 else 'publish']()
+    {'oauth': oauth, 'publish': publish, 'refresh': refresh, 'insights': insights, 'comments': comments, 'search': search}[sys.argv[1] if len(sys.argv) > 1 else 'publish']()

@@ -1,0 +1,34 @@
+name: トークンの作り直し（許可コードから）
+on:
+  workflow_dispatch:
+    inputs:
+      code:
+        description: 許可コード
+        required: true
+      app_id:
+        description: アプリID
+        required: true
+permissions:
+  contents: write
+concurrency:
+  group: threads
+  cancel-in-progress: false
+jobs:
+  oauth:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 作り直す
+        env:
+          CODE: ${{ inputs.code }}
+          APP_ID: ${{ inputs.app_id }}
+          THREADS_APP_SECRET: ${{ secrets.THREADS_APP_SECRET || secrets.KEY }}
+          TOKEN2: ${{ secrets.TOKEN }}
+        run: |
+          echo "::add-mask::$CODE"
+          python3 tools/publish.py oauth
+      - name: 保存
+        run: |
+          git config user.name "threads-bot"; git config user.email "threads-bot@users.noreply.github.com"
+          git add state
+          git diff --cached --quiet || (git commit -qm "トークンを作り直し" && git pull -q --rebase && git push -q)
