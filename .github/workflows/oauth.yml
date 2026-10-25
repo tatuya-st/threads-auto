@@ -11,7 +11,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: threads
+  group: threads-oauth
   cancel-in-progress: false
 jobs:
   oauth:
