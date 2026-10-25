@@ -1,0 +1,24 @@
+{
+ "id": "20261026-0744-morning",
+ "slot": "morning",
+ "form": "basic",
+ "kind": "single",
+ "created": "2026-10-26T07:44+09:00",
+ "title": "今朝の1品",
+ "footer": "▶ 気になった番号はリプで教えてね（詳細はプロフのリンク）",
+ "topic": "ガジェット",
+ "text": "ガジェット選びで最後の決め手になるの、スペック？見た目？\n私はだいたい「充電端子が何か」で決まります🔌\n\n今日の1品、返信にそっと置いておきます👇\n\n※PR：返信に楽天ROOMのリンクがあります",
+ "reply": "【PR】今日の1品はこちら👇\nPhilips コンセント一体型モバイルバッテリー 10000mAh DLP4350QW\n4,980円・送料無料\n楽天ROOM：https://room.rakuten.co.jp/room_a9a129c5a9/items",
+ "items": [
+  {
+   "itemcode": "richgo-shop:10000071",
+   "name": "Philips コンセント一体型モバイルバッテリー 10000mAh DLP4350QW",
+   "hook": "充電器とモバイルバッテリーを1台にまとめたい旅行好きに",
+   "price": "4,980円",
+   "quip": "挿せば充電器、抜けば電池",
+   "points": [
+    "10000mAh・ACプラグ付き"
+   ]
+  }
+ ]
+}
