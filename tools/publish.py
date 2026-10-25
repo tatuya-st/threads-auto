@@ -314,8 +314,8 @@ def search():
     json.dump(out, open(os.path.join(ROOT, 'state', 'search.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(f"::notice::検索 {len(found)}件（他の人の投稿 {others}件）")
     if fails and len(fails) == len(WORDS):
-        print('::error::検索できません（threads_keyword_search の許可が入ったトークンが必要）')
-        raise SystemExit(1)
+        # 許可待ちのあいだは毎日失敗通知が届かないよう、知らせるだけで終える
+        print('::notice::検索の許可がまだ有効になっていません（threads_keyword_search）')
 
 
 if __name__ == '__main__':
