@@ -62,6 +62,11 @@ a{color:var(--s1)}
   <h2>投稿の一覧</h2>
   <table><thead><tr><th>日時</th><th>枠</th><th>閲覧</th><th>いいね</th><th>返信</th></tr></thead><tbody id="tb"></tbody></table>
 </div>
+<div class="card">
+  <h2>話題のリサーチ（キーワード検索）</h2>
+  <p id="srm">毎日18:13ごろに「楽天ROOM」「買ってよかった」などで検索した上位の投稿。自分の投稿づくりの参考にだけ使い、30日で削除します。</p>
+  <table><thead><tr><th>言葉</th><th>投稿者</th><th>内容</th></tr></thead><tbody id="sr"></tbody></table>
+</div>
 </main>
 <div class="tip" id="tip"></div>
 <script>
@@ -79,6 +84,14 @@ function axis(svg,W,H,L,B,max){for(let i=0;i<=4;i++){const y=H-B-(H-B-8)*i/4;el(
 function bar(svg,x,y,w,h,color){const r=Math.min(4,w/2,h);el('path',{d:`M${x},${y+h}V${y+r}Q${x},${y} ${x+r},${y}H${x+w-r}Q${x+w},${y} ${x+w},${y+r}V${y+h}Z`,fill:color},svg)}
 async function j(u){try{const r=await fetch(u+'?t='+Date.now());return r.ok?r.json():null}catch(e){return null}}
 (async()=>{
+  // 話題のリサーチ
+  {const sr=await j('state/search.json'),tb=document.getElementById('sr');
+   if(sr){document.getElementById('srm').textContent+=`（最終 ${sr.at.slice(5,16).replace('T',' ')}・${sr.posts.length}件${sr.approved?'':'・審査中のため自分の投稿のみ'}）`;
+     for(const p of sr.posts.slice(0,30)){const tr=document.createElement('tr');
+       const a=document.createElement('td');a.textContent=(p.mode==='TAG'?'#':'')+p.q;
+       const b=document.createElement('td');b.textContent='@'+(p.user||'');
+       const c=document.createElement('td');const l=document.createElement('a');l.href=p.link||'#';l.textContent=(p.text||'').slice(0,60)||'（画像）';c.appendChild(l);
+       tr.append(a,b,c);tb.appendChild(tr)}}}
   const log=await j('state/insights_log.json')||{};const cm=await j('state/comments.json');
   const days=Object.keys(log).sort();
   if(!days.length){document.getElementById('upd').textContent='まだ記録がありません（毎日23:37ごろに記録されます）';return}
