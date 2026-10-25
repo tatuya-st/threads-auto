@@ -1,6 +1,6 @@
 """投稿ノートに出す「Threadsの反応」のまとめを作る。
 state/insights.json・state/insights_log.json・state/posted・queue を読み、
-ArtifactData に書き込む1つの JSON を標準出力に出す（文章は書き写さず、書き出し40字だけ）。
+ArtifactData に書き込む1つの JSON（反応・次の投稿・投稿待ち・最近の投稿文・コメント返信の下書き・画像の一覧） を標準出力に出す。
 使い方: python3 tools/note_summary.py > summary.json
 """
 import glob
@@ -77,6 +77,48 @@ def main():
         "followers": int((log[d].get("account") or {}).get("followers_count") or 0),
     } for d in days]
 
+    # 次の投稿の予定（ルイは投稿の直前に文章を作るので、時間と形だけ）
+    plan = [(7, 43, "morning", "朝：会話＋商品1件"), (12, 43, "noon", "昼：会話投稿"),
+            (20, 43, "night", "夜：画像つきの投稿"), (23, 43, "late", "深夜：短いつぶやき")]
+    nxt = None
+    for add in (0, 1):
+        base_day = (now + timedelta(days=add)).replace(second=0, microsecond=0)
+        for h, mi, sk, lab in plan:
+            t = base_day.replace(hour=h, minute=mi)
+            if t > now:
+                nxt = {"time": f"{t.month}/{t.day} {h}:{mi:02d}ごろ", "slot": sk, "label": lab}
+                break
+        if nxt:
+            break
+
+    # 投稿待ち（作られたがまだ投稿されていないもの）と、最後に投稿したもの
+    def full(pid):
+        q = load(f"queue/{pid}.json", {})
+        pz = load(f"state/posted/{pid}.json", {})
+        parts = pid.split("-")
+        return {
+            "id": pid,
+            "label": f"{int(parts[0][4:6])}/{int(parts[0][6:8])} {SLOT.get(parts[2], parts[2])}" if len(parts) >= 3 else pid,
+            "text": q.get("text", ""),
+            "reply": q.get("reply", ""),
+            "link": pz.get("permalink", ""),
+            "image": os.path.exists(f"images/{pid}.png"),
+        }
+
+    qids = sorted(os.path.basename(f)[:-5] for f in glob.glob("queue/*.json"))
+    posted = {os.path.basename(f)[:-5] for f in glob.glob("state/posted/*.json")}
+    cutoff = (now - timedelta(hours=3)).strftime("%Y%m%d-%H%M")
+    pending = [full(i) for i in qids if i not in posted and i >= cutoff][-2:]
+    done = [i for i in qids if i in posted]
+    last = [full(i) for i in done[-3:]][::-1]
+
+    dr = load("state/drafts.json", {})
+    drafts = {"date": dr.get("date", ""), "items": [
+        {k: it.get(k, "") for k in ("user", "text", "draft", "link")} for it in (dr.get("items") or [])
+    ][:20]}
+
+    imgs = sorted(os.path.basename(f)[:-4] for f in glob.glob("images/*.png"))[-12:][::-1]
+
     acc = ins.get("account") or {}
     fol = int(acc.get("followers_count") or 0)
     base = daily[-8]["followers"] if len(daily) >= 8 else (daily[0]["followers"] if daily else fol)
@@ -96,6 +138,11 @@ def main():
         "top": sorted(week, key=lambda r: (r["views"], r["likes"]), reverse=True)[:3],
         "recent": list(reversed(rows))[:8],
         "daily": daily,
+        "next": nxt,
+        "pending": pending,
+        "last": last,
+        "drafts": drafts,
+        "images": imgs,
         "updatedAt": int(now.timestamp() * 1000),
     }
     print(json.dumps(out, ensure_ascii=False))
