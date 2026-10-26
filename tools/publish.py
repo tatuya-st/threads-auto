@@ -125,6 +125,17 @@ def wait_ready(cid, tok):
     raise RuntimeError('画像の処理が終わりませんでした')
 
 
+def replied_ids():
+    """ルイが自動で返信したコメントのid（state/replied/ の記録から）"""
+    ids = set()
+    for f in glob.glob(os.path.join(ROOT, 'state', 'replied', '*.json')):
+        try:
+            ids |= {str(x.get('to')) for x in json.load(open(f, encoding='utf-8')).get('done', [])}
+        except Exception:
+            pass
+    return ids
+
+
 def send_replies(tok, me):
     """queue/replies/<id>.json（ルイが決めたコメントへの返信）を出し、結果を state/replied/<id>.json に残す。
     中身: {"kind":"replies","items":[{"to":コメントのid,"user":名前,"text":返信文}]}"""
@@ -134,12 +145,16 @@ def send_replies(tok, me):
     if not todo:
         return True
     os.makedirs(outd, exist_ok=True)
+    done_to = replied_ids()
     ok_all = True
     for f in todo:
         rid_ = os.path.splitext(os.path.basename(f))[0]
         q = json.load(open(f, encoding='utf-8'))
         rec = {'id': rid_, 'kind': 'replies', 'done': [], 'ng': []}
         for n, it in enumerate(q.get('items', [])[:20]):
+            if str(it.get('to')) in done_to:
+                print(f"{it.get('user', '')} さんにはもう返信済みなので出しません")
+                continue
             if n:
                 time.sleep(random.randint(45, 90))
             try:
@@ -147,6 +162,7 @@ def send_replies(tok, me):
                 time.sleep(3)
                 mid = call('POST', f"{API}/{me['id']}/threads_publish", {'creation_id': cid, 'access_token': tok})['id']
                 rec['done'].append({'to': it['to'], 'reply_id': mid})
+                done_to.add(str(it['to']))
             except Exception as e:
                 msg = str(e).replace(tok, '***')[:200]
                 rec['ng'].append({'to': it.get('to'), 'error': msg})
@@ -290,6 +306,7 @@ def comments():
     mine = me.get('username')
     since = datetime.now(JST) - timedelta(days=7)
     todo, fails, ok = [], [], 0
+    skip = replied_ids()  # 返信済みが API にまだ反映されていなくても出さない
     for f in sorted(glob.glob(os.path.join(ROOT, 'state', 'posted', '*.json'))):
         rec = json.load(open(f, encoding='utf-8'))
         try:
@@ -315,7 +332,7 @@ def comments():
                     answered = any(x.get('username') == mine for x in rr.get('data', []))
                 except Exception:
                     pass
-            if not answered:
+            if not answered and str(c['id']) not in skip:
                 todo.append({'id': c['id'], 'post': rec['id'], 'user': c.get('username'), 'text': c.get('text', ''), 'at': c.get('timestamp'), 'link': c.get('permalink')})
     if fails and not ok:
         print('::error::どの投稿のコメントも読めません（threads_read_replies の許可が入ったトークンが必要）')
