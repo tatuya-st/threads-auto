@@ -125,6 +125,15 @@ def wait_ready(cid, tok):
     raise RuntimeError('画像の処理が終わりませんでした')
 
 
+def remote_has(rel):
+    """push 後に別の実行が先に記録した物があるか（古いコミットで動いた実行が二重に出さないように）。"""
+    try:
+        subprocess.run(['git', 'fetch', '-q', '--depth', '1', 'origin', 'main'], cwd=ROOT, capture_output=True, timeout=60)
+        return subprocess.run(['git', 'cat-file', '-e', 'FETCH_HEAD:' + rel], cwd=ROOT, capture_output=True).returncode == 0
+    except Exception:
+        return False
+
+
 def replied_ids():
     """ルイが自動で返信したコメントのid（state/replied/ の記録から）"""
     ids = set()
@@ -149,6 +158,9 @@ def send_replies(tok, me):
     ok_all = True
     for f in todo:
         rid_ = os.path.splitext(os.path.basename(f))[0]
+        if remote_has(f'state/replied/{rid_}.json'):
+            print(f'{rid_} はほかの実行で返信済みなので出しません')
+            continue
         q = json.load(open(f, encoding='utf-8'))
         rec = {'id': rid_, 'kind': 'replies', 'done': [], 'ng': []}
         for n, it in enumerate(q.get('items', [])[:50]):
@@ -198,6 +210,9 @@ def publish():
     sha = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, capture_output=True, text=True).stdout.strip() or 'main'
     failed = []
     for qid, q in todo[:2]:
+        if remote_has(f'state/posted/{qid}.json'):
+            print(f'{qid} はほかの実行で公開済みなので出しません')
+            continue
         # 二重投稿の最終チェック：すでに Threads に出した商品が入っていたら公開しない
         dup = [it['itemcode'] for it in q['items'] if it['itemcode'] in sent]
         rec = {'id': qid, 'axis': q.get('axis'), 'theme': q.get('theme'), 'codes': [it['itemcode'] for it in q['items']]}
