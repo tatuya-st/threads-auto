@@ -1,0 +1,24 @@
+{
+ "id": "20261027-0748-morning",
+ "slot": "morning",
+ "form": "n5",
+ "kind": "single",
+ "created": "2026-10-27T07:48+09:00",
+ "title": "逆レビュー",
+ "footer": "▶ 見るだけでもどうぞ。プロフィールのリンクから楽天ROOMへ",
+ "topic": "楽天ROOM",
+ "text": "充電器、純正派？サードパーティ派？\nガジェット好きの私は、出力の数字を見て決める派です🔌\n逆レビュー：充電器の悪いところ、30Wで冷静でいられない。以上。\nリプで答え合わせしましょう👇\n\n※PR：返信に楽天ROOMのリンクがあります",
+ "reply": "【PR】今日の1品はこちら👇\nUGREEN 30W 充電器（USB-C×2＋USB-A×1）\n1,980円〜\n楽天ROOM：https://room.rakuten.co.jp/room_a9a129c5a9/items",
+ "items": [
+  {
+   "itemcode": "ugreen-gear:10001088",
+   "name": "UGREEN 30W 充電器（USB-C×2＋USB-A×1）",
+   "hook": "スマホとイヤホンを1口のコンセントで同時に充電したい人に",
+   "price": "1,980円〜",
+   "quip": "3口でケーブル渋滞解消",
+   "points": [
+    "30W"
+   ]
+  }
+ ]
+}
