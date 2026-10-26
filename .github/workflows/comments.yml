@@ -1,7 +1,7 @@
 name: コメントの確認
 on:
   schedule:
-    - cron: '23 10 * * *'
+    - cron: '17 * * * *'
   workflow_dispatch:
 permissions:
   contents: write
