@@ -428,9 +428,9 @@ def summary(a, cands):
 # 時間帯ごとに使える形。BASE_FORMS はその時間帯の基本形で「3日以内に繰り返さない」の対象外
 SLOTS = ['morning', 'noon', 'night', 'late']
 FORMS = {
-    'morning': ['basic', 'discover', 'n1', 'n5', 'n2'],
-    'noon': ['talk', 'n2'],
-    'night': ['summary', 'kuyou'],
+    'morning': ['basic', 'discover', 'n1', 'n5', 'n2', 'n11', 'n3'],
+    'noon': ['talk', 'n2', 'n11'],
+    'night': ['summary', 'kuyou', 'n12'],
     'late': ['n15'],
 }
 ALL_FORMS = {f for v in FORMS.values() for f in v}
@@ -546,7 +546,7 @@ N2_ASK = ['この勝負、どっちの勝ちですか？👇', 'あなたの財�
           '財布が一番弱くなる時間帯、いつですか？👇', 'あなたの家の財布、出席率どれくらいですか？👇', '財布欠席くんに一言お願いします👇', 'あなたなら、どっちの味方をしますか？👇']
 
 # 供養投稿（10/25 本人提案）。語り手は財布欠席くん。商品をけなさない・買わないことを強く勧めない
-KU_OPEN = ['🕯 本日の供養', '🕯 本日の見送り報告', '🕯 今日の供養コーナー', '🕯 本日、見送られた物', '🕯 今夜の供養', '🕯 見送り速報', '🕯 本日の供養（財布欠席くん調べ）', '🕯 今日も見送りました']
+KU_OPEN = ['🕯 本日の供養', '🕯 本日の見送り報告', '🕯 今日の供養コーナー', '🕯 本日、見送られた物', '🕯 今夜の供養', '🕯 見送り速報', '🕯 本日の供養（財布欠席くん調べ）', '🕯 財布欠席くんの見送り帳']
 KU_SERIF = ['今日は欠席です。見送りましょう', 'カートの前まで来ましたね。今日はここまでです', 'いい物なのは知ってます。でも今日は欠席で', '中身がないので、今日は見送りです',
             '心は出席、体は欠席です', '見送るのも、立派な判断です', 'また会える日まで、そっとカートに', '今日はお気持ちだけ受け取ります']
 KU_PRAISE = ['見送ったあなたも、えらい。', '見送れた人、今日いちばんえらい。', '見るだけで済ませたあなた、立派です。', '今日も耐えた。それだけで100点。',
@@ -560,7 +560,41 @@ N15 = ['夜の楽天は、\n昼の私とは別人が見ている。\n朝の私�
        'お気に入り登録は無料。\nそう言い聞かせて、今夜も増えていく。', 'ポチる前に寝る。\nそれが今夜の唯一の目標です。', '夜は判断力が下がるらしい。\nだからカートに入れるだけにしておく。\n…入れるだけ。',
        '財布「もう寝なよ」\n私「あと1ページだけ」', '明日の私へ。\nカートの中身は、夜の私が勝手にやりました。', '物欲にも、\n消灯時間がほしい。', 'おやすみなさい。\nカートは開けっぱなしで寝ます。']
 
-TITLES = {'basic': '今朝の1品', 'discover': '見つけてしまった…', 'n1': '買ってないのに詳しい選手権', 'n5': '逆レビュー', 'n2': '財布欠席くんとの攻防', 'kuyou': '本日の供養'}
+# N11「物欲会議」議事録（議題＝商品の種類と事実のスペック。決議はいつも保留寄り）
+N11_HEAD = ['【物欲会議 議事録】', '【第◯回 物欲会議・議事録】', '【物欲会議（臨時）議事録】', '【物欲会議 議事録・要約版】',
+            '【物欲会議 議事録（非公開のはずが公開）】', '【本日の物欲会議 議事録】', '【物欲会議・緊急招集 議事録】', '【物欲会議 議事録・速報】']
+N11_SHINGI = ['物欲「{f}。これ以上の説明いる？」', '物欲「{f}って、もう答え出てません？」', '物欲「{f}。以上、賛成の方は挙手を」', '理性「{f}…確かに強い」',
+              '物欲「{f}。異議のある方はいますか」\n（沈黙）', '物欲「まず{f}。話はそれからだ」', '理性「{f}は認める。認めるけど」', '物欲「{f}。これは会議する必要あった？」']
+N11_KETSUGI = ['保留（カートには入れた）', '保留（お気に入りには登録した）', '継続審議（毎晩スペック表を見る）', '保留（次のセールまで）',
+               '保留（財布の復帰を待つ）', '可決…と見せかけて保留', '保留（でも気持ちは可決）', '保留（議長が寝落ち）']
+N11_ASK = ['あなたの物欲会議、今日の議題は何ですか？👇', 'この議題、あなたなら可決？否決？👇', '最近いちばん長引いた物欲会議、教えてください👇',
+           'みなさんの家の会議、財布は出席してますか？👇', '次の会議の議題、リプで募集してます👇', 'あなたの決議はいつも何で終わりますか？👇',
+           '保留のままカートに眠ってる物、何個ありますか？👇', '議長（あなた）の判断、聞かせてください👇']
+
+# N12 金曜夜「今週買わずに耐えたもの発表会」（司会は財布欠席くん。商品なし・画像なし）
+N12_HEAD = ['🎤 今週買わずに耐えたもの発表会', '🎤 金曜恒例・今週耐えたもの発表会', '🎤 今週の「買わずに耐えた」発表会、開会します',
+            '🎤 週末前の発表会：今週買わずに耐えたもの', '🎤 今週も開催・耐えたもの発表会', '🎤 発表会のお時間です（今週耐えたもの）',
+            '🎤 今週の耐えた記録、発表会', '🎤 金曜夜の発表会：買わずに耐えたもの']
+N12_HOST = ['司会の財布欠席くんです。今週もカートの前で踏みとどまった皆さん、えらい。', '司会は財布欠席くん。本日は出席しております。耐えた話だけ聞きに来ました。',
+            '司会の財布欠席くんです。「見るだけ」で済ませた1週間、拍手を送ります👏', '財布欠席くん「今週も皆さんのおかげで、中身が守られました」',
+            '財布欠席くん「耐えた物の大きさは問いません。耐えたこと自体が優勝です」', '司会の財布欠席くんです。セールの誘惑を越えてきた皆さん、ようこそ。',
+            '財布欠席くん「お気に入り登録で止めた人も、立派な入賞です」', '財布欠席くん「今週、カートに入れて出した人。それも耐えたにカウントします」']
+N12_ASK = ['あなたが今週買わずに耐えたもの、発表してください👇', '今週いちばん危なかった「耐えたもの」、教えてください👇', 'エントリーはリプで。耐えたもの、ひとつどうぞ👇',
+           '今週の耐えた記録、ここで発表していきませんか？👇', '耐えたもの＋耐えた理由、ひとことでどうぞ👇', '今週「あと一歩でポチりそうだった物」、何でした？👇',
+           '耐えた人から順番にどうぞ。財布欠席くんが全員ほめます👇', 'みなさんの今週の耐えたもの、聞かせてください👇']
+
+# N3 値段を別の単位に変換（使った基準は本文に書く。オチは効果の話にしない）
+N3_UNITS = [('ラーメン', '杯', 900), ('牛丼', '杯', 500), ('コンビニのおにぎり', '個', 180), ('缶コーヒー', '本', 150),
+            ('映画', '本', 2000), ('回転寿司', '皿', 120), ('銭湯', '回', 550), ('ハンバーガー', '個', 400)]
+N3_OPEN = ['この{type}、値段を{u}に換算してみました。', '{type}の値段、{u}で数えたら現実味が出るかと思って。', '物欲を落ち着かせるため、{type}を{u}に換算します。',
+           '計算してみました。この{type}は、{u}でいうと…', '{type}の値段を{u}換算する会、開催します。', 'ガジェット好きの悪いクセ。{type}の値段を{u}で数える。',
+           '値段だけだとピンとこないので、{type}を{u}に置き換えてみた。', '{type}、{u}で言うといくら？を計算しました。']
+N3_OCHI = ['換算したら、余計に悩み始めました。', '計算したら、なぜか安く見えてきた。危ない。', '結論：計算は物欲を止めない。', '財布欠席くん「どっちにしても欠席です」',
+           '数字にしたら、心が揺れ始めました。', 'でも{u}は、{type}の代わりにはなってくれない。', 'この計算、誰も得しない気がしてきた。', '{u}をガマンすれば…いや、それは無理です。']
+N3_ASK = ['あなたなら何に換算しますか？👇', 'みなさんの「換算の単位」、教えてください👇', 'この換算、高い？安い？どっちに見えます？👇', 'あなたの心の通貨は何ですか？👇',
+          '物欲を止める換算、他にいい単位あったら教えてください👇', '{u}換算で買ったこと、ありますか？👇', 'これ、あなたなら何{c}分まで出せますか？👇', '次は何を換算してほしいですか？👇']
+
+TITLES = {'basic': '今朝の1品', 'discover': '見つけてしまった…', 'n1': '買ってないのに詳しい選手権', 'n5': '逆レビュー', 'n2': '財布欠席くんとの攻防', 'kuyou': '本日の供養', 'n11': '物欲会議 議事録', 'n3': '値段を換算してみた'}
 
 
 def form_history(repo):
@@ -618,6 +652,10 @@ def single_ok(it, form):
     facts = spec_facts(it)
     if form == 'kuyou':
         return len(facts) >= 1
+    if form == 'n3':
+        return price_num(it.get('price')) >= 1000
+    if form == 'n11':
+        return len(facts) >= 1
     if form in ('discover', 'n1', 'n5', 'n2'):
         return len(facts) >= 1 and cat_of(it, it.get('_gid', '')) != 'beauty'
     return True
@@ -643,6 +681,15 @@ def rotate(repo, pool, seed):
     os.makedirs(os.path.dirname(used_p), exist_ok=True)
     json.dump(used, open(used_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     return text
+
+
+def n12(a):
+    stamp = datetime.now(JST)
+    seed = h31(stamp.strftime('%Y%m%d') + 'n12')
+    recent = recent_texts(a.repo, 8)
+    text = pick_fresh(N12_HEAD, seed, recent) + '\n' + pick_fresh(N12_HOST, seed * 7 + 1, recent) + '\n\n' + pick_fresh(N12_ASK, seed * 7 + 2, recent)
+    qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot
+    write_q(a, {'id': qid, 'slot': a.slot, 'form': 'n12', 'kind': 'talk', 'created': stamp.isoformat(timespec='minutes'), 'text': text, 'items': []}, '耐えたもの発表会')
 
 
 def late(a):
@@ -684,6 +731,18 @@ def single(a, form, it):
         p1, p2 = pick(N2_PROD, seed), pick(N2_PROD, seed + 3)
         w1, w2 = pick(N2_WALLET, seed), pick(N2_WALLET, seed + 5)
         text = (f'【{t}と財布欠席くん】\n{t}「{p1.format(f=facts[0])}」\n財布「{w1}」\n{t}「{p2.format(f=f2)}」\n財布「{w2}」\n\n' + pf(N2_ASK, 3))
+    elif form == 'n11':
+        text = (pf(N11_HEAD, 1) + f'\n議題：{t}（{facts[0]}）\n出席者：私、物欲、理性\n欠席：財布\n審議：' + pf(N11_SHINGI, 2).format(f=facts[-1])
+                + '\n決議：' + pf(N11_KETSUGI, 3) + '\n\n' + pf(N11_ASK, 4))
+    elif form == 'n3':
+        pn = price_num(price)
+        units = [u for u in N3_UNITS if pn >= u[2]]
+        name, c, base = units[seed % len(units)]
+        n = pn / base
+        cnt = f'{n:.0f}' if n >= 10 else f'{n:.1f}'.rstrip('0').rstrip('.')
+        kara = '・いちばん安い選択肢で' if '〜' in price else ''
+        text = (pf(N3_OPEN, 1).format(type=t, u=name) + f'\n\n{price}＝{name}約{cnt}{c}分\n（{name}1{c}{base}円で計算{kara}）\n\n'
+                + pf(N3_OCHI, 2).format(type=t, u=name) + '\n\n' + pf(N3_ASK, 3).format(u=name, c=c))
     elif form == 'kuyou':
         text = (f'{pf(KU_OPEN, 1)}：{t}（{facts[0]}）。\n財布欠席くん「{pf(KU_SERIF, 2)}」\n{pf(KU_PRAISE, 3)}\n\n{pf(KU_ASK, 4)}')
     text = clip(text + '\n\n' + PR_LINE, 490)
@@ -715,11 +774,15 @@ def main():
         feasible.add('summary')
     if singles:
         feasible.add('basic')
-    for fm in ('discover', 'n1', 'n5', 'n2', 'kuyou'):
+    if a.slot == 'night' and datetime.now(JST).weekday() == 4:
+        feasible.add('n12')
+    for fm in ('discover', 'n1', 'n5', 'n2', 'kuyou', 'n11', 'n3'):
         if any(single_ok(it, fm) for it in singles):
             feasible.add(fm)
     seed = h31(datetime.now(JST).strftime('%Y%m%d') + a.slot)
     form = a.form if (a.form in FORMS[a.slot] and a.form in feasible) else choose_form(a.repo, a.slot, feasible, seed)
+    if 'n12' in feasible and not a.form:
+        form = 'n12'  # 金曜の夜は「今週買わずに耐えたもの発表会」
     if not form:
         print('なし')
         return
@@ -727,6 +790,8 @@ def main():
         return talk(a.repo)
     if form == 'summary':
         return summary(a, cands)
+    if form == 'n12':
+        return n12(a)
     it = next(x for x in singles if single_ok(x, form))
     return single(a, form, it)
 
