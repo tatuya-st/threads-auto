@@ -27,6 +27,13 @@ def main():
         print(0)
         return
     qid = pending[-1]
+    # コメント返信の push が、まだ記録の付いていない投稿と同じ時間帯に重なったときも待たない
+    # （返信が後から足されたなら、その投稿は前の実行で出ている）
+    reps = [os.path.basename(f)[:13] for f in glob.glob(os.path.join(ROOT, 'queue', 'replies', '*.json'))
+            if not os.path.exists(os.path.join(ROOT, 'state', 'replied', os.path.splitext(os.path.basename(f))[0] + '.json'))]
+    if reps and max(reps) > qid[:13]:
+        print(0)
+        return
     slot = qid.rsplit('-', 1)[-1]
 
     # 投稿ごとの最新の閲覧数
