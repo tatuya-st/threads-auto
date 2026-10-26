@@ -151,7 +151,7 @@ def send_replies(tok, me):
         rid_ = os.path.splitext(os.path.basename(f))[0]
         q = json.load(open(f, encoding='utf-8'))
         rec = {'id': rid_, 'kind': 'replies', 'done': [], 'ng': []}
-        for n, it in enumerate(q.get('items', [])[:20]):
+        for n, it in enumerate(q.get('items', [])[:50]):
             if str(it.get('to')) in done_to:
                 print(f"{it.get('user', '')} さんにはもう返信済みなので出しません")
                 continue
