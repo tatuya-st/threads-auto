@@ -7,7 +7,7 @@
 
 環境変数: THREADS_TOKEN（最初に貼るトークン）, THREADS_APP_SECRET（暗号化の鍵にも使う）, GITHUB_REPOSITORY
 """
-import glob, json, os, subprocess, sys, time, urllib.parse, urllib.request
+import glob, json, os, random, subprocess, sys, time, urllib.parse, urllib.request
 from datetime import datetime, timezone, timedelta
 
 API = 'https://graph.threads.net/v1.0'
@@ -125,6 +125,40 @@ def wait_ready(cid, tok):
     raise RuntimeError('画像の処理が終わりませんでした')
 
 
+def send_replies(tok, me):
+    """queue/replies/<id>.json（ルイが決めたコメントへの返信）を出し、結果を state/replied/<id>.json に残す。
+    中身: {"kind":"replies","items":[{"to":コメントのid,"user":名前,"text":返信文}]}"""
+    files = sorted(glob.glob(os.path.join(ROOT, 'queue', 'replies', '*.json')))
+    outd = os.path.join(ROOT, 'state', 'replied')
+    todo = [f for f in files if not os.path.exists(os.path.join(outd, os.path.basename(f)))]
+    if not todo:
+        return True
+    os.makedirs(outd, exist_ok=True)
+    ok_all = True
+    for f in todo:
+        rid_ = os.path.splitext(os.path.basename(f))[0]
+        q = json.load(open(f, encoding='utf-8'))
+        rec = {'id': rid_, 'kind': 'replies', 'done': [], 'ng': []}
+        for n, it in enumerate(q.get('items', [])[:5]):
+            if n:
+                time.sleep(random.randint(45, 90))
+            try:
+                cid = call('POST', f"{API}/{me['id']}/threads", {'media_type': 'TEXT', 'text': it['text'], 'reply_to_id': it['to'], 'access_token': tok})['id']
+                time.sleep(3)
+                mid = call('POST', f"{API}/{me['id']}/threads_publish", {'creation_id': cid, 'access_token': tok})['id']
+                rec['done'].append({'to': it['to'], 'reply_id': mid})
+            except Exception as e:
+                msg = str(e).replace(tok, '***')[:200]
+                rec['ng'].append({'to': it.get('to'), 'error': msg})
+                print(f"::warning::{it.get('user', '')} さんへの返信を出せませんでした: {msg}")
+        rec['at'] = datetime.now(JST).isoformat(timespec='minutes')
+        json.dump(rec, open(os.path.join(outd, rid_ + '.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        print(f"{rid_} コメント返信 {len(rec['done'])}件（失敗 {len(rec['ng'])}件）")
+        if rec['ng'] and not rec['done']:
+            ok_all = False
+    return ok_all
+
+
 def publish():
     repo = os.environ['GITHUB_REPOSITORY']
     todo = []
@@ -132,10 +166,17 @@ def publish():
         qid = os.path.splitext(os.path.basename(f))[0]
         if not os.path.exists(os.path.join(ROOT, 'state', 'posted', qid + '.json')):
             todo.append((qid, json.load(open(f, encoding='utf-8'))))
-    if not todo:
+    has_rep = any(not os.path.exists(os.path.join(ROOT, 'state', 'replied', os.path.basename(f)))
+                  for f in glob.glob(os.path.join(ROOT, 'queue', 'replies', '*.json')))
+    if not todo and not has_rep:
         print('公開待ちなし')
         return
     tok, me = token()
+    rep_ok = send_replies(tok, me) if has_rep else True
+    if not todo:
+        if not rep_ok:
+            raise SystemExit(1)
+        return
     sent_p = os.path.join(ROOT, 'state', 'sent.json')
     sent = json.load(open(sent_p, encoding='utf-8')) if os.path.exists(sent_p) else {}
     sha = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, capture_output=True, text=True).stdout.strip() or 'main'
@@ -197,7 +238,7 @@ def publish():
         json.dump(rec, open(os.path.join(ROOT, 'state', 'posted', qid + '.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         json.dump(sent, open(sent_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         print(qid, rec.get('permalink') or rec.get('skipped'))
-    if failed:
+    if failed or not rep_ok:
         raise SystemExit(1)
 
 

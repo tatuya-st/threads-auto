@@ -22,12 +22,30 @@ def main():
         gh('issue', 'close', n)
     if not items:
         return
-    lines = [f"@tatuya-st 返信待ちのコメントが{len(items)}件あります。下書きをコピーして、Threadsで返信してください。", '']
-    for i, it in enumerate(items, 1):
+    # pri: reply（本人が返す）・auto（ルイが自動で返信済み）・like（いいねだけ）。pri なしは本人が返す扱い
+    rep = [it for it in items if it.get('pri', 'reply') == 'reply']
+    aut = [it for it in items if it.get('pri') == 'auto']
+    lik = [it for it in items if it.get('pri') == 'like']
+    lines = []
+    if rep:
+        lines += [f"@tatuya-st あなたが返したいコメントが{len(rep)}件あります。下書きをコピーして、Threadsで返信してください。", '']
+    else:
+        lines += ['今日はあなたが返すコメントはありません（ルイが返信済み・いいねだけ）。', '']
+    for i, it in enumerate(rep, 1):
         # Threadsの名前に @ を付けると同じ名前の GitHub ユーザーに通知が飛ぶので付けない
-        lines += [f"### {i}. {it.get('user', '')} さん", '', '> ' + it.get('text', '').replace('\n', '\n> '), '',
+        lines += [f"### ★{i}. {it.get('user', '').lstrip('★')} さん", '', '> ' + it.get('text', '').replace('\n', '\n> '), '',
                   '下書き：', '```', it.get('draft', ''), '```', f"[コメントを開く]({it.get('link', '')})", '']
-    title = f"💬 返信待ちのコメント {len(items)}件（{d.get('date', '')}）"
+    if aut:
+        lines += ['---', '#### ✅ ルイが自動で返信しました', '']
+        for it in aut:
+            lines.append(f"- {it.get('user', '').lstrip('✅')} さん：{it.get('text', '')[:40]} → {it.get('draft', '').replace('✅ ルイが返信しました：', '')}　[開く]({it.get('link', '')})")
+        lines.append('')
+    if lik:
+        lines += ['---', '#### 👍 いいねだけでOK', '']
+        for it in lik:
+            lines.append(f"- {it.get('user', '')} さん：{it.get('text', '')[:40]}　[開く]({it.get('link', '')})")
+    parts = [f"★あなたが返す {len(rep)}件" if rep else '', f"✅自動で返信 {len(aut)}件" if aut else '', f"👍いいねだけ {len(lik)}件" if lik else '']
+    title = "💬 " + '・'.join(x for x in parts if x) + f"（{d.get('date', '')}）"
     r = gh('issue', 'create', '--title', title, '--label', 'comments', '--body', '\n'.join(lines))
     print(r.stdout or r.stderr)
 

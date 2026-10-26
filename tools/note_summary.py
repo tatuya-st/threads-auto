@@ -113,8 +113,11 @@ def main():
     last = [full(i) for i in done[-3:]][::-1]
 
     dr = load("state/drafts.json", {})
+    # 本人が返す（reply）→ ルイが自動で返信（auto）→ いいねだけ（like）の順
+    order = {"reply": 0, "auto": 1, "like": 2}
+    ditems = sorted(dr.get("items") or [], key=lambda it: order.get(it.get("pri", "reply"), 0))
     drafts = {"date": dr.get("date", ""), "items": [
-        {k: it.get(k, "") for k in ("user", "text", "draft", "link")} for it in (dr.get("items") or [])
+        {**{k: it.get(k, "") for k in ("user", "text", "draft", "link")}, "pri": it.get("pri", "reply")} for it in ditems
     ][:20]}
 
     imgs = sorted(os.path.basename(f)[:-4] for f in glob.glob("images/*.png"))[-12:][::-1]

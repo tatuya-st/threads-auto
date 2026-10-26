@@ -23,6 +23,7 @@ def main():
         if not os.path.exists(os.path.join(ROOT, 'state', 'posted', qid + '.json')):
             pending.append(qid)
     if not pending:
+        # コメント返信（queue/replies/）だけのときは待たずにすぐ出す
         print(0)
         return
     qid = pending[-1]
