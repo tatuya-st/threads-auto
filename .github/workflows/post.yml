@@ -41,6 +41,8 @@ jobs:
       - name: 投稿時間（反応が良い時間帯を数字から選ぶ）
         if: github.event_name == 'push'
         run: |
+          n=0; for q in queue/*.json; do [ -f "state/posted/$(basename "$q")" ] || n=1; done
+          [ $n = 1 ] || { echo "新しい投稿なし（返信だけ）なので待たない"; exit 0; }
           out=$(python tools/timing.py)
           echo "$out" | head -n -1
           sleep $(echo "$out" | tail -1)

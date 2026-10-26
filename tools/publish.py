@@ -187,6 +187,16 @@ def send_replies(tok, me):
     return ok_all
 
 
+def recent_texts(tok, me):
+    """Threadsに実際に出ている自分の最近の投稿の本文（git の記録がずれても二重投稿を止める最後の砦）"""
+    try:
+        r = call('GET', f"{API}/{me['id']}/threads", {'fields': 'text', 'limit': 25, 'access_token': tok})
+        return [''.join((x.get('text') or '').split())[:60] for x in r.get('data', [])]
+    except Exception as e:
+        print(f"::warning::最近の投稿を読めませんでした: {str(e).replace(tok, '***')[:150]}")
+        return None
+
+
 def publish():
     repo = os.environ['GITHUB_REPOSITORY']
     todo = []
@@ -209,6 +219,7 @@ def publish():
     sent = json.load(open(sent_p, encoding='utf-8')) if os.path.exists(sent_p) else {}
     sha = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, capture_output=True, text=True).stdout.strip() or 'main'
     failed = []
+    live = recent_texts(tok, me)
     for qid, q in todo[:2]:
         if remote_has(f'state/posted/{qid}.json'):
             print(f'{qid} はほかの実行で公開済みなので出しません')
@@ -220,7 +231,14 @@ def publish():
             made = datetime.strptime(qid[:13], '%Y%m%d-%H%M').replace(tzinfo=JST)
         except ValueError:
             made = datetime.now(JST)
-        if dup:
+        head = ''.join((q.get('text') or '').split())[:60]
+        if live is None:
+            rec = None
+            print(f'{qid} は最近の投稿を確認できないため、今回は出さずに次の実行に回します')
+            continue
+        if head and head in live:
+            rec.update(skipped='Threadsに同じ本文がすでにあるため公開せず')
+        elif dup:
             rec.update(skipped='二重投稿になるため公開せず', dup=dup)
         elif datetime.now(JST) - made > timedelta(hours=3):
             # 前回失敗して残った古い投稿は出さない（次の投稿と続けて2本出るのを防ぐ）
