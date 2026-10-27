@@ -220,7 +220,7 @@ def thin_link(q):
     if not q.get('reply') or not last or datetime.now(JST) - last >= timedelta(hours=LINK_GAP_H):
         return q
     # 商品名は返信に残し、URLの行だけ外す（リンクはプロフィールへ）
-    lines = [l for l in q['reply'].split('\n') if 'http' not in l]
+    lines = [l for l in q['reply'].split('\n') if 'http' not in l and 'ここからどうぞ' not in l]
     q = dict(q, reply='\n'.join(lines + ['楽天ROOMはプロフィールのリンクから📌']), _nolink=True)
     q['text'] = (q.get('text') or '').replace('※PR：返信に楽天ROOMのリンクがあります', '※PR：楽天ROOMはプロフィールのリンクから')
     print(f"{q.get('id')} は直近にリンクを貼ったため、今回は返信にURLを付けない")
