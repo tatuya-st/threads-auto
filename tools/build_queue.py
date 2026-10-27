@@ -273,6 +273,7 @@ def talk(repo):
     text = left[h31(datetime.now(JST).strftime('%Y%m%d')) % len(left)]
     used.append(text)
     text = log_text(repo) if text == '{log}' else text.replace('{f}', str(f))
+    text = re.sub(r'[ 　]*👇+$', '', text.rstrip())  # 10/27：人間らしく、👇の決まり文句は外す
     if not re.search(r'(？|\?|👇|ますか|ませんか|ですか)[^\n]{0,3}$', text):
         text += '\nみんなは？'  # 10/27：最後にもう一度聞く（決まり文句の👇は付けない）
     os.makedirs(os.path.dirname(used_p), exist_ok=True)
