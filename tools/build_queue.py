@@ -195,7 +195,6 @@ TALKS = [
     'イヤホン、今ので何代目ですか？\n私は数えるのが怖くて途中でやめました🎧',
     'スマホの写真、今何枚入ってますか？\n私は消すのが面倒で増える一方です📸',
     '充電器、家に何個ありますか？\n数えたら「なんでこんなに」ってなりました🔌',
-    'スマホのケース、何回替えましたか？\n私は本体より先に飽きる派です📱',
     # 10/27 他の人の投稿から：「安い・すぐ使える・場面が浮かぶ」が売れるという声 → 選び方を聞く二択に
     '通販で買うとき、決め手は値段？レビュー？\n私は「使う場面が浮かぶか」で最後に決めてます🔍\nみんなは？',
     '1000円以下のガジェット、買ってよかった物ありますか？\n私はケーブルをまとめるだけの小物が地味に当たりでした🔌\nみんなの当たりは？',
@@ -244,7 +243,18 @@ def followers(repo):
 
 
 TALK_KEYS = ['充電', 'ケーブル', '寒い', '暖房', '詰め替え', '買い忘れ', 'イヤホン', 'iPhone', '神社', 'お守り', 'ラーメン', 'カート',
-             'マラソン', '布団', '加湿器', 'レビュー', '家電', 'コーヒー', 'スマホ', '旅', 'おすすめに乗', 'ルーティン', 'ガジェット']
+             'マラソン', '布団', '加湿器', 'レビュー', '家電', 'コーヒー', 'スマホ', '旅', 'おすすめに乗', 'ルーティン', 'ガジェット',
+             '大掃除', '脱衣所', '目覚まし', '冬支度', '飲み物']
+
+# 10/28 他の人の情報投稿から：朝は「季節のひと言＋共感の問いかけ」。3行以内・1行目に季節・季節は前倒し（冬支度・年末大掃除）
+MORNING_TALKS = [
+    '朝晩ぐっと寒くなりましたね🍂\n布団から出るまで、何分かかってますか？\n私は毎朝ちょっと決意が要る派です⏰',
+    'そろそろ年末の大掃除が頭をよぎる季節ですね🧹\n今年はどこから手をつけますか？\n私は見て見ぬふりのコンロ回りからです',
+    '11月が目の前ですね🍁\n冬支度、もう何か始めましたか？\n私はまず加湿器を出すところからです💧',
+    '朝の床が冷たい季節になりました🥶\n家でいちばん寒い場所、どこですか？\n私は断然、脱衣所です',
+    '日の出が遅くなってきましたね🌅\n目覚まし、1回で起きる派？スヌーズ派？\n私はスヌーズに頼る派です',
+    '朝の空気が冷たくなりましたね🍂\n朝のあったかい飲み物、何派ですか？\n私はその日の気分で選ぶ派です☕',
+]
 
 
 def talk(repo, slot='noon'):
@@ -255,6 +265,8 @@ def talk(repo, slot='noon'):
     pool = TALKS
     if slot == 'noon' and datetime.now(JST).toordinal() % 2 == 0:  # 仲間募集は昼だけ（朝は一般の会話ネタ）
         pool = [t for t in NAKAMA if ('{f}' not in t or f >= 100) and (t != '{log}' or log_text(repo))]
+    if slot == 'morning':
+        pool = MORNING_TALKS
     pool = [t for t in pool if not banned(t)]
     left = [t for t in pool if t not in used]
     if not left:
@@ -855,7 +867,8 @@ def single_ok(it, form):
 
 
 # 10/27 本人指示：不安・詐欺っぽさ・規約違反を連想させる言葉は使わない
-BANNED = ['凍結', '垢バン', 'BAN', '規制', '稼げ', '稼ぐ', '副業', '月収', '万円稼', '絶対', '必ず儲', '儲か', '今だけ', '急いで', '限定公開', 'コンサル']
+BANNED = ['凍結', '垢バン', 'BAN', '規制', '稼げ', '稼ぐ', '副業', '月収', '万円稼', '絶対', '必ず儲', '儲か', '今だけ', '急いで', '限定公開', 'コンサル',
+          '流出', '漏えい', '漏洩', '不正ログイン', '乗っ取り']  # 10/28：「楽天で情報流出か」がトレンド中。ネタにしない・不安をあおらない
 
 
 def banned(text):
@@ -977,18 +990,14 @@ def single(a, form, it):
         imp = f"🔥 いま楽天で{rk.group(2)}位。みんな見てます"
     elif rv >= 300:
         imp = f"🔥 レビュー{it.get('reviews')}。もう答えは出てるかも"
-    # 10/27：「これだ！！」と思わせる一文（言葉そのものは使わない。体験談は作らない）
-    KORE = ['あれこれ比べても、結局ここに戻ってくる', '迷う理由が、ちょっと見つからない', 'もう他を探さなくていいかもしれません', '欲しかった条件、だいたいそろってます',
-            '探していた答えに、やっと出会えた感じ', 'これで決まり、と言いたくなる一品', '見た瞬間「あ、これ」となるタイプ', '比べれば比べるほど、こっちに傾きます']
-    kore = '👉 ' + KORE[h31(it['itemcode']) % len(KORE)]
     cap = it.get('cap') or {}
-    if cap.get('o'):
-        # 10/27 本人「同じ文面が目立つ」：投稿ノートの商品専用の紹介文（cap）があれば、使い回しの文は使わない
-        reply = '\n'.join(x for x in [f"【PR】{it['name']}", cap['o'], f"✅ ここが売り：{cap['s']}" if cap.get('s') else '',
-                                       f"{price}{'・送料無料' if free_ship(it) else ''}", f"{cap.get('a') or 'よかったらどうぞ'}👇\n楽天ROOM：{ROOM_URL}"] if x)
-    else:
-        reply = '\n'.join(x for x in [f"【PR】{it['name']}", imp, kore, f"💬 {quip}" if quip else '', f"✅ ここが売り：{sell}" if sell else '',
-                                       f"{price}{'・送料無料' if free_ship(it) else ''}", f"よかったらここからどうぞ👇\n楽天ROOM：{ROOM_URL}"] if x)
+    # 10/28：返信の型（他の人の情報投稿から）。PR表記は1行目の頭・推しの理由を事実から1文・リンクは1つで直前に「押すと何が分かるか」
+    pts = [clip(x.strip(), 40) for x in (it.get('points') or []) if x.strip() and 'やつ' not in x]
+    reason = cap.get('s') or sell or (pts[0] if pts else '')
+    lead = cap.get('o') or imp
+    reply = '\n'.join(x for x in [f"【PR】{it['name']}", lead, f"✅ 推しの理由：{reason}" if reason else '',
+                                   f"{price}{'・送料無料' if free_ship(it) else ''}",
+                                   f"今の価格とレビューは、ここから見られます👇\n楽天ROOM：{ROOM_URL}"] if x)
     qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot
     title = ('今夜の1品' if a.slot == 'night' else '今朝の1品') if form == 'basic' else TITLES.get(form, '今日の1品')
     q = {'id': qid, 'slot': a.slot, 'form': form, 'kind': 'talk' if a.slot == 'noon' else 'single', 'created': stamp.isoformat(timespec='minutes'),
