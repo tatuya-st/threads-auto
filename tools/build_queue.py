@@ -434,9 +434,9 @@ def summary(a, cands):
 # 時間帯ごとに使える形。BASE_FORMS はその時間帯の基本形で「3日以内に繰り返さない」の対象外
 SLOTS = ['morning', 'noon', 'night', 'late']
 FORMS = {
-    'morning': ['basic', 'discover', 'n1', 'n5', 'n2', 'n11', 'n3'],
+    'morning': ['basic', 'discover', 'n1', 'n5', 'n2', 'n11', 'n3', 'n4', 'n9'],
     'noon': ['talk', 'n2', 'n11'],
-    'night': ['basic', 'kuyou', 'n12'],
+    'night': ['basic', 'kuyou', 'n12', 'n9'],
     'late': ['n15'],
 }
 ALL_FORMS = {f for v in FORMS.values() for f in v}
@@ -702,6 +702,14 @@ QA_LINE = {
            '{type}を換算：{price}＝{u}約{cnt}{c}分（1{c}{base}円で計算）。計算しても物欲は止まらない。',
            '{type}の{price}、{u}にすると約{cnt}{c}分（1{c}{base}円で計算）。なぜか安く見えてきた。',
            '試しに{type}（{price}）を{u}換算：約{cnt}{c}分（1{c}{base}円で計算）。余計に悩み始めました。'],
+    # N4 謳い文句を大げさにしすぎるシリーズ：大げさなのは前半の冗談だけ。後半は物欲・カートの話にして効果効能は言わない
+    'n4': ['{type}で世界は救えない。でも{spec1}と聞いた私の物欲は救われた。', '{type}で人生は変わらない。でも{spec1}の数字を見た夜は、ちょっと眠れない。',
+           '{type}で歴史は動かない。でも{spec1}で私の指はカートへ動いた。', '{type}で地球は回らない。でも{spec1}で私の頭はぐるぐる回る。',
+           '{type}でノーベル賞は取れない。でも{spec1}にはスペック表で赤丸をつけた。', '{type}で宇宙には行けない。でも{spec1}で物欲は大気圏を突破した。',
+           '{type}で明日の天気は変わらない。でも{spec1}でカートの中は嵐の予報。', '{type}で国境はなくならない。でも{spec1}で財布欠席くんとの境目は消えかけてる。'],
+    # N9 商品が吹き出しで喋る（画像の吹き出しにも同じセリフ）。セリフはスペックの事実だけ
+    'n9': ['{type}「{spec1}。あとは任せな」', '{type}「{spec1}やで。覚えといて」', '{type}「名乗るほどの者じゃない。{spec1}です」', '{type}「{spec1}。それ以上でも以下でもない」',
+           '{type}「いいか、{spec1}だ」', '{type}「{spec1}。カートで待ってる」', '{type}「自己紹介します。{spec1}です」', '{type}「{spec1}って、言うてもええかな」'],
     'kuyou': ['財布欠席くん「本日の供養は{type}（{spec1}）。見送ったあなたも、えらい」', '財布欠席くん「{type}（{spec1}）、今日は見送りです。見送れた人、えらい」',
               '🕯 財布欠席くん「{type}（{spec1}）はお気持ちだけ。見送った判断も立派です」', '🕯 本日の供養：{type}（{spec1}）。財布欠席くん「今日も耐えた、100点」',
               '🕯 財布欠席くん「{type}（{spec1}）、心は出席・体は欠席で」', '🕯 見送り速報：{type}（{spec1}）。財布欠席くん「ポチらなかった指に拍手」',
@@ -745,7 +753,7 @@ def recent_axis_aud(recent):
     return out
 
 
-TITLES = {'basic': '今朝の1品', 'discover': '見つけてしまった…', 'n1': '買ってないのに詳しい選手権', 'n5': '逆レビュー', 'n2': '財布欠席くんとの攻防', 'kuyou': '本日の供養', 'n11': '物欲会議 議事録', 'n3': '値段を換算してみた'}
+TITLES = {'basic': '今朝の1品', 'discover': '見つけてしまった…', 'n1': '買ってないのに詳しい選手権', 'n5': '逆レビュー', 'n2': '財布欠席くんとの攻防', 'kuyou': '本日の供養', 'n11': '物欲会議 議事録', 'n3': '値段を換算してみた', 'n4': '大げさに言うと', 'n9': '商品がしゃべった'}
 
 
 def form_history(repo):
@@ -807,7 +815,7 @@ def single_ok(it, form):
         return price_num(it.get('price')) >= 1000
     if form == 'n11':
         return len(facts) >= 1
-    if form in ('discover', 'n1', 'n5', 'n2'):
+    if form in ('discover', 'n1', 'n5', 'n2', 'n4', 'n9'):
         return len(facts) >= 1 and cat_of(it, it.get('_gid', '')) != 'beauty'
     return True
 
@@ -889,7 +897,7 @@ def single(a, form, it):
         return pick_fresh(arr, seed * 7 + k, recent)
 
     spec = '、'.join(facts)
-    spec1 = facts[0] if facts else ''
+    spec1 = facts[0].split('・')[0] if facts else ''  # 10/27：「300mL・医薬部外品の表記」のような長い句は最初の数字だけにする
     if form == 'kuyou':
         q, ans = pick_fresh([x[0] for x in KU_QA], seed, recent), None
         ans = next(x[1] for x in KU_QA if x[0] == q)
@@ -940,7 +948,7 @@ def single(a, form, it):
     title = ('今夜の1品' if a.slot == 'night' else '今朝の1品') if form == 'basic' else TITLES.get(form, '今日の1品')
     q = {'id': qid, 'slot': a.slot, 'form': form, 'kind': 'talk' if a.slot == 'noon' else 'single', 'created': stamp.isoformat(timespec='minutes'),
          'title': title, 'footer': pick(FOOTERS, seed), 'topic': 'ガジェット' if cat_of(it, it.get('_gid', '')) in ('gadget', 'kaden') else '楽天ROOM',
-         'text': text, 'reply': reply,
+         'text': text, 'reply': reply, **({'serif': line3} if form == 'n9' else {}),
          'items': [{'itemcode': it['itemcode'], 'name': it['name'], 'hook': it.get('hook', ''), 'price': price, 'quip': it.get('quip', ''), 'points': facts}]}
     write_q(a, q, f'{form} 1件')
 
@@ -969,7 +977,7 @@ def main():
         feasible.add('basic')
     if a.slot == 'night' and datetime.now(JST).weekday() == 4:
         feasible.add('n12')
-    for fm in ('discover', 'n1', 'n5', 'n2', 'kuyou', 'n11', 'n3'):
+    for fm in ('discover', 'n1', 'n5', 'n2', 'kuyou', 'n11', 'n3', 'n4', 'n9'):
         if any(single_ok(it, fm) for it in singles):
             feasible.add(fm)
     seed = h31(datetime.now(JST).strftime('%Y%m%d') + a.slot)

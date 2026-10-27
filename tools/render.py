@@ -188,6 +188,18 @@ def render_single(q, out):
         text(d, (110, y), it['quip'], fq, SUB)
         y += 40
     pts = [p for p in it.get('points', []) if p][:3]
+    if q.get('serif'):  # N9：商品が吹き出しで喋る（ルイのオリジナルの配色。しっぽは左上の商品の文へ向ける）
+        y += 50
+        fs = font('bold', 44)
+        lines = wrap(d, q['serif'], fs, W - 340, 3)
+        bh = 70 + 62 * len(lines)
+        x0, x1 = 110, W - 110
+        d.polygon([(170, y + 4), (230, y + 4), (150, y - 40)], fill=ACC)
+        d.rounded_rectangle((x0, y, x1, y + bh), 44, fill='#fff7ee', outline=ACC, width=6)
+        d.polygon([(176, y + 7), (224, y + 7), (157, y - 28)], fill='#fff7ee')
+        for i, l in enumerate(lines):
+            text(d, (x0 + 50, y + 78 + 62 * i), l, fs, INK)
+        pts = []
     if pts:
         y += 30
         box_h = 40 + 62 * len(pts)
