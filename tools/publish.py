@@ -219,9 +219,11 @@ def thin_link(q):
     last = last_link_at()
     if not q.get('reply') or not last or datetime.now(JST) - last >= timedelta(hours=LINK_GAP_H):
         return q
-    q = dict(q, reply=None)
+    # 商品名は返信に残し、URLの行だけ外す（リンクはプロフィールへ）
+    lines = [l for l in q['reply'].split('\n') if 'http' not in l]
+    q = dict(q, reply='\n'.join(lines + ['楽天ROOMはプロフィールのリンクから📌']), _nolink=True)
     q['text'] = (q.get('text') or '').replace('※PR：返信に楽天ROOMのリンクがあります', '※PR：楽天ROOMはプロフィールのリンクから')
-    print(f"{q.get('id')} は直近にリンクを貼ったため、今回はリンク返信なし")
+    print(f"{q.get('id')} は直近にリンクを貼ったため、今回は返信にURLを付けない")
     return q
 
 
@@ -306,7 +308,7 @@ def publish():
                       rid = call('POST', f"{API}/{me['id']}/threads", {'media_type': 'TEXT', 'text': q['reply'], 'reply_to_id': mid, 'access_token': tok})['id']
                       time.sleep(3)
                       call('POST', f"{API}/{me['id']}/threads_publish", {'creation_id': rid, 'access_token': tok})
-                      rec['reply'] = 'ok'
+                      rec['reply'] = 'nolink' if q.get('_nolink') else 'ok'
                   except Exception as e:
                       rec['reply'] = 'ng'
                       print(f"::warning::リンクの返信は付けられませんでした（本文はプロフィールのリンク案内のみ）: {str(e).replace(tok, '***')[:150]}")

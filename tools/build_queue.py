@@ -187,7 +187,6 @@ TALKS = [
     '朝のコーヒー派？お茶派？\nちなみに私はその日の気分です☕',
     '寝る前のスマホ、やめなきゃと思いながら今日も見てます🌙\n同じ人いますか？',
     # 10/25 方針(2)：ROOMを実際にやっている人が共感する本人の実体験（事実だけ）
-    '楽天ROOM、一度凍結されてから再開しました📦\n同じ経験ある方いますか？再開してから気をつけてること、情報交換したいです',
     '楽天ROOMって、いいねは付くのに売れない問題ありません？🤔\nROOMやってる方、「買いたい人」にどうやって届けてますか？',
     'ROOMで意外だったこと。\n派手な新商品より、詰め替えや定番の消耗品がおすすめに乗りました🧴\nみなさんは何がおすすめに乗りました？',
     '楽天ROOMの投稿、毎日の流れを決めてコツコツ続けてます📱\nROOMやってる方、1日のルーティンありますか？',
@@ -206,7 +205,6 @@ NAKAMA = [
     # 10/27：仲間募集も「数字・一言・二択で答えられる問いかけ＋先に自分の答え＋みんなは？」の形にする（事実の体験だけ）
     '楽天ROOM、いいねは付くのに売れない…わかる人？🙋‍♂️\n私はまさにそれで、Threadsで話しかける方に力を入れ始めました\nROOMやってる人、みんなはどう？',
     'ROOMでおすすめに乗ったの、新商品？定番？\n私は意外にも、詰め替えや定番の消耗品でした🧴\nみんなはどっち？👇',
-    '楽天ROOM、凍結されたことある？ない？\n私は一度凍結されて、そこから再開しました📦\nみんなはどっち？',
     'ROOMの投稿、朝派？夜派？\n私は毎日の流れを決めて、コツコツ足してます📱\nみんなは何時ごろ？',
     '楽天ROOM、始めて何年目ですか？\n私はまだまだ手探り組です🔰\nみんなは？👇',
     'ROOMで紹介するの、ガジェット多め？日用品多め？\nガジェット好きなのに、気づけば日用品も増えてます🔌\nみんなは？',
@@ -241,7 +239,7 @@ def followers(repo):
 
 
 TALK_KEYS = ['充電', 'ケーブル', '寒い', '暖房', '詰め替え', '買い忘れ', 'イヤホン', 'iPhone', '神社', 'お守り', 'ラーメン', 'カート',
-             'マラソン', '布団', '加湿器', 'レビュー', '家電', 'コーヒー', 'スマホ', '旅', '凍結', 'おすすめに乗', 'ルーティン', 'ガジェット']
+             'マラソン', '布団', '加湿器', 'レビュー', '家電', 'コーヒー', 'スマホ', '旅', 'おすすめに乗', 'ルーティン', 'ガジェット']
 
 
 def talk(repo):
@@ -252,6 +250,7 @@ def talk(repo):
     pool = TALKS
     if datetime.now(JST).toordinal() % 2 == 0:
         pool = [t for t in NAKAMA if ('{f}' not in t or f >= 100) and (t != '{log}' or log_text(repo))]
+    pool = [t for t in pool if not banned(t)]
     left = [t for t in pool if t not in used]
     if not left:
         used = [t for t in used if t not in pool]
@@ -775,7 +774,33 @@ def single_ok(it, form):
     return True
 
 
+# 10/27 本人指示：不安・詐欺っぽさ・規約違反を連想させる言葉は使わない
+BANNED = ['凍結', '垢バン', 'BAN', '規制', '稼げ', '稼ぐ', '副業', '月収', '万円稼', '絶対', '必ず儲', '儲か', '今だけ', '急いで', '限定公開', 'コンサル']
+
+
+def banned(text):
+    return [w for w in BANNED if w in (text or '')]
+
+
+def slot_done(repo, slot):
+    """今日この時間帯の投稿がすでにある（公開済み・公開待ち）なら True。削除・見送りした分は数えない。"""
+    day = datetime.now(JST).strftime('%Y%m%d')
+    for f in glob.glob(os.path.join(repo, 'queue', f'{day}-*-{slot}.json')):
+        qid = os.path.splitext(os.path.basename(f))[0]
+        pp = os.path.join(repo, 'state', 'posted', qid + '.json')
+        if not os.path.exists(pp):
+            return True
+        r = json.load(open(pp, encoding='utf-8'))
+        if not r.get('deleted') and not r.get('skipped'):
+            return True
+    return False
+
+
 def write_q(a, q, note):
+    bad = banned(q.get('text', '') + str(q.get('reply') or ''))
+    if bad:
+        print(f"なし（使わない言葉 {bad} が入ったため作り直しが必要）")
+        return
     os.makedirs(os.path.join(a.repo, 'queue'), exist_ok=True)
     with open(os.path.join(a.repo, 'queue', q['id'] + '.json'), 'w', encoding='utf-8') as f:
         json.dump(q, f, ensure_ascii=False, indent=1)
@@ -846,7 +871,10 @@ def single(a, form, it):
         if '〜' in price:
             fmt['price'] = price.replace('〜', 'から')
     line3 = pf(QA_LINE[form], 2).format(**fmt)
-    text = q + '\n' + ans + '\n' + line3 + '\n' + pf(QA_CLOSE, 3)
+    close = pf(QA_CLOSE, 3)
+    if line3.rstrip().endswith('👇'):
+        close = close.rstrip('👇').rstrip()  # 👇が2行続かないように
+    text = q + '\n' + ans + '\n' + line3 + '\n' + close
     text = clip(text + '\n\n' + PR_LINE, 490)
     reply = f"【PR】今日の1品はこちら👇\n{it['name']}\n{price}{'・送料無料' if free_ship(it) else ''}\n楽天ROOM：{ROOM_URL}"
     qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot
@@ -865,7 +893,11 @@ def main():
     ap.add_argument('--repo', required=True)
     ap.add_argument('--slot', choices=SLOTS, default='night')
     ap.add_argument('--form', choices=sorted(ALL_FORMS), default=None, help='形を指定（使えないときは自動で選ぶ）')
+    ap.add_argument('--force', action='store_true', help='同じ時間帯の投稿が今日すでにあっても作る（削除後の出し直し用）')
     a = ap.parse_args()
+    if not a.force and slot_done(a.repo, a.slot):
+        print('なし（今日のこの時間帯はもう投稿済み）')
+        return
     if a.slot == 'late':
         return late(a)
     has_data = os.path.isfile(a.html) and os.path.getsize(a.html) > 0
