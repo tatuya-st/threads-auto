@@ -197,6 +197,34 @@ def recent_texts(tok, me):
         return None
 
 
+LINK_GAP_H = 20  # リンク返信は約1日1回まで（貼りすぎによる表示減・凍結を避ける）
+
+
+def last_link_at():
+    """最後にリンク返信を付けた時刻（state/posted の記録から）"""
+    last = None
+    for f in glob.glob(os.path.join(ROOT, 'state', 'posted', '*.json')):
+        try:
+            r = json.load(open(f, encoding='utf-8'))
+            if r.get('reply') == 'ok' and r.get('at'):
+                t = datetime.fromisoformat(r['at'])
+                last = t if last is None or t > last else last
+        except Exception:
+            pass
+    return last
+
+
+def thin_link(q):
+    """直近にリンクを貼っていたら、今回はリンク返信を付けずプロフィール案内にする（PR表記は残す）"""
+    last = last_link_at()
+    if not q.get('reply') or not last or datetime.now(JST) - last >= timedelta(hours=LINK_GAP_H):
+        return q
+    q = dict(q, reply=None)
+    q['text'] = (q.get('text') or '').replace('※PR：返信に楽天ROOMのリンクがあります', '※PR：楽天ROOMはプロフィールのリンクから')
+    print(f"{q.get('id')} は直近にリンクを貼ったため、今回はリンク返信なし")
+    return q
+
+
 def publish():
     repo = os.environ['GITHUB_REPOSITORY']
     todo = []
@@ -224,8 +252,15 @@ def publish():
         if remote_has(f'state/posted/{qid}.json'):
             print(f'{qid} はほかの実行で公開済みなので出しません')
             continue
+        q = thin_link(q)
         # 二重投稿の最終チェック：すでに Threads に出した商品が入っていたら公開しない
-        dup = [it['itemcode'] for it in q['items'] if it['itemcode'] in sent]
+        # 商品つきの投稿には必ずPR表記を入れる（ステマ規制対策）
+        if q.get('items') and 'PR' not in (q.get('text') or ''):
+            q['text'] = (q.get('text') or '').rstrip() + '\n\n※PR'
+        # 同じ商品コードに加え、同じ商品名も二度と出さない（楽天の「同じSNSで同じ商品は1回まで」対策）
+        nm = lambda s: ''.join((s or '').split()).lower()
+        sent_names = {nm(v.get('name')) for v in sent.values() if isinstance(v, dict)}
+        dup = [it['itemcode'] for it in q['items'] if it['itemcode'] in sent or nm(it.get('name')) in sent_names]
         rec = {'id': qid, 'axis': q.get('axis'), 'theme': q.get('theme'), 'codes': [it['itemcode'] for it in q['items']]}
         try:
             made = datetime.strptime(qid[:13], '%Y%m%d-%H%M').replace(tzinfo=JST)
