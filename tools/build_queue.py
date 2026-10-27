@@ -1028,8 +1028,8 @@ def main():
     if not form:
         print('なし')
         return
-    if a.slot == 'morning' and not a.form:
-        form = 'talk'
+    if a.slot == 'morning':
+        form = 'talk'  # 形の指定があっても朝は会話だけ（10/27 数字で判断）
     if form == 'talk':
         return talk(a.repo, a.slot)
     if form == 'summary':
