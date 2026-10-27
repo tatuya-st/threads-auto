@@ -885,8 +885,8 @@ def single(a, form, it):
     # 10/27：返信も短く・ユーモア・ここが売り・よかったらどうぞ
     sell = '／'.join([f for f in facts if '送料無料' not in f][:2])
     quip = it.get('quip', '') if 'やつ' not in it.get('quip', '') else ''
-    reply = '\n'.join(x for x in [f"【PR】{it['name']}", f"💬 {quip}" if quip else '', f"✨ ここが推し：{sell}" if sell else '',
-                                   f"{price}{'・送料無料' if free_ship(it) else ''}", f"よかったら、お迎えしてあげてね👇\n楽天ROOM：{ROOM_URL}"] if x)
+    reply = '\n'.join(x for x in [f"【PR】{it['name']}", f"💬 {quip}" if quip else '', f"✅ ここが売り：{sell}" if sell else '',
+                                   f"{price}{'・送料無料' if free_ship(it) else ''}", f"よかったらここからどうぞ👇\n楽天ROOM：{ROOM_URL}"] if x)
     qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot
     title = ('今夜の1品' if a.slot == 'night' else '今朝の1品') if form == 'basic' else TITLES.get(form, '今日の1品')
     q = {'id': qid, 'slot': a.slot, 'form': form, 'kind': 'talk' if a.slot == 'noon' else 'single', 'created': stamp.isoformat(timespec='minutes'),
