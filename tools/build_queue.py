@@ -203,17 +203,15 @@ TALKS = [
 # ROOM仲間募集の投稿（他の人の「初報酬報告＋仲間募集」がいいね149・コメント87だったので取り入れる）。
 # 1日おきに昼の会話投稿をこちらにする。売上などの数字は作らない（本当の数字だけ使う）
 NAKAMA = [
-    '楽天ROOM、コツコツ続けてます📦\nまだまだ手探りなので、同じように頑張ってる方と繋がりたいです🤝\nコメントもらえたらフォロー返しに行きます！',
-    'Threadsのフォロワーさんが{f}人になりました🙏\nいつも見てくれてありがとうございます！\n楽天ROOMやってる方、ゆるく情報交換しませんか？',
-    '楽天ROOM、続けるのが一番むずかしい気がしてます😂\n同じく頑張ってる方、一緒に励まし合いましょう🔥\nコメント・フォロー大歓迎です',
-    'ROOMで「これ紹介してよかった」って商品、ありますか？\nROOM仲間さんのおすすめ、知りたいです👇',
-    '仕事しながら楽天ROOMやってます💼\n時間がない中でどう続けてるか、みなさんの工夫を教えてください🙏\nフォロー返しに行きます！',
-    '楽天ROOMやってる方、いますか？🌱\nまだまだ勉強中なので、一緒に頑張れる仲間を探してます🤝\n気軽に絡んでください！',
-    # 10/25 他の人の投稿で反応が多かった形：運用ログ（本当の数字だけ）・みんなへの質問・一喜一憂の共感
-    '{log}',
-    '楽天ROOM・アフィリエイトやってる皆さん、\n今月の調子どうですか？📊\n良かった人も、そうでもない人も、ゆるく話しましょう🤝',
-    'ROOMもThreadsも、数字に一喜一憂しがちです😂\n0の日が続いてもめげない方法、\nみなさんどうしてますか？',
-    'お買い物マラソンと5と0のつく日、\nやっぱり動きが違いますよね🛒\nみなさんはセールの日、何を意識してますか？',
+    # 10/27：仲間募集も「数字・一言・二択で答えられる問いかけ＋先に自分の答え＋みんなは？」の形にする（事実の体験だけ）
+    '楽天ROOM、いいねは付くのに売れない…わかる人？🙋‍♂️\n私はまさにそれで、Threadsで話しかける方に力を入れ始めました\nROOMやってる人、みんなはどう？',
+    'ROOMでおすすめに乗ったの、新商品？定番？\n私は意外にも、詰め替えや定番の消耗品でした🧴\nみんなはどっち？👇',
+    '楽天ROOM、凍結されたことある？ない？\n私は一度凍結されて、そこから再開しました📦\nみんなはどっち？',
+    'ROOMの投稿、朝派？夜派？\n私は毎日の流れを決めて、コツコツ足してます📱\nみんなは何時ごろ？',
+    '楽天ROOM、始めて何年目ですか？\n私はまだまだ手探り組です🔰\nみんなは？👇',
+    'ROOMで紹介するの、ガジェット多め？日用品多め？\nガジェット好きなのに、気づけば日用品も増えてます🔌\nみんなは？',
+    '楽天ROOM、1日に何件投稿してますか？\n私は「毎日ちょっとずつ」派です📱\nROOMやってる人、みんなは？',
+    'ROOMの商品、写真の映え重視？口コミ重視？\n私はレビュー件数を見てから決める派です🔍\nみんなは？',
 ]
 
 
@@ -259,18 +257,19 @@ def talk(repo):
         used = [t for t in used if t not in pool]
         left = pool[:]
     # 同じ日の朝の投稿と話題がかぶらないようにする（例：朝「お守り何個？」→昼もお守り、を避ける）
-    today = datetime.now(JST).strftime('%Y%m%d')
+    # 10/27：直近3日の投稿（text・reply）と話題・相手がかぶらないようにする
     seen = ''
-    for f in glob.glob(os.path.join(repo, 'queue', today + '-*.json')):
-        d = json.load(open(f, encoding='utf-8'))
-        if d.get('slot') != 'noon':
-            seen += d.get('text', '') + d.get('reply', '')
+    for k in range(3):
+        day = (datetime.now(JST) - timedelta(days=k)).strftime('%Y%m%d')
+        for f in glob.glob(os.path.join(repo, 'queue', day + '-*.json')):
+            d = json.load(open(f, encoding='utf-8'))
+            seen += d.get('text', '') + str(d.get('reply', ''))
     fresh = [t for t in left if not any(k in t and k in seen for k in TALK_KEYS)]
     left = fresh or left
     text = left[h31(datetime.now(JST).strftime('%Y%m%d')) % len(left)]
     used.append(text)
     text = log_text(repo) if text == '{log}' else text.replace('{f}', str(f))
-    if pool is TALKS and not re.search(r'(？|\?|👇|ますか|ませんか|ですか)[^\n]{0,3}$', text):
+    if not re.search(r'(？|\?|👇|ますか|ませんか|ですか)[^\n]{0,3}$', text):
         text += '\nみんなは？👇'  # 10/27：最後にもう一度聞く
     os.makedirs(os.path.dirname(used_p), exist_ok=True)
     json.dump(used, open(used_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
