@@ -885,7 +885,18 @@ def single(a, form, it):
     # 10/27：返信も短く・ユーモア・ここが売り・よかったらどうぞ
     sell = '／'.join([f for f in facts if '送料無料' not in f][:2])
     quip = it.get('quip', '') if 'やつ' not in it.get('quip', '') else ''
-    reply = '\n'.join(x for x in [f"【PR】{it['name']}", f"💬 {quip}" if quip else '', f"✅ ここが売り：{sell}" if sell else '',
+    # 10/27：インパクトの1行（事実の数字＋ひとボケ）
+    allt = ' '.join(list(it.get('badges') or []) + list(it.get('points') or []) + [it.get('why') or ''])
+    off = re.search(r'(\d+)%OFF', allt); rk = re.search(r'(リアルタイム|デイリー)\s*(\d+)位', allt)
+    rv = int(re.sub(r'\D', '', str(it.get('reviews') or '')) or 0)
+    imp = ''
+    if off and int(off.group(1)) >= 20:
+        imp = f"🔥 まさかの{off.group(1)}%OFF…これは事件です"
+    elif rk and int(rk.group(2)) <= 10:
+        imp = f"🔥 いま楽天で{rk.group(2)}位。みんな見てます"
+    elif rv >= 300:
+        imp = f"🔥 レビュー{it.get('reviews')}。もう答えは出てるかも"
+    reply = '\n'.join(x for x in [f"【PR】{it['name']}", imp, f"💬 {quip}" if quip else '', f"✅ ここが売り：{sell}" if sell else '',
                                    f"{price}{'・送料無料' if free_ship(it) else ''}", f"よかったらここからどうぞ👇\n楽天ROOM：{ROOM_URL}"] if x)
     qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot
     title = ('今夜の1品' if a.slot == 'night' else '今朝の1品') if form == 'basic' else TITLES.get(form, '今日の1品')
