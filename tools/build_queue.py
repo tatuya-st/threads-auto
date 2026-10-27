@@ -263,7 +263,7 @@ def talk(repo):
     # 同じ日の朝の投稿と話題がかぶらないようにする（例：朝「お守り何個？」→昼もお守り、を避ける）
     # 10/27：直近3日の投稿（text・reply）と話題・相手がかぶらないようにする
     seen = ''
-    for k in range(3):
+    for k in range(7):  # 10/27：伸びた話題（スマホ）の焼き直しが伸びなかったため、話題は7日あける
         day = (datetime.now(JST) - timedelta(days=k)).strftime('%Y%m%d')
         for f in glob.glob(os.path.join(repo, 'queue', day + '-*.json')):
             d = json.load(open(f, encoding='utf-8'))
