@@ -913,7 +913,12 @@ def n12(a):
 
 def late(a):
     stamp = datetime.now(JST)
-    text = rotate(a.repo, N15, h31(stamp.strftime('%Y%m%d') + 'late'))
+    # 直近2回の深夜つぶやきと同じ言い回し（3文字以上の重なり）を含む文は避ける（例：「夜の私」が続かないように）
+    prev = [json.load(open(f, encoding='utf-8')).get('text', '') for f in sorted(glob.glob(os.path.join(a.repo, 'queue', '*-late.json')))[-2:]]
+    grams = lambda t: {g for g in (t.replace('\n', '')[i:i + 3] for i in range(len(t))) if len(g) == 3 and not set(g) & set('、。…「」 ')}
+    pg = set().union(*[grams(t) for t in prev]) if prev else set()
+    pool = [t for t in N15 if not grams(t) & pg] or N15
+    text = rotate(a.repo, pool, h31(stamp.strftime('%Y%m%d') + 'late'))
     qid = stamp.strftime('%Y%m%d-%H%M') + '-late'
     write_q(a, {'id': qid, 'slot': 'late', 'form': 'n15', 'kind': 'talk', 'created': stamp.isoformat(timespec='minutes'), 'text': text, 'items': []}, '深夜のつぶやき')
 
