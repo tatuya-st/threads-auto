@@ -247,7 +247,7 @@ TALK_KEYS = ['充電', 'ケーブル', '寒い', '暖房', '詰め替え', '買�
              'マラソン', '布団', '加湿器', 'レビュー', '家電', 'コーヒー', 'スマホ', '旅', 'おすすめに乗', 'ルーティン', 'ガジェット']
 
 
-def talk(repo):
+def talk(repo, slot='noon'):
     used_p = os.path.join(repo, 'state', 'talk.json')
     used = json.load(open(used_p, encoding='utf-8')) if os.path.exists(used_p) else []
     # 1日おきに仲間募集の投稿にする
@@ -272,7 +272,7 @@ def talk(repo):
     left = fresh or left
     shp = set(last_shapes(repo))  # 10/27：直前の投稿と同じ問いかけの形は続けない
     left = [t for t in left if shape_of(t) not in shp] or left
-    text = left[h31(datetime.now(JST).strftime('%Y%m%d')) % len(left)]
+    text = left[h31(datetime.now(JST).strftime('%Y%m%d') + slot) % len(left)]
     used.append(text)
     text = log_text(repo) if text == '{log}' else text.replace('{f}', str(f))
     text = re.sub(r'[ 　]*👇+$', '', text.rstrip())  # 10/27：人間らしく、👇の決まり文句は外す
@@ -281,8 +281,8 @@ def talk(repo):
     os.makedirs(os.path.dirname(used_p), exist_ok=True)
     json.dump(used, open(used_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     stamp = datetime.now(JST)
-    qid = stamp.strftime('%Y%m%d-%H%M') + '-noon'
-    q = {'id': qid, 'slot': 'noon', 'form': 'talk', 'kind': 'talk', 'created': stamp.isoformat(timespec='minutes'), 'text': text, 'items': []}
+    qid = stamp.strftime('%Y%m%d-%H%M') + '-' + slot
+    q = {'id': qid, 'slot': slot, 'form': 'talk', 'kind': 'talk', 'created': stamp.isoformat(timespec='minutes'), 'text': text, 'items': []}
     os.makedirs(os.path.join(repo, 'queue'), exist_ok=True)
     with open(os.path.join(repo, 'queue', qid + '.json'), 'w', encoding='utf-8') as f:
         json.dump(q, f, ensure_ascii=False, indent=1)
@@ -436,7 +436,7 @@ def summary(a, cands):
 # 時間帯ごとに使える形。BASE_FORMS はその時間帯の基本形で「3日以内に繰り返さない」の対象外
 SLOTS = ['morning', 'noon', 'night', 'late']
 FORMS = {
-    'morning': ['basic', 'discover', 'n1', 'n5', 'n2', 'n11', 'n3', 'n4', 'n9'],
+    'morning': ['talk', 'basic', 'discover', 'n1', 'n5', 'n2', 'n11', 'n3', 'n4', 'n9'],
     'noon': ['talk', 'n2', 'n11'],
     'night': ['basic', 'kuyou', 'n12', 'n9'],
     'late': ['n15'],
@@ -987,7 +987,7 @@ def single(a, form, it):
     qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot
     title = ('今夜の1品' if a.slot == 'night' else '今朝の1品') if form == 'basic' else TITLES.get(form, '今日の1品')
     q = {'id': qid, 'slot': a.slot, 'form': form, 'kind': 'talk' if a.slot == 'noon' else 'single', 'created': stamp.isoformat(timespec='minutes'),
-         'title': title, 'footer': pick(FOOTERS, seed), 'topic': 'ガジェット' if cat_of(it, it.get('_gid', '')) in ('gadget', 'kaden') else '楽天ROOM',
+         'title': title, 'footer': pick([x for x in FOOTERS if '番号' not in x], seed), 'topic': 'ガジェット' if cat_of(it, it.get('_gid', '')) in ('gadget', 'kaden') else '楽天ROOM',
          'text': text, 'reply': reply, **({'serif': line3} if form == 'n9' else {}),
          'items': [{'itemcode': it['itemcode'], 'name': it['name'], 'hook': it.get('hook', ''), 'price': price, 'quip': it.get('quip', ''), 'points': facts}]}
     write_q(a, q, f'{form} 1件')
@@ -1010,7 +1010,8 @@ def main():
     has_data = os.path.isfile(a.html) and os.path.getsize(a.html) > 0
     cands = gather(a) if has_data else []
     singles = [it for it in cands if it.get('quip') and 'やつ' not in it.get('quip', '')]
-    feasible = {'talk'} if a.slot == 'noon' else set()
+    # 10/27 見直し：商品つきの投稿は表示14〜24回、会話だけの投稿は95〜4851回。朝も会話だけにし、商品とリンクは夜の1本だけにする
+    feasible = {'talk'} if a.slot in ('noon', 'morning') else set()
     if len(singles) >= 2:
         feasible.add('summary')
     if singles:
@@ -1027,8 +1028,10 @@ def main():
     if not form:
         print('なし')
         return
+    if a.slot == 'morning' and not a.form:
+        form = 'talk'
     if form == 'talk':
-        return talk(a.repo)
+        return talk(a.repo, a.slot)
     if form == 'summary':
         return summary(a, cands)
     if form == 'n12':
