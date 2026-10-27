@@ -896,8 +896,10 @@ def single(a, form, it):
         imp = f"🔥 いま楽天で{rk.group(2)}位。みんな見てます"
     elif rv >= 300:
         imp = f"🔥 レビュー{it.get('reviews')}。もう答えは出てるかも"
-    m = re.match(r'^(.+?(たい|ない|る|い))人(の[^、。]*)?に$', it.get('hook') or '')
-    kore = f"👉 {m.group(1)}なら、これだ！" if m else ''
+    # 10/27：「これだ！！」と思わせる一文（言葉そのものは使わない。体験談は作らない）
+    KORE = ['あれこれ比べても、結局ここに戻ってくる', '迷う理由が、ちょっと見つからない', 'もう他を探さなくていいかもしれません', '欲しかった条件、だいたいそろってます',
+            '探していた答えに、やっと出会えた感じ', 'これで決まり、と言いたくなる一品', '見た瞬間「あ、これ」となるタイプ', '比べれば比べるほど、こっちに傾きます']
+    kore = '👉 ' + KORE[h31(it['itemcode']) % len(KORE)]
     reply = '\n'.join(x for x in [f"【PR】{it['name']}", imp, kore, f"💬 {quip}" if quip else '', f"✅ ここが売り：{sell}" if sell else '',
                                    f"{price}{'・送料無料' if free_ship(it) else ''}", f"よかったらここからどうぞ👇\n楽天ROOM：{ROOM_URL}"] if x)
     qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot
