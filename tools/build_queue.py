@@ -274,7 +274,7 @@ def talk(repo):
     used.append(text)
     text = log_text(repo) if text == '{log}' else text.replace('{f}', str(f))
     if not re.search(r'(？|\?|👇|ますか|ませんか|ですか)[^\n]{0,3}$', text):
-        text += '\nみんなは？👇'  # 10/27：最後にもう一度聞く
+        text += '\nみんなは？'  # 10/27：最後にもう一度聞く（決まり文句の👇は付けない）
     os.makedirs(os.path.dirname(used_p), exist_ok=True)
     json.dump(used, open(used_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     stamp = datetime.now(JST)
@@ -638,8 +638,7 @@ QA = [
     ({'life'}, '節約中', 'コスパ', '節約中のみなさん、日用品はまとめ買い派？その都度派？', '私は置き場所が許すかぎりまとめ買い派です📦'),
     ({'life'}, '一人暮らし', '時短', '日用品の買い忘れ、月に何回ありますか？', '私は「切れてから気づく」派です🧴'),
 ]
-QA_CLOSE = ['みんなは？👇', 'みなさんは？数字でも一言でもどうぞ👇', 'あなたの答え、リプで教えてください👇', 'みんなの答えも聞かせてください👇',
-            'ひとことでいいので、みなさんのも教えてください👇', 'みなさんはどうですか？👇', 'リプで答え合わせしましょう👇', 'あなたは？一言でどうぞ👇']
+QA_CLOSE = ['みんなは？', 'みんなはどう？', 'あなたは？', 'みんなのも聞きたいです', 'みんなはどうしてる？', '同じ人いますか？', 'ほかの人のも知りたい', 'みんなはどっち寄り？']  # 10/27：人間らしく。決まり文句と👇の連発をやめる
 # 形ごとの3行目（商品は種類だけ。数字はスペックの事実だけ）
 QA_LINE = {
     'basic': ['そんな人に{type}を1つ、返信に置いておきます👇', '今日の1品（{type}）は返信にそっと置いておきます👇', '気になる{type}を1つ、返信に置いておきますね👇',
@@ -877,9 +876,11 @@ def single(a, form, it):
             fmt['price'] = price.replace('〜', 'から')
     line3 = pf(QA_LINE[form], 2).format(**fmt)
     close = pf(QA_CLOSE, 3)
-    if line3.rstrip().endswith('👇'):
-        close = close.rstrip('👇').rstrip()  # 👇が2行続かないように
-    text = q + '\n' + ans + '\n' + line3 + '\n' + close
+    # 10/27：人間らしく。basic は「返信に置いておきます」の宣伝行を入れず、会話だけにする（商品は返信で十分伝わる）
+    body = [q, ans] if form == 'basic' else [q, ans, line3.rstrip('👇').rstrip()]
+    if not re.search(r'(？|\?)$', body[-1]):
+        body.append(close)
+    text = '\n'.join(body)
     text = clip(text + '\n\n' + PR_LINE, 490)
     reply = f"【PR】今日の1品はこちら👇\n{it['name']}\n{price}{'・送料無料' if free_ship(it) else ''}\n楽天ROOM：{ROOM_URL}"
     qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot

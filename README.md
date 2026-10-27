@@ -8,4 +8,5 @@
 - index.html … 成績表（GitHub Pages: https://tatuya-st.github.io/threads-auto/）
 - 毎日 19:23 コメント確認 → 夜にルイが仕分け：★は queue/replies/ に置いて自動で返信（結果は state/replied/）、本人が返すものは下書きを state/drafts.json → Issue でスマホに届く
 - リンク返信は約1日1回まで（20時間あける）。商品つき投稿は必ずPR表記。同じ商品（商品コード・商品名）は二度と出さない
+- 文章は人間らしく：決まり文句・宣伝っぽい行・👇の連発は使わない。友だちに話しかける短い言葉で
 - 投稿時間は tools/timing.py が閲覧数から選ぶ（用意から0〜80分後）。失敗は Issue（alert）で通知
