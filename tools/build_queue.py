@@ -896,7 +896,9 @@ def single(a, form, it):
         imp = f"🔥 いま楽天で{rk.group(2)}位。みんな見てます"
     elif rv >= 300:
         imp = f"🔥 レビュー{it.get('reviews')}。もう答えは出てるかも"
-    reply = '\n'.join(x for x in [f"【PR】{it['name']}", imp, f"💬 {quip}" if quip else '', f"✅ ここが売り：{sell}" if sell else '',
+    m = re.match(r'^(.+?(たい|ない|る|い))人(の[^、。]*)?に$', it.get('hook') or '')
+    kore = f"👉 {m.group(1)}なら、これだ！" if m else ''
+    reply = '\n'.join(x for x in [f"【PR】{it['name']}", imp, kore, f"💬 {quip}" if quip else '', f"✅ ここが売り：{sell}" if sell else '',
                                    f"{price}{'・送料無料' if free_ship(it) else ''}", f"よかったらここからどうぞ👇\n楽天ROOM：{ROOM_URL}"] if x)
     qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot
     title = ('今夜の1品' if a.slot == 'night' else '今朝の1品') if form == 'basic' else TITLES.get(form, '今日の1品')
