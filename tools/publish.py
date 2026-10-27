@@ -29,8 +29,8 @@ def call(method, url, params, tries=3):
     """Threads API を呼ぶ。サーバー側の一時的なエラー（5xx・429・通信切れ）は待って最大3回までやり直す。"""
     data = urllib.parse.urlencode(params).encode()
     for n in range(tries):
-        if method == 'GET':
-            req = urllib.request.Request(url + '?' + data.decode())
+        if method in ('GET', 'DELETE'):
+            req = urllib.request.Request(url + '?' + data.decode(), method=method)
         else:
             req = urllib.request.Request(url, data=data, method='POST')
         try:
@@ -424,6 +424,24 @@ def search():
         print('::notice::検索の許可がまだ有効になっていません（threads_keyword_search）')
 
 
+def delete():
+    """DELETE_ID の投稿を Threads から削除する（言葉選びが悪かった投稿の出し直し用）"""
+    mid = os.environ.get('DELETE_ID', '').strip()
+    if not mid.isdigit():
+        raise SystemExit('削除する投稿のidがありません')
+    tok, _ = token()
+    try:
+        call('DELETE', f'{API}/{mid}', {'access_token': tok})
+    except Exception as e:
+        raise SystemExit(f"削除できませんでした: {str(e).replace(tok, '***')[:200]}")
+    for f in glob.glob(os.path.join(ROOT, 'state', 'posted', '*.json')):
+        rec = json.load(open(f, encoding='utf-8'))
+        if rec.get('media_id') == mid:
+            rec['deleted'] = datetime.now(JST).isoformat(timespec='minutes')
+            json.dump(rec, open(f, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    print(f'{mid} を削除しました')
+
+
 def oauth():
     """許可コード（CODE）からトークンを作って暗号化して保存する。スマホでトークン生成ツールが使えないとき用。"""
     code, app = os.environ.get('CODE', '').strip().replace('#_', ''), os.environ.get('APP_ID', '').strip()
@@ -441,4 +459,4 @@ def oauth():
 
 
 if __name__ == '__main__':
-    {'oauth': oauth, 'publish': publish, 'refresh': refresh, 'insights': insights, 'comments': comments, 'search': search}[sys.argv[1] if len(sys.argv) > 1 else 'publish']()
+    {'oauth': oauth, 'publish': publish, 'refresh': refresh, 'insights': insights, 'comments': comments, 'search': search, 'delete': delete}[sys.argv[1] if len(sys.argv) > 1 else 'publish']()

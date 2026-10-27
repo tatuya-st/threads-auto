@@ -1,0 +1,29 @@
+name: 投稿の削除
+on:
+  workflow_dispatch:
+    inputs:
+      media_id:
+        description: 削除する投稿のid
+        required: true
+permissions:
+  contents: write
+concurrency:
+  group: threads-delete
+  cancel-in-progress: false
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 削除する
+        env:
+          DELETE_ID: ${{ inputs.media_id }}
+          THREADS_TOKEN: ${{ secrets.THREADS || secrets.THREADS_ACCESS_TOKEN || secrets.TOKEN || secrets.THREADS_TOKEN }}
+          THREADS_APP_SECRET: ${{ secrets.THREADS_APP_SECRET || secrets.KEY }}
+          TOKEN2: ${{ secrets.TOKEN }}
+        run: python3 tools/publish.py delete
+      - name: 記録を保存
+        run: |
+          git config user.name "threads-bot"; git config user.email "threads-bot@users.noreply.github.com"
+          git add state
+          git diff --cached --quiet || (git commit -qm "削除の記録" && git pull -q --rebase && git push -q)
