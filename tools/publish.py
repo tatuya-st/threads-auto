@@ -433,7 +433,8 @@ def delete():
     try:
         call('DELETE', f'{API}/{mid}', {'access_token': tok})
     except Exception as e:
-        raise SystemExit(f"削除できませんでした: {str(e).replace(tok, '***')[:200]}")
+        print(f"::error::削除できませんでした: {str(e).replace(tok, '***')[:200]}")
+        raise SystemExit(1)
     for f in glob.glob(os.path.join(ROOT, 'state', 'posted', '*.json')):
         rec = json.load(open(f, encoding='utf-8'))
         if rec.get('media_id') == mid:
