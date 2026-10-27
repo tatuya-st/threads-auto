@@ -933,6 +933,13 @@ def main():
         return n12(a)
     rec = recent_texts(a.repo)
     ok = [x for x in singles if single_ok(x, form)]
+    # 10/27：情報収集（state/research.json の hot_words）で今話題の種類・ブランドを先に使う
+    try:
+        hot = json.load(open(os.path.join(a.repo, 'state', 'research.json'), encoding='utf-8')).get('hot_words', [])
+    except Exception:
+        hot = []
+    if hot:
+        ok.sort(key=lambda x: not any(w and w.lower() in (x.get('name', '') + x.get('hook', '')).lower() for w in hot))
     it = next((x for x in ok if type_of(x)[0] not in rec), ok[0])
     return single(a, form, it)
 
