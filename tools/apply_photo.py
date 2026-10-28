@@ -34,6 +34,7 @@ def main():
     rel = f"assets/photos/{q['id']}.jpg"
     panel(src).save(os.path.join(ROOT, rel), quality=92)
     q['photo'] = rel
+    q.pop('hold', None)
     from datetime import datetime, timezone, timedelta
     q['released'] = datetime.now(timezone(timedelta(hours=9))).isoformat(timespec='minutes')
     if len(sys.argv) > 3:

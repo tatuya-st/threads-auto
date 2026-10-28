@@ -245,7 +245,11 @@ def publish():
     for f in sorted(glob.glob(os.path.join(ROOT, 'queue', '*.json'))):
         qid = os.path.splitext(os.path.basename(f))[0]
         if not os.path.exists(os.path.join(ROOT, 'state', 'posted', qid + '.json')):
-            todo.append((qid, json.load(open(f, encoding='utf-8'))))
+            q_ = json.load(open(f, encoding='utf-8'))
+            if q_.get('hold'):  # マスターの画像待ち。届くまで出さない
+                print(f'{qid} はマスターの画像待ちなので出しません')
+                continue
+            todo.append((qid, q_))
     has_rep = any(not os.path.exists(os.path.join(ROOT, 'state', 'replied', os.path.basename(f)))
                   for f in glob.glob(os.path.join(ROOT, 'queue', 'replies', '*.json')))
     if not todo and not has_rep:
