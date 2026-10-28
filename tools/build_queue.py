@@ -905,6 +905,13 @@ def write_q(a, q, note):
     if bad:
         print(f"なし（使わない言葉 {bad} が入ったため作り直しが必要）")
         return
+    # マスターが前もって送ってくれた場面画像（assets/photos/ready/<商品コード>.jpg）があれば、そのまま使う
+    if q.get('kind') == 'single' and q.get('items'):
+        rp = os.path.join('assets', 'photos', 'ready', q['items'][0]['itemcode'].replace(':', '_') + '.jpg')
+        if os.path.exists(os.path.join(a.repo, rp)):
+            q['photo'] = rp
+            q.pop('hold', None)
+            note += '（マスターの画像あり）'
     os.makedirs(os.path.join(a.repo, 'queue'), exist_ok=True)
     with open(os.path.join(a.repo, 'queue', q['id'] + '.json'), 'w', encoding='utf-8') as f:
         json.dump(q, f, ensure_ascii=False, indent=1)
