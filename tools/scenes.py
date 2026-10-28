@@ -304,6 +304,38 @@ def s_cart(d, W, H, f):
 DRAW = {'battery': s_battery, 'winter': s_winter, 'refill': s_refill, 'oral': s_oral, 'iphone': s_iphone, 'cart': s_cart}
 
 
+def draw_custom(im, box, path, line, fontfn):
+    """マスターがMUSEで作った場面写真（assets/photos/）を貼る。line があれば上に吹き出しを重ねる。"""
+    x0, y0, x1, y1 = [int(v) for v in box]
+    p = Image.open(path).convert('RGBA').resize((x1 - x0, y1 - y0), Image.LANCZOS)
+    d = ImageDraw.Draw(p)
+    if line:
+        lines = line.split('\n')
+        f = fontfn('bold', 34)
+        bw = max(d.textlength(l, font=f) for l in lines) + 60
+        bh = len(lines) * 44 + 36
+        d.rounded_rectangle((24, 20, 24 + bw, 20 + bh), 30, fill=(255, 255, 255, 255), outline=(45, 40, 40), width=3)
+        for i, l in enumerate(lines):
+            d.text((24 + bw / 2, 20 + 18 + 22 + i * 44), l, font=f, fill=INK, anchor='mm')
+    _finish(im, p, x0, y0, fontfn)
+
+
+def _finish(im, p, x0, y0, fontfn):
+    d = ImageDraw.Draw(p)
+    fc = fontfn('medium', 20)
+    cap = '※写真はイメージです。実際の商品とは異なります'
+    cw = d.textlength(cap, font=fc)
+    W2, H2 = p.size
+    ov = Image.new('RGBA', p.size, (0, 0, 0, 0))
+    ImageDraw.Draw(ov).rounded_rectangle((W2 - cw - 34, H2 - 46, W2 - 12, H2 - 14), 14, fill=(0, 0, 0, 140))
+    p = Image.alpha_composite(p, ov)
+    ImageDraw.Draw(p).text((W2 - 23, H2 - 30), cap, font=fc, fill=(255, 255, 255), anchor='rm')
+    m = Image.new('L', p.size, 0)
+    ImageDraw.Draw(m).rounded_rectangle((0, 0, p.size[0] - 1, p.size[1] - 1), 36, fill=255)
+    p.putalpha(m)
+    im.paste(p, (x0, y0), p)
+
+
 def draw_photo(im, box, scene, line, fontfn):
     """財布欠席くんのぬいぐるみの場面写真（マスター提供の画像）に、毎回ちがうひと言の吹き出しを重ねる。"""
     import json, os

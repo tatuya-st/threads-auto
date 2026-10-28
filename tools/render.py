@@ -228,7 +228,10 @@ def render_scene(q, out):
     text(d, (110, 270), q['title'], fit(d, q['title'], 'display', 60, W - 220, 40), INK)
     it = q['items'][0]
     sc = q.get('scene') or scenes.pick(it, q)
-    scenes.draw(im, (110, 305, W - 110, 805), sc, scenes.line_for(sc, q), font, q.get('chara'))
+    if q.get('photo'):  # マスターがMUSEで作った写真
+        scenes.draw_custom(im, (110, 305, W - 110, 805), os.path.join(HERE, '..', q['photo']), q.get('photo_line'), font)
+    else:
+        scenes.draw(im, (110, 305, W - 110, 805), sc, scenes.line_for(sc, q), font, q.get('chara'))
     d = ImageDraw.Draw(im)
     y = 885
     fh = font('bold', 46)

@@ -280,6 +280,11 @@ def publish():
             made = datetime.strptime(qid[:13], '%Y%m%d-%H%M').replace(tzinfo=JST)
         except ValueError:
             made = datetime.now(JST)
+        if q.get('released'):  # マスターの画像を待ってから出す投稿は、出してよくなった時刻から数える
+            try:
+                made = datetime.fromisoformat(q['released'])
+            except ValueError:
+                pass
         head = ''.join((q.get('text') or '').split())[:60]
         if live is None:
             rec = None
