@@ -213,7 +213,54 @@ def render_single(q, out):
     im.save(out, optimize=True)
 
 
+def render_scene(q, out):
+    """商品1件＋場面イラスト（物欲おばけが商品の活きる場面を演じる。実物写真のふりはしない）。"""
+    import scenes
+    im = Image.new('RGB', (W, H), '#fdf1e2')
+    d = ImageDraw.Draw(im)
+    d.rounded_rectangle((60, 60, W - 60, H - 60), 48, fill='#ffffff')
+    fb = font('bold', 38)
+    t = '【PR】楽天ROOM'
+    bw = int(tw(d, t, fb)) + 64
+    d.rounded_rectangle((110, 110, 110 + bw, 180), 35, fill=ACC)
+    text(d, (142, 147), t, fb, '#ffffff', 'lm')
+    text(d, (W - 110, 155), '※イラストはイメージです', font('medium', 28), SUB, 'rs')
+    text(d, (110, 270), q['title'], fit(d, q['title'], 'display', 60, W - 220, 40), INK)
+    it = q['items'][0]
+    sc = q.get('scene') or scenes.pick(it, q)
+    scenes.draw(im, (110, 305, W - 110, 805), sc, scenes.line_for(sc, q), font)
+    d = ImageDraw.Draw(im)
+    y = 885
+    fh = font('bold', 46)
+    hl = wrap(d, it.get('hook') or it['name'], fh, W - 220, 2)
+    for l in hl:
+        text(d, (110, y), l, fh, INK)
+        y += 60
+    if it.get('hook'):
+        fn = font('medium', 28)
+        text(d, (110, y), wrap(d, it['name'], fn, W - 220, 1)[0], fn, MUTED)
+        y += 30
+    y += 88
+    price = str(it.get('price', ''))
+    fp = fit(d, price, 'display', 76, 520, 50)
+    text(d, (110, y), price, fp, ACC)
+    quip = it.get('quip') or ''
+    if quip:
+        px = 110 + tw(d, price, fp) + 28
+        mx = W - 110 - px
+        fq = fit(d, '← ' + quip, 'medium', 32, mx, 20)
+        if tw(d, '← ' + quip, fq) <= mx:
+            text(d, (px, y - 8), '← ' + quip, fq, SUB)
+    text(d, (110, 1240), q['footer'], fit(d, q['footer'], 'medium', 34, FOOT_W, 22), MUTED)
+    draw_saifu(im, 'kesseki')
+    im.save(out, optimize=True)
+
+
 if __name__ == '__main__':
     q = json.load(open(sys.argv[1], encoding='utf-8'))
-    (render_single if q.get('kind') == 'single' else render)(q, sys.argv[2])
+    if q.get('kind') == 'single':
+        # 場面イラストつきが基本。吹き出し（N9）と供養は専用の形のまま
+        (render_single if (q.get('serif') or q.get('form') == 'kuyou' or q.get('scene') == 'none') else render_scene)(q, sys.argv[2])
+    else:
+        render(q, sys.argv[2])
     print(sys.argv[2])
