@@ -282,7 +282,8 @@ def publish():
             rec.update(skipped='時間がたったため見送り')
         else:
           try:
-              if q.get('kind') == 'talk':
+              pic = q.get('kind') != 'talk' or q.get('image')  # 会話投稿でも image:true なら画像つき
+              if not pic:
                   params = {'media_type': 'TEXT', 'text': q['text'], 'access_token': tok}
               else:
                   img = f'https://raw.githubusercontent.com/{repo}/{sha}/images/{qid}.png'
@@ -290,7 +291,7 @@ def publish():
               if q.get('topic'):
                   params['topic_tag'] = q['topic']
               cid = call('POST', f"{API}/{me['id']}/threads", params)['id']
-              if q.get('kind') != 'talk':
+              if pic:
                   wait_ready(cid, tok)
               else:
                   time.sleep(3)
