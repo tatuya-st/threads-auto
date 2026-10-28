@@ -74,14 +74,26 @@ def works(tok):
 
 def token():
     """使えるトークンを返す。貼り直されたトークン（Secrets）を優先し、短期トークンなら長期に交換して保存する。"""
-    tries = [('secret', os.environ.get('THREADS_TOKEN', '').strip()), ('saved', decrypt())]
+    # 保存済み（作り直した）トークンを優先。Secrets は貼り直されたときだけ先に試す（古いトークンで上書きしないように）
+    import hashlib
+    sec = os.environ.get('THREADS_TOKEN', '').strip()
+    seen_p = os.path.join(ROOT, 'state', 'secret_seen.txt')
+    h = hashlib.sha256(sec.encode()).hexdigest()[:16] if sec else ''
+    seen = open(seen_p).read().strip() if os.path.exists(seen_p) else None
+    if seen is None and h:
+        open(seen_p, 'w').write(h)
+        seen = h
+    fresh = bool(h) and h != seen
+    tries = [('secret', sec), ('saved', decrypt())] if fresh else [('saved', decrypt()), ('secret', sec)]
     for src, tok in tries:
         if not tok:
             continue
         me = works(tok)
         if not me:
             continue
-        if src == 'secret' and SECRET:
+        if src == 'secret' and fresh and h:
+            open(seen_p, 'w').write(h)
+        if src == 'secret' and SECRET and fresh:
             # 1時間で切れる短期トークンなら60日の長期トークンに交換（長期ならエラーになるのでそのまま）
             try:
                 tok = call('GET', 'https://graph.threads.net/access_token', {'grant_type': 'th_exchange_token', 'client_secret': SECRET, 'access_token': tok})['access_token']
