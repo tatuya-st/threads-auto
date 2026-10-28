@@ -224,7 +224,7 @@ def render_scene(q, out):
     bw = int(tw(d, t, fb)) + 64
     d.rounded_rectangle((110, 110, 110 + bw, 180), 35, fill=ACC)
     text(d, (142, 147), t, fb, '#ffffff', 'lm')
-    text(d, (W - 110, 155), '※イラストはイメージです', font('medium', 28), SUB, 'rs')
+    text(d, (W - 110, 155), '※画像はイメージです', font('medium', 28), SUB, 'rs')
     text(d, (110, 270), q['title'], fit(d, q['title'], 'display', 60, W - 220, 40), INK)
     it = q['items'][0]
     sc = q.get('scene') or scenes.pick(it, q)

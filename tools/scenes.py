@@ -304,9 +304,36 @@ def s_cart(d, W, H, f):
 DRAW = {'battery': s_battery, 'winter': s_winter, 'refill': s_refill, 'oral': s_oral, 'iphone': s_iphone, 'cart': s_cart}
 
 
+def draw_photo(im, box, scene, line, fontfn):
+    """財布欠席くんのぬいぐるみの場面写真（マスター提供の画像）に、毎回ちがうひと言の吹き出しを重ねる。"""
+    import json, os
+    base = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'assets', 'scenes')
+    x0, y0, x1, y1 = [int(v) for v in box]
+    p = Image.open(os.path.join(base, scene + '.jpg')).convert('RGBA').resize((x1 - x0, y1 - y0), Image.LANCZOS)
+    bx0, by0, bx1, by1 = json.load(open(os.path.join(base, 'bubbles.json')))[scene]
+    d = ImageDraw.Draw(p)
+    pad = 7
+    d.rounded_rectangle((bx0 - pad, by0 - pad + 2, bx1 + pad, by1 + pad), 30, fill=(255, 255, 255, 255), outline=(45, 40, 40), width=3)
+    lines = line.split('\n')
+    size = 40
+    while size > 22 and (max(d.textlength(l, font=fontfn('bold', size)) for l in lines) > (bx1 - bx0) - 40 or size * 1.3 * len(lines) > (by1 - by0) - 20):
+        size -= 1
+    f = fontfn('bold', size)
+    lh = size * 1.3
+    cy = (by0 + by1) / 2 - lh * (len(lines) - 1) / 2
+    for i, l in enumerate(lines):
+        d.text(((bx0 + bx1) / 2, cy + i * lh), l, font=f, fill=INK, anchor='mm')
+    m = Image.new('L', p.size, 0)
+    ImageDraw.Draw(m).rounded_rectangle((0, 0, p.size[0] - 1, p.size[1] - 1), 36, fill=255)
+    p.putalpha(m)
+    im.paste(p, (x0, y0), p)
+
+
 def draw(im, box, scene, line, fontfn, who=None):
     global CHARA
     CHARA = who or season_chara()
+    if CHARA == 'saifu':  # ハロウィン以外は、ぬいぐるみの場面写真を使う
+        return draw_photo(im, box, scene, line, fontfn)
     """im の box（x0,y0,x1,y1）に場面を描く。fontfn(kind, size) は render.py の font。"""
     x0, y0, x1, y1 = [int(v) for v in box]
     W, H = (x1 - x0) * K, (y1 - y0) * K
