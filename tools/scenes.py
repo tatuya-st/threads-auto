@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""商品が活きる場面のイラスト（ルイのオリジナル「物欲おばけ」が主役）。
+"""商品が活きる場面のイラスト。主役はハロウィン時期（10/15〜10/31）だけ「物欲おばけ」、それ以外は「財布欠席くん」。
 誰が見ても絵だとわかるタッチで描く。実物の商品写真のふりはしない。
 pick(it, q) で場面を選び、draw(im, box, scene, line) で box の中に描く。"""
 import hashlib, math
@@ -84,6 +84,57 @@ def ghost(d, x, y, s, mood='normal', hat=False):
     return body
 
 
+def season_chara(now=None):
+    from datetime import datetime, timezone, timedelta
+    now = now or datetime.now(timezone(timedelta(hours=9)))
+    return 'ghost' if (now.month == 10 and now.day >= 15) else 'saifu'
+
+
+CHARA = 'saifu'
+S_BODY, S_EDGE, S_FLAP, S_IN = (160, 99, 46), (91, 52, 21), (138, 82, 38), (244, 230, 211)
+
+
+def saifu(d, x, y, s, mood='normal'):
+    """財布欠席くん（ふたが少し開いた財布）。おばけと同じ場所・大きさに収まる。顔はおばけより 0.65s 下。"""
+    e = 5 * K
+    d.rounded_rectangle((x - s * 1.05 + 6 * K, y + s * 0.95 + 6 * K, x + s * 1.05 + 6 * K, y + s * 2.6 + 6 * K), s * 0.22, fill=(0, 0, 0, 60))
+    d.polygon([(x - s * 1.0, y + s * 1.0), (x + s * 1.0, y + s * 1.0), (x + s * 0.85, y + s * 0.5), (x - s * 0.85, y + s * 0.5)], fill=S_FLAP)
+    d.line([(x - s * 1.0, y + s * 1.0), (x - s * 0.85, y + s * 0.5), (x + s * 0.85, y + s * 0.5), (x + s * 1.0, y + s * 1.0)], fill=S_EDGE, width=e, joint='curve')
+    d.polygon([(x - s * 0.9, y + s * 1.0), (x + s * 0.9, y + s * 1.0), (x + s * 0.78, y + s * 0.75), (x - s * 0.78, y + s * 0.75)], fill=S_IN)
+    d.rounded_rectangle((x - s * 1.05, y + s * 0.95, x + s * 1.05, y + s * 2.6), s * 0.22, fill=S_BODY, outline=S_EDGE, width=e)
+    ey = y + s * 1.5
+    for ex in (x - s * 0.38, x + s * 0.38):
+        if mood == 'happy':
+            d.arc((ex - s * 0.18, ey - s * 0.12, ex + s * 0.18, ey + s * 0.2), 200, 340, fill=S_EDGE, width=e)
+        else:
+            d.ellipse((ex - s * 0.19, ey - s * 0.19, ex + s * 0.19, ey + s * 0.19), fill=WH, outline=S_EDGE, width=3 * K)
+            d.ellipse((ex - s * 0.08, ey - s * 0.08, ex + s * 0.08, ey + s * 0.08), fill=(17, 17, 17))
+    d.ellipse((x - s * 0.75, ey + s * 0.2, x - s * 0.47, ey + s * 0.36), fill=(232, 140, 120))
+    d.ellipse((x + s * 0.47, ey + s * 0.2, x + s * 0.75, ey + s * 0.36), fill=(232, 140, 120))
+    my = ey + s * 0.45
+    if mood == 'happy':
+        d.chord((x - s * 0.2, my - s * 0.12, x + s * 0.2, my + s * 0.22), 0, 180, fill=S_EDGE)
+    elif mood == 'worry':
+        d.line([(x - s * 0.18, my + s * 0.16), (x, my + s * 0.04), (x + s * 0.18, my + s * 0.16)], fill=S_EDGE, width=e, joint='curve')
+        for i, (sx, sy) in enumerate([(x + s * 1.2, y + s * 1.0), (x + s * 1.35, y + s * 1.35)]):
+            r = s * (0.13 - i * 0.03)
+            d.polygon([(sx, sy - r * 1.8), (sx + r, sy), (sx - r, sy)], fill=(110, 180, 240), outline=INK)
+            d.ellipse((sx - r, sy - r, sx + r, sy + r), fill=(110, 180, 240), outline=INK, width=2 * K)
+    elif mood == 'cold':
+        d.line([(x - s * 0.2 + i * s * 0.08, my + s * (0.05 if i % 2 else 0.15)) for i in range(6)], fill=S_EDGE, width=4 * K)
+    else:
+        d.ellipse((x - s * 0.1, my, x + s * 0.1, my + s * 0.18), fill=S_EDGE)
+
+
+def chara(d, x, y, s, mood='normal'):
+    """季節の主役を描き、顔の位置のずれ（s単位）を返す。"""
+    if CHARA == 'ghost':
+        ghost(d, x, y, s, mood)
+        return 0.0
+    saifu(d, x, y, s, mood)
+    return 0.65
+
+
 GS, GY = 0.1, 0.34  # おばけの大きさ（横幅比）と頭の高さ（高さ比）
 
 
@@ -133,7 +184,7 @@ def s_battery(d, W, H, f):
     # 床
     d.rectangle((0, H * 0.82, W, H), fill=(190, 210, 228))
     gx = W * 0.27
-    ghost(d, gx, H * GY, W * GS, 'worry')
+    chara(d, gx, H * GY, W * GS, 'worry')
     phone(d, W * 0.39, H * 0.5, W * 0.085, W * 0.15, pct=0.3)
     arm(d, (gx + W * 0.09, H * 0.66), (W * 0.39, H * 0.66), W * 0.025)
     for i, (qx, qy) in enumerate([(W * 0.07, H * 0.5), (W * 0.04, H * 0.68)]):
@@ -157,7 +208,7 @@ def s_winter(d, W, H, f):
         x, y = (i * 137) % int(W), (i * 89) % int(H * 0.7)
         d.ellipse((x - 5 * K, y - 5 * K, x + 5 * K, y + 5 * K), fill=WH)
     gx, gy, s = W * 0.27, H * GY, W * GS
-    ghost(d, gx, gy, s, 'cold')
+    gy += chara(d, gx, gy, s, 'cold') * s  # 以降の小物は顔の位置に合わせる
     d.rounded_rectangle((gx - s * 1.05, gy + s * 1.55, gx + s * 1.05, gy + s * 1.85), 10 * K, fill=(220, 60, 60), outline=INK, width=4 * K)
     d.rectangle((gx + s * 0.4, gy + s * 1.7, gx + s * 0.7, gy + s * 2.3), fill=(220, 60, 60), outline=INK, width=4 * K)
     for i in range(3):
@@ -185,7 +236,7 @@ def s_refill(d, W, H, f):
         d.rectangle((x + W * 0.02, H * 0.47, x + W * 0.05, H * 0.52), fill=(120, 170, 220), outline=INK, width=3 * K)
         d.text((x + W * 0.035, H * 0.63), '空', font=f['tag'], fill=(150, 150, 160), anchor='mm')
     gx = W * 0.62
-    ghost(d, gx, H * GY, W * GS, 'happy')
+    chara(d, gx, H * GY, W * GS, 'happy')
     px, py, pw, ph = W * 0.76, H * 0.46, W * 0.15, H * 0.33
     d.polygon([(px, py + ph * 0.1), (px + pw * 0.3, py), (px + pw, py), (px + pw, py + ph), (px, py + ph)], fill=(110, 190, 220), outline=INK)
     d.line([(px, py + ph * 0.1), (px + pw * 0.3, py), (px + pw, py), (px + pw, py + ph), (px, py + ph), (px, py + ph * 0.1)], fill=INK, width=5 * K)
@@ -201,7 +252,7 @@ def s_oral(d, W, H, f):
     d.rounded_rectangle((W * 0.62, H * 0.06, W * 0.95, H * 0.62), 30 * K, fill=(235, 245, 250), outline=INK, width=5 * K)
     d.rounded_rectangle((W * 0.64, H * 0.09, W * 0.93, H * 0.59), 24 * K, fill=(200, 230, 245))
     gx, gy, s = W * 0.3, H * GY, W * GS
-    ghost(d, gx, gy, s, 'happy')
+    gy += chara(d, gx, gy, s, 'happy') * s
     for i in range(7):
         bx, by, r = gx + s * (0.2 + (i % 3) * 0.25), gy + s * (1.45 + (i // 3) * 0.2), s * (0.12 - (i % 2) * 0.03)
         d.ellipse((bx - r, by - r, bx + r, by + r), fill=WH, outline=INK, width=2 * K)
@@ -217,7 +268,7 @@ def s_oral(d, W, H, f):
 def s_iphone(d, W, H, f):
     d.rectangle((0, H * 0.82, W, H), fill=(214, 206, 232))
     gx = W * 0.27
-    ghost(d, gx, H * GY, W * GS, 'happy')
+    chara(d, gx, H * GY, W * GS, 'happy')
     X, Y, PW = W * 0.46, H * 0.14, W * 0.17
     phone(d, X, Y, PW, PW * 1.9)
     d.rounded_rectangle((X - W * 0.015, Y - W * 0.015, X + PW + W * 0.015, Y + PW * 1.9 + W * 0.015), 30 * K, outline=(160, 110, 220), width=10 * K)
@@ -232,7 +283,7 @@ def s_iphone(d, W, H, f):
 def s_cart(d, W, H, f):
     d.rectangle((0, H * 0.82, W, H), fill=(232, 210, 184))
     gx = W * 0.27
-    ghost(d, gx, H * GY, W * GS, 'normal')
+    chara(d, gx, H * GY, W * GS, 'normal')
     cx, cy = W * 0.45, H * 0.46
     d.line((cx, cy, cx + W * 0.04, cy + H * 0.06), fill=INK, width=8 * K)
     pts = [(cx + W * 0.03, cy + H * 0.06), (cx + W * 0.36, cy + H * 0.06), (cx + W * 0.32, cy + H * 0.27), (cx + W * 0.07, cy + H * 0.27)]
@@ -253,7 +304,9 @@ def s_cart(d, W, H, f):
 DRAW = {'battery': s_battery, 'winter': s_winter, 'refill': s_refill, 'oral': s_oral, 'iphone': s_iphone, 'cart': s_cart}
 
 
-def draw(im, box, scene, line, fontfn):
+def draw(im, box, scene, line, fontfn, who=None):
+    global CHARA
+    CHARA = who or season_chara()
     """im の box（x0,y0,x1,y1）に場面を描く。fontfn(kind, size) は render.py の font。"""
     x0, y0, x1, y1 = [int(v) for v in box]
     W, H = (x1 - x0) * K, (y1 - y0) * K
