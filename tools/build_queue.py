@@ -305,6 +305,13 @@ def talk(repo, slot='noon'):
     stamp = datetime.now(JST)
     qid = stamp.strftime('%Y%m%d-%H%M') + '-' + slot
     q = {'id': qid, 'slot': slot, 'form': 'talk', 'kind': 'talk', 'created': stamp.isoformat(timespec='minutes'), 'text': text, 'items': []}
+    # 10/29 Threads公式Tips：トピック付きの投稿は表示が伸びやすい → 会話投稿にもトピックを付ける
+    if 'ROOM' in text:
+        q['topic'] = '楽天ROOM'
+    elif re.search(r'充電|ケーブル|イヤホン|iPhone|スマホ|ガジェット|家電|パソコン|SSD|モバイルバッテリー|ケトル', text):
+        q['topic'] = 'ガジェット'
+    elif slot == 'morning':
+        q['topic'] = '冬支度'
     os.makedirs(os.path.join(repo, 'queue'), exist_ok=True)
     with open(os.path.join(repo, 'queue', qid + '.json'), 'w', encoding='utf-8') as f:
         json.dump(q, f, ensure_ascii=False, indent=1)
