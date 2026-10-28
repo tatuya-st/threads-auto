@@ -22,5 +22,6 @@
   }
  ],
  "photo": "assets/photos/20261028-1933-night.jpg",
- "released": "2026-10-28T19:38+09:00"
+ "released": "2026-10-28T19:38+09:00",
+ "hold": true
 }
