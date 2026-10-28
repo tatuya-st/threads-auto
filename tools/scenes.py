@@ -313,9 +313,9 @@ def draw_photo(im, box, scene, line, fontfn):
     bx0, by0, bx1, by1 = json.load(open(os.path.join(base, 'bubbles.json')))[scene]
     d = ImageDraw.Draw(p)
     pad = 7
-    d.rounded_rectangle((bx0 - pad, by0 - pad + 2, bx1 + pad, by1 + pad), 30, fill=(255, 255, 255, 255), outline=(45, 40, 40), width=3)
+    d.rounded_rectangle((bx0 - pad, max(by0 - pad, 10), bx1 + pad, by1 + pad), 30, fill=(255, 255, 255, 255), outline=(45, 40, 40), width=3)
     lines = line.split('\n')
-    size = 40
+    size = 36
     while size > 22 and (max(d.textlength(l, font=fontfn('bold', size)) for l in lines) > (bx1 - bx0) - 40 or size * 1.3 * len(lines) > (by1 - by0) - 20):
         size -= 1
     f = fontfn('bold', size)
@@ -323,6 +323,15 @@ def draw_photo(im, box, scene, line, fontfn):
     cy = (by0 + by1) / 2 - lh * (len(lines) - 1) / 2
     for i, l in enumerate(lines):
         d.text(((bx0 + bx1) / 2, cy + i * lh), l, font=f, fill=INK, anchor='mm')
+    # 写真の右下に「実際の商品とは異なります」（写っている物を商品と誤解されないように）
+    fc = fontfn('medium', 20)
+    cap = '※写真はイメージです。実際の商品とは異なります'
+    cw = d.textlength(cap, font=fc)
+    W2, H2 = p.size
+    ov = Image.new('RGBA', p.size, (0, 0, 0, 0))
+    ImageDraw.Draw(ov).rounded_rectangle((W2 - cw - 34, H2 - 46, W2 - 12, H2 - 14), 14, fill=(0, 0, 0, 140))
+    p = Image.alpha_composite(p, ov)
+    ImageDraw.Draw(p).text((W2 - 23, H2 - 30), cap, font=fc, fill=(255, 255, 255), anchor='rm')
     m = Image.new('L', p.size, 0)
     ImageDraw.Draw(m).rounded_rectangle((0, 0, p.size[0] - 1, p.size[1] - 1), 36, fill=255)
     p.putalpha(m)
@@ -332,8 +341,13 @@ def draw_photo(im, box, scene, line, fontfn):
 def draw(im, box, scene, line, fontfn, who=None):
     global CHARA
     CHARA = who or season_chara()
-    if CHARA == 'saifu':  # ハロウィン以外は、ぬいぐるみの場面写真を使う
-        return draw_photo(im, box, scene, line, fontfn)
+    import os
+    base = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'assets', 'scenes')
+    name = scene if CHARA == 'saifu' else 'ghost_' + scene
+    if os.path.exists(os.path.join(base, name + '.jpg')):  # ぬいぐるみの場面写真があればそれを使う
+        return draw_photo(im, box, name, line, fontfn)
+    if CHARA == 'saifu':
+        return draw_photo(im, box, 'cart', line, fontfn)
     """im の box（x0,y0,x1,y1）に場面を描く。fontfn(kind, size) は render.py の font。"""
     x0, y0, x1, y1 = [int(v) for v in box]
     W, H = (x1 - x0) * K, (y1 - y0) * K
