@@ -912,6 +912,11 @@ def write_q(a, q, note):
             q['photo'] = rp
             q.pop('hold', None)
             note += '（マスターの画像あり）'
+        fp = rp[:-4] + '_full.png'  # 投稿画像まるごと（マスターのデザインをそのまま使う）
+        if os.path.exists(os.path.join(a.repo, fp)):
+            q['full_image'] = fp
+            q.pop('hold', None)
+            note += '（マスターの画像まるごと）'
     os.makedirs(os.path.join(a.repo, 'queue'), exist_ok=True)
     with open(os.path.join(a.repo, 'queue', q['id'] + '.json'), 'w', encoding='utf-8') as f:
         json.dump(q, f, ensure_ascii=False, indent=1)

@@ -261,7 +261,9 @@ def render_scene(q, out):
 
 if __name__ == '__main__':
     q = json.load(open(sys.argv[1], encoding='utf-8'))
-    if q.get('kind') == 'single':
+    if q.get('full_image'):  # マスターのデザインをそのまま投稿画像にする（訂正済みのもの）
+        Image.open(os.path.join(HERE, '..', q['full_image'])).convert('RGB').resize((W, H), Image.LANCZOS).save(sys.argv[2])
+    elif q.get('kind') == 'single':
         # 場面イラストつきが基本。吹き出し（N9）と供養は専用の形のまま
         (render_single if (q.get('serif') or q.get('form') == 'kuyou' or q.get('scene') == 'none') else render_scene)(q, sys.argv[2])
     else:
