@@ -164,7 +164,7 @@ def clip(s, n):
 TALKS = [
     'スマホの充電、何%から焦り始めますか？\n私は40%で「そろそろか…」ってなります🔋',
     'ケーブルって、なんで使いたい時だけ1本も見つからないんでしょうね。\n家に何本あるか、数えたら負けな気がしてます🔌',
-    '朝の脱衣所、もはや修行の場。\n冬の朝いちばんつらい場所、どこですか？🥶',
+    '電車やバスの中、スマホ以外に何を見てますか？\n私は気づくと結局スマホしか見てません📱',
     '暖房のスイッチ、もう入れました？\nまだ我慢してる派の人、仲間です🔥',
     '詰め替えるとき、毎回ちょっとこぼす派です。\nこぼさない人、コツ教えてください🙏',
     '買い忘れて一番困るもの、トイレットペーパー説。\nみなさんは何ですか？🧻',
@@ -174,7 +174,7 @@ TALKS = [
     '休みの日は弾丸で神社巡りしてます⛩️\n最近行ってよかった神社、ありますか？',
     'お守り、気づいたら増える一方です。\n何個持ってるか、正直に教えてください😂',
     '旅先で毎回ラーメン食べちゃう人、手を挙げて🙋‍♂️\nご当地のおすすめあれば知りたい',
-    '楽天のカート、入れっぱなしの商品が何個ありますか？\n私は数えるのをやめました🛒',
+    '子どもの頃に欲しかったおもちゃ、覚えてますか？\n大人になった今、ガジェットで同じ物を探してる気がします🔌',
     'お買い物マラソン、何店舗まで回る派ですか？\n毎回「今回は控えめに」と言ってる気がします',
     '布団から出るまでの時間、冬になると倍になりません？\nみなさん何分かかってます？⏰',
     '加湿器のお手入れ、ちゃんとやれてる人を尊敬してます。\nコツありますか？💧',
@@ -820,14 +820,22 @@ def pick_qa(it, recent, seed):
     c = cat_of(it, it.get('_gid', ''))
     last = recent_axis_aud(recent)
     # 種類に合う問いかけを先に、なければカテゴリの問いかけ
+    shp = set(SHAPES_NOW)
+    shp_last = set(SHAPES_NOW[-1:])
+    backup = []
     for pool in ([q for q in QA if t in q[0]], [q for q in QA if c in q[0]] or [q for q in QA if 'life' in q[0]]):
         fresh = [q for q in pool if q[3] not in recent and q[1] not in last]
         fresh2 = [q for q in fresh if q[2] != last.get('axis')]
+        base = fresh2 or fresh
         # 10/27：直前の投稿と同じ問いかけの形（とくに「〜派？」）は続けない
-        shp = set(SHAPES_NOW)
-        fresh3 = [q for q in (fresh2 or fresh) if shape_of(q[3]) not in shp]
-        if fresh3 or fresh2 or fresh:
-            return pick(fresh3 or fresh2 or fresh, seed)
+        # 11/01：直近2本の形を両方避けられなければ、せめて直前の1本の形は避ける（種類の問いかけで無理ならカテゴリの問いかけへ）
+        fresh3 = [q for q in base if shape_of(q[3]) not in shp]
+        fresh4 = [q for q in base if shape_of(q[3]) not in shp_last]
+        if fresh3 or fresh4:
+            return pick(fresh3 or fresh4, seed)
+        backup = backup or base
+    if backup:
+        return pick(backup, seed)
     pool = [q for q in QA if t in q[0] or c in q[0]] or QA
     return pick([q for q in pool if q[3] not in recent] or pool, seed)
 
@@ -1050,7 +1058,7 @@ def single(a, form, it):
     reason = cap.get('s') or sell or (pts[0] if pts else '')
     lead = cap.get('o') or imp
     reply = '\n'.join(x for x in [f"【PR】{it['name']}", lead, f"✅ 推しの理由：{reason}" if reason else '',
-                                   f"{price}{'・送料無料' if free_ship(it) else ''}",
+                                   '' if price and price in reason else f"{price}{'・送料無料' if free_ship(it) else ''}",  # 11/01：推しの理由に価格があれば重ねない
                                    f"今の価格とレビューは、ここから見られます👇\n楽天ROOM：{ROOM_URL}"] if x)
     qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot
     title = ('今夜の1品' if a.slot == 'night' else '今朝の1品') if form == 'basic' else TITLES.get(form, '今日の1品')
@@ -1096,8 +1104,8 @@ def main():
     if not form:
         print('なし')
         return
-    if a.slot == 'morning':
-        form = 'talk'  # 形の指定があっても朝は会話だけ（10/27 数字で判断）
+    if a.slot in ('morning', 'noon'):
+        form = 'talk'  # 形の指定があっても朝・昼は会話だけ（10/27 数字で判断。11/01 昼も商品データを渡されても会話だけに）
     if form == 'talk':
         return talk(a.repo, a.slot)
     if form == 'summary':
