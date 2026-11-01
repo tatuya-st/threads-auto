@@ -229,12 +229,14 @@ def last_link_at():
 def thin_link(q):
     """直近にリンクを貼っていたら、今回はリンク返信を付けずプロフィール案内にする（PR表記は残す）"""
     last = last_link_at()
-    # 11/1：レイ（別のAI）とリンク枠を分け合う。state/link_off.json の日付（日本時間）はルイはリンクを付けない
+    # レイ（別のAI）とリンク枠を分け合う：奇数日＝ルイ、偶数日＝レイ（日本時間）。
+    # 偶数日はルイはリンクを付けない。state/link_off.json の日付も臨時で付けない日にできる
     try:
         off = json.load(open(os.path.join(ROOT, 'state', 'link_off.json'), encoding='utf-8'))
     except Exception:
         off = []
-    blocked = datetime.now(JST).strftime('%Y-%m-%d') in off
+    today = datetime.now(JST)
+    blocked = today.day % 2 == 0 or today.strftime('%Y-%m-%d') in off
     if not q.get('reply') or (not blocked and (not last or datetime.now(JST) - last >= timedelta(hours=LINK_GAP_H))):
         return q
     # 商品名は返信に残し、URLの行だけ外す（リンクはプロフィールへ）
