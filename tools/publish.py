@@ -25,6 +25,20 @@ if os.environ.get('THREADS_TOKEN', '').strip() == SECRET:
     os.environ['THREADS_TOKEN'] = ''
 
 
+class LimitHit(RuntimeError):
+    """Threadsの書き込み上限（429）。その日の書き込みは止める（連打・別ルートでの回避はしない）"""
+
+
+LIMIT_P = os.path.join(ROOT, 'state', 'limit.json')
+
+
+def limited_today():
+    try:
+        return json.load(open(LIMIT_P, encoding='utf-8')).get('date') == datetime.now(JST).strftime('%Y-%m-%d')
+    except Exception:
+        return False
+
+
 def call(method, url, params, tries=3):
     """Threads API を呼ぶ。サーバー側の一時的なエラー（5xx・429・通信切れ）は待って最大3回までやり直す。"""
     data = urllib.parse.urlencode(params).encode()
@@ -39,6 +53,12 @@ def call(method, url, params, tries=3):
         except urllib.error.HTTPError as e:
             body = e.read().decode(errors='replace')
             err = RuntimeError(f'{e.code} {body[:300]}')
+            if e.code == 429 and method == 'POST':
+                # 書き込みの上限：やり直さず、今日はもう書き込まない（レイにも伝えるため記録する）
+                os.makedirs(os.path.dirname(LIMIT_P), exist_ok=True)
+                json.dump({'date': datetime.now(JST).strftime('%Y-%m-%d'), 'at': datetime.now(JST).isoformat(timespec='minutes')},
+                          open(LIMIT_P, 'w', encoding='utf-8'), ensure_ascii=False)
+                raise LimitHit(f'書き込み上限(429) {body[:200]}')
             if not (e.code >= 500 or e.code == 429) or n == tries - 1:
                 raise err
         except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
@@ -190,6 +210,9 @@ def send_replies(tok, me):
             except Exception as e:
                 msg = str(e).replace(tok, '***')[:200]
                 rec['ng'].append({'to': it.get('to'), 'error': msg})
+                if isinstance(e, LimitHit):
+                    print('::error::書き込み上限が出たため、今日の返信はここで止めます')
+                    break
                 print(f"::warning::{it.get('user', '')} さんへの返信を出せませんでした: {msg}")
         rec['at'] = datetime.now(JST).isoformat(timespec='minutes')
         json.dump(rec, open(os.path.join(outd, rid_ + '.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
@@ -263,8 +286,11 @@ def publish():
     if not todo and not has_rep:
         print('公開待ちなし')
         return
+    if limited_today():
+        print('今日はThreadsの書き込み上限が出たため、投稿も返信もしません（明日から再開）')
+        return
     tok, me = token()
-    rep_ok = send_replies(tok, me) if has_rep else True
+    rep_ok = send_replies(tok, me) if has_rep and not limited_today() else True
     if not todo:
         if not rep_ok:
             raise SystemExit(1)
@@ -275,6 +301,9 @@ def publish():
     failed = []
     live = recent_texts(tok, me)
     for qid, q in todo[:2]:
+        if limited_today():
+            print(f'{qid} は書き込み上限のため出しません')
+            break
         if remote_has(f'state/posted/{qid}.json'):
             print(f'{qid} はほかの実行で公開済みなので出しません')
             continue
@@ -349,6 +378,9 @@ def publish():
             msg = str(e).replace(tok, '***')[:200]
             rec.update(skipped=f'エラー: {msg}')
             failed.append(qid)
+            if isinstance(e, LimitHit):
+                rec['skipped'] = '書き込み上限(429)のため今日は止めた'
+                print('::error::Threadsの書き込み上限が出ました。今日の書き込みは止めます')
             print(f'::error::{qid} を投稿できませんでした: {msg}')
         os.makedirs(os.path.join(ROOT, 'state', 'posted'), exist_ok=True)
         json.dump(rec, open(os.path.join(ROOT, 'state', 'posted', qid + '.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
@@ -356,6 +388,35 @@ def publish():
         print(qid, rec.get('permalink') or rec.get('skipped'))
     if failed or not rep_ok:
         raise SystemExit(1)
+
+
+def save_rei_posts(tok, me):
+    """同じアカウントでルイが出していない投稿＝レイの投稿。話題かぶりを避けるため直近3日分を state/rei_posts.json に残す
+    （マスターがルイの投稿をレイに、レイの投稿をルイに中継しなくて済むように）"""
+    mine = set()
+    for f in glob.glob(os.path.join(ROOT, 'state', 'posted', '*.json')):
+        try:
+            mine.add(str(json.load(open(f, encoding='utf-8')).get('media_id')))
+        except Exception:
+            pass
+    try:
+        r = call('GET', f"{API}/{me['id']}/threads", {'fields': 'id,text,timestamp,permalink', 'limit': 50, 'access_token': tok})
+    except Exception as e:
+        print(f"::warning::レイの投稿を読めませんでした: {str(e).replace(tok, '***')[:150]}")
+        return
+    since = datetime.now(JST) - timedelta(days=3)
+    rei = []
+    for x in r.get('data', []):
+        try:
+            t = datetime.strptime(x['timestamp'], '%Y-%m-%dT%H:%M:%S%z').astimezone(JST)
+        except (KeyError, ValueError):
+            continue
+        if str(x.get('id')) in mine or t < since:
+            continue
+        rei.append({'at': t.isoformat(timespec='minutes'), 'text': (x.get('text') or '')[:300], 'link': x.get('permalink')})
+    json.dump({'at': datetime.now(JST).isoformat(timespec='minutes'), 'posts': rei},
+              open(os.path.join(ROOT, 'state', 'rei_posts.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    print(f"::notice::レイの投稿（直近3日）{len(rei)}件を記録")
 
 
 def insights():
@@ -392,6 +453,7 @@ def insights():
             print(f"::warning::{rec['id']} の数字は読めませんでした: {str(e).replace(tok, '***')[:120]}")
     json.dump(out, open(os.path.join(ROOT, 'state', 'insights.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     # 日ごとの記録（ダッシュボードと投稿時間の調整に使う）。60日分だけ残す
+    save_rei_posts(tok, me)
     log_p = os.path.join(ROOT, 'state', 'insights_log.json')
     log = json.load(open(log_p, encoding='utf-8')) if os.path.exists(log_p) else {}
     log[out['at'][:10]] = {'account': out['account'], 'posts': out['posts']}
