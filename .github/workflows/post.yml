@@ -63,7 +63,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           if grep -q "\"$(TZ=Asia/Tokyo date +%F)\"" state/limit.json 2>/dev/null; then
-            bash tools/alert.sh "⛔ Threadsの書き込み上限が出ました" "今日のルイの投稿と返信は止めました（明日から自動で再開）。レイに「今日は書き込み上限が出たので、今日の書き込みは止めて」と伝えてください。"
+            bash tools/alert.sh "⛔ Threadsの書き込み上限が出ました" "今日のルイの投稿と返信は止めました（明日から自動で再開）。レイには合図のページで自動で伝わるので、マスターの作業はありません。"
           else
             bash tools/alert.sh "⚠️ Threadsに投稿できませんでした" "投稿の処理が失敗しました。ルイが次の実行で原因を確認します。"
           fi

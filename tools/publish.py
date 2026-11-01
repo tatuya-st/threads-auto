@@ -39,6 +39,21 @@ def limited_today():
         return False
 
 
+STATUS_P = os.path.join(ROOT, 'state', 'status.txt')
+
+
+def write_status():
+    """レイが書き込み前に見る今日の合図（https://tatuya-st.github.io/threads-auto/state/status.txt）"""
+    now = datetime.now(JST)
+    stop = limited_today()
+    who = 'ルイ' if now.day % 2 else 'レイ'
+    txt = (f"日付：{now.strftime('%Y-%m-%d')}（日本時間）\n"
+           f"書き込み：{'止める（Threadsの書き込み上限が出たため、今日は投稿も返信もしない）' if stop else 'OK'}\n"
+           f"今日のリンク：{who}\n"
+           f"更新：{now.strftime('%H:%M')}\n")
+    open(STATUS_P, 'w', encoding='utf-8').write(txt)
+
+
 def call(method, url, params, tries=3):
     """Threads API を呼ぶ。サーバー側の一時的なエラー（5xx・429・通信切れ）は待って最大3回までやり直す。"""
     data = urllib.parse.urlencode(params).encode()
@@ -58,6 +73,7 @@ def call(method, url, params, tries=3):
                 os.makedirs(os.path.dirname(LIMIT_P), exist_ok=True)
                 json.dump({'date': datetime.now(JST).strftime('%Y-%m-%d'), 'at': datetime.now(JST).isoformat(timespec='minutes')},
                           open(LIMIT_P, 'w', encoding='utf-8'), ensure_ascii=False)
+                write_status()
                 raise LimitHit(f'書き込み上限(429) {body[:200]}')
             if not (e.code >= 500 or e.code == 429) or n == tries - 1:
                 raise err
@@ -454,6 +470,7 @@ def insights():
     json.dump(out, open(os.path.join(ROOT, 'state', 'insights.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     # 日ごとの記録（ダッシュボードと投稿時間の調整に使う）。60日分だけ残す
     save_rei_posts(tok, me)
+    write_status()
     log_p = os.path.join(ROOT, 'state', 'insights_log.json')
     log = json.load(open(log_p, encoding='utf-8')) if os.path.exists(log_p) else {}
     log[out['at'][:10]] = {'account': out['account'], 'posts': out['posts']}
@@ -514,6 +531,7 @@ def comments():
     if fails and not ok:
         print('::error::どの投稿のコメントも読めません（threads_read_replies の許可が入ったトークンが必要）')
         raise SystemExit(1)
+    write_status()
     out = {'at': datetime.now(JST).isoformat(timespec='minutes'), 'unanswered': todo}
     json.dump(out, open(os.path.join(ROOT, 'state', 'comments.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(f"::notice::返信待ちのコメント {len(todo)}件")
