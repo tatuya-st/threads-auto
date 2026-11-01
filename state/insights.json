@@ -1,5 +1,5 @@
 {
- "at": "2026-11-01T00:10+09:00",
+ "at": "2026-11-01T11:05+09:00",
  "posts": {
   "20261023-0743-morning": {
    "views": 14,
@@ -135,18 +135,25 @@
    "quotes": 0
   },
   "20261029-0744-morning": {
-   "views": 458,
+   "views": 460,
    "likes": 13,
-   "replies": 8,
+   "replies": 10,
+   "reposts": 0,
+   "quotes": 0
+  },
+  "20261101-0902-morning": {
+   "views": 36,
+   "likes": 4,
+   "replies": 0,
    "reposts": 0,
    "quotes": 0
   }
  },
  "account": {
-  "views": 1458,
-  "likes": 3,
-  "replies": 1,
+  "views": 1820,
+  "likes": 31,
+  "replies": 23,
   "reposts": 0,
-  "followers_count": 760
+  "followers_count": 777
  }
 }

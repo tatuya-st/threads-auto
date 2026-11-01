@@ -884,11 +884,11 @@
  },
  "2026-11-01": {
   "account": {
-   "views": 1458,
-   "likes": 3,
-   "replies": 1,
+   "views": 1820,
+   "likes": 31,
+   "replies": 23,
    "reposts": 0,
-   "followers_count": 760
+   "followers_count": 777
   },
   "posts": {
    "20261023-0743-morning": {
@@ -1025,9 +1025,16 @@
     "quotes": 0
    },
    "20261029-0744-morning": {
-    "views": 458,
+    "views": 460,
     "likes": 13,
-    "replies": 8,
+    "replies": 10,
+    "reposts": 0,
+    "quotes": 0
+   },
+   "20261101-0902-morning": {
+    "views": 36,
+    "likes": 4,
+    "replies": 0,
     "reposts": 0,
     "quotes": 0
    }
