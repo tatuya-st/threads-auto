@@ -884,11 +884,11 @@
  },
  "2026-11-01": {
   "account": {
-   "views": 1867,
-   "likes": 32,
-   "replies": 23,
+   "views": 2176,
+   "likes": 43,
+   "replies": 35,
    "reposts": 0,
-   "followers_count": 778
+   "followers_count": 789
   },
   "posts": {
    "20261023-0743-morning": {
@@ -983,58 +983,65 @@
     "quotes": 0
    },
    "20261027-1950-night": {
-    "views": 219,
+    "views": 221,
     "likes": 1,
     "replies": 1,
     "reposts": 0,
     "quotes": 0
    },
    "20261027-2346-late": {
-    "views": 551,
+    "views": 553,
     "likes": 1,
     "replies": 0,
     "reposts": 0,
     "quotes": 0
    },
    "20261028-0744-morning": {
-    "views": 435,
+    "views": 437,
     "likes": 9,
     "replies": 14,
     "reposts": 0,
     "quotes": 0
    },
    "20261028-1300-noon": {
-    "views": 292,
+    "views": 294,
     "likes": 7,
     "replies": 2,
     "reposts": 0,
     "quotes": 0
    },
    "20261028-1933-night": {
-    "views": 489,
+    "views": 492,
     "likes": 6,
     "replies": 1,
     "reposts": 0,
     "quotes": 0
    },
    "20261028-2345-late": {
-    "views": 494,
+    "views": 496,
     "likes": 3,
     "replies": 0,
     "reposts": 0,
     "quotes": 0
    },
    "20261029-0744-morning": {
-    "views": 461,
+    "views": 464,
     "likes": 13,
-    "replies": 10,
+    "replies": 11,
     "reposts": 0,
     "quotes": 0
    },
    "20261101-0902-morning": {
-    "views": 45,
-    "likes": 6,
-    "replies": 1,
+    "views": 94,
+    "likes": 9,
+    "replies": 5,
+    "reposts": 0,
+    "quotes": 0
+   },
+   "20261101-1244-noon": {
+    "views": 59,
+    "likes": 0,
+    "replies": 0,
     "reposts": 0,
     "quotes": 0
    }
