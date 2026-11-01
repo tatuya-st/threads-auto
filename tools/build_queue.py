@@ -354,6 +354,10 @@ def gather(a):
                 pending.add(norm(it['name']))
     sent_names = {norm(v.get('name')) for v in sent.values() if isinstance(v, dict)}
 
+    try:
+        avoid = set(json.load(open(os.path.join(a.repo, 'state', 'avoid.json'), encoding='utf-8')).get(datetime.now(JST).strftime('%Y-%m-%d'), []))
+    except Exception:
+        avoid = set()
     now = time.time() * 1000
     lim = now - LOOKBACK_DAYS * 864e5
     cands = []
@@ -376,6 +380,9 @@ def gather(a):
         strong = 1000 <= p <= 10000 and (gid in STRONG_GIDS or STRONG_RE.search(it['name']))
         sc = -4 if gid == 'tabi' else -3.5 if strong else proven if proven is not None else (0 if c in ('gadget', 'kaden') else 1) if 0 < p <= 10000 else 2 if 0 < p <= 30000 else 3
         it['_c'] = c
+        # 11/1：レイ（別のAI）と商品のジャンルが同じ日にかぶらないようにする（state/avoid.json {"YYYY-MM-DD":["plant"]}）
+        if gid in avoid or (('plant' in avoid) and (it.get('genreTag') == '観葉植物' or re.search(r'観葉植物|鉢植え|多肉|サボテン|エアプランツ|ハイドロカルチャー|苔玉', it.get('name', '')))):
+            continue
         cands.append((sc, -likes, -it['_t'], it))
     cands.sort(key=lambda x: x[:3])
     return [c[-1] for c in cands]
