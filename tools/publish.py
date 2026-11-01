@@ -51,6 +51,12 @@ def write_status():
            f"書き込み：{'止める（Threadsの書き込み上限が出たため、今日は投稿も返信もしない）' if stop else 'OK'}\n"
            f"今日のリンク：{who}\n"
            f"更新：{now.strftime('%H:%M')}\n")
+    try:  # ルイからレイへの連絡（マスターの中継なしで届ける）
+        note = open(os.path.join(ROOT, 'state', 'to_rei.txt'), encoding='utf-8').read().strip()
+    except OSError:
+        note = ''
+    if note:
+        txt += f"\n■ルイからレイへの連絡\n{note}\n"
     open(STATUS_P, 'w', encoding='utf-8').write(txt)
 
 
