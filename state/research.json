@@ -1,16 +1,6 @@
 {
- "at": "2026-11-02T12:25+09:00",
+ "at": "2026-11-02T19:25+09:00",
  "notes": [
-  {
-   "what": "誰でも答えられる問いかけ（何件・何年・二択）にコメントが集まる",
-   "src": "https://www.threads.com/@taka_room_jp/post/DafMXRejz1C",
-   "done": "会話ネタを4つ追加"
-  },
-  {
-   "what": "売れる条件は「安い・すぐ使える・使う場面が想像できる」という声",
-   "src": "https://www.threads.com/@sa_ya_workmama/post/DW8dqjAE41b",
-   "done": "選び方を聞く問いかけに反映"
-  },
   {
    "what": "同じ商品を同じSNSで二度紹介しないよう注意する声（楽天スタッフブログを引用）",
    "src": "https://www.threads.com/@yumi202376/post/DHUcFqXJcH0",
@@ -200,6 +190,16 @@
    "what": "11月に入り防寒グッズ（電気毛布・足元ヒーター）の特集が増えている",
    "src": "https://kaden.watch.impress.co.jp/category/air/heater/electric_blanket/index.html",
    "done": "hot_wordsに『電気毛布』"
+  },
+  {
+   "what": "11/2昼『楽天ROOM、1日に何件投稿？』が5時間で表示42・コメント0（会話型の平均の3分の1未満）",
+   "src": "state/insights.json",
+   "done": "weak に記録し、NAKAMAから外した"
+  },
+  {
+   "what": "楽天公式：10月に新企画『ジャンル祭』（家電含む4ジャンル、マラソンと同時開催）。今後も続ける予定だが11月の日程は未発表",
+   "src": "https://corp.rakuten.co.jp/news/update/2026/1002_01.html",
+   "done": "記録のみ（日程未発表のため sales には入れない）"
   }
  ],
  "hot_words": [
@@ -336,6 +336,19 @@
    "replies": 0,
    "cause": "書き出しが弱い（「アプリ」がぼんやりで自分ごとにしにくい。他の深夜つぶやきの平均約446の3分の1未満）",
    "fix": "N15から外した"
+  },
+  {
+   "id": "20261102-1244-noon",
+   "topic": "楽天ROOMの1日の投稿件数",
+   "open": "楽天ROOM、1日に何件投稿してますか？",
+   "shape": "何件？＋自分の答え（数字なし）",
+   "image": "なし",
+   "time": "12:44",
+   "views": 42,
+   "likes": 1,
+   "replies": 0,
+   "cause": "テーマが悪い（ROOMをやっている人しか答えられない内輪の話題。自分の答えも数字がなく、答えのお手本にならない）",
+   "fix": "NAKAMAから外した"
   }
  ]
 }
