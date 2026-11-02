@@ -276,7 +276,7 @@ MORNING_TALKS = [
 TOPIC_MAP = [('大掃除', '年末大掃除'), ('結露', '結露対策'), ('目覚まし|スヌーズ|布団から', '冬の朝'), ('脱衣所|寒い場所|暖房', '寒さ対策'),
              ('顔洗い', '冬の朝'), ('朝ごはん', '朝ごはん'), ('飲み物|コーヒー|お茶', '朝の飲み物'), ('買い替え', '買い替え'),
              ('忘れ', '忘れ物'), ('マラソン|5と0|カート|お気に入り|セール', '楽天市場'), ('神社|お守り', '神社巡り'), ('ラーメン', 'ご当地ラーメン'),
-             ('冬支度', '冬支度'), ('乾燥', '乾燥対策')]
+             ('冬支度', '冬支度'), ('乾燥', '乾燥対策'), ('充電|電池|バッテリー', 'スマホの電池')]
 
 
 def talk(repo, slot='noon'):
@@ -1062,7 +1062,8 @@ def single(a, form, it):
     cap = it.get('cap') or {}
     # 10/28：返信の型（他の人の情報投稿から）。PR表記は1行目の頭・推しの理由を事実から1文・リンクは1つで直前に「押すと何が分かるか」
     pts = [clip(x.strip(), 40) for x in (it.get('points') or []) if x.strip() and 'やつ' not in x]
-    reason = cap.get('s') or sell or (pts[0] if pts else '')
+    # 11/02：cap が無い商品は、短い数字だけの推し理由にならないよう商品ごとの quip を優先
+    reason = cap.get('s') or quip or sell or (pts[0] if pts else '')
     lead = cap.get('o') or imp
     reply = '\n'.join(x for x in [f"【PR】{it['name']}", lead, f"✅ 推しの理由：{reason}" if reason else '',
                                    '' if price and price in reason else f"{price}{'・送料無料' if free_ship(it) else ''}",  # 11/01：推しの理由に価格があれば重ねない
