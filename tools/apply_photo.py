@@ -9,16 +9,15 @@ import json, os, sys
 from PIL import Image
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-PW, PH = 860, 500
+PW, PH = 1080, 900  # レイ風：写真が主役（上の約3分の2）
 
 
 def panel(src):
     im = Image.open(src).convert('RGB')
     w, h = im.size
-    if h / w > 1.1:  # 投稿画像まるごと（1080×1350 の比）→ 場面の位置（110,305〜970,805）を切り出す
-        s = w / 1080
-        im = im.crop((int(118 * s), int(313 * s), int(962 * s), int(797 * s)))
-        w, h = im.size
+    if h / w > 1.1:  # 縦長の写真はそのまま画面いっぱいに使う
+        im.thumbnail((1080, 1350 * 2))
+        return im
     r = PW / PH
     if w / h > r:
         nw = int(h * r); im = im.crop(((w - nw) // 2, 0, (w - nw) // 2 + nw, h))

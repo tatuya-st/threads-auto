@@ -213,51 +213,97 @@ def render_single(q, out):
     im.save(out, optimize=True)
 
 
-def render_scene(q, out):
-    """商品1件＋場面イラスト（物欲おばけが商品の活きる場面を演じる。実物写真のふりはしない）。"""
-    import scenes
-    im = Image.new('RGB', (W, H), '#fdf1e2')
-    d = ImageDraw.Draw(im)
-    d.rounded_rectangle((60, 60, W - 60, H - 60), 48, fill='#ffffff')
-    fb = font('bold', 38)
-    t = '【PR】楽天ROOM'
-    bw = int(tw(d, t, fb)) + 64
-    d.rounded_rectangle((110, 110, 110 + bw, 180), 35, fill=ACC)
-    text(d, (142, 147), t, fb, '#ffffff', 'lm')
-    text(d, (W - 110, 155), '※画像はイメージです', font('medium', 28), SUB, 'rs')
-    text(d, (110, 270), q['title'], fit(d, q['title'], 'display', 60, W - 220, 40), INK)
-    it = q['items'][0]
-    sc = q.get('scene') or scenes.pick(it, q)
-    if q.get('photo'):  # マスターがMUSEで作った写真
-        scenes.draw_custom(im, (110, 305, W - 110, 805), os.path.join(HERE, '..', q['photo']), q.get('photo_line'), font)
+def _cover(img, w, h):
+    iw, ih = img.size
+    r = w / h
+    if iw / ih > r:
+        nw = int(ih * r); img = img.crop(((iw - nw) // 2, 0, (iw - nw) // 2 + nw, ih))
     else:
-        scenes.draw(im, (110, 305, W - 110, 805), sc, scenes.line_for(sc, q), font, q.get('chara'))
-    d = ImageDraw.Draw(im)
-    y = 885
-    fh = font('bold', 46)
-    hl = wrap(d, it.get('hook') or it['name'], fh, W - 220, 2)
+        nh = int(iw / r); img = img.crop((0, (ih - nh) // 2, iw, (ih - nh) // 2 + nh))
+    return img.resize((w, h), Image.LANCZOS)
+
+
+def _scene_photo(q, it):
+    """場面の写真を選ぶ：マスターのMUSE写真 → 財布欠席くんの場面写真 → 買い物かごの場面。"""
+    import scenes
+    if q.get('photo'):
+        return Image.open(os.path.join(HERE, '..', q['photo'])).convert('RGB')
+    base = os.path.join(HERE, '..', 'assets', 'scenes')
+    sc = q.get('scene') or scenes.pick(it, q)
+    name = sc if scenes.season_chara() == 'saifu' else 'ghost_' + sc
+    for n in (name, sc, 'cart'):
+        f = os.path.join(base, str(n) + '.jpg')
+        if os.path.exists(f):
+            return Image.open(f).convert('RGB')
+    return Image.new('RGB', (860, 500), '#e9e2d8')
+
+
+def render_scene(q, out):
+    """レイ風（2026-11-03 マスター指示）：写真が主役・文字は少なく・広告のデザイン。
+    上の約3分の2を写真が端まで占め、下に短い一言と価格だけ。実在の人が使った写真のふりはしない。"""
+    it = q['items'][0]
+    im = Image.new('RGB', (W, H), '#ffffff')
+    from PIL import ImageFilter
+    PHH = 880
+    ph = _scene_photo(q, it)
+    if ph.size[1] / ph.size[0] > 1.1:  # 縦長の写真は画面いっぱいに
+        PHH = H
+        im.paste(_cover(ph, W, H), (0, 0))
+    else:
+        # 写真は切らずに横幅いっぱい。上下はぼかした同じ写真で埋める（吹き出しや絵が欠けない）
+        im.paste(_cover(ph, W, PHH).filter(ImageFilter.GaussianBlur(28)), (0, 0))
+        fh2 = 720  # 少しだけ拡大（左右を数%だけ切る）して写真を大きく
+        fw = int(ph.size[0] * fh2 / ph.size[1])
+        big = ph.resize((fw, fh2), Image.LANCZOS)
+        if fw > W:
+            big = big.crop(((fw - W) // 2, 0, (fw - W) // 2 + W, fh2)); fw = W
+        im.paste(big, ((W - fw) // 2, 130))
+        PHH = 130 + fh2 + 40
+        im.paste(Image.new('RGB', (W, H - PHH), '#ffffff'), (0, PHH))
+    # 写真の下を白へなじませる
+    if PHH < H:
+        g = Image.new('L', (1, 160))
+        for y in range(160):
+            g.putpixel((0, y), int(255 * (y / 159) ** 1.6))
+        im.paste(Image.new('RGB', (W, 160), '#ffffff'), (0, PHH - 160), g.resize((W, 160)))
+    else:
+        g = Image.new('L', (1, 620))
+        for y in range(620):
+            g.putpixel((0, y), int(235 * (y / 619) ** 1.3))
+        im.paste(Image.new('RGB', (W, 620), '#ffffff'), (0, H - 620), g.resize((W, 620)))
+    d = ImageDraw.Draw(im, 'RGBA')
+    # 左上：PR表記（ひと目でわかる形）／右上：イメージの注意
+    fb = font('bold', 34)
+    t = '【PR】楽天ROOM'
+    bw = int(tw(d, t, fb)) + 52
+    d.rounded_rectangle((48, 48, 48 + bw, 108), 30, fill=ACC)
+    text(d, (74, 78), t, fb, '#ffffff', 'lm')
+    fc = font('medium', 24)
+    cap = '※画像はイメージです。実際の商品とは異なります'
+    cw = tw(d, cap, fc)
+    d.rounded_rectangle((W - 48 - cw - 36, 56, W - 48, 100), 22, fill=(0, 0, 0, 120))
+    text(d, (W - 66, 78), cap, fc, '#ffffff', 'rm')
+    # 下：短い一言（1〜2行）→ 価格 → 小さく商品名 → 案内
+    y = (PHH + 70) if PHH < H else (H - 380)
+    fh = font('display', 62)
+    hook = it.get('hook') or q.get('title') or it['name']
+    hl = wrap(d, hook, fh, W - 150, 2)
+    if len(hl) == 2:
+        fh = font('display', 54); hl = wrap(d, hook, fh, W - 150, 2)
+        y -= 20
     for l in hl:
-        text(d, (110, y), l, fh, INK)
-        y += 60
-    if it.get('hook'):
-        fn = font('medium', 28)
-        text(d, (110, y), wrap(d, it['name'], fn, W - 220, 1)[0], fn, MUTED)
-        y += 30
-    y += 88
+        text(d, (60, y), l, fh, INK)
+        y += 76
+    y += 50
     price = str(it.get('price', ''))
-    fp = fit(d, price, 'display', 76, 520, 50)
-    text(d, (110, y), price, fp, ACC)
-    quip = it.get('quip') or ''
-    if quip:
-        px = 110 + tw(d, price, fp) + 28
-        mx = W - 110 - px
-        fq = fit(d, '← ' + quip, 'medium', 32, mx, 20)
-        if tw(d, '← ' + quip, fq) <= mx:
-            text(d, (px, y - 8), '← ' + quip, fq, SUB)
-    text(d, (110, 1240), q['footer'], fit(d, q['footer'], 'medium', 34, FOOT_W, 22), MUTED)
+    fp = fit(d, price, 'display', 84, 560, 50)
+    text(d, (60, y), price, fp, ACC)
+    y += 46
+    fn = font('medium', 28)
+    text(d, (62, y), wrap(d, it['name'], fn, W - 340, 1)[0], fn, MUTED)
+    text(d, (62, H - 56), q['footer'], fit(d, q['footer'], 'medium', 30, FOOT_W, 20), MUTED)
     draw_saifu(im, 'kesseki')
     im.save(out, optimize=True)
-
 
 if __name__ == '__main__':
     q = json.load(open(sys.argv[1], encoding='utf-8'))
