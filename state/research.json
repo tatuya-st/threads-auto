@@ -1,36 +1,6 @@
 {
- "at": "2026-11-02T19:25+09:00",
+ "at": "2026-11-03T07:25+09:00",
  "notes": [
-  {
-   "what": "同じ商品を同じSNSで二度紹介しないよう注意する声（楽天スタッフブログを引用）",
-   "src": "https://www.threads.com/@yumi202376/post/DHUcFqXJcH0",
-   "done": "商品コード・商品名で二重投稿を止める仕組みに"
-  },
-  {
-   "what": "リンクを毎回貼って凍結されたという体験談",
-   "src": "https://www.threads.com/@amam__.31/post/DVKmZ2vCXz5",
-   "done": "リンクは1日1回まで"
-  },
-  {
-   "what": "スレッズ投稿にPR表記をつける呼びかけ",
-   "src": "https://www.threads.com/@shiro_sns01/post/DThYqHokjwO",
-   "done": "商品つき投稿は必ずPR表記"
-  },
-  {
-   "what": "10/27昼の会話投稿に禁止語「凍結」と作った体験談が入っていた。削除を2回実行したがThreadsが「見つからない／権限なし」と返した",
-   "src": "https://www.threads.com/@tatuya_st/post/De-_RmQjrza",
-   "done": "本人に連絡。BANNEDで今後ははじく"
-  },
-  {
-   "what": "PR表記は冒頭の分かりやすい位置に、という指摘（景品表示法のステマ規制）",
-   "src": "https://www.threads.com/@aki_hapi/post/DOVsxAXErfk",
-   "done": "返信の1行目の頭を【PR】に固定（build_queue.py）"
-  },
-  {
-   "what": "リンクは本文でなくコメント欄に貼ると拡散されにくさを避けられる・固定投稿とプロフにもリンク",
-   "src": "https://www.threads.com/@hiro_blog_life/post/DHNVa4ozmNk",
-   "done": "返信にリンク1つ＋直前に『押すと何が分かるか』の一言に（build_queue.py・publish.py）"
-  },
   {
    "what": "ROOMリンクはROOMページに飛び、商品ページまでログインが要ることがある。直接リンクの方が早いという声",
    "src": "https://www.threads.com/@panchiyan509/post/DNMnsJ2vZnZ",
@@ -200,6 +170,42 @@
    "what": "楽天公式：10月に新企画『ジャンル祭』（家電含む4ジャンル、マラソンと同時開催）。今後も続ける予定だが11月の日程は未発表",
    "src": "https://corp.rakuten.co.jp/news/update/2026/1002_01.html",
    "done": "記録のみ（日程未発表のため sales には入れない）"
+  },
+  {
+   "what": "11/2夕『変なDM来た？』が8時間で表示43・コメント0（会話型の平均の3分の1未満）",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "weakに記録・TALK_KEYSに『DM』を足し同じ話題を止めた"
+  },
+  {
+   "what": "11/3朝時点でも11月マラソン（11/4 20:00〜11/11 1:59）は予想のまま。エントリー必須・上限は回により5000〜10000ポイント",
+   "src": "https://pricey.jp/web/articles/4049",
+   "src2": "https://corp.rakuten.co.jp/news/press/2026/?month=10",
+   "done": "salesは『予想・公式未確認』のまま据え置き"
+  },
+  {
+   "what": "Threadsで冬支度の福袋（超早得）が売り切れ続出という投稿があり、11月初めから福袋の動きが出ている",
+   "src": "https://www.threads.com/@nagisaworks/post/DQp0HCyEhq5",
+   "src2": "",
+   "done": "hot_wordsに『福袋』を追加（夜の商品投稿で先に選ばれる）"
+  },
+  {
+   "what": "商品投稿の形：PR｜ランキング順位（日付）＋価格（投稿時点）＋レビュー★と件数＋最後に問いかけ",
+   "src": "https://www.threads.com/@genmai_maama/post/DewZomemmvY",
+   "src2": "",
+   "done": "記録のみ（build_queue.pyは既にPR表記・投稿時点の価格・レビュー件数を入れているため変更なし）"
+  },
+  {
+   "what": "海外：ThreadsはMetaが2月に『Dear Algo』（公開投稿で好みを伝えると約3日フィードが変わる）を出し、フォロー中の重視・反応稼ぎ投稿の抑制を進めているとの解説",
+   "src": "https://metricool.com/threads-algorithm/",
+   "src2": "",
+   "done": "記録のみ（『反応稼ぎ』と見られないよう、今の自然な問いかけ＋自分の答えの形を続ける。Meta公式未確認のためコードは変えない）"
+  },
+  {
+   "what": "楽天アフィリエイト公式のお知らせページは今回開けず確認できなかった（10月の楽天プレスにアフィ・ROOM関連の発表は無し）",
+   "src": "https://corp.rakuten.co.jp/news/press/2026/?month=10",
+   "src2": "",
+   "done": "official_turnを1に進めた（次は楽天ROOM公式）"
   }
  ],
  "hot_words": [
@@ -215,7 +221,8 @@
   "ポータブルSSD",
   "ブランケット",
   "布団乾燥機",
-  "電気毛布"
+  "電気毛布",
+  "福袋"
  ],
  "sales": [
   {
@@ -349,6 +356,20 @@
    "replies": 0,
    "cause": "テーマが悪い（ROOMをやっている人しか答えられない内輪の話題。自分の答えも数字がなく、答えのお手本にならない）",
    "fix": "NAKAMAから外した"
+  },
+  {
+   "id": "20261102-1526-noon",
+   "topic": "知らない人からの怪しいDM",
+   "open": "知らない人から「『はい』とだけ返してください」系のDM、来てませんか？",
+   "shape": "来たことある？＋自分の対処",
+   "image": "なし",
+   "time": "16:12",
+   "views": 43,
+   "likes": 1,
+   "replies": 0,
+   "cause": "テーマが悪い（詐欺・警戒の話題で、ガジェットや買い物と関係が薄く、答えると自分の弱みを見せる形になる）",
+   "fix": "TALK_KEYSに『DM』を足し、警戒・不安系の話題は会話ネタにしない"
   }
- ]
+ ],
+ "official_turn": 1
 }
