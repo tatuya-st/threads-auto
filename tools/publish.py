@@ -368,6 +368,15 @@ def publish():
               else:
                   img = f'https://raw.githubusercontent.com/{repo}/{sha}/images/{qid}.png'
                   params = {'media_type': 'IMAGE', 'image_url': img, 'text': q['text'], 'access_token': tok}
+                  if os.path.exists(os.path.join(ROOT, 'images', qid + '_2.png')):
+                      # 2枚投稿（カルーセル）：1枚ずつ準備してから、まとめて1本にする
+                      kids = []
+                      for nm2 in (qid, qid + '_2'):
+                          u = f'https://raw.githubusercontent.com/{repo}/{sha}/images/{nm2}.png'
+                          k = call('POST', f"{API}/{me['id']}/threads", {'media_type': 'IMAGE', 'image_url': u, 'is_carousel_item': 'true', 'access_token': tok})['id']
+                          wait_ready(k, tok)
+                          kids.append(k)
+                      params = {'media_type': 'CAROUSEL', 'children': ','.join(kids), 'text': q['text'], 'access_token': tok}
               if q.get('topic'):
                   params['topic_tag'] = q['topic']
               cid = call('POST', f"{API}/{me['id']}/threads", params)['id']

@@ -238,6 +238,18 @@ def _scene_photo(q, it):
     return Image.new('RGB', (860, 500), '#e9e2d8')
 
 
+def second(q):
+    """2枚目：写真を2枚目（別の女性）にし、見出しを推しポイントのひと言に変える。"""
+    q2 = json.loads(json.dumps(q))
+    q2['photo'] = q['photo2']
+    it = q2['items'][0]
+    pts = it.get('points') if isinstance(it.get('points'), list) else []
+    alt = it.get('quip') or (pts[0] if pts else None)
+    if alt:
+        it['hook'] = alt
+    return q2
+
+
 def render_scene(q, out):
     """レイ風（2026-11-03 マスター指示）：写真が主役・文字は少なく・広告のデザイン。
     上の約3分の2を写真が端まで占め、下に短い一言と価格だけ。実在の人が使った写真のふりはしない。"""
@@ -280,6 +292,9 @@ def render_scene(q, out):
     text(d, (74, 78), t, fb, '#ffffff', 'lm')
     fc = font('medium', 24)
     cap = '※画像はイメージです。実際の商品とは異なります'
+    if q.get('photo'):  # 人物入りのAI画像：実在の人が使った写真に見せない
+        cap = '※AIで作ったイメージです。実在の人物・実際の商品とは異なります'
+        fc = fit(d, cap, 'medium', 24, W - 48 - 36 - 48 - bw - 40, 16)
     cw = tw(d, cap, fc)
     d.rounded_rectangle((W - 48 - cw - 36, 56, W - 48, 100), 22, fill=(0, 0, 0, 120))
     text(d, (W - 66, 78), cap, fc, '#ffffff', 'rm')

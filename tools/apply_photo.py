@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """マスターがMUSEで作った画像を、夜の商品投稿の画像に入れる（ルイが訂正してから投稿する用）。
-使い方: python3 tools/apply_photo.py queue/<id>.json <マスターの画像> [吹き出しのひと言]
+使い方: python3 tools/apply_photo.py queue/<id>.json <画像1> [<画像2>] [ひと言]
+- 画像を2枚渡すと2枚投稿（1枚目と2枚目で別の女性。同じ人に見えたら使わない）
 - 投稿画像まるごと（縦長）なら、場面の部分だけを切り出して使う
 - 場面の写真（横長など）なら、場面の枠に合わせて切り抜く
 - 【PR】表記・商品名・価格・「実際の商品とは異なります」は、ルイの正しい情報で入れ直す
@@ -36,14 +37,23 @@ def main():
     q.pop('hold', None)
     from datetime import datetime, timezone, timedelta
     q['released'] = datetime.now(timezone(timedelta(hours=9))).isoformat(timespec='minutes')
-    if len(sys.argv) > 3:
-        q['photo_line'] = sys.argv[3]
+    rest = sys.argv[3:]
+    if rest and os.path.isfile(rest[0]):
+        rel2 = f"assets/photos/{q['id']}_2.jpg"
+        panel(rest.pop(0)).save(os.path.join(ROOT, rel2), quality=92)
+        q['photo2'] = rel2
+    if rest:
+        q['photo_line'] = rest[0]
     json.dump(q, open(qp, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import render
     out = os.path.join(ROOT, 'images', q['id'] + '.png')
     render.render_scene(q, out)
     print(out)
+    if q.get('photo2'):
+        out2 = os.path.join(ROOT, 'images', q['id'] + '_2.png')
+        render.render_scene(render.second(q), out2)
+        print(out2)
 
 
 if __name__ == '__main__':
