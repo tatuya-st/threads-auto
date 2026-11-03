@@ -968,6 +968,10 @@ def write_q(a, q, note):
             q['full_image'] = fp
             q.pop('hold', None)
             note += '（マスターの画像まるごと）'
+        # 夜の商品投稿は、レイが直した画像が届くまで出さない（2026-11-03 マスター指示）
+        if q.get('slot') == 'night' and not q.get('photo') and not q.get('full_image'):
+            q['hold'] = True
+            note += '（レイの画像待ち）'
     os.makedirs(os.path.join(a.repo, 'queue'), exist_ok=True)
     with open(os.path.join(a.repo, 'queue', q['id'] + '.json'), 'w', encoding='utf-8') as f:
         json.dump(q, f, ensure_ascii=False, indent=1)
