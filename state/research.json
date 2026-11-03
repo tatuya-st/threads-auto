@@ -1,21 +1,6 @@
 {
- "at": "2026-11-03T07:25+09:00",
+ "at": "2026-11-03T12:25+09:00",
  "notes": [
-  {
-   "what": "ROOMリンクはROOMページに飛び、商品ページまでログインが要ることがある。直接リンクの方が早いという声",
-   "src": "https://www.threads.com/@panchiyan509/post/DNMnsJ2vZnZ",
-   "done": "記録のみ（リンクの種類は変えない）"
-  },
-  {
-   "what": "11月の楽天イベント：1日ワンダフルデー・5と0のつく日・18日ご愛顧感謝デー、マラソン11/4〜11・BF11/21〜27は予想",
-   "src": "https://n-memo.com/rakuten-sale-ichiran/",
-   "done": "research.json の sales に追加"
-  },
-  {
-   "what": "朝は季節のひと言＋共感の問いかけ（10/28の型）",
-   "src": "本人指示（10/28）",
-   "done": "朝専用の会話ネタ MORNING_TALKS を6つ追加（build_queue.py）"
-  },
   {
    "what": "「楽天で情報流出か」がトレンド中",
    "src": "本人指示（10/28）",
@@ -206,6 +191,24 @@
    "src": "https://corp.rakuten.co.jp/news/press/2026/?month=10",
    "src2": "",
    "done": "official_turnを1に進めた（次は楽天ROOM公式）"
+  },
+  {
+   "what": "楽天公式：11月お買い物マラソンは11/4 20:00〜11/11 1:59で確定。エントリーは11/2 10:00から必須、買いまわり上限7000pt、1店舗1000円以上（税込・送料別・クーポン後）、転売目的の複数注文は対象外",
+   "src": "https://event.rakuten.co.jp/campaign/point-up/marathon/",
+   "src2": "https://media.yourmystar.jp/articles/d18aa51d-aeea-4617-9653-3f3fb84b89fa",
+   "done": "sales のマラソンを公式確認済みに更新・終わったワンダフルデーを削除。マラソン前の問いかけはTALKSに既にあるので追加なし"
+  },
+  {
+   "what": "海外：Amazonのストアフロントで伸びている人は、季節・セール向けのリストを一番上に固定し、プロフィールや固定投稿から誘導、売れた商品はシーズン中ずっと上に置き直している（訪問数は自己申告で根拠不明）",
+   "src": "https://logie.ai/news/amazon-storefront-traffic-is-booming-real-creator-numbers-prime-day-myths-proven-strategies-for-growth/",
+   "src2": "",
+   "done": "記録のみ（ROOMのコレクションの並べ替えはルイの操作範囲外。週1の振り返りで本人に伝える材料）"
+  },
+  {
+   "what": "ROOM公式：ランクボーナスはS+3%・A+2%・B+1%（エントリー不要、毎月1日に適用、1商品1000円上限）。店舗・メーカーから依頼を受けた紹介と判断されると期間中の全投稿がボーナス対象外（ページは2021年表記で古い可能性）",
+   "src": "https://room.rakuten.co.jp/feature/aff_bonus_5/",
+   "src2": "https://room.rakuten.co.jp/info/room_rank/",
+   "done": "記録のみ（依頼を受けた紹介はしない方針を確認。official_turn を楽天イベントへ進めた）"
   }
  ],
  "hot_words": [
@@ -226,12 +229,7 @@
  ],
  "sales": [
   {
-   "label": "ワンダフルデー",
-   "s": "2026-11-01T00:00",
-   "e": "2026-11-01T23:59"
-  },
-  {
-   "label": "お買い物マラソン（予想・公式未確認）",
+   "label": "お買い物マラソン（公式確認済み・エントリー必須・上限7000pt）",
    "s": "2026-11-04T20:00",
    "e": "2026-11-11T01:59"
   },
@@ -371,5 +369,5 @@
    "fix": "TALK_KEYSに『DM』を足し、警戒・不安系の話題は会話ネタにしない"
   }
  ],
- "official_turn": 1
+ "official_turn": 2
 }
