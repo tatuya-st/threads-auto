@@ -545,6 +545,11 @@ FAMILY = {'モバイルバッテリー': '充電', '充電器': '充電', '充�
           '化粧水': '肌', '美容液': '肌'}
 
 
+FAMILY_WORDS = {'充電': ['充電', 'バッテリー', '電池'], '掃除': ['掃除'], '音': ['イヤホン', 'スピーカー', 'ヘッドホン'],
+                'スマホ': ['スマホケース', '機種変'], '空気': ['加湿', '除湿', '空気清浄'], '暖房': ['ヒーター', 'こたつ', '電気毛布'],
+                'オーラルケア': ['歯みがき', '歯ブラシ', 'マウスウォッシュ']}
+
+
 def family_of(t):
     return FAMILY.get(t, t)
 
@@ -556,10 +561,16 @@ def recent_families(repo, days=3):
     for f in glob.glob(os.path.join(repo, 'queue', '*.json')):
         if os.path.basename(f)[:8] >= since:
             try:
-                for x in json.load(open(f, encoding='utf-8')).get('items', []):
+                d = json.load(open(f, encoding='utf-8'))
+                for x in d.get('items', []):
                     t = type_of(x)[0]
                     if t:
                         out.add(family_of(t))
+                # 11/03：会話投稿の話題も数える（昼「スマホの充電、何%から焦る？」→夜モバイルバッテリー、が続いたため）
+                txt = d.get('text', '')
+                for fam, words in FAMILY_WORDS.items():
+                    if any(w in txt for w in words):
+                        out.add(fam)
             except Exception:
                 pass
     return out
@@ -742,6 +753,11 @@ QA = [
     ({'beauty'}, '冬が苦手', '口コミ', '季節の変わり目、スキンケアを変える派？ずっと同じ派？', 'ガジェットは新しい物好きなのに、ここだけは保守的です🧴'),
     ({'life'}, '節約中', 'コスパ', '日用品のストック、家に何個ありますか？', '置き場所が許すかぎり増えていきます📦'),
     ({'life'}, '一人暮らし', '時短', '日用品の買い忘れ、月に何回ありますか？', '「切れてから気づく」の常連です🧴'),
+    # 11/03：life の問いかけが数字の形しか無く、昼の数字の問いかけと続いたため、場面・あるあるの形を足す
+    ({'life'}, '家事を回してる', 'コスパ', '洗面台の下のストック、いちばん場所を取ってるのは？', 'うちは気づいたら同じ物が3本並んでました🧴'),
+    ({'life'}, '子育て中', '時短', '「あ、切らしてた」に気づくのって、だいたい夜じゃないですか？', 'しかも店が閉まってから気づきます🧴'),
+    ({'マウスウォッシュ'}, '通勤中', '見た目', '歯みがきのあと、マウスウォッシュまでする日としない日、ありません？', 'うちは洗面台にボトルが見えてるかどうかで決まります🪥'),
+    ({'マウスウォッシュ'}, '夜ふかし', '口コミ', '寝る前の歯みがき、「今日はもういいか」が頭をよぎる日ありません？', '歯ブラシを持つまでがいちばん長い人です🪥'),
 ]
 
 
@@ -969,10 +985,8 @@ def write_q(a, q, note):
             q['full_image'] = fp
             q.pop('hold', None)
             note += '（マスターの画像まるごと）'
-        # 夜の商品投稿は、レイが直した画像が届くまで出さない（2026-11-03 マスター指示）
-        if q.get('slot') == 'night' and not q.get('photo') and not q.get('full_image'):
-            q['hold'] = True
-            note += '（レイの画像待ち）'
+        # 11/03 本人指示：夜の商品投稿は画像待ちをせず、自動の画像（render_scene）でそのまま出す。hold は付けない
+        q.pop('hold', None)
     os.makedirs(os.path.join(a.repo, 'queue'), exist_ok=True)
     with open(os.path.join(a.repo, 'queue', q['id'] + '.json'), 'w', encoding='utf-8') as f:
         json.dump(q, f, ensure_ascii=False, indent=1)
