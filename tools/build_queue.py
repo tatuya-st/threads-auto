@@ -322,6 +322,11 @@ def talk(repo, slot='noon'):
     stamp = datetime.now(JST)
     qid = stamp.strftime('%Y%m%d-%H%M') + '-' + slot
     q = {'id': qid, 'slot': slot, 'form': 'talk', 'kind': 'talk', 'created': stamp.isoformat(timespec='minutes'), 'text': text, 'items': []}
+    # 11/3：10/29以降は商品投稿が止まり、ROOMへのリンクが1本も出ずクリックが減った。
+    # 返信がいちばん集まる朝の会話投稿に、ルイのリンクの日（奇数日）だけROOMへの返信リンクを付ける。
+    # 間隔（20時間）と偶数日の扱いは publish.py の thin_link がそのまま守る
+    if slot == 'morning' and stamp.day % 2 == 1:
+        q['reply'] = '※PR\nうちで実際に選んでる冬の便利もの、楽天ROOMにまとめてます\n' + ROOM_COLS_URL
     # 10/29 Threads公式Tips：トピック付きの投稿は表示が伸びやすい → 会話投稿にもトピックを付ける
     if 'ROOM' in text:
         q['topic'] = '楽天ROOM'
