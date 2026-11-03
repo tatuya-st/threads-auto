@@ -42,6 +42,25 @@ def limited_today():
 STATUS_P = os.path.join(ROOT, 'state', 'status.txt')
 
 
+def night_info(now, handed):
+    """ルイの今夜の商品投稿がどうなっているかを、レイに伝える（マスターの中継なし）"""
+    day = now.strftime('%Y%m%d')
+    fs = sorted(glob.glob(os.path.join(ROOT, 'queue', day + '-*-night.json')))
+    line = 'まだ（マスターの「OK」が出てから投稿します）'
+    if handed:
+        line = 'ボツになりました。今夜の商品投稿はレイが出してください（リンクもレイが使ってよい）'
+    elif fs:
+        q = json.load(open(fs[-1], encoding='utf-8'))
+        pp = os.path.join(ROOT, 'state', 'posted', os.path.basename(fs[-1]))
+        nm = (q.get('items') or [{}])[0].get('name', '')[:25]
+        if os.path.exists(pp):
+            r = json.load(open(pp, encoding='utf-8'))
+            line = ('ボツ・削除しました' if r.get('deleted') else '投稿しました') + (f'（{nm}）' if nm else '')
+        else:
+            line = 'マスターの確認待ち' + (f'（{nm}）' if nm else '')
+    return f"\n■ルイの今夜の商品投稿\n・{line}\n"
+
+
 def room_info(now):
     """11/03 マスター指示：レイにも楽天ROOMの情報を渡す（セール日程・売れ筋・出した商品・ROOMの入口）"""
     def load(n, d):
@@ -66,7 +85,8 @@ def room_info(now):
     if r.get('hot_words'):
         out.append('・今売れ筋の種類：' + '、'.join(r['hot_words'][:10]))
     sent = load('sent.json', {})
-    recent = sorted((v for v in sent.values() if isinstance(v, dict) and v.get('at')), key=lambda v: v['at'], reverse=True)[:5]
+    gone = lambda v: load(os.path.join('posted', (v.get('post') or '') + '.json'), {}).get('deleted')
+    recent = sorted((v for v in sent.values() if isinstance(v, dict) and v.get('at') and not gone(v)), key=lambda v: v['at'], reverse=True)[:5]
     if recent:
         out.append('・ルイがThreadsに出した商品（同じ商品は出さないでください）：' + ' ／ '.join(v['name'][:25] for v in recent))
     return '\n'.join(out) + '\n'
@@ -77,6 +97,13 @@ def write_status():
     now = datetime.now(JST)
     stop = limited_today()
     who = 'ルイ' if now.day % 2 else 'レイ'
+    try:  # 11/03：ルイの商品投稿がボツになった日は、その日のリンクと夜の商品投稿をレイに渡す
+        hand = json.load(open(os.path.join(ROOT, 'state', 'handover.json'), encoding='utf-8'))
+    except Exception:
+        hand = {}
+    today = now.strftime('%Y-%m-%d')
+    if today in hand:
+        who = f"レイ（{hand[today]}）"
     txt = (f"日付：{now.strftime('%Y-%m-%d')}（日本時間）\n"
            f"書き込み：{'止める（Threadsの書き込み上限が出たため、今日は投稿も返信もしない）' if stop else 'OK'}\n"
            f"今日のリンク：{who}\n"
@@ -87,6 +114,7 @@ def write_status():
         note = ''
     if note:
         txt += f"\n■ルイからレイへの連絡\n{note}\n"
+    txt += night_info(now, today in hand)
     txt += room_info(now)
     open(STATUS_P, 'w', encoding='utf-8').write(txt)
 
@@ -312,7 +340,11 @@ def thin_link(q):
     except Exception:
         off = []
     today = datetime.now(JST)
-    blocked = today.day % 2 == 0 or today.strftime('%Y-%m-%d') in off
+    try:
+        hand = json.load(open(os.path.join(ROOT, 'state', 'handover.json'), encoding='utf-8'))
+    except Exception:
+        hand = {}
+    blocked = today.day % 2 == 0 or today.strftime('%Y-%m-%d') in off or today.strftime('%Y-%m-%d') in hand
     if not q.get('reply') or (not blocked and (not last or datetime.now(JST) - last >= timedelta(hours=LINK_GAP_H))):
         return q
     # 商品名は返信に残し、URLの行だけ外す（リンクはプロフィールへ）
