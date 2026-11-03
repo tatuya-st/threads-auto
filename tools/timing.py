@@ -73,6 +73,9 @@ def main():
         end = (m + timedelta(days=1 if m.hour >= 12 else 0)).replace(hour=0, minute=30, second=0)
         left = min(left, (end - datetime.now(JST)).total_seconds())
     sec = int(min(b * 60 + random.randint(0, 1199), max(left, 0)))
+    if slot == 'night':
+        # 11/03：夜の商品投稿は、マスターに画像を見せてから最低30分は出さない（その間に「ボツ」が来たら止める）
+        sec = max(sec, int(30 * 60 - (datetime.now(JST) - made_at(qid)).total_seconds()))
     print(f'::notice::{slot} は {b}〜{b + 20}分の枠で投稿（{sec // 60}分待つ）', flush=True)
     print(sec)
 

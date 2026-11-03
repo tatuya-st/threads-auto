@@ -389,6 +389,9 @@ def publish():
         if limited_today():
             print(f'{qid} は書き込み上限のため出しません')
             break
+        if not remote_has(f'queue/{qid}.json'):  # 11/03：マスターの「ボツ」で queue から消された投稿は出さない
+            print(f'{qid} はボツで取り消されたので出しません')
+            continue
         if remote_has(f'state/posted/{qid}.json'):
             print(f'{qid} はほかの実行で公開済みなので出しません')
             continue
