@@ -1,21 +1,6 @@
 {
- "at": "2026-11-03T12:25+09:00",
+ "at": "2026-11-03T19:25+09:00",
  "notes": [
-  {
-   "what": "ROOMはThreadsからの流入が増えクリック競争が激化、Aランク条件が上がった体感という声（基準は非公開）",
-   "src": "https://mamakago.com/room2602/",
-   "done": "記録のみ（ランク条件は公式未確認）"
-  },
-  {
-   "what": "11月マラソンは楽天カレンダー公式でも2026年の日時は未掲載（過去は11/4 20:00〜11/11 01:59）",
-   "src": "https://calendar.rakuten.co.jp/evt?ct=2&eid=538056",
-   "done": "sales は予想表記のまま"
-  },
-  {
-   "what": "他媒体・アフィのリンクは本文でなくコメント欄に、PR表記を忘れずに（本文に貼るとインプが落ちる）",
-   "src": "https://www.threads.com/@niwatori_rookie/post/DQy6kl-jn-R",
-   "done": "まとめ投稿の返信も【PR】を1行目の頭・リンク直前に『押すと何が分かるか』に統一（build_queue.py）"
-  },
   {
    "what": "1行目に検索されやすい言葉を入れ、2行に収めてプレビューで切れないようにする型",
    "src": "https://www.threads.com/@meta.ai/post/DdWb_L6AoIC",
@@ -209,6 +194,24 @@
    "what": "マスターの写メ(11/03)：他人の『ゼロから始めるなら5つだけ守る』型＋実績の管理画面2枚＋3連投(1/3)でいいね235。数字の見せ方が伸びの理由。ルイは実際の数字が無いので型だけ保留。マスターの本物の成果が出たら、本物の数字だけで同じ型を使う",
    "src": "マスターの写メ",
    "done": "保留（実績の捏造はしない）"
+  },
+  {
+   "what": "11/3昼『スマホの充電、何%から焦る？＋自分の答え』が表示187・コメント19（よく伸びた）",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "TALKSに同じ形で話題違いの『ブラウザのタブ、何個たまったら閉じる？』を足し、TALK_KEYSに『タブ』"
+  },
+  {
+   "what": "海外：MetaのAI生成ラベル更新はFacebook・Instagramの広告が対象（Threadsの通常投稿への言及なし、Meta公式の出典は記事内に無し）",
+   "src": "https://almcorp.com/news/meta-ai-labels-facebook-instagram-ads-disclosure-2026/",
+   "src2": "",
+   "done": "広告を出していないので仕組みは変えない（公式未確認のため採用なし）"
+  },
+  {
+   "what": "11/3夜時点でも楽天ブラックフライデー2026の日程・エントリー・上限は公式未発表（検索で出るのは過去年の記事）",
+   "src": "https://premium.gamepedia.jp/shopping/archives/13659",
+   "src2": "",
+   "done": "salesの予想表記のまま。official_turnを3へ"
   }
  ],
  "hot_words": [
@@ -369,5 +372,5 @@
    "fix": "TALK_KEYSに『DM』を足し、警戒・不安系の話題は会話ネタにしない"
   }
  ],
- "official_turn": 2
+ "official_turn": 3
 }
