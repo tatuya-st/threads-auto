@@ -1,26 +1,6 @@
 {
- "at": "2026-11-03T19:25+09:00",
+ "at": "2026-11-04T07:30+09:00",
  "notes": [
-  {
-   "what": "1行目に検索されやすい言葉を入れ、2行に収めてプレビューで切れないようにする型",
-   "src": "https://www.threads.com/@meta.ai/post/DdWb_L6AoIC",
-   "done": "記録のみ（今の会話型は1行目が問いかけで2行以内に収まっている）"
-  },
-  {
-   "what": "楽天1位の超小型ポータブルSSD（memcarycard）を紹介する投稿",
-   "src": "https://www.threads.com/@endoumasaaki/post/DWQ70gxk60r",
-   "done": "hot_wordsにポータブルSSD・ROOM売れ筋リサーチに追加依頼"
-  },
-  {
-   "what": "寒さで軽い吸湿発熱ブランケット（Toronel light）をPR付きで紹介",
-   "src": "https://www.threads.com/@dansoukun/post/DeP3E_PCUCx",
-   "done": "hot_wordsにブランケット・ROOM売れ筋リサーチに追加依頼"
-  },
-  {
-   "what": "楽天の新イベント『ジャンル祭』（10/4〜9、マラソンと連動。家電・日用品など）",
-   "src": "https://corp.rakuten.co.jp/news/update/2026/1002_01.html",
-   "done": "記録のみ（次回の日程は未発表）"
-  },
   {
    "what": "10/28朝『冬支度もう始めた？＋自分の答え』がコメント5件と朝としては伸びた",
    "src": "state/insights.json",
@@ -212,6 +192,30 @@
    "src": "https://premium.gamepedia.jp/shopping/archives/13659",
    "src2": "",
    "done": "salesの予想表記のまま。official_turnを3へ"
+  },
+  {
+   "what": "Meta公式：Threads APIの更新履歴は8/18（デバッグトークン）・8/12（token_type追加）が最新で、9〜11月に投稿上限・リンク・返信の変更なし（リンク5件超の投稿は失敗は従来どおり）",
+   "src": "https://developers.facebook.com/documentation/threads/changelog",
+   "src2": "",
+   "done": "変更なし（返信のリンク1つの今の作りで問題なし）。official_turnを4（消費者庁）へ"
+  },
+  {
+   "what": "海外：秋冬の贈り物で、キャンドルウォーマーランプ・サンセットランプ・ウェイトブランケット・サンライズアラームなど『こもって温まる照明・寝具』が挙がっている（6/18更新、人気の根拠データなし）",
+   "src": "https://www.wishdeck.com/blog/fall-gift-trends",
+   "src2": "https://www.rakuten.co.jp/category/562715/",
+   "done": "楽天にカテゴリがあり買えるため hot_words に『キャンドルウォーマー』を追加（具体的な型番は未確認のため売れ筋リサーチは呼ばない）"
+  },
+  {
+   "what": "海外の『TikTokで話題のガジェット』記事は2023年のもので古い",
+   "src": "https://bgr.com/general/gadgets-that-went-viral-on-tiktok-and-are-actually-worth-buying",
+   "src2": "",
+   "done": "見送り（情報が古い）"
+  },
+  {
+   "what": "site:threads.com の楽天ROOM検索（売れた・冬）はThreadsの投稿が出ず、拾えるものなし",
+   "src": "",
+   "src2": "",
+   "done": "記録のみ（次の朝はクエリを変える）"
   }
  ],
  "hot_words": [
@@ -228,7 +232,8 @@
   "ブランケット",
   "布団乾燥機",
   "電気毛布",
-  "福袋"
+  "福袋",
+  "キャンドルウォーマー"
  ],
  "sales": [
   {
@@ -372,5 +377,5 @@
    "fix": "TALK_KEYSに『DM』を足し、警戒・不安系の話題は会話ネタにしない"
   }
  ],
- "official_turn": 3
+ "official_turn": 4
 }
