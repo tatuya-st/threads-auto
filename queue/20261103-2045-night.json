@@ -1,0 +1,24 @@
+{
+ "id": "20261103-2045-night",
+ "slot": "night",
+ "form": "basic",
+ "kind": "single",
+ "created": "2026-11-03T20:45+09:00",
+ "title": "今夜の1品",
+ "footer": "▶ 財布と相談のうえ、プロフィールのリンクから",
+ "topic": "楽天ROOM",
+ "text": "寝る前の歯みがき、「今日はもういいか」が頭をよぎる日ありません？\n歯ブラシを持つまでがいちばん長い人です🪥\n正直なところ、みんなは？\n\n※PR：返信に楽天ROOMのリンクがあります",
+ "reply": "【PR】OraLuLu マウスウォッシュ アップルミント 500ml\n✅ 推しの理由：500mlのアップルミント\n2,280円〜\n今の価格とレビューは、ここから見られます👇\n楽天ROOM：https://room.rakuten.co.jp/room_a9a129c5a9/items",
+ "items": [
+  {
+   "itemcode": "life-plus-one:10000000",
+   "name": "OraLuLu マウスウォッシュ アップルミント 500ml",
+   "hook": "オーラルルのマウスウォッシュを使っている人の買い足しに",
+   "price": "2,280円〜",
+   "quip": "500mlのアップルミント",
+   "points": [
+    "500ml"
+   ]
+  }
+ ]
+}
