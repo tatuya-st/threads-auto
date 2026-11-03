@@ -783,7 +783,7 @@ def last_shapes(repo, n=2):
     return out
 
 
-QA_CLOSE = ['みんなは？', 'みんなはどう？', 'あなたは？', 'みんなのも聞きたいです', 'みんなはどうしてる？', '同じ人いますか？', 'ほかの人のも知りたい', '正直なところ、みんなは？', '怒らないので教えてください', '私だけじゃないと信じてます。みんなは？']  # 10/27：人間らしく。決まり文句と👇の連発をやめる
+QA_CLOSE = ['みんなは？', 'みんなはどう？', 'あなたは？', 'みんなのも聞きたいです', 'みんなはどうしてる？', '同じ人いますか？', 'ほかの人のも知りたい', '怒らないので教えてください', '私だけじゃないと信じてます。みんなは？']  # 10/27：人間らしく。決まり文句と👇の連発をやめる
 # 形ごとの3行目（商品は種類だけ。数字はスペックの事実だけ）
 QA_LINE = {
     'basic': ['そんな人に{type}を1つ、返信に置いておきます👇', '今日の1品（{type}）は返信にそっと置いておきます👇', '気になる{type}を1つ、返信に置いておきますね👇',
@@ -1118,6 +1118,14 @@ def main():
     has_data = os.path.isfile(a.html) and os.path.getsize(a.html) > 0
     cands = gather(a) if has_data else []
     singles = [it for it in cands if it.get('quip') and 'やつ' not in it.get('quip', '')]
+    # 11/03 マスター「センスない、ボツ」：推しの理由が商品名をなぞっただけ（例：『500mlのアップルミント』）の商品は夜に出さない
+    def _thin(it):
+        if (it.get('cap') or {}).get('s'):
+            return False
+        nm = re.sub(r'\s', '', it.get('name', '')).lower()
+        parts = [x for x in re.split(r'[の・、。\s]+', re.sub(r'\s', ' ', it.get('quip', '')).lower()) if x]
+        return not parts or all(x in nm for x in parts)
+    singles = [it for it in singles if not _thin(it)]
     # 10/27 見直し：商品つきの投稿は表示14〜24回、会話だけの投稿は95〜4851回。朝も会話だけにし、商品とリンクは夜の1本だけにする
     feasible = {'talk'} if a.slot in ('noon', 'morning') else set()
     if len(singles) >= 2:
