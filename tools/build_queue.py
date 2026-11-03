@@ -959,6 +959,9 @@ def slot_done(repo, slot):
     day = datetime.now(JST).strftime('%Y%m%d')
     for f in glob.glob(os.path.join(repo, 'queue', f'{day}-*-{slot}.json')):
         qid = os.path.splitext(os.path.basename(f))[0]
+        # 深夜(late)が日付をまたいで 0〜4時台に作られた分は、前の日の深夜として数える
+        if slot == 'late' and qid.split('-')[1] < '0500':
+            continue
         pp = os.path.join(repo, 'state', 'posted', qid + '.json')
         if not os.path.exists(pp):
             return True
