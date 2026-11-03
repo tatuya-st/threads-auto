@@ -42,6 +42,36 @@ def limited_today():
 STATUS_P = os.path.join(ROOT, 'state', 'status.txt')
 
 
+def room_info(now):
+    """11/03 マスター指示：レイにも楽天ROOMの情報を渡す（セール日程・売れ筋・出した商品・ROOMの入口）"""
+    def load(n, d):
+        try:
+            return json.load(open(os.path.join(ROOT, 'state', n), encoding='utf-8'))
+        except Exception:
+            return d
+    r = load('research.json', {})
+    out = ["\n■楽天ROOMの情報（ルイが自動で更新）",
+           "・ROOM：https://room.rakuten.co.jp/room_a9a129c5a9/items",
+           "・コレクション：https://room.rakuten.co.jp/room_a9a129c5a9/collections"]
+    sales = []
+    for s in r.get('sales', []):
+        try:
+            st, en = datetime.fromisoformat(s['s']).replace(tzinfo=JST), datetime.fromisoformat(s['e']).replace(tzinfo=JST)
+        except Exception:
+            continue
+        if en >= now and st <= now + timedelta(days=7):
+            sales.append(f"{s['label']} {st.strftime('%m/%d %H:%M')}〜{en.strftime('%m/%d %H:%M')}" + ('（開催中）' if st <= now else ''))
+    if sales:
+        out.append('・7日以内のセール：' + ' ／ '.join(sales[:5]))
+    if r.get('hot_words'):
+        out.append('・今売れ筋の種類：' + '、'.join(r['hot_words'][:10]))
+    sent = load('sent.json', {})
+    recent = sorted((v for v in sent.values() if isinstance(v, dict) and v.get('at')), key=lambda v: v['at'], reverse=True)[:5]
+    if recent:
+        out.append('・ルイがThreadsに出した商品（同じ商品は出さないでください）：' + ' ／ '.join(v['name'][:25] for v in recent))
+    return '\n'.join(out) + '\n'
+
+
 def write_status():
     """レイが書き込み前に見る今日の合図（https://tatuya-st.github.io/threads-auto/state/status.txt）"""
     now = datetime.now(JST)
@@ -57,6 +87,7 @@ def write_status():
         note = ''
     if note:
         txt += f"\n■ルイからレイへの連絡\n{note}\n"
+    txt += room_info(now)
     open(STATUS_P, 'w', encoding='utf-8').write(txt)
 
 
