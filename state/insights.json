@@ -1,5 +1,5 @@
 {
- "at": "2026-11-03T20:27+09:00",
+ "at": "2026-11-04T11:23+09:00",
  "posts": {
   "20261023-0743-morning": {
    "views": 14,
@@ -107,7 +107,7 @@
    "quotes": 0
   },
   "20261028-0744-morning": {
-   "views": 440,
+   "views": 446,
    "likes": 9,
    "replies": 14,
    "reposts": 0,
@@ -142,74 +142,88 @@
    "quotes": 0
   },
   "20261101-0902-morning": {
-   "views": 183,
+   "views": 184,
    "likes": 9,
    "replies": 16,
    "reposts": 0,
    "quotes": 0
   },
   "20261101-1244-noon": {
-   "views": 185,
+   "views": 186,
    "likes": 1,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261101-2344-late": {
-   "views": 92,
+   "views": 94,
    "likes": 4,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261102-0744-morning": {
-   "views": 274,
+   "views": 280,
    "likes": 12,
    "replies": 35,
    "reposts": 0,
    "quotes": 0
   },
   "20261102-1244-noon": {
-   "views": 85,
+   "views": 92,
    "likes": 8,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261102-1526-noon": {
-   "views": 54,
+   "views": 57,
    "likes": 1,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261103-0024-late": {
-   "views": 390,
+   "views": 402,
    "likes": 2,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261103-0744-morning": {
-   "views": 80,
+   "views": 105,
    "likes": 5,
-   "replies": 15,
+   "replies": 26,
    "reposts": 0,
    "quotes": 0
   },
   "20261103-1244-noon": {
-   "views": 226,
-   "likes": 7,
-   "replies": 23,
+   "views": 261,
+   "likes": 8,
+   "replies": 25,
+   "reposts": 0,
+   "quotes": 0
+  },
+  "20261103-2344-late": {
+   "views": 52,
+   "likes": 5,
+   "replies": 5,
+   "reposts": 0,
+   "quotes": 0
+  },
+  "20261104-0745-morning": {
+   "views": 279,
+   "likes": 3,
+   "replies": 0,
    "reposts": 0,
    "quotes": 0
   }
  },
  "account": {
-  "views": 1321,
-  "likes": 5,
-  "replies": 12,
+  "views": 2011,
+  "likes": 17,
+  "replies": 42,
   "reposts": 0,
-  "followers_count": 879
+  "followers_count": 869
  }
 }
