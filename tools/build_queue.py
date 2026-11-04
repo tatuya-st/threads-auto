@@ -310,13 +310,26 @@ def talk(repo, slot='noon'):
         return next((tp for k, tp in TOPIC_MAP if re.search(k, t)), None)
     seen_tp = {tp for k, tp in TOPIC_MAP if re.search(k, seen)}
     left = [t for t in left if _tp(t) not in seen_tp] or left
+    # 11/4：直近3日の書き出し（最初の6文字）と同じものは使わない。同じ話題（例：ROOMの仲間募集）は前回と違う問いかけの形にする
+    heads, same_tp_shapes = set(), set()
+    for k in range(3):
+        day = (datetime.now(JST) - timedelta(days=k)).strftime('%Y%m%d')
+        for f in glob.glob(os.path.join(repo, 'queue', day + '-*.json')):
+            tx = json.load(open(f, encoding='utf-8')).get('text', '')
+            if tx:
+                heads.add(tx[:6])
+                if 'ROOM' in tx.split('\n')[0]:
+                    same_tp_shapes.add(shape_of(tx))
+    left = [t for t in left if t[:6] not in heads] or left
+    if all('ROOM' in t for t in left):
+        left = [t for t in left if shape_of(t) not in same_tp_shapes] or left
     shp = set(last_shapes(repo))  # 10/27：直前の投稿と同じ問いかけの形は続けない
     left = [t for t in left if shape_of(t) not in shp] or left
     text = left[h31(datetime.now(JST).strftime('%Y%m%d') + slot) % len(left)]
     used.append(text)
     text = log_text(repo) if text == '{log}' else text.replace('{f}', str(f))
     text = re.sub(r'[ 　]*👇+$', '', text.rstrip())  # 10/27：人間らしく、👇の決まり文句は外す
-    if not re.search(r'(？|\?|👇|ますか|ませんか|ですか)[^\n]{0,3}$', text):
+    if not re.search(r'(？|\?|👇|ますか|ませんか|ですか)[^\n]{0,3}$', text) and not re.search(r'(みんな|聞きたい|教えて)[^\n]*$', text):  # 11/4：「聞きたいです」の後に「みんなは？」が重なるのを防ぐ
         text += '\nみんなは？'  # 10/27：最後にもう一度聞く（決まり文句の👇は付けない）
     os.makedirs(os.path.dirname(used_p), exist_ok=True)
     json.dump(used, open(used_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
