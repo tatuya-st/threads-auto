@@ -330,7 +330,7 @@ def last_link_at():
     for f in glob.glob(os.path.join(ROOT, 'state', 'posted', '*.json')):
         try:
             r = json.load(open(f, encoding='utf-8'))
-            if r.get('reply') == 'ok' and r.get('at'):
+            if (r.get('reply') == 'ok' or r.get('link') == 'ok') and r.get('at'):
                 t = datetime.fromisoformat(r['at'])
                 last = t if last is None or t > last else last
         except Exception:
@@ -356,8 +356,15 @@ def thin_link(q):
     if q.get('master_link'):  # マスターが「リンク付きで」と明示した投稿は、日付の割り当てより優先する
         blocked = False
         last = None
-    if not q.get('reply') or (not blocked and (not last or datetime.now(JST) - last >= timedelta(hours=LINK_GAP_H))):
+    has_link = 'http' in (q.get('text') or '') or 'http' in (q.get('reply') or '')
+    if not has_link or (not blocked and (not last or datetime.now(JST) - last >= timedelta(hours=LINK_GAP_H))):
         return q
+    if 'http' in (q.get('text') or ''):  # 11/05：売る投稿はリンクが本文（1通目）。リンクを付けない日は本文からURLの行だけ外す
+        tl = [l for l in q['text'].split('\n') if 'http' not in l and '見られます👇' not in l]
+        q = dict(q, text='\n'.join(tl + ['楽天ROOMはプロフィールのリンクから📌']), _nolink=True)
+        print(f"{q.get('id')} は今日リンクを付けない日のため、本文にURLを入れない")
+        if 'http' not in (q.get('reply') or ''):
+            return q
     # 商品名は返信に残し、URLの行だけ外す（リンクはプロフィールへ）
     lines = [l for l in q['reply'].split('\n') if 'http' not in l and 'ここからどうぞ' not in l and 'ここから見られます' not in l]
     q = dict(q, reply='\n'.join(lines + ['楽天ROOMはプロフィールのリンクから📌']), _nolink=True)
@@ -468,6 +475,8 @@ def publish():
                   link = ''
               now = datetime.now(JST).isoformat(timespec='minutes')
               rec.update(media_id=mid, permalink=link, at=now)
+              if 'http' in q['text']:
+                  rec['link'] = 'ok'  # 11/05：本文（1通目）にリンクを入れた記録（1日1回の決まりに数える）
               # リンクは本文ではなく自分の返信に付ける（失敗しても投稿本体はそのまま）
               if q.get('reply'):
                   try:
@@ -475,7 +484,7 @@ def publish():
                       rid = call('POST', f"{API}/{me['id']}/threads", {'media_type': 'TEXT', 'text': q['reply'], 'reply_to_id': mid, 'access_token': tok})['id']
                       time.sleep(3)
                       call('POST', f"{API}/{me['id']}/threads_publish", {'creation_id': rid, 'access_token': tok})
-                      rec['reply'] = 'nolink' if q.get('_nolink') else 'ok'
+                      rec['reply'] = 'ok' if 'http' in q['reply'] else 'nolink'
                   except Exception as e:
                       rec['reply'] = 'ng'
                       print(f"::warning::リンクの返信は付けられませんでした（本文はプロフィールのリンク案内のみ）: {str(e).replace(tok, '***')[:150]}")

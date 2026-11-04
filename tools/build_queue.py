@@ -1059,6 +1059,60 @@ def late(a):
     write_q(a, {'id': qid, 'slot': 'late', 'form': 'n15', 'kind': 'talk', 'created': stamp.isoformat(timespec='minutes'), 'text': text, 'items': []}, '深夜のつぶやき')
 
 
+
+def price_compare(it):
+    """11/05：比べられる数字（確かめた数字だけ）。合計→1個あたり、◯%OFF、送料無料"""
+    price = str(it.get('price') or '')
+    if not price:
+        return ''
+    s = f'💰 {price}'
+    m = re.search(r'[×xｘ](\d+)(本|個|袋|パック|箱|缶|ロール|枚入|セット)', it.get('name', ''))
+    pm = re.fullmatch(r'([\d,]+)円', price)
+    if m and pm and int(m.group(1)) > 1:
+        s += f"（1{m.group(2).replace('枚入', 'パック').replace('セット', '組')}あたり約{round(int(pm.group(1).replace(',', '')) / int(m.group(1))):,}円）"
+    allt = ' '.join(list(it.get('badges') or []) + list(it.get('points') or []))
+    off = re.search(r'(\d+)%OFF', allt)
+    if off:
+        s += f'・{off.group(1)}%OFF'
+    if free_ship(it):
+        s += '・送料無料'
+    return s
+
+
+def flash_line(it, repo):
+    """11/05：セール速報フック（公式で確かめた日程・商品の事実だけ）。あと◯分で開始／◯時まで／クーポンの表記"""
+    now = datetime.now(JST)
+    try:
+        sales = json.load(open(os.path.join(repo, 'state', 'research.json'), encoding='utf-8')).get('sales') or []
+    except Exception:
+        sales = []
+    for x in sales:
+        lb = str(x.get('label', ''))
+        if '予想' in lb or '未確認' in lb:
+            continue
+        lb = re.sub(r'（.*?）', '', lb).strip()
+        try:
+            st = datetime.fromisoformat(x['s']).replace(tzinfo=JST); en = datetime.fromisoformat(x['e']).replace(tzinfo=JST)
+        except Exception:
+            continue
+        if timedelta(0) < st - now <= timedelta(hours=3):
+            mins = int((st - now).total_seconds() // 60)
+            return f"⏰ {lb}、あと{mins // 60}時間{mins % 60}分で開始" if mins >= 60 else f"⏰ {lb}、あと{mins}分で開始"
+        if st <= now < en and en - now <= timedelta(hours=24):
+            return f"⏰ {lb}は{en.month}/{en.day} {en.hour}:{en.minute:02d}まで"
+    dl = it.get('deadline')
+    if dl:
+        try:
+            d = datetime.fromisoformat(dl.replace(' ', 'T')).replace(tzinfo=JST)
+            if timedelta(0) < d - now <= timedelta(hours=48):
+                return f"⏰ この価格は{d.month}/{d.day} {d.hour}:{d.minute:02d}まで"
+        except Exception:
+            pass
+    allt = list(it.get('badges') or []) + list(it.get('points') or [])
+    cp = next((clip(x, 30) for x in allt if 'クーポン' in x), '')
+    return f'🎫 クーポン出てます：{cp}' if cp else ''
+
+
 def single(a, form, it):
     """商品1件を使う形（本文に商品名は出さない。商品は返信に1件だけリンク付きで）。"""
     stamp = datetime.now(JST)
@@ -1098,7 +1152,6 @@ def single(a, form, it):
     if not re.search(r'(？|\?)$', body[-1]):
         body.append(close)
     text = '\n'.join(body)
-    text = clip(text + '\n\n' + PR_LINE, 490)
     # 10/27：返信も短く・ユーモア・ここが売り・よかったらどうぞ
     sell = '／'.join([f for f in facts if '送料無料' not in f][:2])
     quip = it.get('quip', '') if 'やつ' not in it.get('quip', '') else ''
@@ -1119,9 +1172,18 @@ def single(a, form, it):
     # 11/02：cap が無い商品は、短い数字だけの推し理由にならないよう商品ごとの quip を優先
     reason = cap.get('s') or quip or sell or (pts[0] if pts else '')
     lead = cap.get('o') or imp
-    reply = '\n'.join(x for x in [f"【PR】{it['name']}", lead, f"✅ 推しの理由：{reason}" if reason else '',
-                                   '' if price and price in reason else f"{price}{'・送料無料' if free_ship(it) else ''}",  # 11/01：推しの理由に価格があれば重ねない
-                                   f"色・容量・今の価格は、この商品ページで見られます👇\n{aff_link(it.get('url'))}" if aff_link(it.get('url')) else f"今の価格とレビューは、ここから見られます👇\n楽天ROOM：{ROOM_URL}"] if x)
+    # 11/05 レイ案・マスター承認：売る投稿はリンクを1通目（本文）に入れる。同業の型「悩み→固有名詞」「比べられる数字」「セール速報」を本文に。
+    # 1行目は【PR】＋あるある・悩みの問いかけ → 先に自分の答え → 商品名を実名で → 価格（確かめた数字だけで比べる） → 速報 → 専用リンク
+    nm = clip(re.sub(r'\s+', ' ', it.get('name', '')).strip(), 44)
+    pl = price_compare(it)
+    flash = flash_line(it, a.repo)
+    link = aff_link(it.get('url'))
+    head = '\n'.join(x for x in ['【PR】' + body[0]] + body[1:2] + [f'👉 {nm}', pl, flash] if x)
+    tail = (f"色・容量・今の価格は、この商品ページで見られます👇\n{link}" if link else f"今の価格とレビューは、楽天ROOMで見られます👇\n{ROOM_URL}")
+    text = clip(head, 490 - len(tail) - 1) + '\n' + tail
+    # 返信（2通目）はリンクなしの会話用：つかみ＋推しの理由＋問いかけ
+    rq = body[-1] if re.search(r'(？|\?)$', body[-1]) and body[-1] != body[0] else close
+    reply = '\n'.join(x for x in [lead, f"✅ 推しの理由：{reason}" if reason else '', rq] if x)
     qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot
     title = ('今夜の1品' if a.slot == 'night' else '今朝の1品') if form == 'basic' else TITLES.get(form, '今日の1品')
     q = {'id': qid, 'slot': a.slot, 'form': form, 'kind': 'talk' if a.slot == 'noon' else 'single', 'created': stamp.isoformat(timespec='minutes'),
