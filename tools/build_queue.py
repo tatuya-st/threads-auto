@@ -1001,8 +1001,10 @@ def write_q(a, q, note):
             q['full_image'] = fp
             q.pop('hold', None)
             note += '（マスターの画像まるごと）'
-        # 11/03 本人指示：夜の商品投稿は画像待ちをせず、自動の画像（render_scene）でそのまま出す。hold は付けない
-        q.pop('hold', None)
+        # 11/03夜の本人指示（最優先）：夜の商品投稿は必ず投稿前に画像と文をマスターに見せ、「OK」が出るまで出さない。
+        # マスターの画像がない限り hold（確認待ち）を付ける。hold を外すのはマスターのOKのあとだけ
+        if not q.get('photo') and not q.get('full_image'):
+            q['hold'] = 'マスターの確認待ち'
     os.makedirs(os.path.join(a.repo, 'queue'), exist_ok=True)
     with open(os.path.join(a.repo, 'queue', q['id'] + '.json'), 'w', encoding='utf-8') as f:
         json.dump(q, f, ensure_ascii=False, indent=1)
