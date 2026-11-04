@@ -20,6 +20,11 @@ jobs:
           THREADS_APP_SECRET: ${{ secrets.THREADS_APP_SECRET || secrets.KEY }}
           TOKEN2: ${{ secrets.TOKEN }}
         run: python3 tools/publish.py refresh
+      - name: インスタも延長
+        env:
+          THREADS_APP_SECRET: ${{ secrets.THREADS_APP_SECRET || secrets.KEY }}
+          TOKEN2: ${{ secrets.TOKEN }}
+        run: python3 tools/ig.py refresh
       - name: 保存
         run: |
           git config user.name "threads-bot"; git config user.email "threads-bot@users.noreply.github.com"
