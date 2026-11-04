@@ -1,5 +1,5 @@
 {
- "at": "2026-11-04T14:32+09:00",
+ "at": "2026-11-04T20:23+09:00",
  "posts": {
   "20261023-0743-morning": {
    "views": 14,
@@ -79,7 +79,7 @@
    "quotes": 0
   },
   "20261026-1244-noon": {
-   "views": 6591,
+   "views": 6592,
    "likes": 46,
    "replies": 98,
    "reposts": 1,
@@ -121,7 +121,7 @@
    "quotes": 0
   },
   "20261028-1933-night": {
-   "views": 497,
+   "views": 498,
    "likes": 6,
    "replies": 1,
    "reposts": 0,
@@ -198,28 +198,28 @@
    "quotes": 0
   },
   "20261103-1244-noon": {
-   "views": 267,
+   "views": 269,
    "likes": 8,
    "replies": 25,
    "reposts": 0,
    "quotes": 0
   },
   "20261103-2344-late": {
-   "views": 55,
+   "views": 60,
    "likes": 5,
    "replies": 5,
    "reposts": 0,
    "quotes": 0
   },
   "20261104-0745-morning": {
-   "views": 293,
+   "views": 303,
    "likes": 3,
    "replies": 2,
    "reposts": 0,
    "quotes": 0
   },
   "20261104-1244-noon": {
-   "views": 48,
+   "views": 152,
    "likes": 1,
    "replies": 0,
    "reposts": 0,
@@ -227,10 +227,10 @@
   }
  },
  "account": {
-  "views": 2227,
-  "likes": 21,
-  "replies": 45,
+  "views": 1231,
+  "likes": 1,
+  "replies": 1,
   "reposts": 0,
-  "followers_count": 872
+  "followers_count": 883
  }
 }
