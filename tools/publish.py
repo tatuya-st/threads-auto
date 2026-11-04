@@ -345,6 +345,9 @@ def thin_link(q):
     except Exception:
         hand = {}
     blocked = today.day % 2 == 0 or today.strftime('%Y-%m-%d') in off or today.strftime('%Y-%m-%d') in hand
+    if q.get('master_link'):  # マスターが「リンク付きで」と明示した投稿は、日付の割り当てより優先する
+        blocked = False
+        last = None
     if not q.get('reply') or (not blocked and (not last or datetime.now(JST) - last >= timedelta(hours=LINK_GAP_H))):
         return q
     # 商品名は返信に残し、URLの行だけ外す（リンクはプロフィールへ）
