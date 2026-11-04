@@ -13,6 +13,15 @@ from datetime import datetime, timezone, timedelta
 
 JST = timezone(timedelta(hours=9))
 ROOM_URL = 'https://room.rakuten.co.jp/room_a9a129c5a9/items'
+AFF_ID = '5922d1d2.3399bc73.5922d1d3.9a2e2310'  # 11/04 マスターの楽天アフィリエイトID（商品ページに直接飛ぶリンク用）
+
+
+def aff_link(url):
+    """楽天市場の商品URLを、マスターのアフィリエイトリンクにする（見た人がそのまま商品ページに行ける）"""
+    import urllib.parse as _u
+    if not url or 'item.rakuten.co.jp' not in url:
+        return ''
+    return f"https://hb.afl.rakuten.co.jp/ichiba/{AFF_ID}/?pc={_u.quote(url, safe='')}&link_type=hybrid_url"
 ROOM_COLS_URL = 'https://room.rakuten.co.jp/room_a9a129c5a9/collections'
 LOOKBACK_DAYS = 14
 PER_POST = 3
@@ -399,6 +408,7 @@ def gather(a):
         it = dict(base) if base else {'itemcode': code, 'name': r.get('name', ''), 'price': r.get('price', ''), 'hook': r.get('hook', ''), 'quip': r.get('quip', ''), 'points': [], '_gid': r.get('genre', '')}
         it.setdefault('hook', r.get('hook', ''))
         it.setdefault('quip', r.get('quip', ''))
+        it.setdefault('url', r.get('url', ''))  # 11/04：返信リンクを商品ページ直行にするため
         it['_t'] = r.get('postedAt') or 0
         gid, p, c = it.get('_gid', ''), price_num(it.get('price')), cat_of(it, it.get('_gid', ''))
         likes = it.get('likes') or 0
@@ -1109,7 +1119,7 @@ def single(a, form, it):
     lead = cap.get('o') or imp
     reply = '\n'.join(x for x in [f"【PR】{it['name']}", lead, f"✅ 推しの理由：{reason}" if reason else '',
                                    '' if price and price in reason else f"{price}{'・送料無料' if free_ship(it) else ''}",  # 11/01：推しの理由に価格があれば重ねない
-                                   f"今の価格とレビューは、ここから見られます👇\n楽天ROOM：{ROOM_URL}"] if x)
+                                   f"色・容量・今の価格は、この商品ページで見られます👇\n{aff_link(it.get('url'))}" if aff_link(it.get('url')) else f"今の価格とレビューは、ここから見られます👇\n楽天ROOM：{ROOM_URL}"] if x)
     qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot
     title = ('今夜の1品' if a.slot == 'night' else '今朝の1品') if form == 'basic' else TITLES.get(form, '今日の1品')
     q = {'id': qid, 'slot': a.slot, 'form': form, 'kind': 'talk' if a.slot == 'noon' else 'single', 'created': stamp.isoformat(timespec='minutes'),

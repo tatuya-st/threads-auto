@@ -283,6 +283,14 @@ def send_replies(tok, me):
             if n:
                 time.sleep(random.randint(45, 90))
             try:
+                if it.get('replace_link'):
+                    # 11/04 マスター指示：ROOMのトップに飛ぶ古いリンク返信を消し、商品ページに直接飛ぶリンクに差し替える
+                    old = call('GET', f"{API}/{it['to']}/replies", {'fields': 'id,text,username', 'access_token': tok})
+                    for x in old.get('data', []):
+                        if x.get('username') == me.get('username') and 'room.rakuten.co.jp' in (x.get('text') or ''):
+                            call('DELETE', f"{API}/{x['id']}", {'access_token': tok})
+                            print('古いリンク返信を消しました')
+                    time.sleep(5)
                 cid = call('POST', f"{API}/{me['id']}/threads", {'media_type': 'TEXT', 'text': it['text'], 'reply_to_id': it['to'], 'access_token': tok})['id']
                 time.sleep(3)
                 mid = call('POST', f"{API}/{me['id']}/threads_publish", {'creation_id': cid, 'access_token': tok})['id']
