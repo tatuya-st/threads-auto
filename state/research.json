@@ -1,31 +1,6 @@
 {
- "at": "2026-11-04T19:25+09:00",
+ "at": "2026-11-05T07:25+09:00",
  "notes": [
-  {
-   "what": "レイの11/2の投稿：17時ごろ A8のAND PLANTS（観葉植物の無料診断・リンクあり・PR表記は1行目の頭）",
-   "src": "本人経由のレイの連絡（11/1）",
-   "done": "state/avoid.json に 2026-11-02 は plant を入れ、build_queue.py でその日の夜の商品から植物を外すようにした（試し実行で確認）"
-  },
-  {
-   "what": "去年は本番の前に「ブラックフライデースロット」（2025/11/12 10:00〜11/20 19:59、全会員）があった",
-   "src": "https://www.threads.com/@japanicanblog/post/DROs_FDkaQ2",
-   "done": "sales に予想として追加（11/12〜11/20）"
-  },
-  {
-   "what": "10/31時点でも11月マラソン・BFの日程とポイント上限は楽天公式で未発表（予想のまま）",
-   "src": "https://plaza.rakuten.co.jp/raku10p/diary/202610270000/",
-   "done": "sales の『予想・公式未確認』表記を維持（変更なし）"
-  },
-  {
-   "what": "11/1昼『楽天のお気に入り何個？』が6時間で表示110・反応0（会話型の平均の3分の1未満）",
-   "src": "state/insights.json",
-   "done": "weakに記録、TALKSから外しTALK_KEYSに『お気に入り』追加（build_queue.py）"
-  },
-  {
-   "what": "11/1朝『家でいちばん寒い場所どこ？＋自分の答え』が表示125でコメント10",
-   "src": "state/insights.json",
-   "done": "MORNING_TALKSに同じ『場所を聞く』形で年末の散らかり場所を1つ追加"
-  },
   {
    "what": "セールで買った物をまとめて『みんな何買った？』と聞く投稿にコメントが集まる形",
    "src": "https://www.threads.com/@rico_home25/post/DG-VJTAzxvN",
@@ -224,6 +199,36 @@
    "src": "",
    "src2": "",
    "done": "見送り（自動投稿の外注サービスは規約上グレーなので参考にしない）"
+  },
+  {
+   "what": "自分の成績：仲間募集（ROOM内輪）の昼は2回続けてコメント0、一般の会話ネタの昼はコメント25",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "build_queue.py：NAKAMAから1つ外し、仲間募集の昼を4日に1回へ減らした"
+  },
+  {
+   "what": "site:threads.com の楽天ROOM（買ってよかった・冬）検索はThreadsの投稿が出ず、拾えるものなし",
+   "src": "",
+   "src2": "",
+   "done": "なし"
+  },
+  {
+   "what": "リベシティ記事（7/19）：ROOMは紹介文を結論から・1枚目の画像と最初の3行で興味を引く・良い商品をmyROOM上部に固定",
+   "src": "https://library.libecity.com/articles/01KXVY1VXC3AYMXW50TJ3GG4BA",
+   "src2": "",
+   "done": "1行目に全力・3行以内は取り入れ済み。myROOMの固定はROOM上の操作なので見送り（ルイはROOMを操作しない）"
+  },
+  {
+   "what": "海外③：米FTCが2026年に「広告表示とは別にAI関与の表示」を求めたという解説が多数（AIで作った証言は表示があっても欺瞞的という立場も）。ただしFTC公式の出どころは確認できず",
+   "src": "https://beancount.io/blog/2026/07/13/ftc-ai-content-double-disclosure-rule-influencers-guide",
+   "src2": "",
+   "done": "見送り（公式で確かめられず、米国の話。本人ルール「体験談・感想を作らない」で既に守れている）"
+  },
+  {
+   "what": "公式(f)楽天ROOM：ランク条件・お知らせの変更は検索で見当たらず（8/3のリベシティ記事にも変更の記載なし）",
+   "src": "https://library.libecity.com/articles/01KZ3XKQZ4AZQS82CXWESM9402",
+   "src2": "",
+   "done": "変更なし。official_turnを進めた"
   }
  ],
  "hot_words": [
@@ -396,7 +401,33 @@
    "replies": 5,
    "cause": "書き出しが弱い（1行目『物欲にも、』だけでは何の話か分からず、止まる理由がない）",
    "fix": "N15からこの言い回しを外し、1行目で場面が浮かぶ言い回しに入れ替えた"
+  },
+  {
+   "id": "20261104-1244-noon",
+   "topic": "ROOMで最初に売れた商品",
+   "open": "ROOMで、いちばん最初に売れた商品って何でした？",
+   "shape": "何？＋自分の答え（仲間募集）",
+   "image": "なし",
+   "time": "13:55",
+   "views": 177,
+   "likes": 1,
+   "replies": 0,
+   "cause": "テーマが悪い（11/2に続きROOM内輪の話題。ROOMをやっていない人が答えられず、会話投稿の平均約560の3分の1未満）",
+   "fix": "NAKAMAから外し、仲間募集の昼を1日おき→4日に1回へ"
+  },
+  {
+   "id": "20261104-2044-night",
+   "topic": "日用品の買い忘れ（柔軟剤6袋・8,890円）",
+   "open": "日用品の買い忘れ、月に何回ありますか？",
+   "shape": "何回？＋自分の答え＋商品",
+   "image": "商品がしゃべった",
+   "time": "21:39",
+   "views": 56,
+   "likes": 0,
+   "replies": 2,
+   "cause": "テーマが悪い（ガジェット好きのアカウントで高めの箱買い日用品。数字の問いと商品のつながりが弱い。夜の商品投稿の平均約290の3分の1未満）",
+   "fix": "lifeの問いかけ『買い忘れ月何回』を『詰め替え用、袋のまま置いてる人いますか？』に入れ替え"
   }
  ],
- "official_turn": 1
+ "official_turn": 2
 }
