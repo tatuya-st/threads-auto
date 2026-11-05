@@ -1,28 +1,6 @@
 {
- "at": "2026-11-05T19:30+09:00",
+ "at": "2026-11-06T07:25+09:00",
  "notes": [
-  {
-   "what": "11/2昼『楽天ROOM、1日に何件投稿？』が5時間で表示42・コメント0（会話型の平均の3分の1未満）",
-   "src": "state/insights.json",
-   "done": "weak に記録し、NAKAMAから外した"
-  },
-  {
-   "what": "楽天公式：10月に新企画『ジャンル祭』（家電含む4ジャンル、マラソンと同時開催）。今後も続ける予定だが11月の日程は未発表",
-   "src": "https://corp.rakuten.co.jp/news/update/2026/1002_01.html",
-   "done": "記録のみ（日程未発表のため sales には入れない）"
-  },
-  {
-   "what": "11/2夕『変なDM来た？』が8時間で表示43・コメント0（会話型の平均の3分の1未満）",
-   "src": "state/insights.json",
-   "src2": "",
-   "done": "weakに記録・TALK_KEYSに『DM』を足し同じ話題を止めた"
-  },
-  {
-   "what": "11/3朝時点でも11月マラソン（11/4 20:00〜11/11 1:59）は予想のまま。エントリー必須・上限は回により5000〜10000ポイント",
-   "src": "https://pricey.jp/web/articles/4049",
-   "src2": "https://corp.rakuten.co.jp/news/press/2026/?month=10",
-   "done": "salesは『予想・公式未確認』のまま据え置き"
-  },
   {
    "what": "Threadsで冬支度の福袋（超早得）が売り切れ続出という投稿があり、11月初めから福袋の動きが出ている",
    "src": "https://www.threads.com/@nagisaworks/post/DQp0HCyEhq5",
@@ -237,6 +215,30 @@
    "src": "https://jisaku.com/posts/christmas-gift-tech-gadgets",
    "src2": "",
    "done": "hot_wordsに『ワイヤレスイヤホン』（カードリーダーを外す）。売れ筋リサーチの実行は権限で止められ未実行（Soundcore Space A40・AirPods 4 ANCを次回候補）"
+  },
+  {
+   "what": "自分の成績：11/5朝『顔洗い、お湯派？水派？』は最終で表示335・いいね24・コメント69（朝の季節の二択＋自分の答えが今いちばん強い形）。11/5昼の加湿器お手入れは表示96・反応0（weak記録済み）。新しく伸びなかった投稿はなし",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "変更なし（同じ形の朝ネタこたつ？電気毛布？は追加済み）"
+  },
+  {
+   "what": "リベシティ記事（9/25）：ROOMはフォロワーを増やすのが大切という考え方。具体的な手順はログイン後の部分のため読まない",
+   "src": "https://library.libecity.com/articles/01M3BRPQC5HPSK8HX9MQ0RNXAE",
+   "src2": "",
+   "done": "なし（会員限定部分には入らない）"
+  },
+  {
+   "what": "海外①：Threadsはフォロー中の人の投稿を上位に出す方向（フォロー外への広がりは減り、フォロワーへの届きは増える）。ただし2024年11月の変更で新しい話ではない",
+   "src": "https://jang.com.pk/en/25734-threads-gets-major-overhaul-with-metas-game-changing-upgrade-news",
+   "src2": "https://techcrunch.com/2024/11/21/threads-adjusts-its-algorithm-to-show-you-more-content-from-accounts-you-follow",
+   "done": "仕組みの変更なし（フォロワーを育てる11/05方針と同じ向き。記録のみ）"
+  },
+  {
+   "what": "公式(f)消費者庁：10/20に株式会社giobai（アロマ商品）へ景品表示法の措置命令（優良誤認またはステマ告示）。SNS・アフィリエイトへの言及は本ページになし",
+   "src": "https://www.caa.go.jp/notice/entry/047830/",
+   "src2": "",
+   "done": "ルール変更なし（【PR】表記・効果をうたわない・体験談を作らないで守れている）。official_turnを0へ"
   }
  ],
  "hot_words": [
@@ -261,11 +263,6 @@
    "label": "お買い物マラソン（公式確認済み・エントリー必須・上限7000pt）",
    "s": "2026-11-04T20:00",
    "e": "2026-11-11T01:59"
-  },
-  {
-   "label": "5と0のつく日",
-   "s": "2026-11-05T00:00",
-   "e": "2026-11-05T23:59"
   },
   {
    "label": "5と0のつく日",
@@ -468,5 +465,5 @@
    "fix": "TALKSの加湿器お手入れを外し、TALK_KEYSに『お手入れ』を足した"
   }
  ],
- "official_turn": 4
+ "official_turn": 0
 }
