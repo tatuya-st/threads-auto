@@ -1,26 +1,6 @@
 {
- "at": "2026-11-05T12:25+09:00",
+ "at": "2026-11-05T19:30+09:00",
  "notes": [
-  {
-   "what": "Threads運用記事：問いかけは投稿の最後・最初の30分の返信に集中・短時間の連投はミュートの原因との説（Meta公式の根拠なし）",
-   "src": "https://tatap.jp/knowledge/how-to-extend-threads/",
-   "done": "公式で確かめられないためコードは変えず、既存の型（最後に「みんなは？」）と一致を確認"
-  },
-  {
-   "what": "11/1深夜のつぶやき『見るだけと言って開いたアプリ』が表示67・コメント0（深夜の平均約446）",
-   "src": "state/insights.json",
-   "done": "weakに記録・N15から外した"
-  },
-  {
-   "what": "11/2朝『朝いちばんに飲むもの決まってますか？＋自分の答え』が表示187でコメント17",
-   "src": "state/insights.json",
-   "done": "同じ形でMORNING_TALKSに乾燥対策の問いを1つ追加・TALK_KEYSに『乾燥』"
-  },
-  {
-   "what": "11月に入り防寒グッズ（電気毛布・足元ヒーター）の特集が増えている",
-   "src": "https://kaden.watch.impress.co.jp/category/air/heater/electric_blanket/index.html",
-   "done": "hot_wordsに『電気毛布』"
-  },
   {
    "what": "11/2昼『楽天ROOM、1日に何件投稿？』が5時間で表示42・コメント0（会話型の平均の3分の1未満）",
    "src": "state/insights.json",
@@ -233,10 +213,33 @@
    "src": "https://www.hypersku.com/v2/blog/tiktok-trending-products-2026/",
    "src2": "",
    "done": "hot_wordsにプロジェクター・ワイヤレス充電を追加（具体的な型番が無いため売れ筋リサーチは呼ばない）"
+  },
+  {
+   "what": "自分の成績：11/5朝『お湯派？水派？』は4時間で表示66→約10時間で表示138・コメント31に伸びた（朝の二択は遅れて伸びる。weakの時間仮説は外れ）",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "同じ形の朝ネタ（こたつ？電気毛布？）をMORNING_TALKSに1つ追加"
+  },
+  {
+   "what": "Threads利用規約の変更履歴：最新は9/24（大きな変更なしの判定）、10〜11月の変更記録はなし",
+   "src": "https://conductatlas.com/platform/threads/threads-terms-of-use/history/",
+   "src2": "",
+   "done": "公式(f)Meta：変更なし。official_turnを進めた"
+  },
+  {
+   "what": "海外⑤：Threads APIの最新の大きな更新は4/14（GIF・ゴースト投稿・ストーリーズ共有・埋め込み）。リンクやトピックの扱いの変更はなし",
+   "src": "https://www.pulse.bot/digital-marketing/news/meta-updates-threads-api-with-more-third-party-app-integration-fa428c28-957b-41a9-87d9-600372dba784/",
+   "src2": "",
+   "done": "仕組みの変更なし（記録のみ）"
+  },
+  {
+   "what": "クリスマスギフト向けガジェット記事（9/26更新）：Soundcore Space A40・AirPods 4 ANC・Kindle・Stream Deckを予算別に紹介",
+   "src": "https://jisaku.com/posts/christmas-gift-tech-gadgets",
+   "src2": "",
+   "done": "hot_wordsに『ワイヤレスイヤホン』（カードリーダーを外す）。売れ筋リサーチの実行は権限で止められ未実行（Soundcore Space A40・AirPods 4 ANCを次回候補）"
   }
  ],
  "hot_words": [
-  "カードリーダー",
   "iPhone",
   "詰め替え",
   "歯磨き",
@@ -250,7 +253,8 @@
   "福袋",
   "キャンドルウォーマー",
   "プロジェクター",
-  "ワイヤレス充電"
+  "ワイヤレス充電",
+  "ワイヤレスイヤホン"
  ],
  "sales": [
   {
@@ -449,7 +453,20 @@
    "replies": 8,
    "cause": "時間が悪い（コメント率は高いが4時間で表示66。朝の会話平均約270の3分の1未満で、表示が広がる前の時間帯に止まった）",
    "fix": "TALKSから外した（使用済み）"
+  },
+  {
+   "id": "20261105-1244-noon",
+   "topic": "加湿器のお手入れの頻度",
+   "open": "加湿器のお手入れ、何日に1回やってますか？💧",
+   "shape": "何日？＋自分の答え（「みんなは？」なし）",
+   "image": "なし",
+   "time": "13:58",
+   "views": 31,
+   "likes": 0,
+   "replies": 0,
+   "cause": "テーマが悪い（お手入れできていない人が答えにくい家事の義務ネタ。締めが「尊敬してます」で問いかけが弱い）",
+   "fix": "TALKSの加湿器お手入れを外し、TALK_KEYSに『お手入れ』を足した"
   }
  ],
- "official_turn": 3
+ "official_turn": 4
 }
