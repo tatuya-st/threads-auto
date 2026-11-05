@@ -330,8 +330,8 @@ def last_link_at():
     for f in glob.glob(os.path.join(ROOT, 'state', 'posted', '*.json')):
         try:
             r = json.load(open(f, encoding='utf-8'))
-            if (r.get('reply') == 'ok' or r.get('link') == 'ok') and r.get('at'):
-                t = datetime.fromisoformat(r['at'])
+            if (r.get('reply') == 'ok' or r.get('link') == 'ok' or r.get('boost') == 'link') and (r.get('link_at') or r.get('at')):
+                t = datetime.fromisoformat(r.get('link_at') or r['at'])  # あとから付けたリンクは付けた時刻で数える
                 last = t if last is None or t > last else last
         except Exception:
             pass
@@ -542,6 +542,105 @@ def save_rei_posts(tok, me):
     print(f"::notice::レイの投稿（直近3日）{len(rei)}件を記録")
 
 
+ROOM_COLS = 'https://room.rakuten.co.jp/room_a9a129c5a9/collections'
+# 伸びた投稿へのあとがけ返信。話題ごとに言い方を変え、同じ文が続かないようにする
+BOOST_LINK = [
+    (r'顔|洗面|お湯|水|歯|口|風呂', '【PR】洗面所まわりで実際に使ってるもの、楽天ROOMに置いてます。のぞくだけでもどうぞ\n'),
+    (r'スマホ|iPhone|充電|ケース|アプリ|電池', '【PR】スマホまわりで買ってよかった小物、楽天ROOMにまとめてます\n'),
+    (r'寒|冬|暖|加湿|コート|布団|毛布', '【PR】冬支度で買ったもの・迷ってるもの、楽天ROOMに並べてます\n'),
+    (r'', '【PR】このへんの話で気になってるもの、楽天ROOMにまとめてます\n'),
+]
+BOOST_PROF = [
+    (r'顔|洗面|お湯|水|歯|口|風呂', '【PR】洗面所まわりで使ってるものは、プロフィールの楽天ROOMに置いてます🧴'),
+    (r'スマホ|iPhone|充電|ケース|アプリ|電池', '【PR】スマホまわりの小物は、プロフィールの楽天ROOMにまとめてます📱'),
+    (r'寒|冬|暖|加湿|コート|布団|毛布', '【PR】冬支度のものは、プロフィールの楽天ROOMに並べてます🧣'),
+    (r'', '【PR】気になってるものは、プロフィールの楽天ROOMにまとめてます📌'),
+]
+
+
+def boost(tok, me, posts):
+    """11/06：30日で閲覧1.4万人に対しプロフィールのリンクは29クリック。伸びた投稿にROOMへの道がなかったのが原因。
+    直近30時間のルイの投稿でいちばん見られているもの（閲覧200以上）に、あとから自分の返信でROOMへの道を付ける。
+    ・ルイのリンクの日（奇数日）で20時間あいていれば、URL付き（その日のリンク1回分に数える）
+    ・それ以外の日はURLなしで「プロフィールの楽天ROOM」へ案内（レイのリンク枠は使わない）。1日1本まで"""
+    if limited_today():
+        return
+    now = datetime.now(JST)
+    today = now.strftime('%Y-%m-%d')
+    recs = []
+    for f in glob.glob(os.path.join(ROOT, 'state', 'posted', '*.json')):
+        try:
+            r = json.load(open(f, encoding='utf-8'))
+            recs.append((f, r))
+        except Exception:
+            pass
+    if any((r.get('boost_at') or '')[:10] == today for _, r in recs):
+        return  # 今日はもう付けた
+    try:
+        off = json.load(open(os.path.join(ROOT, 'state', 'link_off.json'), encoding='utf-8'))
+    except Exception:
+        off = []
+    try:
+        hand = json.load(open(os.path.join(ROOT, 'state', 'handover.json'), encoding='utf-8'))
+    except Exception:
+        hand = {}
+    last = last_link_at()
+    link_ok = now.day % 2 == 1 and today not in off and today not in hand and (not last or now - last >= timedelta(hours=LINK_GAP_H))
+    best = None
+    for f, r in recs:
+        if not r.get('media_id') or not r.get('at') or r.get('boost') or r.get('reply') == 'ok' or r.get('link') == 'ok':
+            continue
+        try:
+            if now - datetime.fromisoformat(r['at']) > timedelta(hours=30):
+                continue
+        except ValueError:
+            continue
+        v = (posts.get(r['id']) or {}).get('views') or 0
+        if v >= 200 and (best is None or v > best[0]):
+            best = (v, f, r)
+    if not best:
+        return
+    v, f, r = best
+    if not link_ok and r.get('reply'):
+        return  # すでにプロフィール案内の返信が付いている投稿には重ねない
+    try:
+        q = json.load(open(os.path.join(ROOT, 'queue', r['id'] + '.json'), encoding='utf-8'))
+        body = q.get('text') or ''
+    except Exception:
+        body = ''
+    table = BOOST_LINK if link_ok else BOOST_PROF
+    txt = next(t for k, t in table if _re.search(k, body))
+    if link_ok:
+        txt += ROOM_COLS
+    try:
+        rid = call('POST', f"{API}/{me['id']}/threads", {'media_type': 'TEXT', 'text': txt, 'reply_to_id': r['media_id'], 'access_token': tok})['id']
+        time.sleep(3)
+        call('POST', f"{API}/{me['id']}/threads_publish", {'creation_id': rid, 'access_token': tok})
+    except Exception as e:
+        print(f"::warning::伸びた投稿への返信は付けられませんでした: {str(e).replace(tok, '***')[:150]}")
+        return
+    r['boost'] = 'link' if link_ok else 'profile'
+    r['boost_at'] = now.isoformat(timespec='minutes')
+    if link_ok:
+        r['link_at'] = r['boost_at']
+    json.dump(r, open(f, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    print(f"::notice::{r['id']}（閲覧{v}）にROOMへの返信を付けました（{r['boost']}）")
+
+
+def link_clicks(tok, me):
+    """Threadsのリンクのクリック数（プロフィール・投稿のリンク）を読む。読めなくても他の処理は止めない"""
+    try:
+        r = call('GET', f"{API}/{me['id']}/threads_insights", {'metric': 'clicks', 'access_token': tok})
+        out = {}
+        for m in r.get('data', []):
+            for x in m.get('link_total_values') or []:
+                out[x.get('link_url', '?')] = x.get('value', 0)
+        return out
+    except Exception as e:
+        print(f"::warning::クリック数は読めませんでした: {str(e).replace(tok, '***')[:120]}")
+        return None
+
+
 def insights():
     """直近の投稿の反応（閲覧・いいね・返信・再投稿）とアカウント全体の数字を state/insights.json に保存する。"""
     tok, me = token()
@@ -574,13 +673,18 @@ def insights():
             out['posts'][rec['id']] = {m['name']: (m.get('values') or [{}])[0].get('value', m.get('total_value', {}).get('value')) for m in r.get('data', [])}
         except Exception as e:
             print(f"::warning::{rec['id']} の数字は読めませんでした: {str(e).replace(tok, '***')[:120]}")
+    out['clicks'] = link_clicks(tok, me)
     json.dump(out, open(os.path.join(ROOT, 'state', 'insights.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    try:
+        boost(tok, me, out['posts'])
+    except Exception as e:
+        print(f"::warning::あとがけ返信でエラー: {str(e).replace(tok, '***')[:150]}")
     # 日ごとの記録（ダッシュボードと投稿時間の調整に使う）。60日分だけ残す
     save_rei_posts(tok, me)
     write_status()
     log_p = os.path.join(ROOT, 'state', 'insights_log.json')
     log = json.load(open(log_p, encoding='utf-8')) if os.path.exists(log_p) else {}
-    log[out['at'][:10]] = {'account': out['account'], 'posts': out['posts']}
+    log[out['at'][:10]] = {'account': out['account'], 'posts': out['posts'], 'clicks': out.get('clicks')}
     log = dict(sorted(log.items())[-60:])
     json.dump(log, open(log_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(f"::notice::数字を保存しました（投稿{len(out['posts'])}件・フォロワー{out['account'].get('followers_count')}）")
