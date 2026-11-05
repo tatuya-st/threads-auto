@@ -368,7 +368,7 @@ def thin_link(q):
     # 商品名は返信に残し、URLの行だけ外す（リンクはプロフィールへ）
     lines = [l for l in q['reply'].split('\n') if 'http' not in l and 'ここからどうぞ' not in l and 'ここから見られます' not in l]
     q = dict(q, reply='\n'.join(lines + ['楽天ROOMはプロフィールのリンクから📌']), _nolink=True)
-    q['text'] = (q.get('text') or '').replace('※PR：返信に楽天ROOMのリンクがあります', '※PR：楽天ROOMはプロフィールのリンクから')
+    q['text'] = (q.get('text') or '').replace('【PR】返信に楽天ROOMのリンクがあります', '【PR】楽天ROOMはプロフィールのリンクから')
     print(f"{q.get('id')} は直近にリンクを貼ったため、今回は返信にURLを付けない")
     return q
 
@@ -416,8 +416,14 @@ def publish():
         q = thin_link(q)
         # 二重投稿の最終チェック：すでに Threads に出した商品が入っていたら公開しない
         # 商品つきの投稿には必ずPR表記を入れる（ステマ規制対策）
-        if q.get('items') and 'PR' not in (q.get('text') or ''):
-            q['text'] = (q.get('text') or '').rstrip() + '\n\n※PR'
+        # 11/05 レイ決定：PR表記は【PR】に統一（※PR は使わない）。ROOM全体への誘導投稿も同じ
+        for k in ('text', 'reply'):
+            if q.get(k):
+                q[k] = q[k].replace('※PR：', '【PR】').replace('※PR\n', '【PR】').replace('※PR', '【PR】')
+        if q.get('items') and '【PR】' not in (q.get('text') or ''):
+            q['text'] = '【PR】' + (q.get('text') or '').lstrip()
+        if 'http' in (q.get('reply') or '') and '【PR】' not in q['reply']:
+            q['reply'] = '【PR】' + q['reply'].lstrip()
         # 同じ商品コードに加え、同じ商品名も二度と出さない（楽天の「同じSNSで同じ商品は1回まで」対策）
         nm = lambda s: ''.join((s or '').split()).lower()
         sent_names = {nm(v.get('name')) for v in sent.values() if isinstance(v, dict)}

@@ -350,7 +350,7 @@ def talk(repo, slot='noon'):
     # 返信がいちばん集まる朝の会話投稿に、ルイのリンクの日（奇数日）だけROOMへの返信リンクを付ける。
     # 間隔（20時間）と偶数日の扱いは publish.py の thin_link がそのまま守る
     if slot == 'morning' and stamp.day % 2 == 1:
-        q['reply'] = '※PR\nうちで実際に選んでる冬の便利もの、楽天ROOMにまとめてます\n' + ROOM_COLS_URL
+        q['reply'] = '【PR】うちで実際に選んでる冬の便利もの、楽天ROOMにまとめてます\n' + ROOM_COLS_URL
     # 10/29 Threads公式Tips：トピック付きの投稿は表示が伸びやすい → 会話投稿にもトピックを付ける
     if 'ROOM' in text:
         q['topic'] = '楽天ROOM'
@@ -535,7 +535,7 @@ FORMS = {
 ALL_FORMS = {f for v in FORMS.values() for f in v}
 BASE_FORMS = {'basic', 'talk', 'summary', 'n15'}
 OLD_FORM = {'morning': 'summary', 'noon': 'talk', 'night': 'summary', 'late': 'n15'}  # form が無い昔の投稿
-PR_LINE = '※PR：返信に楽天ROOMのリンクがあります'
+PR_LINE = '【PR】返信に楽天ROOMのリンクがあります'
 
 # 商品の「種類」。本文には商品名を出さず、この種類で書く（並びは細かいものから）
 TYPES = [
