@@ -1954,20 +1954,13 @@
  },
  "2026-11-06": {
   "account": {
-   "views": 3895,
-   "likes": 31,
-   "replies": 71,
+   "views": 4629,
+   "likes": 54,
+   "replies": 116,
    "reposts": 0,
-   "followers_count": 913
+   "followers_count": 933
   },
   "posts": {
-   "20261023-0743-morning": {
-    "views": 14,
-    "likes": 0,
-    "replies": 1,
-    "reposts": 0,
-    "quotes": 0
-   },
    "20261023-1244-noon": {
     "views": 262,
     "likes": 2,
@@ -2039,7 +2032,7 @@
     "quotes": 0
    },
    "20261026-1244-noon": {
-    "views": 6593,
+    "views": 6594,
     "likes": 46,
     "replies": 98,
     "reposts": 1,
@@ -2067,7 +2060,7 @@
     "quotes": 0
    },
    "20261028-0744-morning": {
-    "views": 451,
+    "views": 454,
     "likes": 9,
     "replies": 14,
     "reposts": 0,
@@ -2123,14 +2116,14 @@
     "quotes": 0
    },
    "20261102-0744-morning": {
-    "views": 283,
+    "views": 284,
     "likes": 12,
     "replies": 35,
     "reposts": 0,
     "quotes": 0
    },
    "20261102-1244-noon": {
-    "views": 97,
+    "views": 98,
     "likes": 9,
     "replies": 0,
     "reposts": 0,
@@ -2151,7 +2144,7 @@
     "quotes": 0
    },
    "20261103-0744-morning": {
-    "views": 114,
+    "views": 116,
     "likes": 5,
     "replies": 26,
     "reposts": 0,
@@ -2179,40 +2172,64 @@
     "quotes": 0
    },
    "20261104-1244-noon": {
-    "views": 200,
+    "views": 201,
     "likes": 2,
     "replies": 0,
     "reposts": 0,
     "quotes": 0
    },
    "20261104-2044-night": {
-    "views": 112,
+    "views": 116,
     "likes": 1,
     "replies": 2,
     "reposts": 0,
     "quotes": 0
    },
    "20261104-2344-late": {
-    "views": 201,
+    "views": 207,
     "likes": 5,
     "replies": 2,
     "reposts": 0,
     "quotes": 0
    },
    "20261105-0745-morning": {
-    "views": 335,
-    "likes": 24,
-    "replies": 69,
+    "views": 386,
+    "likes": 28,
+    "replies": 90,
     "reposts": 0,
     "quotes": 0
    },
    "20261105-1244-noon": {
-    "views": 96,
+    "views": 117,
     "likes": 0,
     "replies": 0,
     "reposts": 0,
     "quotes": 0
+   },
+   "20261105-2344-late": {
+    "views": 237,
+    "likes": 4,
+    "replies": 0,
+    "reposts": 0,
+    "quotes": 0
+   },
+   "20261106-0743-morning": {
+    "views": 62,
+    "likes": 2,
+    "replies": 6,
+    "reposts": 0,
+    "quotes": 0
    }
+  },
+  "clicks": {
+   "http://invalid.invalid/": 0,
+   "https://hb.afl.rakuten.co.jp/ichiba/5922d1d2": 0,
+   "https://hb.afl.rakuten.co.jp/ichiba/5922d1d2.3399bc73.5922d1d3.9a2e2310?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frakuten24%2F568528%2F&link_type=hybrid_url": 3,
+   "https://px.a8.net/svt/ejp?a8mat=4BESU6+2GPLWY+3OIU+5YJRM": 0,
+   "https://px.a8.net/svt/ejp?a8mat=4BESU6+1RPEIA+4W8G+5Z6WY": 0,
+   "https://px.a8.net/svt/ejp?a8mat=4BESU6+2EXB3M+4KJC+I0KRM": 0,
+   "https://room.rakuten.co.jp/room_a9a129c5a9/collections": 8,
+   "https://room.rakuten.co.jp/room_a9a129c5a9/items": 4
   }
  }
 }
