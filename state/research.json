@@ -1,29 +1,6 @@
 {
- "at": "2026-11-06T12:25+09:00",
+ "at": "2026-11-06T19:30+09:00",
  "notes": [
-  {
-   "what": "海外：Amazonのストアフロントで伸びている人は、季節・セール向けのリストを一番上に固定し、プロフィールや固定投稿から誘導、売れた商品はシーズン中ずっと上に置き直している（訪問数は自己申告で根拠不明）",
-   "src": "https://logie.ai/news/amazon-storefront-traffic-is-booming-real-creator-numbers-prime-day-myths-proven-strategies-for-growth/",
-   "src2": "",
-   "done": "記録のみ（ROOMのコレクションの並べ替えはルイの操作範囲外。週1の振り返りで本人に伝える材料）"
-  },
-  {
-   "what": "ROOM公式：ランクボーナスはS+3%・A+2%・B+1%（エントリー不要、毎月1日に適用、1商品1000円上限）。店舗・メーカーから依頼を受けた紹介と判断されると期間中の全投稿がボーナス対象外（ページは2021年表記で古い可能性）",
-   "src": "https://room.rakuten.co.jp/feature/aff_bonus_5/",
-   "src2": "https://room.rakuten.co.jp/info/room_rank/",
-   "done": "記録のみ（依頼を受けた紹介はしない方針を確認。official_turn を楽天イベントへ進めた）"
-  },
-  {
-   "what": "マスターの写メ(11/03)：他人の『ゼロから始めるなら5つだけ守る』型＋実績の管理画面2枚＋3連投(1/3)でいいね235。数字の見せ方が伸びの理由。ルイは実際の数字が無いので型だけ保留。マスターの本物の成果が出たら、本物の数字だけで同じ型を使う",
-   "src": "マスターの写メ",
-   "done": "保留（実績の捏造はしない）"
-  },
-  {
-   "what": "11/3昼『スマホの充電、何%から焦る？＋自分の答え』が表示187・コメント19（よく伸びた）",
-   "src": "state/insights.json",
-   "src2": "",
-   "done": "TALKSに同じ形で話題違いの『ブラウザのタブ、何個たまったら閉じる？』を足し、TALK_KEYSに『タブ』"
-  },
   {
    "what": "海外：MetaのAI生成ラベル更新はFacebook・Instagramの広告が対象（Threadsの通常投稿への言及なし、Meta公式の出典は記事内に無し）",
    "src": "https://almcorp.com/news/meta-ai-labels-facebook-instagram-ads-disclosure-2026/",
@@ -239,6 +216,30 @@
    "src": "https://ecnomikata.com/pr/11490/",
    "src2": "",
    "done": "なし（2016年の記事のため不採用）"
+  },
+  {
+   "what": "自分の成績：11/6昼『イヤホン、今ので何代目？』は約4時間で表示502・コメント7（会話投稿でよく伸びた側）。11/6朝『天気派？ニュース派？』は表示92・コメント9で朝の平均の3分の1以上のため伸びなかった投稿には入れない",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "TALKSに同じ「今ので何代目？」の形でマウスの問いかけを1つ追加"
+  },
+  {
+   "what": "海外③：Metaは2026年7月からFacebook・Instagramの広告で、AIで作成・編集した広告に『AI生成』の表示を自動で付ける。Threadsへの言及はなく、通常の投稿は従来のAI表示タグのまま",
+   "src": "https://marketingdive.com/news/sociable-meta-adds-updated-disclosure-tags-for-ai-generated-ads/824833",
+   "src2": "",
+   "done": "仕組みの変更なし（広告は出していないため。記録のみ）"
+  },
+  {
+   "what": "公式(f)楽天ROOM：アプリ最新版7.1.0（10/19）は動画投稿の読み込みの遅れの修正のみで、ランク条件・規約の変更は検索でも見当たらず",
+   "src": "https://apps.apple.com/jp/app/id892359812",
+   "src2": "",
+   "done": "変更なし。official_turnを2へ"
+  },
+  {
+   "what": "(e)『A8 高単価』『スレッズ 伸びない』でThreads内の投稿は検索に出ず、クラウドソーシング等の無関係な結果のみ",
+   "src": "https://crowdworks.jp/consultation/threads/9713",
+   "src2": "",
+   "done": "なし（次回は別のクエリで）"
   }
  ],
  "hot_words": [
@@ -465,5 +466,5 @@
    "fix": "TALKSの加湿器お手入れを外し、TALK_KEYSに『お手入れ』を足した"
   }
  ],
- "official_turn": 1
+ "official_turn": 2
 }
