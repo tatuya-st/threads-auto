@@ -297,6 +297,39 @@ TOPIC_MAP = [('大掃除', '年末大掃除'), ('結露', '結露対策'), ('目
              ('冬支度', '冬支度'), ('乾燥', '乾燥対策'), ('充電|電池|バッテリー', 'スマホの電池')]
 
 
+# 11/06：11/03〜11/06の会話投稿6本中5本が「みんなは？」で終わり、同じ文面に見えた → 締めの一言を形に合わせて回し、直近3日の締めと同じものは使わない
+CLOSE_ANY = ['みんなは？', 'あなたの答えも聞かせてください', 'ひと言でいいので教えてください', '同じ人、いますか？', 'みなさんのも聞きたいです', 'リプでこっそり教えてください']
+CLOSE_HA = ['あなたはどっちですか？', 'どっち派か、ひと言でどうぞ', 'みなさんはどっち寄りですか？']
+CLOSE_NUM = ['数字だけでも教えてください', 'あなたは何番目くらいですか？', 'だいたいでいいので教えてください']
+
+
+def vary_close(repo, text, slot):
+    if not text.endswith('\nみんなは？'):
+        return text
+    shp = shape_of(text)
+    if shp == 'num':
+        cands = [c for c in CLOSE_NUM if c != 'あなたは何番目くらいですか？'] + CLOSE_ANY
+    elif shp == 'ha':
+        cands = CLOSE_HA + CLOSE_ANY
+    else:
+        cands = CLOSE_ANY
+    if 'いますか？' in text or '人いますか' in text:
+        cands = [c for c in cands if 'いますか' not in c]
+    recent = set()
+    for k in range(3):
+        day = (datetime.now(JST) - timedelta(days=k)).strftime('%Y%m%d')
+        for f in glob.glob(os.path.join(repo, 'queue', day + '-*.json')):
+            try:
+                tx = json.load(open(f, encoding='utf-8')).get('text', '')
+            except Exception:
+                continue
+            if tx:
+                recent.add(tx.rstrip().split('\n')[-1])
+    left = [c for c in cands if c not in recent] or cands
+    c = left[h31(datetime.now(JST).strftime('%Y%m%d') + slot + 'close') % len(left)]
+    return text[:-len('みんなは？')] + c
+
+
 def talk(repo, slot='noon'):
     used_p = os.path.join(repo, 'state', 'talk.json')
     used = json.load(open(used_p, encoding='utf-8')) if os.path.exists(used_p) else []
@@ -369,6 +402,7 @@ def talk(repo, slot='noon'):
     text = re.sub(r'[ 　]*👇+$', '', text.rstrip())  # 10/27：人間らしく、👇の決まり文句は外す
     if not re.search(r'(？|\?|👇|ますか|ませんか|ですか)[^\n]{0,3}$', text) and not re.search(r'(みんな|聞きたい|教えて)[^\n]*$', text):  # 11/4：「聞きたいです」の後に「みんなは？」が重なるのを防ぐ
         text += '\nみんなは？'  # 10/27：最後にもう一度聞く（決まり文句の👇は付けない）
+    text = vary_close(repo, text, slot)
     os.makedirs(os.path.dirname(used_p), exist_ok=True)
     json.dump(used, open(used_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     stamp = datetime.now(JST)
