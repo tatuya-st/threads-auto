@@ -311,47 +311,56 @@ def talk(repo, slot='noon'):
     if not left:
         used = [t for t in used if t not in pool]
         left = pool[:]
-    # 11/05：レイのA8案件（11/06から投稿）に合わせ、通勤中にスマホでお金・アプリを調べる人を集める問いかけを先に使う
-    warm = [t for t in left if t in WARM_A8]
-    if warm and datetime.now(JST).strftime('%Y%m%d') <= '20261115':
-        left = warm  # 下のかぶり防止は「or left」なので、この中で選び直される
-    # 同じ日の朝の投稿と話題がかぶらないようにする（例：朝「お守り何個？」→昼もお守り、を避ける）
-    # 10/27：直近3日の投稿（text・reply）と話題・相手がかぶらないようにする
-    seen = ''
-    for k in range(7):  # 10/27：伸びた話題（スマホ）の焼き直しが伸びなかったため、話題は7日あける
-        day = (datetime.now(JST) - timedelta(days=k)).strftime('%Y%m%d')
-        for f in glob.glob(os.path.join(repo, 'queue', day + '-*.json')):
-            d = json.load(open(f, encoding='utf-8'))
-            seen += d.get('text', '') + str(d.get('reply', ''))
-    fresh = [t for t in left if not any(k in t and k in seen for k in TALK_KEYS)]
-    left = fresh or left
-    # 11/2：キーワードが違っても同じ話題（例：目覚まし→布団から出る＝冬の朝）は7日あける
-    def _tp(t):
-        return next((tp for k, tp in TOPIC_MAP if re.search(k, t)), None)
-    seen_tp = {tp for k, tp in TOPIC_MAP if re.search(k, seen)}
-    left = [t for t in left if _tp(t) not in seen_tp] or left
-    # 11/4：直近3日の書き出し（最初の6文字）と同じものは使わない。同じ話題（例：ROOMの仲間募集）は前回と違う問いかけの形にする
-    heads, same_tp_shapes = set(), set()
-    for k in range(3):
-        day = (datetime.now(JST) - timedelta(days=k)).strftime('%Y%m%d')
-        for f in glob.glob(os.path.join(repo, 'queue', day + '-*.json')):
-            tx = json.load(open(f, encoding='utf-8')).get('text', '')
-            if tx:
-                heads.add(tx[:6])
-                if 'ROOM' in tx.split('\n')[0]:
-                    same_tp_shapes.add(shape_of(tx))
-    left = [t for t in left if t[:6] not in heads] or left
-    if all('ROOM' in t for t in left):
-        left = [t for t in left if shape_of(t) not in same_tp_shapes] or left
-    # 11/05：朝『顔洗い、お湯派？水派？』コメント42、昼『加湿器のお手入れ何日に1回？』反応0。
-    # 1秒で答えられる二択（〜派？）と数字で答える問いを優先し、答えにくい自由回答の問いは使わない（残りが無いときだけ）
-    easy = [t for t in left if shape_of(t) in ('ha', 'num')]
-    left = easy or left
-    ha = [t for t in left if shape_of(t) == 'ha']
-    if ha and 'ha' not in set(last_shapes(repo, 1)):
-        left = ha  # 直前が二択でなければ、二択を出す
+    base = left[:]
     shp = set(last_shapes(repo))  # 10/27：直前の投稿と同じ問いかけの形は続けない
-    left = [t for t in left if shape_of(t) not in shp] or left
+    def _narrow(left, use_warm):
+        # 11/05：レイのA8案件（11/06から投稿）に合わせ、通勤中にスマホでお金・アプリを調べる人を集める問いかけを先に使う
+        warm = [t for t in left if t in WARM_A8]
+        if use_warm and warm and datetime.now(JST).strftime('%Y%m%d') <= '20261115':
+            left = warm  # 下のかぶり防止は「or left」なので、この中で選び直される
+        # 同じ日の朝の投稿と話題がかぶらないようにする（例：朝「お守り何個？」→昼もお守り、を避ける）
+        # 10/27：直近3日の投稿（text・reply）と話題・相手がかぶらないようにする
+        seen = ''
+        for k in range(7):  # 10/27：伸びた話題（スマホ）の焼き直しが伸びなかったため、話題は7日あける
+            day = (datetime.now(JST) - timedelta(days=k)).strftime('%Y%m%d')
+            for f in glob.glob(os.path.join(repo, 'queue', day + '-*.json')):
+                d = json.load(open(f, encoding='utf-8'))
+                seen += d.get('text', '') + str(d.get('reply', ''))
+        fresh = [t for t in left if not any(k in t and k in seen for k in TALK_KEYS)]
+        left = fresh or left
+        # 11/2：キーワードが違っても同じ話題（例：目覚まし→布団から出る＝冬の朝）は7日あける
+        def _tp(t):
+            return next((tp for k, tp in TOPIC_MAP if re.search(k, t)), None)
+        seen_tp = {tp for k, tp in TOPIC_MAP if re.search(k, seen)}
+        left = [t for t in left if _tp(t) not in seen_tp] or left
+        # 11/4：直近3日の書き出し（最初の6文字）と同じものは使わない。同じ話題（例：ROOMの仲間募集）は前回と違う問いかけの形にする
+        heads, same_tp_shapes = set(), set()
+        for k in range(3):
+            day = (datetime.now(JST) - timedelta(days=k)).strftime('%Y%m%d')
+            for f in glob.glob(os.path.join(repo, 'queue', day + '-*.json')):
+                tx = json.load(open(f, encoding='utf-8')).get('text', '')
+                if tx:
+                    heads.add(tx[:6])
+                    if 'ROOM' in tx.split('\n')[0]:
+                        same_tp_shapes.add(shape_of(tx))
+        left = [t for t in left if t[:6] not in heads] or left
+        if all('ROOM' in t for t in left):
+            left = [t for t in left if shape_of(t) not in same_tp_shapes] or left
+        # 11/05：朝『顔洗い、お湯派？水派？』コメント42、昼『加湿器のお手入れ何日に1回？』反応0。
+        # 1秒で答えられる二択（〜派？）と数字で答える問いを優先し、答えにくい自由回答の問いは使わない（残りが無いときだけ）
+        easy = [t for t in left if shape_of(t) in ('ha', 'num')]
+        left = easy or left
+        ha = [t for t in left if shape_of(t) == 'ha']
+        if ha and 'ha' not in set(last_shapes(repo, 1)):
+            left = ha  # 直前が二択でなければ、二択を出す
+        left = [t for t in left if shape_of(t) not in shp] or left
+        return left
+    left = _narrow(base, True)
+    # 11/06：A8向けの問いかけが二択ばかり残り、朝の二択に昼の二択が続いた → 形がかぶるときは一般の会話ネタから選び直す
+    if all(shape_of(t) in shp for t in left):
+        alt = _narrow(base, False)
+        if any(shape_of(t) not in shp for t in alt):
+            left = alt
     text = left[h31(datetime.now(JST).strftime('%Y%m%d') + slot) % len(left)]
     used.append(text)
     text = log_text(repo) if text == '{log}' else text.replace('{f}', str(f))
