@@ -47,7 +47,10 @@ def main():
 
     samples = {b: [] for b in BUCKETS}
     for f in glob.glob(os.path.join(ROOT, 'state', 'posted', f'*-{slot}.json')):
-        rec = json.load(open(f, encoding='utf-8'))
+        try:
+            rec = json.load(open(f, encoding='utf-8'))
+        except ValueError:
+            continue
         pid = rec.get('id', '')
         if pid not in views or not rec.get('at'):
             continue

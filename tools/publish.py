@@ -15,6 +15,23 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 ENC = os.path.join(ROOT, 'state', 'token.enc')
 JST = timezone(timedelta(hours=9))
 import re as _re
+
+
+def read_rec(f):
+    """投稿記録を読む。壊れた（空の）ファイルが1つあっても全体を止めない。"""
+    try:
+        return json.load(open(f, encoding='utf-8'))
+    except (ValueError, OSError) as e:
+        print(f"::warning::{os.path.basename(f)} の記録が壊れているので飛ばします: {e}")
+        return None
+
+
+def save_json(path, obj):
+    """書き込み途中で止まっても空ファイルが残らないよう、一時ファイルに書いてから置き換える。"""
+    tmp = path + '.tmp'
+    with open(tmp, 'w', encoding='utf-8') as fp:
+        json.dump(obj, fp, ensure_ascii=False, indent=1)
+    os.replace(tmp, path)
 SECRET = os.environ.get('THREADS_APP_SECRET', '').strip()
 # 「TOKEN」に app secret（32桁の英数字）が入っている場合は、鍵として使う
 _t2 = os.environ.get('TOKEN2', '').strip()
@@ -506,7 +523,7 @@ def publish():
                 print('::error::Threadsの書き込み上限が出ました。今日の書き込みは止めます')
             print(f'::error::{qid} を投稿できませんでした: {msg}')
         os.makedirs(os.path.join(ROOT, 'state', 'posted'), exist_ok=True)
-        json.dump(rec, open(os.path.join(ROOT, 'state', 'posted', qid + '.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        save_json(os.path.join(ROOT, 'state', 'posted', qid + '.json'), rec)
         json.dump(sent, open(sent_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         print(qid, rec.get('permalink') or rec.get('skipped'))
     if failed or not rep_ok:
@@ -623,7 +640,7 @@ def boost(tok, me, posts):
     r['boost_at'] = now.isoformat(timespec='minutes')
     if link_ok:
         r['link_at'] = r['boost_at']
-    json.dump(r, open(f, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    save_json(f, r)
     print(f"::notice::{r['id']}（閲覧{v}）にROOMへの返信を付けました（{r['boost']}）")
 
 
@@ -659,8 +676,8 @@ def insights():
         raise SystemExit(1)
     since = datetime.now(JST) - timedelta(days=14)
     for f in sorted(glob.glob(os.path.join(ROOT, 'state', 'posted', '*.json'))):
-        rec = json.load(open(f, encoding='utf-8'))
-        if not rec.get('media_id'):
+        rec = read_rec(f)
+        if not rec or not rec.get('media_id'):
             continue
         try:
             made = datetime.strptime(rec['id'][:13], '%Y%m%d-%H%M').replace(tzinfo=JST)
@@ -698,7 +715,9 @@ def comments():
     todo, fails, ok = [], [], 0
     skip = replied_ids()  # 返信済みが API にまだ反映されていなくても出さない
     for f in sorted(glob.glob(os.path.join(ROOT, 'state', 'posted', '*.json'))):
-        rec = json.load(open(f, encoding='utf-8'))
+        rec = read_rec(f)
+        if not rec:
+            continue
         try:
             made = datetime.strptime(rec['id'][:13], '%Y%m%d-%H%M').replace(tzinfo=JST)
         except (ValueError, KeyError):
@@ -794,10 +813,10 @@ def delete():
         print(f"::error::削除できませんでした: {str(e).replace(tok, '***')[:200]}")
         raise SystemExit(1)
     for f in glob.glob(os.path.join(ROOT, 'state', 'posted', '*.json')):
-        rec = json.load(open(f, encoding='utf-8'))
-        if rec.get('media_id') == mid:
+        rec = read_rec(f)
+        if rec and rec.get('media_id') == mid:
             rec['deleted'] = datetime.now(JST).isoformat(timespec='minutes')
-            json.dump(rec, open(f, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+            save_json(f, rec)
     print(f'{mid} を削除しました')
 
 

@@ -29,4 +29,4 @@ jobs:
         if: failure()
         env:
           GH_TOKEN: ${{ github.token }}
-        run: bash tools/alert.sh "⚠️ コメントを確認できませんでした" "threads_read_replies の許可が無いか、トークンの問題です。"
+        run: bash tools/alert.sh "⚠️ コメントを確認できませんでした" "原因は詳細のログを見てください（許可・トークン・記録ファイルのどれか）。ルイが確認します。"
