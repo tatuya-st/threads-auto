@@ -1,36 +1,6 @@
 {
- "at": "2026-11-06T07:25+09:00",
+ "at": "2026-11-06T12:25+09:00",
  "notes": [
-  {
-   "what": "Threadsで冬支度の福袋（超早得）が売り切れ続出という投稿があり、11月初めから福袋の動きが出ている",
-   "src": "https://www.threads.com/@nagisaworks/post/DQp0HCyEhq5",
-   "src2": "",
-   "done": "hot_wordsに『福袋』を追加（夜の商品投稿で先に選ばれる）"
-  },
-  {
-   "what": "商品投稿の形：PR｜ランキング順位（日付）＋価格（投稿時点）＋レビュー★と件数＋最後に問いかけ",
-   "src": "https://www.threads.com/@genmai_maama/post/DewZomemmvY",
-   "src2": "",
-   "done": "記録のみ（build_queue.pyは既にPR表記・投稿時点の価格・レビュー件数を入れているため変更なし）"
-  },
-  {
-   "what": "海外：ThreadsはMetaが2月に『Dear Algo』（公開投稿で好みを伝えると約3日フィードが変わる）を出し、フォロー中の重視・反応稼ぎ投稿の抑制を進めているとの解説",
-   "src": "https://metricool.com/threads-algorithm/",
-   "src2": "",
-   "done": "記録のみ（『反応稼ぎ』と見られないよう、今の自然な問いかけ＋自分の答えの形を続ける。Meta公式未確認のためコードは変えない）"
-  },
-  {
-   "what": "楽天アフィリエイト公式のお知らせページは今回開けず確認できなかった（10月の楽天プレスにアフィ・ROOM関連の発表は無し）",
-   "src": "https://corp.rakuten.co.jp/news/press/2026/?month=10",
-   "src2": "",
-   "done": "official_turnを1に進めた（次は楽天ROOM公式）"
-  },
-  {
-   "what": "楽天公式：11月お買い物マラソンは11/4 20:00〜11/11 1:59で確定。エントリーは11/2 10:00から必須、買いまわり上限7000pt、1店舗1000円以上（税込・送料別・クーポン後）、転売目的の複数注文は対象外",
-   "src": "https://event.rakuten.co.jp/campaign/point-up/marathon/",
-   "src2": "https://media.yourmystar.jp/articles/d18aa51d-aeea-4617-9653-3f3fb84b89fa",
-   "done": "sales のマラソンを公式確認済みに更新・終わったワンダフルデーを削除。マラソン前の問いかけはTALKSに既にあるので追加なし"
-  },
   {
    "what": "海外：Amazonのストアフロントで伸びている人は、季節・セール向けのリストを一番上に固定し、プロフィールや固定投稿から誘導、売れた商品はシーズン中ずっと上に置き直している（訪問数は自己申告で根拠不明）",
    "src": "https://logie.ai/news/amazon-storefront-traffic-is-booming-real-creator-numbers-prime-day-myths-proven-strategies-for-growth/",
@@ -239,6 +209,36 @@
    "src": "https://www.caa.go.jp/notice/entry/047830/",
    "src2": "",
    "done": "ルール変更なし（【PR】表記・効果をうたわない・体験談を作らないで守れている）。official_turnを0へ"
+  },
+  {
+   "what": "自分の成績：11/6朝『通勤中に見るのは天気派？ニュース派？』は約4時間で表示62・コメント6。11/5朝も同じ時間で66→最終335に伸びたため、伸びなかった投稿の判定は保留",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "weakには入れず。同じ天気・ニュースの話になるTALKSの通勤の問いかけを「片道何分スマホを見るか」に入れ替え（11/8のレイ向け呼び込みで焼き直しにならないように）"
+  },
+  {
+   "what": "11/5夜の商品投稿（スマホケース）はマスターの確認待ちで未投稿のまま。本文に『5と0のつく日は11/5 23:59まで』が残り、あとで出ると事実と違う",
+   "src": "queue/20261105-2045-night.json",
+   "src2": "",
+   "done": "queueの本文から期限の1行を削除（確認待ちはそのまま）"
+  },
+  {
+   "what": "海外②：Threadsは月間5億人（2026年6月・Meta発表）、1月26日の週から世界で広告開始、クリエイターボーナスは終了、有料パートナーシップのラベルは使える。リンク投稿の届き方の新しい話はなし",
+   "src": "https://www.makeinfluence.com/en/academy/threads-as-an-influencer-marketing-channel-whats-actually-there-in-2026",
+   "src2": "",
+   "done": "仕組みの変更なし（【PR】表記で足りている。記録のみ）"
+  },
+  {
+   "what": "公式(f)楽天アフィリエイト：検索で11月の規約・料率・禁止事項の変更告知は見当たらず（出てきたのは楽天カードの11/11規約改定＝リボ手数料の日割り化で、アフィとは無関係）",
+   "src": "https://library.libecity.com/articles/01M58NTHT9DQXP08BGR2G3SP3G",
+   "src2": "",
+   "done": "変更なし。official_turnを1へ"
+  },
+  {
+   "what": "(c)A8の年末の高単価案件の動き：公開ページでは新しい情報が見つからず",
+   "src": "https://ecnomikata.com/pr/11490/",
+   "src2": "",
+   "done": "なし（2016年の記事のため不採用）"
   }
  ],
  "hot_words": [
@@ -465,5 +465,5 @@
    "fix": "TALKSの加湿器お手入れを外し、TALK_KEYSに『お手入れ』を足した"
   }
  ],
- "official_turn": 0
+ "official_turn": 1
 }
