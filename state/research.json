@@ -2,18 +2,6 @@
  "at": "2026-11-08T12:30+09:00",
  "notes": [
   {
-   "what": "海外の『TikTokで話題のガジェット』記事は2023年のもので古い",
-   "src": "https://bgr.com/general/gadgets-that-went-viral-on-tiktok-and-are-actually-worth-buying",
-   "src2": "",
-   "done": "見送り（情報が古い）"
-  },
-  {
-   "what": "site:threads.com の楽天ROOM検索（売れた・冬）はThreadsの投稿が出ず、拾えるものなし",
-   "src": "",
-   "src2": "",
-   "done": "記録のみ（次の朝はクエリを変える）"
-  },
-  {
    "what": "海外：Threadsのアルゴリズム解説（2026/5、非公式）＝長めの返信が効く・リンク減産は撤廃・トピック1〜2個・画像1枚で到達増（数字は目安と明記）",
    "src": "https://www.socialync.io/blog/threads-algorithm-2026",
    "src2": "",
@@ -240,6 +228,18 @@
    "src": "https://gagadget.com/en/577968-trending-tiktok-tech/",
    "src2": "",
    "done": "見送り（情報が古く『海外で話題』と言える根拠が弱い。使用量上限で他のタスクが止まったため重い商品追加の実行も控えた）"
+  },
+  {
+   "what": "引き寄せの法則（マスター指示11/08）：『前向きに思い描くだけ』は研究では逆効果（理想を空想すると達成したような気分になり、行動のエネルギーと達成数が下がる）。効くのは『欲しいものを具体的に＋邪魔なものを1つ決める』（メンタル・コントラスティング）",
+   "src": "https://www.bps.org.uk/research-digest/why-positive-fantasies-make-your-dreams-less-likely-come-true",
+   "src2": "https://greatergood.berkeley.edu/article/item/can_positive_thinking_really_make_dreams_come_true",
+   "done": "TALKSに引き寄せをつかみにした問いかけ2つ（物欲あるある・年内に欲しいガジェットを1つ書く）、TALK_KEYSに『引き寄せ』"
+  },
+  {
+   "what": "Metaは『いいねした人は〜』『シェアして』のようにいいね・シェア・コメントを求める投稿（エンゲージメントベイト）の表示を下げる。助言やおすすめを求める本当の質問は対象外。引き寄せ系でよくある『この投稿を見た人は〜』型はこれに当たる",
+   "src": "https://about.fb.com/news/2017/12/news-feed-fyi-fighting-engagement-bait-on-facebook/",
+   "src2": "",
+   "done": "BANNEDに『見た人は』『いいねした人』『シェアした人』『リポストした人』と、断定・金運の言葉（波動・願えば叶う・金運・開運など）を追加"
   }
  ],
  "hot_words": [
