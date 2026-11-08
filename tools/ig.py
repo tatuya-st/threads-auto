@@ -5,6 +5,7 @@
 モード:
   oauth    … 許可コード（CODE）とインスタのアプリの鍵（IG_SECRET）からトークンを作る（60日有効）
   refresh  … トークンを延長する（週1回）
+  insights … アカウントと最近の投稿の数字を state/ig_insights.json に保存する（反応の記録と一緒に実行）
 """
 import json, os, subprocess, sys, urllib.parse, urllib.request
 
@@ -70,5 +71,35 @@ def refresh():
     print('インスタのトークンを延長しました')
 
 
+def insights():
+    import datetime
+    tok = load()
+    if not tok:
+        print('インスタのトークンはまだありません')
+        return
+    G = 'https://graph.instagram.com/v21.0/'
+    acc = call('GET', G + 'me', {'fields': 'user_id,username,account_type,followers_count,follows_count,media_count', 'access_token': tok}, 'アカウント')
+    media = call('GET', G + 'me/media', {'fields': 'id,caption,media_type,media_product_type,timestamp,permalink,like_count,comments_count',
+                                         'limit': 12, 'access_token': tok}, '最近の投稿').get('data', [])
+    posts = []
+    for m in media:
+        row = {k: m.get(k) for k in ('id', 'media_type', 'media_product_type', 'timestamp', 'permalink', 'like_count', 'comments_count')}
+        row['caption'] = (m.get('caption') or '')[:60]
+        for metric in ('reach,saved,shares,views', 'reach,saved'):
+            try:
+                ins = call('GET', G + m['id'] + '/insights', {'metric': metric, 'access_token': tok}, '投稿の数字')
+                for d in ins.get('data', []):
+                    row[d['name']] = (d.get('values') or [{}])[0].get('value', d.get('total_value', {}).get('value'))
+                break
+            except SystemExit:
+                continue
+        posts.append(row)
+    now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).strftime('%Y-%m-%dT%H:%M+09:00')
+    out = {'at': now, 'account': {k: acc.get(k) for k in ('username', 'account_type', 'followers_count', 'follows_count', 'media_count')}, 'posts': posts}
+    with open(os.path.join(ROOT, 'state', 'ig_insights.json'), 'w') as f:
+        json.dump(out, f, ensure_ascii=False, indent=1)
+    print(f"インスタ：フォロワー{acc.get('followers_count')}・投稿{acc.get('media_count')}件を記録しました")
+
+
 if __name__ == '__main__':
-    {'oauth': oauth, 'refresh': refresh}[sys.argv[1]]()
+    {'oauth': oauth, 'refresh': refresh, 'insights': insights}[sys.argv[1]]()

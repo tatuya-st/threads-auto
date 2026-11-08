@@ -20,6 +20,12 @@ jobs:
           THREADS_APP_SECRET: ${{ secrets.THREADS_APP_SECRET || secrets.KEY }}
           TOKEN2: ${{ secrets.TOKEN }}
         run: python3 tools/publish.py insights
+      - name: インスタの数字を読む
+        continue-on-error: true
+        env:
+          THREADS_APP_SECRET: ${{ secrets.THREADS_APP_SECRET || secrets.KEY }}
+          TOKEN2: ${{ secrets.TOKEN }}
+        run: python3 tools/ig.py insights
       - name: 保存
         if: always()
         run: |
