@@ -1,0 +1,23 @@
+{
+ "id": "20261108-2044-night",
+ "slot": "night",
+ "form": "basic",
+ "kind": "single",
+ "created": "2026-11-08T20:44+09:00",
+ "title": "今夜の1品",
+ "footer": "▶ 財布と相談のうえ、プロフィールのリンクから",
+ "topic": "楽天ROOM",
+ "text": "【PR】寝る前の歯みがき、「今日はもういいか」が頭をよぎる日ありません？\n歯ブラシを持つまでがいちばん長い人です🪥\n👉 LUSH ジング！ マウスウォッシュ タブレット\n💰 1,760円\n色・容量・今の価格は、この商品ページで見られます👇\nhttps://hb.afl.rakuten.co.jp/ichiba/5922d1d2.3399bc73.5922d1d3.9a2e2310/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flush%2F61267%2F&link_type=hybrid_url",
+ "reply": "出先でも使えるタブレット型マウスウォッシュを探す人に\n✅ 推しの理由：液体いらずの携帯ケア\nみんなはどうしてる？",
+ "items": [
+  {
+   "itemcode": "lush:10000105",
+   "name": "LUSH ジング！ マウスウォッシュ タブレット",
+   "hook": "出先でも使えるタブレット型マウスウォッシュを探す人に",
+   "price": "1,760円",
+   "quip": "液体いらずの携帯ケア",
+   "points": []
+  }
+ ],
+ "photo": "assets/photos/ready/lush_10000105.jpg"
+}
