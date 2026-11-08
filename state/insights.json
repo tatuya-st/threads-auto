@@ -1,13 +1,6 @@
 {
- "at": "2026-11-08T00:15+09:00",
+ "at": "2026-11-08T11:28+09:00",
  "posts": {
-  "20261025-0744-morning": {
-   "views": 47,
-   "likes": 0,
-   "replies": 1,
-   "reposts": 0,
-   "quotes": 0
-  },
   "20261025-1244-noon": {
    "views": 338,
    "likes": 3,
@@ -65,7 +58,7 @@
    "quotes": 0
   },
   "20261028-0744-morning": {
-   "views": 460,
+   "views": 461,
    "likes": 9,
    "replies": 14,
    "reposts": 0,
@@ -121,7 +114,7 @@
    "quotes": 0
   },
   "20261102-0744-morning": {
-   "views": 289,
+   "views": 290,
    "likes": 12,
    "replies": 35,
    "reposts": 0,
@@ -142,98 +135,98 @@
    "quotes": 0
   },
   "20261103-0024-late": {
-   "views": 408,
+   "views": 409,
    "likes": 2,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261103-0744-morning": {
-   "views": 121,
+   "views": 124,
    "likes": 5,
    "replies": 27,
    "reposts": 0,
    "quotes": 0
   },
   "20261103-1244-noon": {
-   "views": 282,
+   "views": 283,
    "likes": 8,
    "replies": 25,
    "reposts": 0,
    "quotes": 0
   },
   "20261103-2344-late": {
-   "views": 86,
+   "views": 87,
    "likes": 6,
-   "replies": 6,
+   "replies": 7,
    "reposts": 0,
    "quotes": 0
   },
   "20261104-0745-morning": {
-   "views": 334,
+   "views": 335,
    "likes": 3,
    "replies": 2,
    "reposts": 0,
    "quotes": 0
   },
   "20261104-1244-noon": {
-   "views": 206,
+   "views": 208,
    "likes": 2,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261104-2044-night": {
-   "views": 131,
+   "views": 133,
    "likes": 1,
    "replies": 2,
    "reposts": 0,
    "quotes": 0
   },
   "20261104-2344-late": {
-   "views": 221,
+   "views": 223,
    "likes": 7,
    "replies": 2,
    "reposts": 0,
    "quotes": 0
   },
   "20261105-0745-morning": {
-   "views": 416,
+   "views": 419,
    "likes": 28,
    "replies": 93,
    "reposts": 0,
    "quotes": 0
   },
   "20261105-1244-noon": {
-   "views": 152,
+   "views": 154,
    "likes": 0,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261105-2344-late": {
-   "views": 293,
+   "views": 296,
    "likes": 7,
    "replies": 1,
    "reposts": 0,
    "quotes": 0
   },
   "20261106-0743-morning": {
-   "views": 177,
+   "views": 185,
    "likes": 5,
    "replies": 11,
    "reposts": 0,
    "quotes": 0
   },
   "20261106-1244-noon": {
-   "views": 864,
+   "views": 880,
    "likes": 13,
-   "replies": 23,
+   "replies": 30,
    "reposts": 0,
    "quotes": 0
   },
   "20261106-2044-night": {
-   "views": 127,
+   "views": 141,
    "likes": 3,
    "replies": 0,
    "reposts": 0,
@@ -241,11 +234,11 @@
   }
  },
  "account": {
-  "views": 5594,
-  "likes": 9,
-  "replies": 2,
+  "views": 6026,
+  "likes": 11,
+  "replies": 14,
   "reposts": 0,
-  "followers_count": 1003
+  "followers_count": 1010
  },
  "clicks": {
   "https://hb.afl.rakuten.co.jp/ichiba/5922d1d2.3399bc73.5922d1d3.9a2e2310?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frakuten24%2F4901301458964%2F&link_type=hybrid_url": 3,
