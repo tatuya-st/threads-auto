@@ -1299,6 +1299,14 @@ def main():
         return
     if a.slot == 'late':
         return late(a)
+    if a.slot == 'night':  # 11/09：合図ページで夜の商品投稿をレイに渡した日（state/handover.json）は、ルイは夜を出さない（二重を防ぐ）
+        try:
+            hand = json.load(open(os.path.join(a.repo, 'state', 'handover.json'), encoding='utf-8'))
+        except Exception:
+            hand = {}
+        if datetime.now(JST).strftime('%Y-%m-%d') in hand:
+            print('なし（今夜の商品投稿はレイが担当）')
+            return
     has_data = os.path.isfile(a.html) and os.path.getsize(a.html) > 0
     cands = gather(a) if has_data else []
     singles = [it for it in cands if it.get('quip') and 'やつ' not in it.get('quip', '')]
