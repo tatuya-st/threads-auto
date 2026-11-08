@@ -1070,6 +1070,16 @@ def slot_done(repo, slot):
     return False
 
 
+def ratio_ok(path):
+    """11/09 マスター指摘：縦長すぎる画像はThreadsで上下が切れる。4:5（縦÷横1.25）より縦長なら使わず確認待ちにする"""
+    try:
+        from PIL import Image
+        w, h = Image.open(path).size
+        return h / w <= 1.26
+    except Exception:
+        return False
+
+
 def write_q(a, q, note):
     bad = banned(q.get('text', '') + str(q.get('reply') or ''))
     if bad:
@@ -1078,12 +1088,12 @@ def write_q(a, q, note):
     # マスターが前もって送ってくれた場面画像（assets/photos/ready/<商品コード>.jpg）があれば、そのまま使う
     if q.get('kind') == 'single' and q.get('items'):
         rp = os.path.join('assets', 'photos', 'ready', q['items'][0]['itemcode'].replace(':', '_') + '.jpg')
-        if os.path.exists(os.path.join(a.repo, rp)):
+        if os.path.exists(os.path.join(a.repo, rp)) and ratio_ok(os.path.join(a.repo, rp)):
             q['photo'] = rp
             q.pop('hold', None)
             note += '（マスターの画像あり）'
         fp = rp[:-4] + '_full.png'  # 投稿画像まるごと（マスターのデザインをそのまま使う）
-        if os.path.exists(os.path.join(a.repo, fp)):
+        if os.path.exists(os.path.join(a.repo, fp)) and ratio_ok(os.path.join(a.repo, fp)):
             q['full_image'] = fp
             q.pop('hold', None)
             note += '（マスターの画像まるごと）'
