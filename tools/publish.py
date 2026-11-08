@@ -101,6 +101,9 @@ def room_info(now):
         out.append('・7日以内のセール：' + ' ／ '.join(sales[:5]))
     if r.get('hot_words'):
         out.append('・今売れ筋の種類：' + '、'.join(r['hot_words'][:10]))
+    out.append('・いいねタイム（11/8）：1日4回のうち3回はガジェット系でいいね＋ガジェット好きを1回5人フォロー（1日15人まで）、1回は暮らし系')
+    fl = [f for f in load('room_follow.json', []) if isinstance(f, dict) and f.get('url')]
+    out.append(f"・レイのフォロー候補（state/room_follow.json）：{len(fl)}人" + ('（' + ' ／ '.join((f.get('name') or f['url'])[:15] for f in fl[-5:]) + '）' if fl else '（まだなし・レイが1日10人まで足す）'))
     sent = load('sent.json', {})
     gone = lambda v: load(os.path.join('posted', (v.get('post') or '') + '.json'), {}).get('deleted')
     recent = sorted((v for v in sent.values() if isinstance(v, dict) and v.get('at') and not gone(v)), key=lambda v: v['at'], reverse=True)[:5]
