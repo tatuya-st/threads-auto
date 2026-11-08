@@ -63,7 +63,7 @@ def night_info(now, handed):
     """ルイの今夜の商品投稿がどうなっているかを、レイに伝える（マスターの中継なし）"""
     day = now.strftime('%Y%m%d')
     fs = sorted(glob.glob(os.path.join(ROOT, 'queue', day + '-*-night.json')))
-    line = 'まだ（マスターの「OK」が出てから投稿します）'
+    line = 'まだ作っていません（20:45ごろに商品を決めて、ここに商品名を出します）'
     if handed:
         line = 'ボツになりました。今夜の商品投稿はレイが出してください（リンクもレイが使ってよい）'
     elif fs:
