@@ -1,30 +1,6 @@
 {
- "at": "2026-11-08T12:30+09:00",
+ "at": "2026-11-08T19:25+09:00",
  "notes": [
-  {
-   "what": "海外：Threadsのアルゴリズム解説（2026/5、非公式）＝長めの返信が効く・リンク減産は撤廃・トピック1〜2個・画像1枚で到達増（数字は目安と明記）",
-   "src": "https://www.socialync.io/blog/threads-algorithm-2026",
-   "src2": "",
-   "done": "トピック付けは公式Tips確認済みで実装済み。『90秒以内の自己返信』は公式未確認のため見送り（理由：非公式の数字）"
-  },
-  {
-   "what": "楽天アフィリエイトの料率（通常2〜4%・アドバンスで5〜20%）に2026年11月の変更告知は見当たらず（検索で出たのは2024年の解説記事）",
-   "src": "https://www.commercepick.com/archives/49914",
-   "src2": "",
-   "done": "変更なし"
-  },
-  {
-   "what": "楽天ブラックフライデー2026の日程は11/4昼時点でも検索で公式発表が出ず",
-   "src": "",
-   "src2": "",
-   "done": "salesの予想表記のまま"
-  },
-  {
-   "what": "消費者庁ステマ規制：2026年の運用基準改定の情報は検索で見当たらず（出たのは2022〜23年の記事）",
-   "src": "https://netshop.impress.co.jp/node/10314",
-   "src2": "",
-   "done": "変更なし。official_turnを0（楽天アフィリエイト公式）へ"
-  },
   {
    "what": "店舗向け管理画面（RMS）の刷新で、2026年第4四半期から店舗が商品ごとにアフィリエイト料率を最大70%まで決められるようになる予定（開始日・対象外の条件は未記載、楽天公式の告知はまだ見つからず）",
    "src": "https://netshop.impress.co.jp/e/2026/09/17/16713",
@@ -240,6 +216,30 @@
    "src": "https://about.fb.com/news/2017/12/news-feed-fyi-fighting-engagement-bait-on-facebook/",
    "src2": "",
    "done": "BANNEDに『見た人は』『いいねした人』『シェアした人』『リポストした人』と、断定・金運の言葉（波動・願えば叶う・金運・開運など）を追加"
+  },
+  {
+   "what": "自分の成績：11/8昼『楽天ROOM、始めて何年目？』は約6時間で表示248・いいね11・コメント4（会話投稿の平均並み）。11/7・11/8朝は投稿なし。伸びなかった投稿の新規なし",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "weakの追加なし"
+  },
+  {
+   "what": "(d)SSD・メモリがAI需要で値上がり中（2026年1〜3月のメモリ価格は前期比最大90％上昇、ノートPCの部材費に占めるCPU・メモリ・SSDの割合は68％へ）",
+   "src": "https://atmarkit.itmedia.co.jp/ait/articles/2609/11/news029.html",
+   "src2": "https://www.itmedia.co.jp/news/article/2512/11/1251211109/",
+   "done": "TALKSに保存先の二択（クラウド派？外付けSSD派？）を1つ、TALK_KEYSに『バックアップ』。煽らない形。レイへ1行"
+  },
+  {
+   "what": "海外⑤：Threads APIの4月更新で、ゴースト投稿（24時間で自動アーカイブ）・テキスト添付（最大1万字）・スポイラー・GIF投稿・返信承認・投稿の公開/削除のWebhookに対応。リンクやインサイト指標の変更はなし",
+   "src": "https://developers.facebook.com/blog/post/2026/04/14/whats-new-in-the-threads-api/",
+   "src2": "https://pipedot.org/6ZSRS",
+   "done": "記録のみ（今の投稿の形・LINK_GAP_Hは変えない）"
+  },
+  {
+   "what": "公式(f)Meta/Threads：AIコンテンツの表示のヘルプ・透明性センターのページは本文が読めず、変更点は確かめられなかった（前回記録の『広告のAI生成表示』から新しい告知は検索に出ず）",
+   "src": "https://www.meta.com/en-gb/help/artificial-intelligence/1783222608822690/",
+   "src2": "",
+   "done": "変更なし扱い。official_turnを4へ"
   }
  ],
  "hot_words": [
@@ -466,5 +466,5 @@
    "fix": "TALKSの加湿器お手入れを外し、TALK_KEYSに『お手入れ』を足した"
   }
  ],
- "official_turn": 3
+ "official_turn": 4
 }
