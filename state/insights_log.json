@@ -2501,11 +2501,11 @@
  },
  "2026-11-08": {
   "account": {
-   "views": 4762,
-   "likes": 0,
-   "replies": 0,
+   "views": 4983,
+   "likes": 9,
+   "replies": 9,
    "reposts": 0,
-   "followers_count": 1031
+   "followers_count": 1035
   },
   "posts": {
    "20261025-2044-night": {
@@ -2530,7 +2530,7 @@
     "quotes": 0
    },
    "20261026-1244-noon": {
-    "views": 6595,
+    "views": 6596,
     "likes": 46,
     "replies": 98,
     "reposts": 1,
@@ -2656,7 +2656,7 @@
     "quotes": 0
    },
    "20261103-2344-late": {
-    "views": 91,
+    "views": 92,
     "likes": 6,
     "replies": 9,
     "reposts": 0,
@@ -2712,36 +2712,36 @@
     "quotes": 0
    },
    "20261106-0743-morning": {
-    "views": 201,
+    "views": 203,
     "likes": 5,
     "replies": 11,
     "reposts": 0,
     "quotes": 0
    },
    "20261106-1244-noon": {
-    "views": 902,
+    "views": 905,
     "likes": 13,
     "replies": 36,
     "reposts": 0,
     "quotes": 0
    },
    "20261106-2044-night": {
-    "views": 157,
+    "views": 160,
     "likes": 3,
     "replies": 0,
     "reposts": 0,
     "quotes": 0
    },
    "20261108-1244-noon": {
-    "views": 248,
-    "likes": 11,
-    "replies": 4,
+    "views": 373,
+    "likes": 17,
+    "replies": 11,
     "reposts": 0,
     "quotes": 0
    }
   },
   "clicks": {
-   "https://px.a8.net/svt/ejp?a8mat=4BESU6+10BGOI+1WP2+1HLNLE": 0,
+   "https://px.a8.net/svt/ejp?a8mat=4BESU6+10BGOI+1WP2+1HLNLE": 3,
    "https://hb.afl.rakuten.co.jp/ichiba/5922d1d2.3399bc73.5922d1d3.9a2e2310?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frakuten24%2F4901301458964%2F&link_type=hybrid_url": 3,
    "http://invalid.invalid/": 0,
    "https://hb.afl.rakuten.co.jp/ichiba/5922d1d2": 0,
@@ -2750,7 +2750,7 @@
    "https://px.a8.net/svt/ejp?a8mat=4BESU6+1RPEIA+4W8G+5Z6WY": 0,
    "https://px.a8.net/svt/ejp?a8mat=4BESU6+2EXB3M+4KJC+I0KRM": 0,
    "https://room.rakuten.co.jp/room_a9a129c5a9/collections": 1,
-   "https://room.rakuten.co.jp/room_a9a129c5a9/items": 4
+   "https://room.rakuten.co.jp/room_a9a129c5a9/items": 5
   }
  }
 }

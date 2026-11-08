@@ -1,26 +1,40 @@
 {
- "at": "2026-11-08T17:24+09:00",
+ "at": "2026-11-08T20:15+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
   "followers_count": 1261,
-  "follows_count": 2318,
-  "media_count": 64
+  "follows_count": 2320,
+  "media_count": 65
  },
  "posts": [
+  {
+   "id": "18020768798740135",
+   "media_type": "IMAGE",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-08T10:37:06+0000",
+   "permalink": "https://www.instagram.com/p/DfejsTgj4ux/",
+   "like_count": 12,
+   "comments_count": 0,
+   "caption": "俺には2人の部下がいます。\n\n左がレイ。何でも屋で、調べものから数字の管理、画像づくりまで、現場を回してくれます。\n右が",
+   "reach": 15,
+   "saved": 0,
+   "shares": 0,
+   "views": 39
+  },
   {
    "id": "18347223604274267",
    "media_type": "CAROUSEL_ALBUM",
    "media_product_type": "FEED",
    "timestamp": "2026-11-07T03:34:56+0000",
    "permalink": "https://www.instagram.com/p/DfbOlt7jxn6/",
-   "like_count": 44,
+   "like_count": 45,
    "comments_count": 0,
    "caption": "紅葉の季節になりました🍁\n\nライトアップで真っ赤な渓流、夕方の金色の並木道、夜の静かな紅葉さんぽ。\n\n皆さんはどの紅葉が",
-   "reach": 103,
+   "reach": 104,
    "saved": 0,
    "shares": 0,
-   "views": 236
+   "views": 243
   },
   {
    "id": "17989838709114851",
@@ -28,13 +42,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-06T21:38:26+0000",
    "permalink": "https://www.instagram.com/p/DfalykGD7iB/",
-   "like_count": 38,
+   "like_count": 39,
    "comments_count": 0,
    "caption": "いつか行きたい、東北の神社5選⛩️\n\n行った方の投稿を見てから、ずっと気になっている場所です。\n\n1. 駒形神社（岩手県",
-   "reach": 73,
+   "reach": 75,
    "saved": 0,
    "shares": 0,
-   "views": 173
+   "views": 183
   },
   {
    "id": "18122503441954075",
@@ -48,7 +62,7 @@
    "reach": 101,
    "saved": 0,
    "shares": 0,
-   "views": 243
+   "views": 246
   },
   {
    "id": "18134929018739527",
@@ -59,10 +73,10 @@
    "like_count": 121,
    "comments_count": 0,
    "caption": "緑に包まれて、深呼吸。\n鳥居をくぐるたび、心が整っていく気がします。\n\n出石神社（兵庫・豊岡）。\n木漏れ日の参道がずっと",
-   "reach": 378,
+   "reach": 380,
    "saved": 1,
    "shares": 0,
-   "views": 892
+   "views": 896
   },
   {
    "id": "18645161404040801",
@@ -70,13 +84,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-04T03:25:30+0000",
    "permalink": "https://www.instagram.com/p/DfTfH0MD1us/",
-   "like_count": 76,
+   "like_count": 77,
    "comments_count": 0,
    "caption": "青空のした、大衆食堂『正広』さんで昼餉（ひるげ）。\nカレーラーメンにミニかつ丼まで付けた、欲張りセットにしました。\n\nじ",
-   "reach": 152,
+   "reach": 153,
    "saved": 0,
    "shares": 0,
-   "views": 323
+   "views": 326
   },
   {
    "id": "17982401238066938",
@@ -90,7 +104,7 @@
    "reach": 123,
    "saved": 0,
    "shares": 0,
-   "views": 269
+   "views": 270
   },
   {
    "id": "18125226091911371",
@@ -104,7 +118,7 @@
    "reach": 246,
    "saved": 0,
    "shares": 0,
-   "views": 499
+   "views": 500
   },
   {
    "id": "18115357469318963",
@@ -118,7 +132,7 @@
    "reach": 291,
    "saved": 0,
    "shares": 0,
-   "views": 529
+   "views": 530
   },
   {
    "id": "18150829216542933",
@@ -161,20 +175,6 @@
    "saved": 0,
    "shares": 0,
    "views": 909
-  },
-  {
-   "id": "18138816667720257",
-   "media_type": "IMAGE",
-   "media_product_type": "FEED",
-   "timestamp": "2026-09-17T10:58:57+0000",
-   "permalink": "https://www.instagram.com/p/DdYs0IvOwPM/",
-   "like_count": 65,
-   "comments_count": 0,
-   "caption": "あるあるだよね💦😅",
-   "reach": 244,
-   "saved": 0,
-   "shares": 0,
-   "views": 404
   }
  ]
 }
