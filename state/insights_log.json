@@ -2501,11 +2501,11 @@
  },
  "2026-11-08": {
   "account": {
-   "views": 6626,
-   "likes": 25,
-   "replies": 44,
+   "views": 4762,
+   "likes": 0,
+   "replies": 0,
    "reposts": 0,
-   "followers_count": 1033
+   "followers_count": 1031
   },
   "posts": {
    "20261025-2044-night": {
@@ -2733,14 +2733,15 @@
     "quotes": 0
    },
    "20261108-1244-noon": {
-    "views": 193,
-    "likes": 8,
-    "replies": 3,
+    "views": 248,
+    "likes": 11,
+    "replies": 4,
     "reposts": 0,
     "quotes": 0
    }
   },
   "clicks": {
+   "https://px.a8.net/svt/ejp?a8mat=4BESU6+10BGOI+1WP2+1HLNLE": 0,
    "https://hb.afl.rakuten.co.jp/ichiba/5922d1d2.3399bc73.5922d1d3.9a2e2310?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frakuten24%2F4901301458964%2F&link_type=hybrid_url": 3,
    "http://invalid.invalid/": 0,
    "https://hb.afl.rakuten.co.jp/ichiba/5922d1d2": 0,
@@ -2748,7 +2749,7 @@
    "https://px.a8.net/svt/ejp?a8mat=4BESU6+2GPLWY+3OIU+5YJRM": 0,
    "https://px.a8.net/svt/ejp?a8mat=4BESU6+1RPEIA+4W8G+5Z6WY": 0,
    "https://px.a8.net/svt/ejp?a8mat=4BESU6+2EXB3M+4KJC+I0KRM": 0,
-   "https://room.rakuten.co.jp/room_a9a129c5a9/collections": 2,
+   "https://room.rakuten.co.jp/room_a9a129c5a9/collections": 1,
    "https://room.rakuten.co.jp/room_a9a129c5a9/items": 4
   }
  }
