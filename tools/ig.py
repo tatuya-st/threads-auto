@@ -15,14 +15,14 @@ REDIRECT = 'https://tatuya-st.github.io/threads-auto/callback.html'
 KEY = os.environ.get('THREADS_APP_SECRET', '').strip() or os.environ.get('TOKEN2', '').strip()
 
 
-def call(method, url, params):
+def call(method, url, params, step=''):
     data = urllib.parse.urlencode(params).encode()
     req = urllib.request.Request(url + ('?' + data.decode() if method == 'GET' else ''), data=None if method == 'GET' else data, method=method)
     try:
         with urllib.request.urlopen(req, timeout=60) as r:
             return json.loads(r.read())
     except urllib.error.HTTPError as e:
-        raise SystemExit(f'インスタの返事がエラーでした：{e.code} {e.read().decode(errors="replace")[:300]}')
+        raise SystemExit(f'インスタの返事がエラーでした（{step}）：{e.code} {e.read().decode(errors="replace")[:300]}')
 
 
 def save(tok):
@@ -44,7 +44,7 @@ def load():
 
 
 def me(tok):
-    return call('GET', 'https://graph.instagram.com/v21.0/me', {'fields': 'user_id,username', 'access_token': tok})
+    return call('GET', 'https://graph.instagram.com/v21.0/me', {'fields': 'user_id,username', 'access_token': tok}, '3 アカウント確認')
 
 
 def oauth():
@@ -53,8 +53,8 @@ def oauth():
     if not (code and sec):
         raise SystemExit('コードかインスタの鍵がありません')
     short = call('POST', 'https://api.instagram.com/oauth/access_token', {
-        'client_id': APP_ID, 'client_secret': sec, 'grant_type': 'authorization_code', 'redirect_uri': REDIRECT, 'code': code})['access_token']
-    tok = call('GET', 'https://graph.instagram.com/access_token', {'grant_type': 'ig_exchange_token', 'client_secret': sec, 'access_token': short})['access_token']
+        'client_id': APP_ID, 'client_secret': sec, 'grant_type': 'authorization_code', 'redirect_uri': REDIRECT, 'code': code}, '1 コード→短いトークン')['access_token']
+    tok = call('GET', 'https://graph.instagram.com/access_token', {'grant_type': 'ig_exchange_token', 'client_secret': sec, 'access_token': short}, '2 長いトークンに交換')['access_token']
     u = me(tok)
     save(tok)
     print(f"::notice::インスタのトークンを作りました（{u.get('username')}・60日有効、毎週自動で延長）")
