@@ -1,30 +1,6 @@
 {
- "at": "2026-11-06T19:30+09:00",
+ "at": "2026-11-08T12:30+09:00",
  "notes": [
-  {
-   "what": "海外：MetaのAI生成ラベル更新はFacebook・Instagramの広告が対象（Threadsの通常投稿への言及なし、Meta公式の出典は記事内に無し）",
-   "src": "https://almcorp.com/news/meta-ai-labels-facebook-instagram-ads-disclosure-2026/",
-   "src2": "",
-   "done": "広告を出していないので仕組みは変えない（公式未確認のため採用なし）"
-  },
-  {
-   "what": "11/3夜時点でも楽天ブラックフライデー2026の日程・エントリー・上限は公式未発表（検索で出るのは過去年の記事）",
-   "src": "https://premium.gamepedia.jp/shopping/archives/13659",
-   "src2": "",
-   "done": "salesの予想表記のまま。official_turnを3へ"
-  },
-  {
-   "what": "Meta公式：Threads APIの更新履歴は8/18（デバッグトークン）・8/12（token_type追加）が最新で、9〜11月に投稿上限・リンク・返信の変更なし（リンク5件超の投稿は失敗は従来どおり）",
-   "src": "https://developers.facebook.com/documentation/threads/changelog",
-   "src2": "",
-   "done": "変更なし（返信のリンク1つの今の作りで問題なし）。official_turnを4（消費者庁）へ"
-  },
-  {
-   "what": "海外：秋冬の贈り物で、キャンドルウォーマーランプ・サンセットランプ・ウェイトブランケット・サンライズアラームなど『こもって温まる照明・寝具』が挙がっている（6/18更新、人気の根拠データなし）",
-   "src": "https://www.wishdeck.com/blog/fall-gift-trends",
-   "src2": "https://www.rakuten.co.jp/category/562715/",
-   "done": "楽天にカテゴリがあり買えるため hot_words に『キャンドルウォーマー』を追加（具体的な型番は未確認のため売れ筋リサーチは呼ばない）"
-  },
   {
    "what": "海外の『TikTokで話題のガジェット』記事は2023年のもので古い",
    "src": "https://bgr.com/general/gadgets-that-went-viral-on-tiktok-and-are-actually-worth-buying",
@@ -240,6 +216,30 @@
    "src": "https://crowdworks.jp/consultation/threads/9713",
    "src2": "",
    "done": "なし（次回は別のクエリで）"
+  },
+  {
+   "what": "自分の成績：11/6昼『イヤホン、今ので何代目？』が表示880・コメント30で最も伸びた（形は前回『マウス何代目』でTALKSに反映済み）。11/6朝185・夜141は平均の3分の1以上で伸びなかった投稿なし。11/7〜11/8朝は自動投稿のタスクが使用量の上限で止まり投稿なし",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "weakの追加なし・TALKSは反映済みのため変更なし"
+  },
+  {
+   "what": "(b)楽天ブラックフライデー2026は11/8時点で公式発表なし（検索に出るのは予想記事のみ。例年11/20頃〜27頃）",
+   "src": "https://www.r-zyunin.com/rakuten-sale-campaign/black-friday",
+   "src2": "https://calendar.rakuten.co.jp/cal/8607",
+   "done": "salesの『予想・公式未確認』のまま。レイへ時期の1行"
+  },
+  {
+   "what": "公式(f)楽天イベント：5と0のつく日はエントリー＋楽天カード利用が条件で月の獲得上限1000pt（楽天カレンダーの説明）。11〜12月の大型セールの日程はまだ載っていない",
+   "src": "https://calendar.rakuten.co.jp/cal/8607",
+   "src2": "",
+   "done": "salesの5と0のつく日のラベルに条件と上限を追記"
+  },
+  {
+   "what": "海外④：TikTokで話題のガジェット（Anker Soundcore Boom 2・MOFTの見えないスタンド・instax mini Link 3など）。記事は2025年7月で古い",
+   "src": "https://gagadget.com/en/577968-trending-tiktok-tech/",
+   "src2": "",
+   "done": "見送り（情報が古く『海外で話題』と言える根拠が弱い。使用量上限で他のタスクが止まったため重い商品追加の実行も控えた）"
   }
  ],
  "hot_words": [
@@ -266,7 +266,7 @@
    "e": "2026-11-11T01:59"
   },
   {
-   "label": "5と0のつく日",
+   "label": "5と0のつく日（エントリー＋楽天カード・月の上限1000pt）",
    "s": "2026-11-10T00:00",
    "e": "2026-11-10T23:59"
   },
@@ -281,7 +281,7 @@
    "e": "2026-11-16T23:59"
   },
   {
-   "label": "5と0のつく日",
+   "label": "5と0のつく日（エントリー＋楽天カード・月の上限1000pt）",
    "s": "2026-11-15T00:00",
    "e": "2026-11-15T23:59"
   },
@@ -291,7 +291,7 @@
    "e": "2026-11-18T23:59"
   },
   {
-   "label": "5と0のつく日",
+   "label": "5と0のつく日（エントリー＋楽天カード・月の上限1000pt）",
    "s": "2026-11-20T00:00",
    "e": "2026-11-20T23:59"
   },
@@ -301,12 +301,12 @@
    "e": "2026-11-27T01:59"
   },
   {
-   "label": "5と0のつく日",
+   "label": "5と0のつく日（エントリー＋楽天カード・月の上限1000pt）",
    "s": "2026-11-25T00:00",
    "e": "2026-11-25T23:59"
   },
   {
-   "label": "5と0のつく日",
+   "label": "5と0のつく日（エントリー＋楽天カード・月の上限1000pt）",
    "s": "2026-11-30T00:00",
    "e": "2026-11-30T23:59"
   },
@@ -466,5 +466,5 @@
    "fix": "TALKSの加湿器お手入れを外し、TALK_KEYSに『お手入れ』を足した"
   }
  ],
- "official_turn": 2
+ "official_turn": 3
 }
