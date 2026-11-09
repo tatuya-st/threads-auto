@@ -390,11 +390,25 @@ def talk(repo, slot='noon'):
                     if 'ROOM' in tx.split('\n')[0]:
                         same_tp_shapes.add(shape_of(tx))
         left = [t for t in left if t[:6] not in heads] or left
+        # 11/10：朝は「朝の〇〇、…ですね」の書き出しが続きやすい → 直近3日の朝と最初の2文字が同じものは避け、前日の朝と同じ問いかけの形も続けない
+        if slot == 'morning':
+            mh, ms = set(), set()
+            for k in range(1, 4):
+                day = (datetime.now(JST) - timedelta(days=k)).strftime('%Y%m%d')
+                for f in glob.glob(os.path.join(repo, 'queue', day + '-*-morning.json')):
+                    tx = json.load(open(f, encoding='utf-8')).get('text', '')
+                    if tx:
+                        mh.add(tx[:2])
+                        if k == 1:
+                            ms.add(shape_of(tx))
+            left = [t for t in left if t[:2] not in mh] or left
+            if any(shape_of(t) not in ms for t in left):
+                left = [t for t in left if shape_of(t) not in ms]
         if all('ROOM' in t for t in left):
             left = [t for t in left if shape_of(t) not in same_tp_shapes] or left
         # 11/05：朝『顔洗い、お湯派？水派？』コメント42、昼『加湿器のお手入れ何日に1回？』反応0。
         # 1秒で答えられる二択（〜派？）と数字で答える問いを優先し、答えにくい自由回答の問いは使わない（残りが無いときだけ）
-        easy = [t for t in left if shape_of(t) in ('ha', 'num')]
+        easy = [t for t in left if shape_of(t) in ('ha', 'num') and shape_of(t) not in shp]  # 11/10：直前2本と同じ形しか残らないときは、ひと言で答えられる自由回答（どこ？など）に回す
         left = easy or left
         ha = [t for t in left if shape_of(t) == 'ha']
         if ha and 'ha' not in set(last_shapes(repo, 1)):
@@ -867,7 +881,7 @@ QA = [
 def shape_of(text):
     """問いかけの形。同じ形が続くと同じ文面に見えるので、直前の投稿と同じ形は避ける（10/27）。"""
     head = '\n'.join(str(text).split('\n')[:3])
-    if re.search(r'派[？?]|派です|どっち', head):
+    if re.search(r'派[？?]|派です|どっち', head) or re.search(r'[^\n？?]{1,10}[？?][^\n？?]{1,10}[？?]', head):  # 11/10：「こたつ？電気毛布？」のような「派」なしの二択も二択として数える
         return 'ha'
     if re.search(r'何(年|回|個|枚|分|%|％|時間|曲|点|鉢|件|日|週|台|本|人|袋)|いくら|何[^\n]{0,3}ですか', head):
         return 'num'
