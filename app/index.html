@@ -485,6 +485,7 @@
       var awaiting = false;  // 返事待ち
       var thinkTimer = null;
       var voiceSession = false; // 球体タップから始まった音声会話中か
+      var audioUnlocked = false; // 球体タップで speechSynthesis を解錠済みか（iOS対策）
       var sheetOpen = null;
 
       /* ===== 要素 ===== */
@@ -644,9 +645,11 @@
         box.innerHTML = html;
       }
 
-      /* ===== 音声：読み上げ（日本語・女性ボイス固定） ===== */
+      /* ===== 音声：読み上げ（日本語・女性ボイス固定／iOS standalone対策） ===== */
       var speakQueue = [];
       var speakingNow = false;
+      var stallTimer = null;
+      var currentUtterance = null;
       function pickJaFemaleVoice() {
         var voices = [];
         try { voices = window.speechSynthesis ? speechSynthesis.getVoices() : []; } catch (e) {}
@@ -664,38 +667,161 @@
       if ('speechSynthesis' in window) {
         speechSynthesis.onvoiceschanged = function () { pickJaFemaleVoice(); };
       }
+      /* 声一覧が空の間は voiceschanged を待つ（最大約1.6秒で次へ進む） */
+      function ensureVoicesReady(cb) {
+        if (!('speechSynthesis' in window)) { cb(); return; }
+        var voices = [];
+        try { voices = speechSynthesis.getVoices(); } catch (e) {}
+        if (voices && voices.length) { cb(); return; }
+        var finished = false;
+        function finish() { if (finished) return; finished = true; cb(); }
+        try {
+          if (speechSynthesis.addEventListener) {
+            var handler = function () {
+              var v = [];
+              try { v = speechSynthesis.getVoices(); } catch (e) {}
+              if (v && v.length) {
+                try { speechSynthesis.removeEventListener('voiceschanged', handler); } catch (e) {}
+                finish();
+              }
+            };
+            speechSynthesis.addEventListener('voiceschanged', handler);
+          }
+        } catch (e) {}
+        var prev = null;
+        try { prev = speechSynthesis.onvoiceschanged; } catch (e) {}
+        try {
+          speechSynthesis.onvoiceschanged = function (ev) {
+            if (typeof prev === 'function') { try { prev(ev); } catch (e) {} }
+            var v2 = [];
+            try { v2 = speechSynthesis.getVoices(); } catch (e) {}
+            if (v2 && v2.length) finish();
+          };
+        } catch (e) {}
+        setTimeout(finish, 1600);
+      }
+      /* 1. 音声のアンロック：球体タップ処理の中でだけ呼ぶ。音量0の短い発話で解錠する */
+      function unlockAudio() {
+        if (audioUnlocked) return;
+        if (!('speechSynthesis' in window)) { audioUnlocked = true; return; }
+        try {
+          if (speechSynthesis.paused) speechSynthesis.resume();
+          var dummy = new SpeechSynthesisUtterance('あ');
+          dummy.lang = 'ja-JP';
+          dummy.volume = 0;
+          dummy.rate = 1;
+          dummy.pitch = 1;
+          var dv = pickJaFemaleVoice();
+          if (dv) dummy.voice = dv;
+          dummy.onend = function () {};
+          dummy.onerror = function () {};
+          speechSynthesis.speak(dummy);
+        } catch (e) {}
+        audioUnlocked = true;
+      }
+      /* 2. 未アンロック時の表示：読み上げを試みず、タップを促す */
+      function refreshLockedNotice() {
+        if (audioUnlocked || !speakQueue.length) return;
+        if (orbState === 'thinking' && !awaiting) setOrbState('idle');
+        if (orbState === 'thinking') {
+          // 返事待ち表示と競合しないよう、まず待機へ戻してから案内を出す
+          setOrbState('idle');
+        }
+        stateLabel.textContent = '球体を押すと声が出ます';
+        heardLine.textContent = '返事が届いています。球体をタップすると読み上げます';
+      }
       function speak(text, who) {
         if (!('speechSynthesis' in window)) return;
         speakQueue.push({ text: text, who: who });
+        if (!audioUnlocked) { refreshLockedNotice(); return; }
         pumpSpeak();
       }
-      function pumpSpeak() {
-        if (speakingNow || !speakQueue.length) return;
-        var item = speakQueue.shift();
-        speakingNow = true;
-        setOrbState('speaking');
-        var u = new SpeechSynthesisUtterance(item.text);
+      function finishSpeaking() {
+        clearTimeout(stallTimer); stallTimer = null;
+        currentUtterance = null;
+        speakingNow = false;
+        if (speakQueue.length && audioUnlocked) { pumpSpeak(); return; }
+        // 開始・終了・失敗のいずれでも「考え中／お話し中」で固まらないよう必ず戻す
+        if (orbState === 'speaking' || orbState === 'thinking') setOrbState(awaiting ? 'thinking' : 'idle');
+        if (!awaiting) setOrbState('idle');
+        stopSpeakBtn.disabled = true;
+        // 連続会話：読み終わったら続けて聞き取り（既存の動きを維持）
+        if (settings.continuous && voiceSession && !awaiting) {
+          setTimeout(function () { if (voiceSession && orbState === 'idle') startListening(); }, 350);
+        }
+      }
+      function attemptSpeak(item, isRetry) {
+        if (!speakingNow) return;
+        var started = false;
+        var u = null;
+        try { u = new SpeechSynthesisUtterance(item.text); } catch (e) { finishSpeaking(); return; }
+        currentUtterance = u;
         u.lang = 'ja-JP';
         u.rate = settings.rate;
         u.pitch = item.who === 'rui' ? 1.25 : 1.0;
+        u.volume = 1;
         var v = pickJaFemaleVoice();
         if (v) u.voice = v;
-        var done = function () {
-          speakingNow = false;
-          if (speakQueue.length) { pumpSpeak(); return; }
-          if (orbState === 'speaking') setOrbState(awaiting ? 'thinking' : 'idle');
-          stopSpeakBtn.disabled = true;
-          // 連続会話：読み終わったら続けて聞き取り
-          if (settings.continuous && voiceSession && !awaiting) {
-            setTimeout(function () { if (voiceSession && orbState === 'idle') startListening(); }, 350);
+        clearTimeout(stallTimer);
+        /* 4. 詰まり対策：onstart が約2秒以内に来なければ cancel して1回だけ再試行 */
+        stallTimer = setTimeout(function () {
+          if (started) return;
+          try { u.onstart = null; u.onend = null; u.onerror = null; } catch (e) {}
+          if (currentUtterance === u) currentUtterance = null;
+          try { speechSynthesis.cancel(); } catch (e) {}
+          if (!isRetry) {
+            setTimeout(function () { if (speakingNow) attemptSpeak(item, true); }, 140);
+          } else {
+            finishSpeaking();
           }
+        }, 2000);
+        u.onstart = function () { started = true; clearTimeout(stallTimer); stallTimer = null; };
+        u.onend = function () {
+          clearTimeout(stallTimer); stallTimer = null;
+          if (!speakingNow) return;
+          if (currentUtterance === u) currentUtterance = null;
+          finishSpeaking();
         };
-        u.onend = done; u.onerror = done;
-        try { speechSynthesis.speak(u); } catch (e) { done(); }
+        u.onerror = function (ev) {
+          clearTimeout(stallTimer); stallTimer = null;
+          if (!speakingNow) return;
+          if (currentUtterance !== u) return;
+          currentUtterance = null;
+          var err = ev && ev.error ? String(ev.error) : '';
+          // 自分で止めた場合（割り込み）は再試行しない
+          if (err === 'interrupted' || err === 'canceled') { finishSpeaking(); return; }
+          if (!started && !isRetry) {
+            setTimeout(function () { if (speakingNow) attemptSpeak(item, true); }, 140);
+            return;
+          }
+          finishSpeaking();
+        };
+        try {
+          if (speechSynthesis.paused) speechSynthesis.resume();
+          speechSynthesis.speak(u);
+        } catch (e) {
+          clearTimeout(stallTimer); stallTimer = null;
+          if (!isRetry) { setTimeout(function () { if (speakingNow) attemptSpeak(item, true); }, 140); }
+          else finishSpeaking();
+        }
+      }
+      function pumpSpeak() {
+        if (speakingNow || !speakQueue.length) return;
+        if (!audioUnlocked) { refreshLockedNotice(); return; }
+        var item = speakQueue.shift();
+        speakingNow = true;
+        setOrbState('speaking');
+        /* 3. 声の確定：getVoices() が空の間は voiceschanged を待ってから発話する */
+        ensureVoicesReady(function () {
+          if (!speakingNow) return;
+          attemptSpeak(item, false);
+        });
       }
       function stopSpeech() {
         speakQueue = [];
         speakingNow = false;
+        clearTimeout(stallTimer); stallTimer = null;
+        currentUtterance = null;
         voiceSession = false;
         try { speechSynthesis.cancel(); } catch (e) {}
         if (orbState === 'speaking') setOrbState(awaiting ? 'thinking' : 'idle');
@@ -753,7 +879,10 @@
           textInput.focus();
           return;
         }
-        stopSpeech();
+        // アンロック用の無音発話を cancel で消さないよう、発話中／キューがある時だけ止める
+        if (speakingNow || speakQueue.length) stopSpeech();
+        else { clearTimeout(stallTimer); stallTimer = null; }
+        // 球体タップ経由でない自動再開時も、未アンロックならここでは鳴らさず待機に戻す
         voiceSession = true;
         setOrbState('listening');
         heardLine.textContent = '';
@@ -950,8 +1079,24 @@
 
       /* ===== イベント ===== */
       orbBtn.addEventListener('click', function () {
-        if (orbState === 'speaking') { stopSpeech(); return; }
-        if (orbState === 'listening') { voiceSession = false; endListening(); return; }
+        // 割り込み（読み上げ中のタップで停止）は維持する
+        if (orbState === 'speaking') {
+          unlockAudio();
+          stopSpeech();
+          return;
+        }
+        if (orbState === 'listening') { unlockAudio(); voiceSession = false; endListening(); return; }
+        // 初回タップ：このタップ処理の中で音声をアンロックする
+        var hadPending = (!audioUnlocked && speakQueue.length > 0);
+        unlockAudio();
+        // 未アンロック時に溜まっていた返事があれば、聞き取りではなく先に読み上げる
+        if (hadPending || speakQueue.length > 0) {
+          voiceSession = true;
+          heardLine.textContent = '';
+          // アンロック用の無音発話が終わる余地を少しだけ置いてから本編を再生する
+          setTimeout(function () { pumpSpeak(); }, 60);
+          return;
+        }
         startListening();
       });
       document.querySelectorAll('.tabs button').forEach(function (b) {
