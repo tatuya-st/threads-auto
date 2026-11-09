@@ -1,10 +1,10 @@
 {
- "at": "2026-11-09T17:49+09:00",
+ "at": "2026-11-09T20:29+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
   "followers_count": 1262,
-  "follows_count": 2319,
+  "follows_count": 2320,
   "media_count": 66
  },
  "posts": [
@@ -14,13 +14,13 @@
    "media_product_type": "REELS",
    "timestamp": "2026-11-08T21:28:14+0000",
    "permalink": "https://www.instagram.com/reel/DffuMYYzONR/",
-   "like_count": 18,
+   "like_count": 19,
    "comments_count": 0,
    "caption": "深夜百貨店、今夜も開店中🌙\n寝る前のスマホ時間に開く、小さな百貨店です。\n買う前に知りたい「実際のところ」を、数字で正直",
-   "reach": 45,
+   "reach": 50,
    "saved": 0,
    "shares": 0,
-   "views": 73
+   "views": 85
   },
   {
    "id": "18020768798740135",
@@ -28,13 +28,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-08T10:37:06+0000",
    "permalink": "https://www.instagram.com/p/DfejsTgj4ux/",
-   "like_count": 26,
+   "like_count": 28,
    "comments_count": 0,
    "caption": "俺には2人の部下がいます。\n\n左がレイ。何でも屋で、調べものから数字の管理、画像づくりまで、現場を回してくれます。\n右が",
-   "reach": 79,
+   "reach": 86,
    "saved": 0,
    "shares": 0,
-   "views": 134
+   "views": 143
   },
   {
    "id": "18347223604274267",
@@ -62,7 +62,7 @@
    "reach": 83,
    "saved": 0,
    "shares": 0,
-   "views": 196
+   "views": 198
   },
   {
    "id": "18122503441954075",
@@ -90,7 +90,7 @@
    "reach": 386,
    "saved": 1,
    "shares": 0,
-   "views": 904
+   "views": 905
   },
   {
    "id": "18645161404040801",
