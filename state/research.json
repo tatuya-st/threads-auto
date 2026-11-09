@@ -1,24 +1,6 @@
 {
- "at": "2026-11-09T07:35+09:00",
+ "at": "2026-11-09T12:25+09:00",
  "notes": [
-  {
-   "what": "自分の成績：仲間募集（ROOM内輪）の昼は2回続けてコメント0、一般の会話ネタの昼はコメント25",
-   "src": "state/insights.json",
-   "src2": "",
-   "done": "build_queue.py：NAKAMAから1つ外し、仲間募集の昼を4日に1回へ減らした"
-  },
-  {
-   "what": "site:threads.com の楽天ROOM（買ってよかった・冬）検索はThreadsの投稿が出ず、拾えるものなし",
-   "src": "",
-   "src2": "",
-   "done": "なし"
-  },
-  {
-   "what": "リベシティ記事（7/19）：ROOMは紹介文を結論から・1枚目の画像と最初の3行で興味を引く・良い商品をmyROOM上部に固定",
-   "src": "https://library.libecity.com/articles/01KXVY1VXC3AYMXW50TJ3GG4BA",
-   "src2": "",
-   "done": "1行目に全力・3行以内は取り入れ済み。myROOMの固定はROOM上の操作なので見送り（ルイはROOMを操作しない）"
-  },
   {
    "what": "海外③：米FTCが2026年に「広告表示とは別にAI関与の表示」を求めたという解説が多数（AIで作った証言は表示があっても欺瞞的という立場も）。ただしFTC公式の出どころは確認できず",
    "src": "https://beancount.io/blog/2026/07/13/ftc-ai-content-double-disclosure-rule-influencers-guide",
@@ -240,6 +222,24 @@
    "src": "https://www.caa.go.jp/policies/policy/representation/fair_labeling/stealth_marketing/",
    "src2": "https://www.caa.go.jp/policies/policy/representation/fair_labeling/assets/representation_cms201_260723_01.pdf",
    "done": "変更なし（【PR】を1行目の頭に置く今の処理で足りる）。official_turnを0（楽天アフィリエイト公式）に戻した"
+  },
+  {
+   "what": "自分の成績：11/8深夜『財布「もう寝なよ」』が約12時間で表示41で伸びず（書き出しが弱い）。11/8昼『ROOM何年目』は表示480・コメント21で平均並み。11/9朝『結露』はまだ3時間未満のデータで判定は次回",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "weakに記録・build_queue.pyのN15から2本外した"
+  },
+  {
+   "what": "(c)楽天アフィリエイト公式：SNSリンク別レポートキャンペーン（エントリー制・毎月募集。10月分は10/31締切で11/10頃にメール。11月分は別途案内）でSNSごとのクリック等が分かる。8/20にプレミアムパートナー制度は終了し、直近の売上実績で決まる『ステージ制度』へ（判定基準は未掲載）。料率・禁止事項の10〜11月の変更はなし",
+   "src": "https://affiliate.rakuten.co.jp/info/",
+   "src2": "",
+   "done": "公式で確認。to_rei.txtでレイに共有。11月分の募集が出たら次の公式確認で拾う"
+  },
+  {
+   "what": "海外②：Threadsのアフィは『価値のある投稿3本に宣伝1本』・リンクは1本・返信では先に相手の予算と用途を聞いてから提案・開示は多めに（記事の推奨値で外部データではない）",
+   "src": "https://www.outfy.com/blog/?p=13621",
+   "src2": "",
+   "done": "うちは1日4枠で商品1本＝3:1に合っているので変更なし。予算を聞く二択をTALKSに1つ足した（ボーナス前の前倒し）"
   }
  ],
  "hot_words": [
@@ -486,7 +486,20 @@
    "likes": 2,
    "replies": 1,
    "cause": "テーマが悪い（オーラルケアの面倒さは答えが広がりにくく、商品色も強い。リンク入りの夜の商品投稿は4本中3本が表示150前後以下）"
+  },
+  {
+   "id": "20261108-2344-late",
+   "topic": "深夜の物欲つぶやき（財布と私のかけ合い）",
+   "open": "財布「もう寝なよ」",
+   "shape": "セリフ2行のかけ合い（問いかけなし）",
+   "image": "なし",
+   "time": "00:30",
+   "views": 41,
+   "likes": 3,
+   "replies": 0,
+   "cause": "書き出しが弱い（1行目がセリフだけで何の話か見えず、短すぎて止まる理由がない。深夜の平均約310の3分の1未満）",
+   "fix": "N15から『財布「もう寝なよ」』と同じ話題の『寝る前の「あと1ページ」』を外した"
   }
  ],
- "official_turn": 0
+ "official_turn": 1
 }
