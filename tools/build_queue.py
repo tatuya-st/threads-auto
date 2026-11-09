@@ -1272,6 +1272,16 @@ def single(a, form, it):
     link = aff_link(it.get('url'))
     head = '\n'.join(x for x in ['【PR】' + body[0]] + body[1:2] + [f'👉 {nm}', pl, flash] if x)
     tail = (f"色・容量・今の価格は、この商品ページで見られます👇\n{link}" if link else f"今の価格とレビューは、楽天ROOMで見られます👇\n{ROOM_URL}")
+    if a.slot == 'night' and form == 'basic':
+        # 11/09 2人で決定（docs/rei.md 購買心理の型）：夜の商品投稿は5行型。結論／根拠3つ以内／総額・送料・納期・デメリット1つ／リンク＋1行目の頭に【PR】。
+        # 数字は商品データにあるものだけ。デメリットと納期は商品データの 'con'・'ship' に確かめた文があるときだけ書く（作らない）
+        why = []
+        if rv >= 30:
+            why.append(f"レビュー{it.get('reviews')}")
+        why += [f for f in facts if '送料無料' not in f and f not in why]
+        why = why[:3]
+        l3 = '／'.join(x for x in [pl, clip(str(it.get('ship') or ''), 24), ('気になる点：' + clip(str(it['con']), 30)) if it.get('con') else ''] if x)
+        head = '\n'.join(x for x in [f'【PR】結論：{t}で迷ったら、これ👉 {nm}', ('根拠：' + '／'.join(why)) if why else '', l3, flash] if x)
     text = clip(head, 490 - len(tail) - 1) + '\n' + tail
     # 返信（2通目）はリンクなしの会話用：つかみ＋推しの理由＋問いかけ
     # 11/05：返信の締めが「怒らないので教えてください」だけだと何を聞いているか分からないので、問いの形の締めにする。つかみが無い商品は hook を使う
