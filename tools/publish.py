@@ -710,6 +710,33 @@ def insights():
     print(f"::notice::数字を保存しました（投稿{len(out['posts'])}件・フォロワー{out['account'].get('followers_count')}）")
 
 
+def scan_comment(tok, mine, skip, todo, post_id, c, thread, depth):
+    """自分以外のコメント c に自分が返していなければ todo に入れる。
+    自分の返信にさらに返信が来た分も、会話の深さ6往復まで同じように拾う（11/10 追随の取りこぼし対策）。"""
+    F = 'id,text,username,timestamp,permalink,has_replies'
+    answered = False
+    if c.get('has_replies'):
+        try:
+            rr = call('GET', f"{API}/{c['id']}/replies", {'fields': F, 'access_token': tok})
+            answered = any(x.get('username') == mine for x in rr.get('data', []))
+            if depth < 6:
+                for x in rr.get('data', []):
+                    if x.get('username') != mine or not x.get('has_replies'):
+                        continue
+                    r3 = call('GET', f"{API}/{x['id']}/replies", {'fields': F, 'access_token': tok})
+                    for y in r3.get('data', []):
+                        if y.get('username') == mine:
+                            continue
+                        scan_comment(tok, mine, skip, todo, post_id, y, thread or (c.get('text') or '')[:80], depth + 1)
+        except Exception:
+            pass
+    if not answered and str(c['id']) not in skip:
+        item = {'id': c['id'], 'post': post_id, 'user': c.get('username'), 'text': c.get('text', ''), 'at': c.get('timestamp'), 'link': c.get('permalink')}
+        if thread:
+            item['thread'] = thread
+        todo.append(item)
+
+
 def comments():
     """直近7日の投稿に来たコメントのうち、まだ自分が返していないものを state/comments.json に保存する。"""
     tok, me = token()
@@ -737,30 +764,7 @@ def comments():
         for c in r.get('data', []):
             if c.get('username') == mine:
                 continue
-            answered = False
-            F = 'id,text,username,timestamp,permalink,has_replies'
-            if c.get('has_replies'):
-                try:
-                    rr = call('GET', f"{API}/{c['id']}/replies", {'fields': F, 'access_token': tok})
-                    answered = any(x.get('username') == mine for x in rr.get('data', []))
-                    # 返信の返信（こちらの返信にさらにコメントが来た分）も拾う
-                    for x in rr.get('data', []):
-                        if x.get('username') != mine or not x.get('has_replies'):
-                            continue
-                        r3 = call('GET', f"{API}/{x['id']}/replies", {'fields': F, 'access_token': tok})
-                        for y in r3.get('data', []):
-                            if y.get('username') == mine or str(y['id']) in skip:
-                                continue
-                            done = False
-                            if y.get('has_replies'):
-                                r4 = call('GET', f"{API}/{y['id']}/replies", {'fields': 'username', 'access_token': tok})
-                                done = any(z.get('username') == mine for z in r4.get('data', []))
-                            if not done:
-                                todo.append({'id': y['id'], 'post': rec['id'], 'user': y.get('username'), 'text': y.get('text', ''), 'at': y.get('timestamp'), 'link': y.get('permalink'), 'thread': (c.get('text') or '')[:80]})
-                except Exception:
-                    pass
-            if not answered and str(c['id']) not in skip:
-                todo.append({'id': c['id'], 'post': rec['id'], 'user': c.get('username'), 'text': c.get('text', ''), 'at': c.get('timestamp'), 'link': c.get('permalink')})
+            scan_comment(tok, mine, skip, todo, rec['id'], c, '', 0)
     if fails and not ok:
         print('::error::どの投稿のコメントも読めません（threads_read_replies の許可が入ったトークンが必要）')
         raise SystemExit(1)
