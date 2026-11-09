@@ -1,36 +1,6 @@
 {
- "at": "2026-11-09T12:25+09:00",
+ "at": "2026-11-09T19:35+09:00",
  "notes": [
-  {
-   "what": "海外③：米FTCが2026年に「広告表示とは別にAI関与の表示」を求めたという解説が多数（AIで作った証言は表示があっても欺瞞的という立場も）。ただしFTC公式の出どころは確認できず",
-   "src": "https://beancount.io/blog/2026/07/13/ftc-ai-content-double-disclosure-rule-influencers-guide",
-   "src2": "",
-   "done": "見送り（公式で確かめられず、米国の話。本人ルール「体験談・感想を作らない」で既に守れている）"
-  },
-  {
-   "what": "公式(f)楽天ROOM：ランク条件・お知らせの変更は検索で見当たらず（8/3のリベシティ記事にも変更の記載なし）",
-   "src": "https://library.libecity.com/articles/01KZ3XKQZ4AZQS82CXWESM9402",
-   "src2": "",
-   "done": "変更なし。official_turnを進めた"
-  },
-  {
-   "what": "自分の成績：11/5朝『顔洗い、お湯派？水派？』は表示66だがコメント8（反応率は高く、表示が伸びない）",
-   "src": "state/insights.json",
-   "src2": "",
-   "done": "weakに記録・TALKSから外した。あわせて一般の会話枠TALKSに残っていたROOM内輪の問いかけ2本を外した（昼の試し実行で選ばれたため）"
-  },
-  {
-   "what": "楽天イベント予想（11/2更新・非公式）：イーグルス感謝祭11/13〜15上限5000pt、ブラックフライデー11/20〜27、12月スーパーSALE12/3〜10、いずれもエントリー必要",
-   "src": "https://www.dm-s.co.jp/collect/rakuten-sale/",
-   "src2": "https://event.rakuten.co.jp/campaign/point-up/blackfriday/",
-   "done": "salesに12月スーパーSALE（予想）を追加。感謝祭・BFは公式未発表のため既存の予想のまま"
-  },
-  {
-   "what": "公式(f)楽天イベント：ブラックフライデーの公式ページは2025年版のまま（終了表示）、2026年の日程告知はまだ無し",
-   "src": "https://event.rakuten.co.jp/campaign/point-up/blackfriday/",
-   "src2": "",
-   "done": "official_turnを3へ。変化なし"
-  },
   {
    "what": "海外④：TikTok Shopで売れている暮らし・ガジェットは3in1ワイヤレス充電台・小型プロジェクター・覗き見防止フィルム・キャンドルウォーマー型ランプ（7/1更新、ブランド名なし・販売側の記事）",
    "src": "https://www.hypersku.com/v2/blog/tiktok-trending-products-2026/",
@@ -240,6 +210,36 @@
    "src": "https://www.outfy.com/blog/?p=13621",
    "src2": "",
    "done": "うちは1日4枠で商品1本＝3:1に合っているので変更なし。予算を聞く二択をTALKSに1つ足した（ボーナス前の前倒し）"
+  },
+  {
+   "what": "海外③：Metaは2026年3月の改定でAI生成・加工の開示義務を商業広告にも拡大（Meta製AIは自動ラベル、他社AIツールは手動で開示）。FB・IGでブランドを宣伝するクリエイター投稿（アフィ報酬含む）はPartnership Ads扱い。Threadsへの言及なし",
+   "src": "https://www.contentgrip.com/meta-branded-content-rules-update/",
+   "src2": "",
+   "done": "レイへ（IGリールでAI画像を使うときの開示）。こちらは広告を出していないのでコード変更なし"
+  },
+  {
+   "what": "(e)Threadsが伸びない原因：投稿直後に外部リンクへ誘導するコメントを付けるのは業者アカウントの特徴と見られる。評価はいいね数より返信の質・再訪で見る（2026/4/16）",
+   "src": "https://www.luft.co.jp/media/threads-is-unpopular/",
+   "src2": "",
+   "done": "今の形（売る投稿のリンクは本文1通目・返信にリンクを足さない）と一致するので変更なし"
+  },
+  {
+   "what": "(e)リベシティのThreads×アフィ記事は本文が会員限定",
+   "src": "https://library.libecity.com/articles/01KY5NEGYP3SQ71GY8MWWC7MX4",
+   "src2": "",
+   "done": "見送り（会員限定ページのため中には入らない）"
+  },
+  {
+   "what": "公式(f)楽天ROOM：公式のお知らせは検索で出ず、ネットショップ担当者フォーラムにも10〜11月のROOMの仕様変更・ランク条件の記事はなし（変化の確認なし）",
+   "src": "https://netshop.impress.co.jp/g/room",
+   "src2": "",
+   "done": "変更なし。official_turnを進めた"
+  },
+  {
+   "what": "自分の成績：11/9朝『結露』表示45・11/9昼『パソコン何年』表示105で伸びず（会話の平均の3分の1未満）。11/8昼『ROOM何年目』は表示496・コメント23で好調",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "weakに2件記録・TALKSから2つ外した"
   }
  ],
  "hot_words": [
@@ -499,7 +499,33 @@
    "replies": 0,
    "cause": "書き出しが弱い（1行目がセリフだけで何の話か見えず、短すぎて止まる理由がない。深夜の平均約310の3分の1未満）",
    "fix": "N15から『財布「もう寝なよ」』と同じ話題の『寝る前の「あと1ページ」』を外した"
+  },
+  {
+   "id": "20261109-0745-morning",
+   "topic": "結露対策",
+   "open": "朝の窓、そろそろ結露が出てきましたね🪟",
+   "shape": "季節のひと言＋二択（拭く派？見なかった派？）＋自分の答え",
+   "image": "なし",
+   "time": "08:44",
+   "views": 45,
+   "likes": 5,
+   "replies": 5,
+   "cause": "テーマが悪い（結露は住まいによって出ない人も多く、誰でも答えられる話題ではない）",
+   "fix": "TALKSから結露の問いかけを外した"
+  },
+  {
+   "id": "20261109-1243-noon",
+   "topic": "パソコン何年使ってる",
+   "open": "パソコン、何年使ってますか？",
+   "shape": "数字で答える問いかけ＋自分の答え（「みんなは？」なし）",
+   "image": "なし",
+   "time": "13:44",
+   "views": 105,
+   "likes": 3,
+   "replies": 3,
+   "cause": "テーマが悪い（10/26『スマホ何年』の焼き直しで新しさがない）",
+   "fix": "TALKSから外した"
   }
  ],
- "official_turn": 1
+ "official_turn": 2
 }
