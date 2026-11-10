@@ -435,6 +435,16 @@
           </div>
         </div>
         <div class="setting-block">
+          <span class="lbl" id="wakeLabel">呼びかけモード</span>
+          <div class="switch-row">
+            <div>
+              <div>呼びかけで会話を始める</div>
+              <p class="desc">ONにすると、アプリを開いている間「レイ」「ルイ」の呼びかけを聞き続け、呼ばれたら触らなくても返事をして聞き取りを始めます。自分の声の読み上げ中は聞き取りを止めます。</p>
+            </div>
+            <button class="switch" id="wakeSwitch" role="switch" aria-checked="false" aria-labelledby="wakeLabel"></button>
+          </div>
+        </div>
+        <div class="setting-block">
           <label for="keyInput">接続キー</label>
           <div class="key-row">
             <input type="password" id="keyInput" placeholder="接続キーを入力" autocomplete="off" />
@@ -444,7 +454,7 @@
           <button class="key-clear" id="keyClearBtn">接続キーを消す</button>
         </div>
         <p class="fine" id="syncInfo">返事の受信： 接続中…</p>
-        <p class="fine" id="versionLine">アプリの版：v15</p>
+        <p class="fine" id="versionLine">アプリの版：v16</p>
       </div>
     </section>
 
@@ -471,7 +481,7 @@
       var partner = 'rei';
       var orbState = 'idle'; // idle | listening | thinking | speaking
       var messages = [];     // {id, partner, sender, body, ts, pending}
-      var settings = { rate: 1.05, continuous: true, apiKey: '' };
+      var settings = { rate: 1.05, continuous: true, wakeMode: false, apiKey: '' };
       var feedSeen = {};     // フィードで既に見た id
       var feedReady = false; // 初回取得は履歴として取り込むだけ（読み上げない）
       var awaiting = false;  // 返事待ち
@@ -500,6 +510,7 @@
           if (s) {
             if (typeof s.rate === 'number') settings.rate = s.rate;
             if (typeof s.continuous === 'boolean') settings.continuous = s.continuous;
+            if (typeof s.wakeMode === 'boolean') settings.wakeMode = s.wakeMode;
             if (typeof s.apiKey === 'string') settings.apiKey = s.apiKey;
           }
         } catch (e) {}
@@ -1058,6 +1069,58 @@
         if (orbState === 'listening') setOrbState(awaiting ? 'waiting' : 'idle');
       }
 
+      /* ===== v16：呼びかけモード（アプリを開いている間、名前を呼ばれたら触らずに会話開始） ===== */
+      var wakeRec = null, wakeRunning = false, wakeBlocked = false;
+      function wakeShouldRun() {
+        return !!(settings.wakeMode && !wakeBlocked && SR && orbState === 'idle' && !speakingNow && !speakQueue.length && !recognition && document.visibilityState === 'visible');
+      }
+      function stopWake() {
+        if (wakeRec) { try { wakeRec.abort(); } catch (e) {} wakeRec = null; }
+        wakeRunning = false;
+      }
+      function startWake() {
+        if (wakeRunning || !wakeShouldRun()) return;
+        var rec;
+        try { rec = new SR(); } catch (e) { return; }
+        wakeRec = rec; wakeRunning = true;
+        rec.lang = 'ja-JP'; rec.interimResults = true; rec.continuous = true;
+        rec.onresult = function (ev) {
+          var text = '';
+          for (var i = 0; i < ev.results.length; i++) text += ev.results[i][0].transcript;
+          var who = null;
+          if (/ルイ|るい/.test(text)) who = 'rui';
+          else if (/レイ|れい/.test(text)) who = 'rei';
+          if (who) onWakeWord(who, text);
+        };
+        rec.onend = function () { if (wakeRec === rec) { wakeRec = null; wakeRunning = false; } };
+        rec.onerror = function (ev) {
+          if (wakeRec === rec) { wakeRec = null; wakeRunning = false; }
+          if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed') {
+            wakeBlocked = true;
+            toast('マイクの使用が許可されていないため、呼びかけモードを止めました');
+          }
+        };
+        try { rec.start(); } catch (e) { wakeRunning = false; wakeRec = null; }
+      }
+      function onWakeWord(who, text) {
+        stopWake();
+        setPartner(who);
+        playUiClip(who === 'rui' ? 'ui-yes-rui.mp3' : 'ui-yes-rei.mp3');
+        var rest = String(text || '');
+        var idx = Math.max(rest.lastIndexOf('ルイ'), rest.lastIndexOf('レイ'), rest.lastIndexOf('るい'), rest.lastIndexOf('れい'));
+        if (idx >= 0) rest = rest.slice(idx + 2);
+        rest = rest.replace(/^[、。，．・！!？?\sねえあのっと]+/, '').trim();
+        if (rest.length >= 2) {
+          setTimeout(function () { sendUserMessage(rest); }, 600);
+        } else {
+          setTimeout(function () { if (orbState === 'idle') startListening(); }, 900);
+        }
+      }
+      setInterval(function () {
+        if (wakeShouldRun() && !wakeRunning) startWake();
+        else if (!wakeShouldRun() && wakeRunning) stopWake();
+      }, 1500);
+
       /* ===== 送信（GitHubリレー：app_inbox.json へ追記） ===== */
       function addLocalMessage(msg) {
         messages.push(msg);
@@ -1241,6 +1304,7 @@
           b.setAttribute('aria-pressed', parseFloat(b.dataset.rate) === settings.rate ? 'true' : 'false');
         });
         el('continuousSwitch').setAttribute('aria-checked', settings.continuous ? 'true' : 'false');
+        el('wakeSwitch').setAttribute('aria-checked', settings.wakeMode ? 'true' : 'false');
       }
 
       /* ===== イベント ===== */
@@ -1322,6 +1386,12 @@
         saveSettings(); renderSettings();
         toast('連続会話を ' + (settings.continuous ? 'ON' : 'OFF') + ' にしました');
       });
+      el('wakeSwitch').addEventListener('click', function () {
+        settings.wakeMode = !settings.wakeMode;
+        if (settings.wakeMode) wakeBlocked = false;
+        saveSettings(); renderSettings();
+        toast('呼びかけモードを ' + (settings.wakeMode ? 'ON' : 'OFF') + ' にしました');
+      });
       el('keySaveBtn').addEventListener('click', function () {
         var v = el('keyInput').value.trim();
         if (!v) { toast('接続キーが入力されていません'); return; }
@@ -1356,7 +1426,7 @@
         fetch('https://tatuya-st.github.io/threads-auto/state/app_version.json?t=' + Date.now(), { cache: 'no-store' })
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (j) {
-            if (j && j.version && j.version !== 'v15') {
+            if (j && j.version && j.version !== 'v16') {
               el('versionLine').textContent = '新しい版（' + j.version + '）があります。アプリを完全に閉じて開き直してください';
               el('versionLine').style.color = '#ffd479';
             }
