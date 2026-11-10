@@ -75,7 +75,7 @@ def night_info(now, handed):
             line = ('ボツ・削除しました' if r.get('deleted') else '投稿しました') + (f'（{nm}）' if nm else '')
         else:
             line = 'マスターの確認待ち' + (f'（{nm}）' if nm else '')
-    return f"\n■ルイの今夜の商品投稿\n・{line}\n"
+    return f"\n■京の今夜の商品投稿\n・{line}\n"
 
 
 def room_info(now):
@@ -86,7 +86,7 @@ def room_info(now):
         except Exception:
             return d
     r = load('research.json', {})
-    out = ["\n■楽天ROOMの情報（ルイが自動で更新）",
+    out = ["\n■楽天ROOMの情報（京が自動で更新）",
            "・ROOM：https://room.rakuten.co.jp/room_a9a129c5a9/items",
            "・コレクション：https://room.rakuten.co.jp/room_a9a129c5a9/collections"]
     sales = []
@@ -108,7 +108,7 @@ def room_info(now):
     gone = lambda v: load(os.path.join('posted', (v.get('post') or '') + '.json'), {}).get('deleted')
     recent = sorted((v for v in sent.values() if isinstance(v, dict) and v.get('at') and not gone(v)), key=lambda v: v['at'], reverse=True)[:5]
     if recent:
-        out.append('・ルイがThreadsに出した商品（同じ商品は出さないでください）：' + ' ／ '.join(v['name'][:25] for v in recent))
+        out.append('・京がThreadsに出した商品（同じ商品は出さないでください）：' + ' ／ '.join(v['name'][:25] for v in recent))
     return '\n'.join(out) + '\n'
 
 
@@ -116,7 +116,7 @@ def write_status():
     """レイが書き込み前に見る今日の合図（https://tatuya-st.github.io/threads-auto/state/status.txt）"""
     now = datetime.now(JST)
     stop = limited_today()
-    who = 'ルイ' if now.day % 2 else 'レイ'
+    who = '京' if now.day % 2 else 'レイ'
     try:  # 11/03：ルイの商品投稿がボツになった日は、その日のリンクと夜の商品投稿をレイに渡す
         hand = json.load(open(os.path.join(ROOT, 'state', 'handover.json'), encoding='utf-8'))
     except Exception:
@@ -133,7 +133,7 @@ def write_status():
     except OSError:
         note = ''
     if note:
-        txt += f"\n■ルイからレイへの連絡\n{note}\n"
+        txt += f"\n■京から楓への連絡\n{note}\n"
     txt += night_info(now, today in hand)
     txt += room_info(now)
     open(STATUS_P, 'w', encoding='utf-8').write(txt)
