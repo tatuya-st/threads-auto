@@ -445,7 +445,7 @@
           <button class="key-clear" id="keyClearBtn">接続キーを消す</button>
         </div>
         <p class="fine" id="syncInfo">返事の受信： 接続中…</p>
-        <p class="fine" id="versionLine">アプリの版：v9</p>
+        <p class="fine" id="versionLine">アプリの版：v10</p>
       </div>
     </section>
 
@@ -1296,7 +1296,11 @@
         startListening();
       });
       document.querySelectorAll('.tabs button').forEach(function (b) {
-        b.addEventListener('click', function () { setPartner(b.dataset.tab); });
+        b.addEventListener('click', function () {
+          setPartner(b.dataset.tab);
+          /* v10：切り替えた相手の声で短く返事して、切り替わったことを声でも伝える */
+          if (audioUnlocked) playUiClip(b.dataset.tab === 'rui' ? 'ui-yes-rui.mp3' : 'ui-yes-rei.mp3');
+        });
       });
       el('openChatBtn').addEventListener('click', function () { openSheet('chat'); });
       el('openKeyboardBtn').addEventListener('click', function () { openSheet('chat'); setTimeout(function () { textInput.focus(); }, 350); });
@@ -1322,13 +1326,17 @@
       });
       stopSpeakBtn.addEventListener('click', stopSpeech);
       el('voiceTestBtn').addEventListener('click', function () {
-        // v5：タップの中で自然な声のテスト音声を直接再生する（失敗したら端末の読み上げで読む）
+        // v10：テスト音声は今選んでいる相手の声で再生する（ルイ選択中はルイの声）
         voiceSession = false;
         stopSpeech();
         audioUnlocked = true;
         speakingNow = true;
         setOrbState('speaking');
-        playAudioItem({ text: 'こんにちは、マスター。レイです。声のテストをしています。この声、どうですか？', who: 'rei', audio: 'test-voice.mp3' });
+        if (partner === 'rui') {
+          playAudioItem({ text: 'こんにちは、マスター。ルイです。声のテストをしています。この声、どうですか？', who: 'rui', audio: 'test-voice-rui.mp3' });
+        } else {
+          playAudioItem({ text: 'こんにちは、マスター。レイです。声のテストをしています。この声、どうですか？', who: 'rei', audio: 'test-voice.mp3' });
+        }
       });
       document.querySelectorAll('#rateGroup button').forEach(function (b) {
         b.addEventListener('click', function () {
@@ -1376,7 +1384,7 @@
         fetch('https://tatuya-st.github.io/threads-auto/state/app_version.json?t=' + Date.now(), { cache: 'no-store' })
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (j) {
-            if (j && j.version && j.version !== 'v9') {
+            if (j && j.version && j.version !== 'v10') {
               el('versionLine').textContent = '新しい版（' + j.version + '）があります。アプリを完全に閉じて開き直してください';
               el('versionLine').style.color = '#ffd479';
             }
