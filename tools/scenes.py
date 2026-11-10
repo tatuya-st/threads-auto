@@ -87,7 +87,7 @@ def ghost(d, x, y, s, mood='normal', hat=False):
 def season_chara(now=None):
     from datetime import datetime, timezone, timedelta
     now = now or datetime.now(timezone(timedelta(hours=9)))
-    return 'ghost' if (now.month == 10 and now.day >= 15) else 'saifu'
+    return 'ghost'  # 11/11 マスター指示：財布欠席くんは旧ROOMのものなので使わない
 
 
 CHARA = 'saifu'

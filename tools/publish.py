@@ -74,7 +74,7 @@ def night_info(now, handed):
             r = json.load(open(pp, encoding='utf-8'))
             line = ('ボツ・削除しました' if r.get('deleted') else '投稿しました') + (f'（{nm}）' if nm else '')
         else:
-            line = 'マスターの確認待ち' + (f'（{nm}）' if nm else '')
+            line = '楓の画像チェック待ち（合格なら queue の hold を消して push）' + (f'（{nm}）' if nm else '')
     return f"\n■京の今夜の商品投稿\n・{line}\n"
 
 
@@ -400,8 +400,8 @@ def publish():
         qid = os.path.splitext(os.path.basename(f))[0]
         if not os.path.exists(os.path.join(ROOT, 'state', 'posted', qid + '.json')):
             q_ = json.load(open(f, encoding='utf-8'))
-            if q_.get('hold'):  # マスターの画像待ち。届くまで出さない
-                print(f'{qid} はマスターの画像待ちなので出しません')
+            if q_.get('hold'):  # 相互チェック待ち・期限切れなど。hold が消えるまで出さない
+                print(f'{qid} は hold（{q_.get("hold")}）なので出しません')
                 continue
             todo.append((qid, q_))
     has_rep = any(not os.path.exists(os.path.join(ROOT, 'state', 'replied', os.path.basename(f)))

@@ -120,6 +120,7 @@ S_BODY, S_EDGE, S_FLAP, S_IN = '#a0632e', '#5b3415', '#8a5226', '#f4e6d3'
 
 
 def draw_saifu(im, variant='kesseki'):
+    return  # 11/11 マスター指示：財布欠席くんは旧ROOMのものなので使わない
     k = 4  # 4倍で描いて縮小（線をなめらかに）
     c = Image.new('RGBA', (SAIFU_W * k, SAIFU_H * k), (0, 0, 0, 0))
     d = ImageDraw.Draw(c)
@@ -231,7 +232,7 @@ def _scene_photo(q, it):
     base = os.path.join(HERE, '..', 'assets', 'scenes')
     sc = q.get('scene') or scenes.pick(it, q)
     name = sc if scenes.season_chara() == 'saifu' else 'ghost_' + sc
-    for n in (name, sc, 'cart'):
+    for n in (name,):  # 11/11 財布欠席くんの場面写真（sc・cart）は使わない
         f = os.path.join(base, str(n) + '.jpg')
         if os.path.exists(f):
             return Image.open(f).convert('RGB')
