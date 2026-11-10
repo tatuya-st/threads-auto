@@ -1,13 +1,6 @@
 {
- "at": "2026-11-10T20:26+09:00",
+ "at": "2026-11-11T00:30+09:00",
  "posts": {
-  "20261027-2346-late": {
-   "views": 555,
-   "likes": 1,
-   "replies": 0,
-   "reposts": 0,
-   "quotes": 0
-  },
   "20261028-0744-morning": {
    "views": 467,
    "likes": 9,
@@ -144,7 +137,7 @@
   "20261105-0745-morning": {
    "views": 433,
    "likes": 28,
-   "replies": 117,
+   "replies": 119,
    "reposts": 0,
    "quotes": 0
   },
@@ -184,49 +177,49 @@
    "quotes": 0
   },
   "20261108-1244-noon": {
-   "views": 515,
+   "views": 516,
    "likes": 21,
    "replies": 38,
    "reposts": 0,
    "quotes": 0
   },
   "20261108-2344-late": {
-   "views": 63,
+   "views": 64,
    "likes": 4,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261109-0745-morning": {
-   "views": 67,
+   "views": 68,
    "likes": 5,
-   "replies": 12,
+   "replies": 13,
    "reposts": 0,
    "quotes": 0
   },
   "20261109-1243-noon": {
-   "views": 189,
+   "views": 191,
    "likes": 4,
    "replies": 8,
    "reposts": 0,
    "quotes": 0
   },
   "20261109-2343-late": {
-   "views": 106,
+   "views": 109,
    "likes": 5,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261110-0744-morning": {
-   "views": 68,
+   "views": 71,
    "likes": 6,
    "replies": 2,
    "reposts": 0,
    "quotes": 0
   },
   "20261110-1244-noon": {
-   "views": 50,
+   "views": 53,
    "likes": 3,
    "replies": 0,
    "reposts": 0,
@@ -234,11 +227,11 @@
   }
  },
  "account": {
-  "views": 1025,
+  "views": 1065,
   "likes": 1,
-  "replies": 20,
+  "replies": 47,
   "reposts": 0,
-  "followers_count": 1047
+  "followers_count": 1044
  },
  "clicks": {
   "https://px.a8.net/svt/ejp?a8mat=4BESU6+10BGOI+1WP2+1HLNLE": 0,
