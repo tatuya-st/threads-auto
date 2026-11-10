@@ -445,7 +445,7 @@
           <button class="key-clear" id="keyClearBtn">接続キーを消す</button>
         </div>
         <p class="fine" id="syncInfo">返事の受信： 接続中…</p>
-        <p class="fine" id="versionLine">アプリの版：v10</p>
+        <p class="fine" id="versionLine">アプリの版：v11</p>
       </div>
     </section>
 
@@ -759,11 +759,42 @@
           if (p && p.catch) p.catch(function () {});
         } catch (e) {}
       }
+      /* v11：音声は Pages の反映を待たず、GitHub API から直接受け取る（キーが無い時だけ Pages） */
+      var FEED_API = 'https://api.github.com/repos/tatuya-st/threads-auto/contents/state/app_feed.json';
+      var AUDIO_API = 'https://api.github.com/repos/tatuya-st/threads-auto/contents/state/audio/';
+      var audioUrls = {};
+      function fetchAudioBlob(name) {
+        if (!settings.apiKey) return null;
+        return fetch(AUDIO_API + name, { headers: ghHeaders() }).then(function (res) {
+          if (!res.ok) throw new Error('audio api ' + res.status);
+          return res.json();
+        }).then(function (j) {
+          var bin = atob(String(j.content || '').replace(/\s/g, ''));
+          var bytes = new Uint8Array(bin.length);
+          for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+          var url = URL.createObjectURL(new Blob([bytes], { type: 'audio/mpeg' }));
+          audioUrls[name] = url;
+          return url;
+        }).catch(function () { return null; });
+      }
       function playAudioItem(item) {
+        if (audioUrls[item.audio]) { startAudioElement(item, audioUrls[item.audio], false); return; }
+        var pr = fetchAudioBlob(item.audio);
+        if (pr && pr.then) {
+          pr.then(function (u) {
+            if (!speakingNow) return;
+            if (u) startAudioElement(item, u, false);
+            else startAudioElement(item, AUDIO_BASE + item.audio, true);
+          });
+          return;
+        }
+        startAudioElement(item, AUDIO_BASE + item.audio, true);
+      }
+      function startAudioElement(item, src, useCors) {
         try {
           if (currentAudio) { try { currentAudio.pause(); } catch (e) {} }
-          var a = new Audio(AUDIO_BASE + item.audio);
-          a.crossOrigin = 'anonymous';
+          var a = new Audio(src);
+          if (useCors) a.crossOrigin = 'anonymous';
           currentAudio = a;
           hookVoiceAnalyser(a);
           clearTimeout(speakWatchdog);
@@ -786,86 +817,6 @@
           });
         } catch (e) { attemptSpeak(item, false); }
       }
-      /* ===== v9：オーブ・モーションエンジン（仕様 orb-motion-spec.md の実装） =====
-         毎フレーム、状態ごとの目標値へ補間（lerp）して寄せる。状態が切り替わっても
-         値はリセットしない＝動きがモーフする。発話中は再生中の音声そのものを解析して連動させる */
-      var engScale = 1, engGlow = 0.28, engBright = 0, rimUntil = 0, lastRippleAt = 0;
-      var voiceCtx = null, voiceAnalyser = null, voiceBuf = null, ttsLevel = 0;
-      var reducedMotion = false;
-      try { reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
-      function hookVoiceAnalyser(audioEl) {
-        voiceAnalyser = null;
-        try {
-          var AC = window.AudioContext || window.webkitAudioContext;
-          if (!AC) return;
-          if (!voiceCtx) voiceCtx = new AC();
-          if (voiceCtx.state !== 'running') return; /* 止まっている時は音が消える経路にしない */
-          var src = voiceCtx.createMediaElementSource(audioEl);
-          voiceAnalyser = voiceCtx.createAnalyser();
-          voiceAnalyser.fftSize = 512;
-          voiceAnalyser.smoothingTimeConstant = 0.8;
-          voiceBuf = new Uint8Array(voiceAnalyser.fftSize);
-          src.connect(voiceAnalyser);
-          voiceAnalyser.connect(voiceCtx.destination);
-        } catch (e) { voiceAnalyser = null; }
-      }
-      function readTtsLevel(now) {
-        if (voiceAnalyser && voiceBuf && currentAudio && !currentAudio.paused) {
-          try {
-            voiceAnalyser.getByteTimeDomainData(voiceBuf);
-            var sum = 0;
-            for (var i = 0; i < voiceBuf.length; i++) { var d = (voiceBuf[i] - 128) / 128; sum += d * d; }
-            var rms = Math.sqrt(sum / voiceBuf.length);
-            var target = Math.min(rms * 3.2, 1);
-            ttsLevel += (target - ttsLevel) * 0.3;
-            if (ttsLevel > 0.02) return ttsLevel;
-          } catch (e) {}
-        }
-        /* 解析できない環境では疑似エンベロープ（音節レート相当の脈動） */
-        var pseudo = 0.32 + 0.22 * Math.sin(now * 0.028) * Math.sin(now * 0.0043 + 1.7);
-        ttsLevel += ((pseudo < 0.08 ? 0.08 : pseudo) - ttsLevel) * 0.2;
-        return ttsLevel;
-      }
-      function spawnRipple() {
-        try {
-          var r = document.createElement('span');
-          r.className = 'ripple';
-          orbWrap.appendChild(r);
-          setTimeout(function () { if (r.parentNode) r.parentNode.removeChild(r); }, 950);
-        } catch (e) {}
-      }
-      function orbEngine(now) {
-        var amp = reducedMotion ? 0.5 : 1;
-        var breath = Math.sin(now * (Math.PI * 2 / 4000));
-        var sT = 1, gT = 0.28, bT = 0;
-        var x = Math.sin(now * (Math.PI * 2 / 9000)) * 6 * amp;
-        var y = Math.sin(now * (Math.PI * 2 / 7500) + 1.3) * 4 * amp;
-        if (orbState === 'idle' || orbState === 'waiting') {
-          sT = 1 + breath * 0.02 * amp; gT = 0.28 + breath * 0.07;
-        } else if (orbState === 'listening') {
-          sT = 1 + micLevel * 0.15 + breath * 0.005;
-          gT = 0.45 + micLevel * 0.3;
-          if (micLevel > 0.25 && now - lastRippleAt > 1200) { lastRippleAt = now; spawnRipple(); }
-        } else if (orbState === 'thinking') {
-          var pulse = Math.sin(now * (Math.PI * 2 / 1200));
-          sT = 0.93 + pulse * 0.01; gT = 0.3 + pulse * 0.08;
-        } else if (orbState === 'speaking') {
-          var env = readTtsLevel(now);
-          sT = 1 + env * 0.15; gT = 0.35 + env * 0.45; bT = env * 0.25;
-        }
-        engScale += (sT - engScale) * 0.18;
-        engGlow += (gT - engGlow) * 0.15;
-        engBright += (bT - engBright) * 0.2;
-        orbWrap.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + engScale.toFixed(3) + ')';
-        var glowEl = orbWrap.querySelector('.orb-glow');
-        if (glowEl) glowEl.style.opacity = engGlow.toFixed(3);
-        orbBtn.style.filter = engBright > 0.01 ? 'brightness(' + (1 + engBright).toFixed(3) + ')' : '';
-        var rim = now < rimUntil ? 0.9 : 0.25;
-        document.documentElement.style.setProperty('--rim-op', rim);
-        requestAnimationFrame(orbEngine);
-      }
-      requestAnimationFrame(orbEngine);
-
       function finishSpeaking() {
         clearTimeout(stallTimer); stallTimer = null;
         clearTimeout(speakWatchdog); speakWatchdog = null;
@@ -1180,10 +1131,27 @@
 
       /* ===== 受信（app_feed.json をポーリング） ===== */
       function pollFeed() {
+        /* v11：キーがあれば GitHub API から直接読む（Pagesの反映待ちをなくす） */
+        if (settings.apiKey) {
+          fetch(FEED_API, { headers: ghHeaders() }).then(function (res) {
+            if (!res.ok) throw new Error('feed api ' + res.status);
+            return res.json();
+          }).then(function (j) {
+            var data = { messages: [] };
+            try { data = JSON.parse(b64decode(j.content || '')); } catch (e) {}
+            handleFeedData(data);
+          }).catch(function () { pollFeedPages(); });
+          return;
+        }
+        pollFeedPages();
+      }
+      function pollFeedPages() {
         fetch(FEED_URL + '?t=' + Date.now(), { cache: 'no-store' }).then(function (res) {
           if (!res.ok) throw new Error('feed ' + res.status);
           return res.json();
-        }).then(function (data) {
+        }).then(function (data) { handleFeedData(data); }).catch(function () {});
+      }
+      function handleFeedData(data) {
           el('syncInfo').textContent = '返事の受信： ' + fmtTime(Date.now()) + ' に確認済み（数秒ごとに自動確認）';
           var arr = (data && Array.isArray(data.messages)) ? data.messages : [];
           var fresh = [];
@@ -1206,7 +1174,8 @@
               if (sheetOpen !== 'chat') unreadDot.classList.add('on');
               if (settings.continuous) {
                 fresh.forEach(function (m) {
-                  if (m.audio) { try { var pre = new Audio(); pre.preload = 'auto'; pre.src = AUDIO_BASE + m.audio; } catch (e) {} }
+                  if (m.audio && settings.apiKey) { fetchAudioBlob(m.audio); }
+                  else if (m.audio) { try { var pre = new Audio(); pre.preload = 'auto'; pre.src = AUDIO_BASE + m.audio; } catch (e) {} }
                   speak(m.body, m.sender, m.audio);
                 });
               } else if (orbState === 'thinking') {
@@ -1215,7 +1184,6 @@
             }
           }
           feedReady = true;
-        }).catch(function () { /* 取得失敗時は静かに次回再試行 */ });
       }
 
       /* ===== レイヤー開閉 ===== */
@@ -1384,7 +1352,7 @@
         fetch('https://tatuya-st.github.io/threads-auto/state/app_version.json?t=' + Date.now(), { cache: 'no-store' })
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (j) {
-            if (j && j.version && j.version !== 'v10') {
+            if (j && j.version && j.version !== 'v11') {
               el('versionLine').textContent = '新しい版（' + j.version + '）があります。アプリを完全に閉じて開き直してください';
               el('versionLine').style.color = '#ffd479';
             }
