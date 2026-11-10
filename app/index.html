@@ -458,7 +458,7 @@
           <button class="key-clear" id="keyClearBtn">接続キーを消す</button>
         </div>
         <p class="fine" id="syncInfo">返事の受信： 接続中…</p>
-        <p class="fine" id="versionLine">アプリの版：v6</p>
+        <p class="fine" id="versionLine">アプリの版：v7</p>
       </div>
     </section>
 
@@ -946,12 +946,11 @@
         recognition.continuous = false;
         var gotFinal = false;
         recognition.onresult = function (ev) {
-          var interim = '', finalText = '';
+          var finalText = '';
           for (var i = ev.resultIndex; i < ev.results.length; i++) {
             if (ev.results[i].isFinal) finalText += ev.results[i][0].transcript;
-            else interim += ev.results[i][0].transcript;
           }
-          heardLine.textContent = finalText || interim;
+          /* v7：文字起こしは画面に出さない（マスター指示）。認識結果は送信にだけ使う */
           if (finalText) {
             gotFinal = true;
             endListening();
@@ -1258,7 +1257,7 @@
         fetch('https://tatuya-st.github.io/threads-auto/state/app_version.json?t=' + Date.now(), { cache: 'no-store' })
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (j) {
-            if (j && j.version && j.version !== 'v6') {
+            if (j && j.version && j.version !== 'v7') {
               el('versionLine').textContent = '新しい版（' + j.version + '）があります。アプリを完全に閉じて開き直してください';
               el('versionLine').style.color = '#ffd479';
             }
