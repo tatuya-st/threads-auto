@@ -3002,11 +3002,11 @@
  },
  "2026-11-10": {
   "account": {
-   "views": 1649,
-   "likes": 23,
-   "replies": 164,
+   "views": 1808,
+   "likes": 38,
+   "replies": 225,
    "reposts": 0,
-   "followers_count": 1040
+   "followers_count": 1044
   },
   "posts": {
    "20261027-1545-noon": {
@@ -3124,14 +3124,14 @@
    "20261103-1244-noon": {
     "views": 288,
     "likes": 8,
-    "replies": 30,
+    "replies": 31,
     "reposts": 0,
     "quotes": 0
    },
    "20261103-2344-late": {
     "views": 96,
     "likes": 6,
-    "replies": 17,
+    "replies": 19,
     "reposts": 0,
     "quotes": 0
    },
@@ -3164,9 +3164,9 @@
     "quotes": 0
    },
    "20261105-0745-morning": {
-    "views": 431,
+    "views": 433,
     "likes": 28,
-    "replies": 102,
+    "replies": 106,
     "reposts": 0,
     "quotes": 0
    },
@@ -3194,7 +3194,7 @@
    "20261106-1244-noon": {
     "views": 919,
     "likes": 13,
-    "replies": 43,
+    "replies": 45,
     "reposts": 0,
     "quotes": 0
    },
@@ -3206,9 +3206,9 @@
     "quotes": 0
    },
    "20261108-1244-noon": {
-    "views": 507,
+    "views": 510,
     "likes": 21,
-    "replies": 32,
+    "replies": 34,
     "reposts": 0,
     "quotes": 0
    },
@@ -3220,30 +3220,37 @@
     "quotes": 0
    },
    "20261109-0745-morning": {
-    "views": 62,
+    "views": 63,
     "likes": 5,
-    "replies": 9,
+    "replies": 10,
     "reposts": 0,
     "quotes": 0
    },
    "20261109-1243-noon": {
-    "views": 179,
+    "views": 184,
     "likes": 4,
     "replies": 8,
     "reposts": 0,
     "quotes": 0
    },
    "20261109-2343-late": {
-    "views": 92,
-    "likes": 3,
+    "views": 99,
+    "likes": 4,
     "replies": 0,
     "reposts": 0,
     "quotes": 0
    },
    "20261110-0744-morning": {
-    "views": 45,
-    "likes": 5,
+    "views": 56,
+    "likes": 6,
     "replies": 2,
+    "reposts": 0,
+    "quotes": 0
+   },
+   "20261110-1244-noon": {
+    "views": 29,
+    "likes": 3,
+    "replies": 0,
     "reposts": 0,
     "quotes": 0
    }
