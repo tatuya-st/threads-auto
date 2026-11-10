@@ -116,6 +116,7 @@
       }
       /* 待機中：呼吸（周期4秒） */
       body[data-state="idle"] .orb-wrap { animation: breathe 4s ease-in-out infinite; }
+      body[data-state="waiting"] .orb-wrap { animation: breathe 4s ease-in-out infinite; }
       @keyframes breathe {
         0%, 100% { transform: scale(0.98); }
         50% { transform: scale(1.02); }
@@ -379,7 +380,7 @@
       <p class="plan-strip" id="planStrip">今日の作戦を読み込み中…</p>
       <button class="voice-test-btn" id="voiceTestBtn">声をテストする</button>
       <p class="hint">球体をタップで聞き取り開始・停止／読み上げ中のタップで割り込み停止</p>
-      <p class="hint" id="versionLine">アプリの版：v3</p>
+      <p class="hint" id="versionLine">アプリの版：v4</p>
     </main>
 
     <div class="scrim" id="scrim"></div>
@@ -570,6 +571,7 @@
         if (s === 'idle') label = who + 'が待機中';
         else if (s === 'listening') label = who + 'が聞き取り中…';
         else if (s === 'thinking') label = who + 'が考え中…';
+        else if (s === 'waiting') label = who + 'の返事を待っています';
         else if (s === 'speaking') label = who + 'がお話し中…';
         stateLabel.textContent = label;
         stopSpeakBtn.disabled = (s !== 'speaking');
@@ -656,6 +658,7 @@
       var speakQueue = [];
       var speakingNow = false;
       var stallTimer = null;
+      var speakWatchdog = null;
       var currentUtterance = null;
       function pickJaFemaleVoice() {
         var voices = [];
@@ -745,12 +748,12 @@
       }
       function finishSpeaking() {
         clearTimeout(stallTimer); stallTimer = null;
+        clearTimeout(speakWatchdog); speakWatchdog = null;
         currentUtterance = null;
         speakingNow = false;
         if (speakQueue.length && audioUnlocked) { pumpSpeak(); return; }
-        // 開始・終了・失敗のいずれでも「考え中／お話し中」で固まらないよう必ず戻す
-        if (orbState === 'speaking' || orbState === 'thinking') setOrbState(awaiting ? 'thinking' : 'idle');
-        if (!awaiting) setOrbState('idle');
+        // 開始・終了・失敗のいずれでも固まらないよう必ず戻す（返事待ちなら waiting、考え中には戻さない）
+        setOrbState(awaiting ? 'waiting' : 'idle');
         stopSpeakBtn.disabled = true;
         // 連続会話：読み終わったら続けて聞き取り（既存の動きを維持）
         if (settings.continuous && voiceSession && !awaiting) {
@@ -782,6 +785,13 @@
             finishSpeaking();
           }
         }, 2000);
+        /* v4：onend が来ない端末不具合でもお話し中で固まらないよう、長さに応じた上限で必ず終える */
+        clearTimeout(speakWatchdog);
+        speakWatchdog = setTimeout(function () {
+          if (!speakingNow) return;
+          try { speechSynthesis.cancel(); } catch (e) {}
+          finishSpeaking();
+        }, Math.min(60000, 9000 + String(item.text || '').length * 450));
         u.onstart = function () { started = true; clearTimeout(stallTimer); stallTimer = null; };
         u.onend = function () {
           clearTimeout(stallTimer); stallTimer = null;
@@ -838,10 +848,11 @@
         speakQueue = [];
         speakingNow = false;
         clearTimeout(stallTimer); stallTimer = null;
+        clearTimeout(speakWatchdog); speakWatchdog = null;
         currentUtterance = null;
         voiceSession = false;
         try { speechSynthesis.cancel(); } catch (e) {}
-        if (orbState === 'speaking') setOrbState(awaiting ? 'thinking' : 'idle');
+        if (orbState === 'speaking') setOrbState(awaiting ? 'waiting' : 'idle');
         stopSpeakBtn.disabled = true;
       }
 
@@ -940,7 +951,7 @@
       function endListening() {
         stopVolumeMeter();
         if (recognition) { try { recognition.stop(); } catch (e) {} recognition = null; }
-        if (orbState === 'listening') setOrbState(awaiting ? 'thinking' : 'idle');
+        if (orbState === 'listening') setOrbState(awaiting ? 'waiting' : 'idle');
       }
 
       /* ===== 送信（GitHubリレー：app_inbox.json へ追記） ===== */
@@ -955,15 +966,26 @@
         saveLog();
         renderMessages();
       }
+      var waitTimer = null;
       function setAwaiting(on) {
         awaiting = on;
         clearTimeout(thinkTimer);
+        clearTimeout(waitTimer);
         if (on) {
           if (orbState === 'idle' || orbState === 'listening') setOrbState('thinking');
+          /* v4：考え中は最大25秒まで。それを過ぎたら「返事を待っています」表示に切り替え、
+             固まって見えないようにする。返事の受信確認は裏で続く */
           thinkTimer = setTimeout(function () {
-            awaiting = false;
-            if (orbState === 'thinking') setOrbState('idle');
-          }, 120000);
+            if (!awaiting) return;
+            if (orbState === 'thinking') {
+              setOrbState('waiting');
+              heardLine.textContent = '返事は数分かかります。届き次第、読み上げます';
+            }
+            waitTimer = setTimeout(function () {
+              awaiting = false;
+              if (orbState === 'waiting' || orbState === 'thinking') setOrbState('idle');
+            }, 180000);
+          }, 25000);
         }
       }
       function sendUserMessage(text) {
@@ -1103,6 +1125,22 @@
           return;
         }
         if (orbState === 'listening') { unlockAudio(); voiceSession = false; endListening(); return; }
+        // v4：考え中・返事待ちのタップは「返事を今すぐ確認」として働く（固まったままにしない）
+        if (orbState === 'thinking' || orbState === 'waiting') {
+          unlockAudio();
+          pollFeed();
+          if (speakQueue.length > 0) {
+            voiceSession = true;
+            var f2 = speakQueue.shift();
+            audioUnlocked = true;
+            speakingNow = true;
+            setOrbState('speaking');
+            attemptSpeak(f2, false);
+          } else {
+            toast('返事を確認しています');
+          }
+          return;
+        }
         // 溜まっていた返事があれば、聞き取りではなく先に読み上げる。
         // v3：タップ処理の中で直接 speak() する（遅延や無音ダミーを挟まない）
         if (speakQueue.length > 0) {
@@ -1177,6 +1215,7 @@
         toast('接続キーを消しました');
       });
       document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') closeSheets(); });
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) pollFeed(); });
 
       /* ===== 初期化 ===== */
       loadSettings();
@@ -1189,6 +1228,17 @@
       setOrbState('idle');
       /* 声一覧を早めに読み込んでおく（タップ時に待たないため） */
       try { if ('speechSynthesis' in window) { speechSynthesis.getVoices(); } } catch (e) {}
+      /* v4：版の自己確認。サーバ側の版と違えば古いキャッシュで動いていると分かる */
+      try {
+        fetch('https://tatuya-st.github.io/threads-auto/state/app_version.json?t=' + Date.now(), { cache: 'no-store' })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (j) {
+            if (j && j.version && j.version !== 'v4') {
+              el('versionLine').textContent = '新しい版（' + j.version + '）があります。アプリを完全に閉じて開き直してください';
+              el('versionLine').style.color = '#ffd479';
+            }
+          }).catch(function () {});
+      } catch (e) {}
       pollFeed();
       setInterval(pollFeed, POLL_MS);
       setInterval(renderPlan, 60000);
