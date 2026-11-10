@@ -380,7 +380,7 @@
       <p class="plan-strip" id="planStrip">今日の作戦を読み込み中…</p>
       <button class="voice-test-btn" id="voiceTestBtn">声をテストする</button>
       <p class="hint">球体をタップで聞き取り開始・停止／読み上げ中のタップで割り込み停止</p>
-      <p class="hint" id="versionLine">アプリの版：v4</p>
+      <p class="hint" id="versionLine">アプリの版：v5</p>
     </main>
 
     <div class="scrim" id="scrim"></div>
@@ -740,16 +740,49 @@
         stateLabel.textContent = '球体を押すと声が出ます';
         heardLine.textContent = '返事が届いています。球体をタップすると読み上げます';
       }
-      function speak(text, who) {
-        if (!('speechSynthesis' in window)) return;
-        speakQueue.push({ text: text, who: who });
+      function speak(text, who, audio) {
+        speakQueue.push({ text: text, who: who, audio: audio || null });
         if (!audioUnlocked) { refreshLockedNotice(); return; }
         pumpSpeak();
+      }
+      /* v5：自然な声の音声ファイルを再生する（機械音声の読み上げは予備に回す） */
+      var AUDIO_BASE = 'https://tatuya-st.github.io/threads-auto/state/audio/';
+      var currentAudio = null;
+      function startSpeakItem(item) {
+        speakingNow = true;
+        setOrbState('speaking');
+        if (item.audio) { playAudioItem(item); } else { attemptSpeak(item, false); }
+      }
+      function playAudioItem(item) {
+        try {
+          if (currentAudio) { try { currentAudio.pause(); } catch (e) {} }
+          var a = new Audio(AUDIO_BASE + item.audio);
+          currentAudio = a;
+          clearTimeout(speakWatchdog);
+          speakWatchdog = setTimeout(function () {
+            if (!speakingNow) return;
+            try { a.pause(); } catch (e) {}
+            finishSpeaking();
+          }, 120000);
+          a.onended = function () { if (currentAudio === a) currentAudio = null; finishSpeaking(); };
+          a.onerror = function () {
+            if (currentAudio === a) currentAudio = null;
+            clearTimeout(speakWatchdog); speakWatchdog = null;
+            attemptSpeak(item, false);
+          };
+          var p = a.play();
+          if (p && p.catch) p.catch(function () {
+            if (currentAudio === a) currentAudio = null;
+            clearTimeout(speakWatchdog); speakWatchdog = null;
+            if (speakingNow) attemptSpeak(item, false);
+          });
+        } catch (e) { attemptSpeak(item, false); }
       }
       function finishSpeaking() {
         clearTimeout(stallTimer); stallTimer = null;
         clearTimeout(speakWatchdog); speakWatchdog = null;
         currentUtterance = null;
+        currentAudio = null;
         speakingNow = false;
         if (speakQueue.length && audioUnlocked) { pumpSpeak(); return; }
         // 開始・終了・失敗のいずれでも固まらないよう必ず戻す（返事待ちなら waiting、考え中には戻さない）
@@ -826,12 +859,9 @@
         if (speakingNow || !speakQueue.length) return;
         if (!audioUnlocked) { refreshLockedNotice(); return; }
         var item = speakQueue.shift();
-        speakingNow = true;
-        setOrbState('speaking');
-        /* v3：iOSはタップの流れを外れた非同期発話を無音で落とすことがあるため、
-           声一覧の到着を待たず、その場で直接発話する（声が未確定なら既定の声で読む） */
-        try { speechSynthesis.getVoices(); } catch (e) {}
-        attemptSpeak(item, false);
+        /* v5：音声ファイルがあればそれを再生、無ければ端末の読み上げで読む */
+        try { if ('speechSynthesis' in window) speechSynthesis.getVoices(); } catch (e) {}
+        startSpeakItem(item);
       }
       /* タップの中で直接読む（テストボタン・球体の溜まった返事の先頭用）。
          キューも非同期待ちも経由せず、そのタップ処理の中で speak() を呼ぶのが iOS 対策の要 */
@@ -850,6 +880,7 @@
         clearTimeout(stallTimer); stallTimer = null;
         clearTimeout(speakWatchdog); speakWatchdog = null;
         currentUtterance = null;
+        if (currentAudio) { try { currentAudio.pause(); } catch (e) {} currentAudio = null; }
         voiceSession = false;
         try { speechSynthesis.cancel(); } catch (e) {}
         if (orbState === 'speaking') setOrbState(awaiting ? 'waiting' : 'idle');
@@ -1054,7 +1085,7 @@
             feedSeen[fm.id] = true;
             var known = messages.some(function (m) { return m.id === fm.id; });
             if (!known && (fm.sender === 'rei' || fm.sender === 'rui')) {
-              fresh.push({ id: fm.id, partner: fm.partner || 'both', sender: fm.sender, body: String(fm.body || ''), ts: fm.ts || Date.now(), pending: false });
+              fresh.push({ id: fm.id, partner: fm.partner || 'both', sender: fm.sender, body: String(fm.body || ''), ts: fm.ts || Date.now(), pending: false, audio: fm.audio || null });
             }
           });
           if (fresh.length) {
@@ -1066,7 +1097,7 @@
               if (awaiting) setAwaiting(false);
               if (sheetOpen !== 'chat') unreadDot.classList.add('on');
               if (settings.continuous) {
-                fresh.forEach(function (m) { speak(m.body, m.sender); });
+                fresh.forEach(function (m) { speak(m.body, m.sender, m.audio); });
               } else if (orbState === 'thinking') {
                 setOrbState('idle');
               }
@@ -1133,9 +1164,7 @@
             voiceSession = true;
             var f2 = speakQueue.shift();
             audioUnlocked = true;
-            speakingNow = true;
-            setOrbState('speaking');
-            attemptSpeak(f2, false);
+            startSpeakItem(f2);
           } else {
             toast('返事を確認しています');
           }
@@ -1148,9 +1177,7 @@
           heardLine.textContent = '';
           var first = speakQueue.shift();
           audioUnlocked = true;
-          speakingNow = true;
-          setOrbState('speaking');
-          attemptSpeak(first, false);
+          startSpeakItem(first);
           return;
         }
         unlockAudio();
@@ -1183,9 +1210,13 @@
       });
       stopSpeakBtn.addEventListener('click', stopSpeech);
       el('voiceTestBtn').addEventListener('click', function () {
-        // v3：タップの中で直接テスト文を読む。聞こえれば読み上げ自体は生きている
+        // v5：タップの中で自然な声のテスト音声を直接再生する（失敗したら端末の読み上げで読む）
         voiceSession = false;
-        speakDirect('テストです。レイの声、聞こえていますか？', 'rei');
+        stopSpeech();
+        audioUnlocked = true;
+        speakingNow = true;
+        setOrbState('speaking');
+        playAudioItem({ text: 'こんにちは、マスター。レイです。声のテストをしています。この声、どうですか？', who: 'rei', audio: 'test-voice.mp3' });
       });
       document.querySelectorAll('#rateGroup button').forEach(function (b) {
         b.addEventListener('click', function () {
@@ -1233,7 +1264,7 @@
         fetch('https://tatuya-st.github.io/threads-auto/state/app_version.json?t=' + Date.now(), { cache: 'no-store' })
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (j) {
-            if (j && j.version && j.version !== 'v4') {
+            if (j && j.version && j.version !== 'v5') {
               el('versionLine').textContent = '新しい版（' + j.version + '）があります。アプリを完全に閉じて開き直してください';
               el('versionLine').style.color = '#ffd479';
             }
