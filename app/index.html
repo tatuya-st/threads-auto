@@ -458,7 +458,7 @@
           <button class="key-clear" id="keyClearBtn">接続キーを消す</button>
         </div>
         <p class="fine" id="syncInfo">返事の受信： 接続中…</p>
-        <p class="fine" id="versionLine">アプリの版：v7</p>
+        <p class="fine" id="versionLine">アプリの版：v8</p>
       </div>
     </section>
 
@@ -742,10 +742,36 @@
       /* v5：自然な声の音声ファイルを再生する（機械音声の読み上げは予備に回す） */
       var AUDIO_BASE = 'https://tatuya-st.github.io/threads-auto/state/audio/';
       var currentAudio = null;
+      var lastSpokenItem = null;
       function startSpeakItem(item) {
         speakingNow = true;
         setOrbState('speaking');
-        if (item.audio) { playAudioItem(item); } else { attemptSpeak(item, false); }
+        if (item.audio) { lastSpokenItem = item; playAudioItem(item); return; }
+        /* v8：音声ファイルが無い返事は機械音声で読まない。音声の到着を待ってから読む
+           （応答側が少し遅れて音声を付ける場合があるため、フィードを取り直して待つ） */
+        item.retryCount = (item.retryCount || 0) + 1;
+        if (item.retryCount <= 8) {
+          speakingNow = false;
+          speakQueue.unshift(item);
+          stateLabel.textContent = '声を準備しています';
+          setOrbState(awaiting ? 'waiting' : 'idle');
+          pollFeed();
+          setTimeout(function () { pumpSpeak(); }, 6000);
+          return;
+        }
+        /* 待ち切れない場合だけ最後の手段として端末読み上げ */
+        attemptSpeak(item, false);
+      }
+      /* v8：音声コマンドの確認クリップを再生する */
+      function playUiClip(name) {
+        try {
+          if (currentAudio) { try { currentAudio.pause(); } catch (e) {} }
+          var a = new Audio(AUDIO_BASE + name);
+          currentAudio = a;
+          a.onended = function () { if (currentAudio === a) currentAudio = null; };
+          var p = a.play();
+          if (p && p.catch) p.catch(function () {});
+        } catch (e) {}
       }
       function playAudioItem(item) {
         try {
@@ -925,6 +951,28 @@
         orbWrap.style.transform = '';
       }
 
+      /* v8：音声コマンド。短い発話で、相手の切り替え・停止・再生を声だけで行う */
+      function handleVoiceCommand(text) {
+        var t = String(text || '').replace(/\s/g, '');
+        if (t.length > 14) return false;
+        var cmd = null;
+        if (/^(止めて|とめて|ストップ|静かにして)$/.test(t)) cmd = 'stop';
+        else if (/もう一度/.test(t)) cmd = 'replay';
+        else if (/(ふたり|二人|両方)/.test(t) && /(代わ|かわ|切替|切り替|して|お願い)/.test(t)) cmd = 'both';
+        else if (/ルイ/.test(t) && /(代わ|かわ|切替|切り替|して|お願い)/.test(t)) cmd = 'rui';
+        else if (/レイ/.test(t) && /(代わ|かわ|切替|切り替|して|お願い)/.test(t)) cmd = 'rei';
+        if (!cmd) return false;
+        if (cmd === 'stop') { stopSpeech(); playUiClip(partner === 'rui' ? 'ui-yes-rui.mp3' : 'ui-yes-rei.mp3'); return true; }
+        if (cmd === 'replay') {
+          if (lastSpokenItem) { voiceSession = true; audioUnlocked = true; startSpeakItem(lastSpokenItem); }
+          return true;
+        }
+        setPartner(cmd === 'both' ? 'both' : cmd);
+        playUiClip(cmd === 'rui' ? 'ui-yes-rui.mp3' : 'ui-yes-rei.mp3');
+        toast(cmd === 'both' ? '2人に切り替えました' : (cmd === 'rui' ? 'ルイに切り替えました' : 'レイに切り替えました'));
+        return true;
+      }
+
       function startListening() {
         if (!SR) {
           toast('この端末では音声入力が使えません。キーボードから入力してください');
@@ -954,7 +1002,7 @@
           if (finalText) {
             gotFinal = true;
             endListening();
-            sendUserMessage(finalText.trim());
+            if (!handleVoiceCommand(finalText.trim())) sendUserMessage(finalText.trim());
           }
         };
         recognition.onend = function () {
@@ -1257,7 +1305,7 @@
         fetch('https://tatuya-st.github.io/threads-auto/state/app_version.json?t=' + Date.now(), { cache: 'no-store' })
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (j) {
-            if (j && j.version && j.version !== 'v7') {
+            if (j && j.version && j.version !== 'v8') {
               el('versionLine').textContent = '新しい版（' + j.version + '）があります。アプリを完全に閉じて開き直してください';
               el('versionLine').style.color = '#ffd479';
             }
