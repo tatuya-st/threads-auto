@@ -445,7 +445,7 @@
           <button class="key-clear" id="keyClearBtn">接続キーを消す</button>
         </div>
         <p class="fine" id="syncInfo">返事の受信： 接続中…</p>
-        <p class="fine" id="versionLine">アプリの版：v11</p>
+        <p class="fine" id="versionLine">アプリの版：v12</p>
       </div>
     </section>
 
@@ -1123,6 +1123,8 @@
           if (!res.ok) throw new Error('PUT ' + res.status);
           markDelivered(msg.id);
           setAwaiting(true);
+          /* v12：届いた瞬間に、宛先の声で「はい、マスター」と即時応答する（返事本体は本人が書いて届く） */
+          if (audioUnlocked && !speakingNow) playUiClip(msg.partner === 'rui' ? 'ui-yes-rui.mp3' : 'ui-yes-rei.mp3');
         }).catch(function () {
           toast('送信できませんでした。接続キーや通信状態を確認してください');
           if (orbState === 'thinking') setOrbState('idle');
@@ -1352,7 +1354,7 @@
         fetch('https://tatuya-st.github.io/threads-auto/state/app_version.json?t=' + Date.now(), { cache: 'no-store' })
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (j) {
-            if (j && j.version && j.version !== 'v11') {
+            if (j && j.version && j.version !== 'v12') {
               el('versionLine').textContent = '新しい版（' + j.version + '）があります。アプリを完全に閉じて開き直してください';
               el('versionLine').style.color = '#ffd479';
             }
