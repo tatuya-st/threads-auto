@@ -180,6 +180,11 @@
         min-height: 20px; word-break: break-word;
       }
       .hint { margin: 0; font-size: 12.5px; color: var(--muted); text-align: center; }
+      .voice-test-btn {
+        border: 1px solid var(--gold); color: var(--gold); background: rgba(16, 23, 54, 0.85);
+        border-radius: 999px; padding: 9px 20px; font-size: 14.5px; margin: 2px auto 0;
+      }
+      .voice-test-btn:active { opacity: 0.7; }
       .plan-strip {
         margin: 0; font-size: 13px; color: var(--ink);
         background: rgba(16, 23, 54, 0.85); border: 1px solid var(--line);
@@ -372,7 +377,9 @@
         <p class="heard" id="heardLine"></p>
       </div>
       <p class="plan-strip" id="planStrip">今日の作戦を読み込み中…</p>
+      <button class="voice-test-btn" id="voiceTestBtn">声をテストする</button>
       <p class="hint">球体をタップで聞き取り開始・停止／読み上げ中のタップで割り込み停止</p>
+      <p class="hint" id="versionLine">アプリの版：v3</p>
     </main>
 
     <div class="scrim" id="scrim"></div>
@@ -811,11 +818,21 @@
         var item = speakQueue.shift();
         speakingNow = true;
         setOrbState('speaking');
-        /* 3. 声の確定：getVoices() が空の間は voiceschanged を待ってから発話する */
-        ensureVoicesReady(function () {
-          if (!speakingNow) return;
-          attemptSpeak(item, false);
-        });
+        /* v3：iOSはタップの流れを外れた非同期発話を無音で落とすことがあるため、
+           声一覧の到着を待たず、その場で直接発話する（声が未確定なら既定の声で読む） */
+        try { speechSynthesis.getVoices(); } catch (e) {}
+        attemptSpeak(item, false);
+      }
+      /* タップの中で直接読む（テストボタン・球体の溜まった返事の先頭用）。
+         キューも非同期待ちも経由せず、そのタップ処理の中で speak() を呼ぶのが iOS 対策の要 */
+      function speakDirect(text, who) {
+        if (!('speechSynthesis' in window)) { stateLabel.textContent = 'この端末では読み上げが使えません'; return; }
+        try { speechSynthesis.cancel(); } catch (e) {}
+        speakQueue = [];
+        speakingNow = true;
+        setOrbState('speaking');
+        audioUnlocked = true;
+        attemptSpeak({ text: text, who: who || 'rei' }, false);
       }
       function stopSpeech() {
         speakQueue = [];
@@ -1086,17 +1103,19 @@
           return;
         }
         if (orbState === 'listening') { unlockAudio(); voiceSession = false; endListening(); return; }
-        // 初回タップ：このタップ処理の中で音声をアンロックする
-        var hadPending = (!audioUnlocked && speakQueue.length > 0);
-        unlockAudio();
-        // 未アンロック時に溜まっていた返事があれば、聞き取りではなく先に読み上げる
-        if (hadPending || speakQueue.length > 0) {
+        // 溜まっていた返事があれば、聞き取りではなく先に読み上げる。
+        // v3：タップ処理の中で直接 speak() する（遅延や無音ダミーを挟まない）
+        if (speakQueue.length > 0) {
           voiceSession = true;
           heardLine.textContent = '';
-          // アンロック用の無音発話が終わる余地を少しだけ置いてから本編を再生する
-          setTimeout(function () { pumpSpeak(); }, 60);
+          var first = speakQueue.shift();
+          audioUnlocked = true;
+          speakingNow = true;
+          setOrbState('speaking');
+          attemptSpeak(first, false);
           return;
         }
+        unlockAudio();
         startListening();
       });
       document.querySelectorAll('.tabs button').forEach(function (b) {
@@ -1125,6 +1144,11 @@
         textInput.style.height = Math.min(textInput.scrollHeight, 110) + 'px';
       });
       stopSpeakBtn.addEventListener('click', stopSpeech);
+      el('voiceTestBtn').addEventListener('click', function () {
+        // v3：タップの中で直接テスト文を読む。聞こえれば読み上げ自体は生きている
+        voiceSession = false;
+        speakDirect('テストです。レイの声、聞こえていますか？', 'rei');
+      });
       document.querySelectorAll('#rateGroup button').forEach(function (b) {
         b.addEventListener('click', function () {
           settings.rate = parseFloat(b.dataset.rate);
@@ -1163,6 +1187,8 @@
       setPartner('rei');
       renderMessages();
       setOrbState('idle');
+      /* 声一覧を早めに読み込んでおく（タップ時に待たないため） */
+      try { if ('speechSynthesis' in window) { speechSynthesis.getVoices(); } } catch (e) {}
       pollFeed();
       setInterval(pollFeed, POLL_MS);
       setInterval(renderPlan, 60000);
