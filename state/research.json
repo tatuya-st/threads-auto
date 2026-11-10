@@ -1,30 +1,6 @@
 {
- "at": "2026-11-10T12:35+09:00",
+ "at": "2026-11-10T19:30+09:00",
  "notes": [
-  {
-   "what": "海外①：Threadsはフォロー中の人の投稿を上位に出す方向（フォロー外への広がりは減り、フォロワーへの届きは増える）。ただし2024年11月の変更で新しい話ではない",
-   "src": "https://jang.com.pk/en/25734-threads-gets-major-overhaul-with-metas-game-changing-upgrade-news",
-   "src2": "https://techcrunch.com/2024/11/21/threads-adjusts-its-algorithm-to-show-you-more-content-from-accounts-you-follow",
-   "done": "仕組みの変更なし（フォロワーを育てる11/05方針と同じ向き。記録のみ）"
-  },
-  {
-   "what": "公式(f)消費者庁：10/20に株式会社giobai（アロマ商品）へ景品表示法の措置命令（優良誤認またはステマ告示）。SNS・アフィリエイトへの言及は本ページになし",
-   "src": "https://www.caa.go.jp/notice/entry/047830/",
-   "src2": "",
-   "done": "ルール変更なし（【PR】表記・効果をうたわない・体験談を作らないで守れている）。official_turnを0へ"
-  },
-  {
-   "what": "自分の成績：11/6朝『通勤中に見るのは天気派？ニュース派？』は約4時間で表示62・コメント6。11/5朝も同じ時間で66→最終335に伸びたため、伸びなかった投稿の判定は保留",
-   "src": "state/insights.json",
-   "src2": "",
-   "done": "weakには入れず。同じ天気・ニュースの話になるTALKSの通勤の問いかけを「片道何分スマホを見るか」に入れ替え（11/8のレイ向け呼び込みで焼き直しにならないように）"
-  },
-  {
-   "what": "11/5夜の商品投稿（スマホケース）はマスターの確認待ちで未投稿のまま。本文に『5と0のつく日は11/5 23:59まで』が残り、あとで出ると事実と違う",
-   "src": "queue/20261105-2045-night.json",
-   "src2": "",
-   "done": "queueの本文から期限の1行を削除（確認待ちはそのまま）"
-  },
   {
    "what": "海外②：Threadsは月間5億人（2026年6月・Meta発表）、1月26日の週から世界で広告開始、クリエイターボーナスは終了、有料パートナーシップのラベルは使える。リンク投稿の届き方の新しい話はなし",
    "src": "https://www.makeinfluence.com/en/academy/threads-as-an-influencer-marketing-channel-whats-actually-there-in-2026",
@@ -240,6 +216,30 @@
    "src": "https://about.instagram.com/ja-jp/threads",
    "src2": "",
    "done": "【PR】を頭に付ける今の処理（publish.py）と一致。変更なし。official_turnを進めた"
+  },
+  {
+   "what": "自分の成績：11/10昼『貯まったポイント、すぐ使う派？』が約4時間で表示44・コメント0で伸びず",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "weakに記録・TALKSから外した"
+  },
+  {
+   "what": "(d)富士フイルム instax mini Evo 2が2026/11/27国内発売（オープン価格・4.5型タッチ液晶・撮影前5秒動画）。海外の11月のガジェット8選にも入った",
+   "src": "https://www.fujifilm.com/jp/ja/news/list/14132",
+   "src2": "https://www.yankodesign.com/?p=657144",
+   "done": "TALKSに写真プリントの問いかけを1つ・hot_wordsに「インスタントカメラ」。売れ筋リサーチの起動は権限で止められ未実行（次回以降に再挑戦）"
+  },
+  {
+   "what": "海外①：Threadsの2026年9〜11月の新しい仕様変更は見つからず（トレンドタブは国ごとに順次・長文は認証済みのみ）",
+   "src": "https://www.lilachbullock.com/threads-app-news-2026-update/",
+   "src2": "",
+   "done": "変更なし"
+  },
+  {
+   "what": "公式(f)消費者庁：2026/6/29高光製薬に措置命令。依頼投稿の画像を切り出して自社LPや楽天の店舗ページに載せ「SNSでも大人気」と表示したのがステマ告示違反。PR表示は該当箇所の近く・転載時も残す",
+   "src": "https://www.commercepick.com/archives/96722",
+   "src2": "消費者庁PDF（representation_cms210_260629_01）は読み込み許可が得られず未確認",
+   "done": "【PR】を頭に付ける今の処理と一致・コード変更なし。ROOMの「Threadsで話題」バッジは根拠URLがある商品だけに付ける形を守る。レイへ1行。official_turnを0に戻した"
   }
  ],
  "hot_words": [
@@ -255,7 +255,8 @@
   "キャンドルウォーマー",
   "プロジェクター",
   "ワイヤレス充電",
-  "ワイヤレスイヤホン"
+  "ワイヤレスイヤホン",
+  "インスタントカメラ"
  ],
  "sales": [
   {
@@ -538,7 +539,20 @@
    "replies": 2,
    "cause": "テーマが悪い（散らかり場所は自由回答で答えにくく、大掃除の話題とも重なる）",
    "fix": "MORNING_TALKSから外した"
+  },
+  {
+   "id": "20261110-1244-noon",
+   "topic": "貯まったポイントの使い方",
+   "open": "貯まったポイント、すぐ使う派？貯めっぱなし派？",
+   "shape": "二択＋自分の答え＋「リプでこっそり」",
+   "image": "なし",
+   "time": "13:09",
+   "views": 44,
+   "likes": 3,
+   "replies": 0,
+   "cause": "テーマが悪い（お金・ポイントの話は人前で答えにくく、「こっそり」も答える気を下げる。昼の会話の平均の3分の1未満）",
+   "fix": "TALKSから外した"
   }
  ],
- "official_turn": 4
+ "official_turn": 0
 }
