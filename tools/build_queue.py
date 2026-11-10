@@ -634,7 +634,7 @@ TYPES = [
     (r'ヘッドホン|ヘッドフォン', 'ヘッドホン', 1), (r'スピーカー', 'スピーカー', 1), (r'マイク', 'ワイヤレスマイク', 1),
     (r'スマートウォッチ|WATCH|GPSウォッチ|vivoactive', 'スマートウォッチ', 1), (r'モバイルバッテリー', 'モバイルバッテリー', 1),
     (r'充電器', '充電器', 1), (r'ケーブル', '充電ケーブル', 1), (r'スマホケース|iFace|iPhone.{0,12}ケース', 'スマホケース', 1),
-    (r'食洗機|フィニッシュ', '食洗機用洗剤', 0), (r'食器用洗剤|食器洗', '食器用洗剤', 0), (r'柔軟剤', '柔軟剤', 0), (r'洗濯', '洗濯洗剤', 0), (r'洗剤', '洗剤', 0), (r'タブレット', 'タブレット', 1), (r'ミラーレス|一眼|カメラ', 'カメラ', 1), (r'プロジェクター', 'プロジェクター', 0),
+    (r'食洗機|フィニッシュ', '食洗機用洗剤', 0), (r'食器用洗剤|食器洗', '食器用洗剤', 0), (r'柔軟剤(?!入り)', '柔軟剤', 0), (r'洗濯', '洗濯洗剤', 0), (r'洗剤', '洗剤', 0), (r'タブレット', 'タブレット', 1), (r'ミラーレス|一眼|カメラ', 'カメラ', 1), (r'プロジェクター', 'プロジェクター', 0),
     (r'SIMフリー|スマホ|iPhone|Pixel', 'スマホ', 1), (r'加湿器', '加湿器', 0), (r'除湿機', '除湿機', 0),
     (r'空気清浄', '空気清浄機', 0), (r'ドライヤー', 'ドライヤー', 0), (r'電気毛布', '電気毛布', 0), (r'こたつ', 'こたつ', 0),
     (r'ヒーター|ストーブ', 'ヒーター', 0), (r'ケトル', '電気ケトル', 0), (r'炊飯器', '炊飯器', 0), (r'フライパン', 'フライパン', 0),
@@ -1176,6 +1176,10 @@ def price_compare(it):
     s = f'💰 {price}'
     m = re.search(r'[×xｘ](\d+)(本|個|袋|パック|箱|缶|ロール|枚入|セット)', it.get('name', ''))
     pm = re.fullmatch(r'([\d,]+)円', price)
+    if not m and re.search(r'詰め?替え?|つめかえ', it.get('name', '')):
+        # 11/10：「1580g×6」のように単位が無い詰め替えのまとめ買いは袋で数える
+        m = re.search(r'[×xｘ](\d+)()\s*$', it.get('name', ''))
+        m = m and re.match(r'(\d+)(袋)', m.group(1) + '袋')
     if m and pm and int(m.group(1)) > 1:
         s += f"（1{m.group(2).replace('枚入', 'パック').replace('セット', '組')}あたり約{round(int(pm.group(1).replace(',', '')) / int(m.group(1))):,}円）"
     allt = ' '.join(list(it.get('badges') or []) + list(it.get('points') or []))
@@ -1294,7 +1298,7 @@ def single(a, form, it):
         why = []
         if rv >= 30:
             why.append(f"レビュー{it.get('reviews')}")
-        why += [f for f in facts if '送料無料' not in f and f not in why]
+        why += [f for f in facts if '送料無料' not in f and f not in why and f not in nm]  # 11/10：商品名と同じ数字は根拠に繰り返さない
         why = why[:3]
         l3 = '／'.join(x for x in [pl, clip(str(it.get('ship') or ''), 24), ('気になる点：' + clip(str(it['con']), 30)) if it.get('con') else ''] if x)
         head = '\n'.join(x for x in [f'【PR】結論：{t}で迷ったら、これ👉 {nm}', ('根拠：' + '／'.join(why)) if why else '', l3, flash] if x)
