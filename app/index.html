@@ -445,7 +445,7 @@
           <button class="key-clear" id="keyClearBtn">接続キーを消す</button>
         </div>
         <p class="fine" id="syncInfo">返事の受信： 接続中…</p>
-        <p class="fine" id="versionLine">アプリの版：v13</p>
+        <p class="fine" id="versionLine">アプリの版：v14</p>
       </div>
     </section>
 
@@ -803,6 +803,9 @@
         stateLabel.textContent = '声を読み込めませんでした';
         finishSpeaking();
       }
+      /* v14：hookVoiceAnalyser は v9 で呼び出しだけが入って未定義だった（再生のたびに例外→機械音声／無音の原因）。
+         解析で再生経路を壊さないよう、ここでは何もしない。オーブの動きは疑似エンベロープで代替する */
+      function hookVoiceAnalyser(a) { /* no-op */ }
       function startAudioElement(item, src, useCors) {
         try {
           if (currentAudio) { try { currentAudio.pause(); } catch (e) {} }
@@ -1367,7 +1370,7 @@
         fetch('https://tatuya-st.github.io/threads-auto/state/app_version.json?t=' + Date.now(), { cache: 'no-store' })
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (j) {
-            if (j && j.version && j.version !== 'v13') {
+            if (j && j.version && j.version !== 'v14') {
               el('versionLine').textContent = '新しい版（' + j.version + '）があります。アプリを完全に閉じて開き直してください';
               el('versionLine').style.color = '#ffd479';
             }
