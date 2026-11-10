@@ -364,7 +364,6 @@
         <p class="state-label" id="stateLabel">レイが待機中</p>
         <p class="heard" id="heardLine"></p>
       </div>
-      <button class="voice-test-btn" id="voiceTestBtn">声をテストする</button>
     </main>
 
     <div class="scrim" id="scrim"></div>
@@ -445,7 +444,7 @@
           <button class="key-clear" id="keyClearBtn">接続キーを消す</button>
         </div>
         <p class="fine" id="syncInfo">返事の受信： 接続中…</p>
-        <p class="fine" id="versionLine">アプリの版：v14</p>
+        <p class="fine" id="versionLine">アプリの版：v15</p>
       </div>
     </section>
 
@@ -1311,19 +1310,6 @@
         textInput.style.height = Math.min(textInput.scrollHeight, 110) + 'px';
       });
       stopSpeakBtn.addEventListener('click', stopSpeech);
-      el('voiceTestBtn').addEventListener('click', function () {
-        // v10：テスト音声は今選んでいる相手の声で再生する（ルイ選択中はルイの声）
-        voiceSession = false;
-        stopSpeech();
-        audioUnlocked = true;
-        speakingNow = true;
-        setOrbState('speaking');
-        if (partner === 'rui') {
-          playAudioItem({ text: 'こんにちは、マスター。ルイです。声のテストをしています。この声、どうですか？', who: 'rui', audio: 'test-voice-rui.mp3' });
-        } else {
-          playAudioItem({ text: 'こんにちは、マスター。レイです。声のテストをしています。この声、どうですか？', who: 'rei', audio: 'test-voice.mp3' });
-        }
-      });
       document.querySelectorAll('#rateGroup button').forEach(function (b) {
         b.addEventListener('click', function () {
           settings.rate = parseFloat(b.dataset.rate);
@@ -1370,7 +1356,7 @@
         fetch('https://tatuya-st.github.io/threads-auto/state/app_version.json?t=' + Date.now(), { cache: 'no-store' })
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (j) {
-            if (j && j.version && j.version !== 'v14') {
+            if (j && j.version && j.version !== 'v15') {
               el('versionLine').textContent = '新しい版（' + j.version + '）があります。アプリを完全に閉じて開き直してください';
               el('versionLine').style.color = '#ffd479';
             }
