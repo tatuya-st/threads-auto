@@ -445,7 +445,7 @@
           <button class="key-clear" id="keyClearBtn">接続キーを消す</button>
         </div>
         <p class="fine" id="syncInfo">返事の受信： 接続中…</p>
-        <p class="fine" id="versionLine">アプリの版：v12</p>
+        <p class="fine" id="versionLine">アプリの版：v13</p>
       </div>
     </section>
 
@@ -736,7 +736,7 @@
         /* v8：音声ファイルが無い返事は機械音声で読まない。音声の到着を待ってから読む
            （応答側が少し遅れて音声を付ける場合があるため、フィードを取り直して待つ） */
         item.retryCount = (item.retryCount || 0) + 1;
-        if (item.retryCount <= 8) {
+        if (item.retryCount <= 20) {
           speakingNow = false;
           speakQueue.unshift(item);
           stateLabel.textContent = '声を準備しています';
@@ -745,8 +745,10 @@
           setTimeout(function () { pumpSpeak(); }, 6000);
           return;
         }
-        /* 待ち切れない場合だけ最後の手段として端末読み上げ */
-        attemptSpeak(item, false);
+        /* v13：待ち切れても機械音声では読まない。無音で次へ進む */
+        speakingNow = false;
+        stateLabel.textContent = '声の準備が間に合いませんでした';
+        finishSpeaking();
       }
       /* v8：音声コマンドの確認クリップを再生する */
       function playUiClip(name) {
@@ -790,6 +792,17 @@
         }
         startAudioElement(item, AUDIO_BASE + item.audio, true);
       }
+      /* v13：音声ファイルが読めない時は、もう一方の経路で1回だけ取り直す。
+         それでも駄目なら機械音声には絶対に逃がさず、無音で終える（マスター指示） */
+      function audioLoadFailed(item) {
+        if (!item.altTried) {
+          item.altTried = true;
+          var alt = item.audio ? (AUDIO_BASE + item.audio) : null;
+          if (alt) { startAudioElement(item, alt, true); return; }
+        }
+        stateLabel.textContent = '声を読み込めませんでした';
+        finishSpeaking();
+      }
       function startAudioElement(item, src, useCors) {
         try {
           if (currentAudio) { try { currentAudio.pause(); } catch (e) {} }
@@ -807,15 +820,15 @@
           a.onerror = function () {
             if (currentAudio === a) currentAudio = null;
             clearTimeout(speakWatchdog); speakWatchdog = null;
-            attemptSpeak(item, false);
+            audioLoadFailed(item);
           };
           var p = a.play();
           if (p && p.catch) p.catch(function () {
             if (currentAudio === a) currentAudio = null;
             clearTimeout(speakWatchdog); speakWatchdog = null;
-            if (speakingNow) attemptSpeak(item, false);
+            if (speakingNow) audioLoadFailed(item);
           });
-        } catch (e) { attemptSpeak(item, false); }
+        } catch (e) { audioLoadFailed(item); }
       }
       function finishSpeaking() {
         clearTimeout(stallTimer); stallTimer = null;
@@ -1354,7 +1367,7 @@
         fetch('https://tatuya-st.github.io/threads-auto/state/app_version.json?t=' + Date.now(), { cache: 'no-store' })
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (j) {
-            if (j && j.version && j.version !== 'v12') {
+            if (j && j.version && j.version !== 'v13') {
               el('versionLine').textContent = '新しい版（' + j.version + '）があります。アプリを完全に閉じて開き直してください';
               el('versionLine').style.color = '#ffd479';
             }
