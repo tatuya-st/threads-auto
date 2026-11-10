@@ -377,10 +377,7 @@
         <p class="state-label" id="stateLabel">レイが待機中</p>
         <p class="heard" id="heardLine"></p>
       </div>
-      <p class="plan-strip" id="planStrip">今日の作戦を読み込み中…</p>
       <button class="voice-test-btn" id="voiceTestBtn">声をテストする</button>
-      <p class="hint">球体をタップで聞き取り開始・停止／読み上げ中のタップで割り込み停止</p>
-      <p class="hint" id="versionLine">アプリの版：v5</p>
     </main>
 
     <div class="scrim" id="scrim"></div>
@@ -461,6 +458,7 @@
           <button class="key-clear" id="keyClearBtn">接続キーを消す</button>
         </div>
         <p class="fine" id="syncInfo">返事の受信： 接続中…</p>
+        <p class="fine" id="versionLine">アプリの版：v6</p>
       </div>
     </section>
 
@@ -600,10 +598,6 @@
         var diff = Math.round((target - start) / 86400000);
         el('planDays').textContent = diff > 0 ? 'あと' + diff + '日' : (diff === 0 ? '今日が期限日' : '期限から' + (-diff) + '日経過');
         el('planDuty').textContent = (now.getDate() % 2 === 1) ? 'ルイ' : 'レイ';
-        var daysText = diff > 0 ? 'あと' + diff + '日' : (diff === 0 ? '今日が期限日' : '期限から' + (-diff) + '日経過');
-        el('planStrip').innerHTML = (now.getMonth() + 1) + '月' + now.getDate() + '日（' + week + '）' +
-          '<span class="sep">｜</span>12月3日まで ' + daysText +
-          '<span class="sep">｜</span>リンク担当 ' + ((now.getDate() % 2 === 1) ? 'ルイ' : 'レイ');
       }
 
       /* ===== 会話の描画 ===== */
@@ -1264,7 +1258,7 @@
         fetch('https://tatuya-st.github.io/threads-auto/state/app_version.json?t=' + Date.now(), { cache: 'no-store' })
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (j) {
-            if (j && j.version && j.version !== 'v5') {
+            if (j && j.version && j.version !== 'v6') {
               el('versionLine').textContent = '新しい版（' + j.version + '）があります。アプリを完全に閉じて開き直してください';
               el('versionLine').style.color = '#ffd479';
             }
