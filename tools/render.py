@@ -232,7 +232,7 @@ def _scene_photo(q, it):
     base = os.path.join(HERE, '..', 'assets', 'scenes')
     sc = q.get('scene') or scenes.pick(it, q)
     name = sc if scenes.season_chara() == 'saifu' else 'ghost_' + sc
-    for n in (name,):  # 11/11 財布欠席くんの場面写真（sc・cart）は使わない
+    for n in ():  # 11/11 マスター指示：旧ROOMのキャラの場面写真（財布欠席くん・おばけ）は使わない
         f = os.path.join(base, str(n) + '.jpg')
         if os.path.exists(f):
             return Image.open(f).convert('RGB')

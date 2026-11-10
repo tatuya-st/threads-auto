@@ -128,9 +128,7 @@ def saifu(d, x, y, s, mood='normal'):
 
 def chara(d, x, y, s, mood='normal'):
     """季節の主役を描き、顔の位置のずれ（s単位）を返す。"""
-    if CHARA == 'ghost':
-        ghost(d, x, y, s, mood)
-        return 0.0
+    return 0.0  # 11/11 マスター指示：旧ROOMのキャラ（物欲おばけ・財布欠席くん）は描かない
     saifu(d, x, y, s, mood)
     return 0.65
 

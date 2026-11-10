@@ -1,24 +1,6 @@
 {
- "at": "2026-11-10T19:30+09:00",
+ "at": "2026-11-11T07:30+09:00",
  "notes": [
-  {
-   "what": "海外②：Threadsは月間5億人（2026年6月・Meta発表）、1月26日の週から世界で広告開始、クリエイターボーナスは終了、有料パートナーシップのラベルは使える。リンク投稿の届き方の新しい話はなし",
-   "src": "https://www.makeinfluence.com/en/academy/threads-as-an-influencer-marketing-channel-whats-actually-there-in-2026",
-   "src2": "",
-   "done": "仕組みの変更なし（【PR】表記で足りている。記録のみ）"
-  },
-  {
-   "what": "公式(f)楽天アフィリエイト：検索で11月の規約・料率・禁止事項の変更告知は見当たらず（出てきたのは楽天カードの11/11規約改定＝リボ手数料の日割り化で、アフィとは無関係）",
-   "src": "https://library.libecity.com/articles/01M58NTHT9DQXP08BGR2G3SP3G",
-   "src2": "",
-   "done": "変更なし。official_turnを1へ"
-  },
-  {
-   "what": "(c)A8の年末の高単価案件の動き：公開ページでは新しい情報が見つからず",
-   "src": "https://ecnomikata.com/pr/11490/",
-   "src2": "",
-   "done": "なし（2016年の記事のため不採用）"
-  },
   {
    "what": "自分の成績：11/6昼『イヤホン、今ので何代目？』は約4時間で表示502・コメント7（会話投稿でよく伸びた側）。11/6朝『天気派？ニュース派？』は表示92・コメント9で朝の平均の3分の1以上のため伸びなかった投稿には入れない",
    "src": "state/insights.json",
@@ -240,6 +222,24 @@
    "src": "https://www.commercepick.com/archives/96722",
    "src2": "消費者庁PDF（representation_cms210_260629_01）は読み込み許可が得られず未確認",
    "done": "【PR】を頭に付ける今の処理と一致・コード変更なし。ROOMの「Threadsで話題」バッジは根拠URLがある商品だけに付ける形を守る。レイへ1行。official_turnを0に戻した"
+  },
+  {
+   "what": "自分の成績：11/10夜の商品投稿は期限切れのholdで未公開、11/10深夜『財布欠席くんの目が遠くなる』はマスター指示（旧ROOM関連は全部削除）で削除を実行。新しい伸びなかった投稿の追加なし",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "delete.yml で 18360803368220516 を削除・build_queue.py から物欲会議（n11・書き出し・ツッコミ・供養の見出し）を外し、scenes.py/render.py で旧ROOMのキャラ（おばけ・財布欠席くん）の絵と写真を止めた"
+  },
+  {
+   "what": "(a)ROOMでフォロワーを集める人の形：色味・世界観をそろえる、コレクションはジャンル別、画像で分からない重さ・付属品・サイズを文で補う、高い物とプチプラを混ぜる（2023年4月の記事で新味は薄い）",
+   "src": "https://find-model.jp/insta-lab/rakuten-room-interior-influencer/",
+   "src2": "",
+   "done": "記録のみ（古い記事・投稿ノートの説明文で既に事実を書いているため変更なし）"
+  },
+  {
+   "what": "海外②・公式(f)楽天アフィリエイトのお知らせは、ページを開く許可が得られず今回は確かめられず（official_turnは据え置き）",
+   "src": "https://affiliate.rakuten.co.jp/info/",
+   "src2": "https://creatorshelp.automattic.com/2026/04/24/social-media-affiliate-marketing-creators/",
+   "done": "見送り（未確認のため次回に回す）"
   }
  ],
  "hot_words": [
