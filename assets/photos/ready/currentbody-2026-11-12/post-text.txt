@@ -1,5 +1,5 @@
-# CurrentBody 11/12 文面最終版（楓 2026-11-11 作成／2026-11-12 作り直しで更新／京の再検品待ち）
-# 素材：threads-1.jpg / threads-2.jpg / reel-currentbody-v2.mp4 / reel-cover.jpg（v2＝作り直し版。v1は旧版として同フォルダに残置）
+# CurrentBody 11/12 文面最終版（楓 2026-11-11 作成／2026-11-12 作り直し＋再検品の指摘4点修正で更新／京の再検品待ち）
+# 素材：threads-1.jpg / threads-2.jpg / reel-currentbody-v3.mp4 / reel-cover.jpg（v3＝再検品の指摘4点を修正した版。v1・v2は旧版として同フォルダに残置）
 
 ## Threads投稿（2026-11-12 20:45予定・夜の5行型・リンクは1通目）
 # 既定はB版（FANCBの否認条件が未確認のため、コード名は出さない。2026-11-12当日確認メモ参照）
