@@ -1,0 +1,25 @@
+{
+ "id": "20261111-2044-night",
+ "slot": "night",
+ "form": "basic",
+ "kind": "single",
+ "created": "2026-11-11T20:44+09:00",
+ "title": "今夜の1品",
+ "footer": "▶ 見るだけでもどうぞ。プロフィールのリンクから楽天ROOMへ",
+ "topic": "楽天ROOM",
+ "text": "【PR】結論：加湿器で迷ったら、これ👉 BRUNO 4.7L ハイブリッド加湿器 COMFORT MIST BOE153\n💰 13,200円\n色・容量・今の価格は、この商品ページで見られます👇\nhttps://hb.afl.rakuten.co.jp/ichiba/5922d1d2.3399bc73.5922d1d3.9a2e2310/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbruno-official%2F7761193%2F&link_type=hybrid_url",
+ "reply": "部屋になじむデザインの大容量加湿器を探す人に\n✅ 推しの理由：4.7Lでも上から給水\nみんなはどうしてる？",
+ "items": [
+  {
+   "itemcode": "bruno-official:10002226",
+   "name": "BRUNO 4.7L ハイブリッド加湿器 COMFORT MIST BOE153",
+   "hook": "部屋になじむデザインの大容量加湿器を探す人に",
+   "price": "13,200円",
+   "quip": "4.7Lでも上から給水",
+   "points": [
+    "4.7L"
+   ]
+  }
+ ],
+ "hold": "楓の画像チェック待ち（images/20261111-2044-night.png を見て合格なら hold を消して push）"
+}
