@@ -1,0 +1,36 @@
+name: インスタのトークン作成（許可コードから）
+on:
+  workflow_dispatch:
+    inputs:
+      code:
+        description: 許可コード
+        required: true
+      ig_secret:
+        description: インスタのアプリの鍵
+        required: true
+permissions:
+  contents: write
+concurrency:
+  group: threads-oauth
+  cancel-in-progress: false
+jobs:
+  oauth:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 隠す
+        run: |
+          echo "::add-mask::$(jq -r '.inputs.code' "$GITHUB_EVENT_PATH")"
+          echo "::add-mask::$(jq -r '.inputs.ig_secret' "$GITHUB_EVENT_PATH")"
+      - uses: actions/checkout@v4
+      - name: 作る
+        env:
+          CODE: ${{ inputs.code }}
+          IG_SECRET: ${{ inputs.ig_secret }}
+          THREADS_APP_SECRET: ${{ secrets.THREADS_APP_SECRET || secrets.KEY }}
+          TOKEN2: ${{ secrets.TOKEN }}
+        run: python3 tools/ig.py oauth
+      - name: 保存
+        run: |
+          git config user.name "threads-bot"; git config user.email "threads-bot@users.noreply.github.com"
+          git add state
+          git diff --cached --quiet || (git commit -qm "インスタのトークンを作成" && git pull -q --rebase && git push -q)
