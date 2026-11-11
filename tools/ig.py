@@ -171,8 +171,11 @@ def comments(tok):
             except SystemExit as e:
                 it['note'] = f'{now} {str(e)[:200]}'
             continue
-        hit = [m for m in media if (m.get('timestamp') or '') >= it.get('after', '2026-11-11')
-               and any(k in (m.get('caption') or '') for k in it['keywords'])]
+        if it.get('media_id'):
+            hit = [m for m in media if m.get('id') == it['media_id']] or [{'id': it['media_id']}]
+        else:
+            hit = [m for m in media if (m.get('timestamp') or '') >= it.get('after', '2026-11-11')
+                   and any(k in (m.get('caption') or '') for k in it['keywords'])]
         if len(hit) != 1:
             it['note'] = f'{now} 投稿が{len(hit)}件見つかり書き込まず（1件だけのときに書く）'
             continue
