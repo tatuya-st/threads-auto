@@ -44,6 +44,12 @@ def main():
         q['photo2'] = rel2
     if rest:
         q['photo_line'] = rest[0]
+    # 11/12 マスター指示：画像には必ずキャッチコピーを入れる。無ければ入れずに止める
+    it0 = q['items'][0] if q.get('items') else {}
+    if not (q.get('photo_line') or it0.get('hook')):
+        sys.exit('キャッチコピーがありません。apply_photo.py の最後にひと言（キャッチコピー）を渡してください')
+    if q.get('photo2') and not (it0.get('quip') or it0.get('points')):
+        sys.exit('2枚目のキャッチコピー（quip か points）がありません')
     json.dump(q, open(qp, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import render

@@ -248,6 +248,7 @@ def second(q):
     alt = it.get('quip') or (pts[0] if pts else None)
     if alt:
         it['hook'] = alt
+    q2.pop('photo_line', None)  # 2枚目は推しポイントのひと言をキャッチコピーにする
     return q2
 
 
@@ -302,7 +303,8 @@ def render_scene(q, out):
     # 下：短い一言（1〜2行）→ 価格 → 小さく商品名 → 案内
     y = (PHH + 70) if PHH < H else (H - 380)
     fh = font('display', 62)
-    hook = it.get('hook') or q.get('title') or it['name']
+    # キャッチコピー（11/12 マスター指示：画像には必ずキャッチコピーを入れる）
+    hook = q.get('photo_line') or it.get('hook') or q.get('title') or it['name']
     hl = wrap(d, hook, fh, W - 150, 2)
     if len(hl) == 2:
         fh = font('display', 54); hl = wrap(d, hook, fh, W - 150, 2)
