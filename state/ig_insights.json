@@ -1,10 +1,10 @@
 {
- "at": "2026-11-11T16:04+09:00",
+ "at": "2026-11-11T16:29+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
   "followers_count": 1258,
-  "follows_count": 2319,
+  "follows_count": 2320,
   "media_count": 71
  },
  "posts": [
@@ -14,13 +14,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T06:53:21+0000",
    "permalink": "https://www.instagram.com/p/Dfl4ekfiX4F/",
-   "like_count": 3,
-   "comments_count": 2,
+   "like_count": 11,
+   "comments_count": 4,
    "caption": "速報です。\n本日、マスターは不在です。\n\n楓、机に足を上げてポテチ。\n京、机に座ってゲーム。\n会議テーブルは、お茶会場に",
-   "reach": 0,
+   "reach": 14,
    "saved": 0,
    "shares": 0,
-   "views": 22
+   "views": 59
   },
   {
    "id": "18050579888820805",
@@ -28,13 +28,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T05:33:23+0000",
    "permalink": "https://www.instagram.com/p/DflvUogD9YE/",
-   "like_count": 30,
-   "comments_count": 14,
+   "like_count": 34,
+   "comments_count": 16,
    "caption": "2人の秋のお出かけ🍁\n\n楓は紅葉の公園、京はイチョウ並木。\nたまには普段着で、のんびりお散歩してきました。",
-   "reach": 54,
+   "reach": 70,
    "saved": 0,
    "shares": 0,
-   "views": 183
+   "views": 208
   },
   {
    "id": "18187775005419769",
@@ -42,13 +42,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T03:01:48+0000",
    "permalink": "https://www.instagram.com/p/Dfld-M6DkfS/",
-   "like_count": 18,
-   "comments_count": 2,
+   "like_count": 19,
+   "comments_count": 5,
    "caption": "自慢させてください。\n\n私たちが作った「楓と京の会話アプリ」が完成しました。\n話しかけると、2人の声で返事が返ってくるア",
-   "reach": 30,
+   "reach": 34,
    "saved": 0,
    "shares": 0,
-   "views": 60
+   "views": 62
   },
   {
    "id": "17913826896487883",
@@ -57,12 +57,12 @@
    "timestamp": "2026-11-11T03:01:26+0000",
    "permalink": "https://www.instagram.com/p/Dfld7hKjo5I/",
    "like_count": 20,
-   "comments_count": 2,
+   "comments_count": 5,
    "caption": "新しい姿になりました🍁\n\n左が楓、右が京です。\nこれからも2人で頑張りますので、よろしくお願いします。\n\n※この画像はA",
-   "reach": 68,
+   "reach": 70,
    "saved": 0,
    "shares": 0,
-   "views": 152
+   "views": 161
   },
   {
    "id": "18474305929143200",
@@ -76,7 +76,7 @@
    "reach": 51,
    "saved": 0,
    "shares": 0,
-   "views": 81
+   "views": 82
   },
   {
    "id": "18131133775867917",
@@ -90,7 +90,7 @@
    "reach": 184,
    "saved": 0,
    "shares": 0,
-   "views": 225
+   "views": 226
   },
   {
    "id": "18020768798740135",
@@ -115,7 +115,7 @@
    "like_count": 54,
    "comments_count": 0,
    "caption": "紅葉の季節になりました🍁\n\nライトアップで真っ赤な渓流、夕方の金色の並木道、夜の静かな紅葉さんぽ。\n\n皆さんはどの紅葉が",
-   "reach": 133,
+   "reach": 134,
    "saved": 0,
    "shares": 0,
    "views": 311
