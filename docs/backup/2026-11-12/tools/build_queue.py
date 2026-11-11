@@ -1,0 +1,1413 @@
+#!/usr/bin/env python3
+"""投稿ノートのデータから、Threads のまとめ投稿（3件・画像つき）を1本作って queue/ に置く。
+
+使い方:
+  python3 tools/build_queue.py --html <投稿ノートの保存HTML> --posts <posts を保存したフォルダ> --repo <このリポジトリ> --slot morning|noon|night|late [--form 形]
+
+- ROOM に投稿済み（posts）の商品から選ぶ。Threads に一度出した商品（state/sent.json）は二度と選ばない。
+- 投稿ノートの「まとめてThreadsへ」と同じ考え方：ROOMで反応が確かめられた商品 → 1万円以下のガジェット・家電 → 1万円以下 → 3万円以下 → それ以外。
+- 何も選べないときは何も作らず「なし」と出力する。
+"""
+import argparse, glob, json, os, re, sys, time, unicodedata
+from datetime import datetime, timezone, timedelta
+
+JST = timezone(timedelta(hours=9))
+ROOM_URL = 'https://room.rakuten.co.jp/room_a9a129c5a9/items'
+AFF_ID = '5922d1d2.3399bc73.5922d1d3.9a2e2310'  # 11/04 マスターの楽天アフィリエイトID（商品ページに直接飛ぶリンク用）
+
+
+def aff_link(url):
+    """楽天市場の商品URLを、マスターのアフィリエイトリンクにする（見た人がそのまま商品ページに行ける）"""
+    import urllib.parse as _u
+    if not url or 'item.rakuten.co.jp' not in url:
+        return ''
+    return f"https://hb.afl.rakuten.co.jp/ichiba/{AFF_ID}/?pc={_u.quote(url, safe='')}&link_type=hybrid_url"
+ROOM_COLS_URL = 'https://room.rakuten.co.jp/room_a9a129c5a9/collections'
+LOOKBACK_DAYS = 14
+PER_POST = 3
+
+THEMES = {
+    'apple': dict(re=re.compile(r'iPhone|Apple|MagSafe|Lightning|AirPods|アイフォン|アップル', re.I), name_only=False,
+        title=['「残り5%」の恐怖、撲滅', 'ケーブル「あと10cm」問題', '純正は高い。でも妥協しない'],
+        open=lambda n: [f'充電ケーブル、なぜか毎回「あと10cm」足りない問題。\niPhone民のための{n}選🔌', f'iPhoneの「残り5%」表示、\n見るたびに心拍数も上がる説。\n対策グッズ{n}つ👇', f'Apple製品は好き。\n純正の値段は…ちょっと考えたい。\nそんな人向けの{n}選🍎', f'ベッドで寝ながらスマホ、\n首だけ別の生き物になってました。\niPhoneまわり{n}選🔌'],
+        ask=['充電、いつも何%で焦り始めますか？👇', 'ケーブル、家に何本あるか数えたことあります？👇', 'iPhoneまわりで一番困ってること、リプで教えてください👇']),
+    'winter': dict(re=re.compile(r'ヒーター|毛布|暖房|こたつ|ストーブ|加湿|あったか|防寒|ブランケット|湯たんぽ|ひざ掛け|ひざかけ|ぬくぬく'), name_only=False,
+        title=['布団から出る勇気、補助します', '脱衣所の修行、もうやめます', '「寒っ」禁止令、発令'],
+        open=lambda n: [f'朝の脱衣所、もはや修行🥶\n冬支度{n}選です', f'布団から出るのに、毎朝3回の決意が必要な季節になりました。\n冬支度{n}つ👇', f'暖房のスイッチを押すか、まだ我慢するか。\n毎年この時期の小さな戦いに、{n}つの援軍を🔥', f'「寒っ」が口ぐせになる前に。\n冬支度{n}選です🧣'],
+        ask=['家の中で一番寒い場所、どこですか？👇', '暖房、もうつけました？まだ我慢派？👇', '冬の朝、布団から出るまで何分かかります？👇']),
+    'refill': dict(re=re.compile(r'詰め替え|つめかえ|詰替|レフィル|ストック|まとめ買い|\d+個入|\d+個組|[×x]\s*\d+(?![\d.]|\s*(?:cm|mm|ｃｍ|センチ))|\d+ロール|\d+袋|\d+(?:\.\d+)?kg'), name_only=True,
+        title=['詰め替え地獄からの脱出', '「あっ、もう無い」撲滅', '床を汚さない詰め替え生活'],
+        open=lambda n: [f'詰め替えるたびに床が大惨事の人、手を挙げて🙋‍♂️\n私です。\n\n今日はストック系{n}選', f'「あっ、もう無い」って言う回数、\n年間で数えたら怖いので数えてません。\nストック候補{n}つ👇', f'ボトルを逆さにして振る儀式、そろそろ卒業したい。\n詰め替え・ストック{n}選', f'玄関に重い荷物が届く幸せ（運ぶのは配達の方）。\nストック{n}選です📦'],
+        ask=['あなたの家で一番早く無くなるもの、なんですか？👇', '詰め替え、こぼさない派？こぼす派？👇', '買い忘れて一番困ったもの、リプで教えてください😂']),
+    'tabi': dict(re=re.compile(r'御朱印|お守り|ナザール|神社|ラーメン|旅行|トラベル|ネックピロー|夜行バス'), name_only=False,
+        title=['物欲と神頼みの両立', '弾丸旅の装備会議', '神頼み、準備は万全'],
+        open=lambda n: [f'物欲と神頼みで生きてる男の\n今日の{n}選です⛩️', f'休みの日は弾丸で神社巡り。\n荷物は少なく、ご利益は多めに。\n旅の相棒{n}つ👇', f'お守りは増える一方、\nラーメンの替え玉も増える一方。\nそんな男の{n}選です🍜', f'御朱印帳が埋まるたび、\n次の旅先を考え始める病です。\n今日の{n}選⛩️'],
+        ask=['最近行った神社やおすすめのラーメン、リプで教えてください👇', 'お守り、何個持ってます？👇', '旅先でつい買っちゃう物、なんですか？😂']),
+    'base': dict(re=None, name_only=False,
+        title=['財布「やめて」私「見るだけ」', '物欲、フル充電完了', 'ポチる前の作戦会議', 'カート反復横跳びの成果'],
+        open=lambda n: [f'財布「やめて」\n私「見るだけだから」\n\n…という言い訳つきの{n}選です👇', f'ランキングを見すぎて、楽天ポイントが夢に出てきた男の{n}選です', f'物欲のみなさん、お疲れさまです。\n本日の議題は{n}件。異議なしで可決されそうです🫡', f'「何も買わない日」を作ろうとした結果、\n気になるものが{n}つ増えました🔍', f'カートに入れては消す反復横跳び、今日も元気にやってます。\n本日の候補{n}つ👇', f'寝る前の楽天パトロール、本日の成果{n}件です🌙', f'「今月は節約する」と言ってから、今日で3週間。\n言うだけなら無料なので、今日も言います。\n本日の{n}選👇', f'楽天のお気に入り、そろそろ倉庫が必要な量になってきました。\nその中から厳選{n}件です📦'],
+        ask=['あなたなら何番？番号だけのリプでも喜びます👇', '「うちもそれ困ってる」って人はリプで教えてください😂', 'この中で一番気になるの、何番ですか？👇', 'カートに入れたまま一番長く寝かせてる物、なんですか？😂', '「これは買ってよかった」ってもの、ひとつだけ教えてください👇']),
+}
+NOON_OPEN = lambda n: [f'お昼休みのみなさん、おつかれさまです。\nごはんのお供に、気になる物{n}件です🍙', f'昼休み、スマホ片手に楽天パトロールした成果{n}件です🥪', f'午後もがんばるためのご褒美候補{n}つ。\n買うのは仕事が終わってからでOK☕']
+MORNING_OPEN = lambda n: [f'通勤中のみなさん、おはようございます。\n今日の気になる物、{n}件です🫡', f'朝の満員電車で見る用の{n}選です🚃\n買うかどうかは帰ってから決めてOK', f'おはようございます。\n寝ぼけたまま楽天パトロールした成果{n}件です☕']
+LINK_LINES = ['詳細はプロフィールのリンクから🔍', '保存しておくと、あとで探さずに済みます📌\n詳細はプロフィールのリンクから', '迷ったらカートで一晩寝かせるのがおすすめ💤\n詳細はプロフィールのリンクから', '見るだけでも大歓迎👀 プロフィールのリンクから楽天ROOMへ']
+FOOTERS = ['▶ 財布と相談のうえ、プロフィールのリンクから', '▶ 見るだけでもどうぞ。プロフィールのリンクから楽天ROOMへ', '▶ レビューも見てから決めてね（プロフィールのリンクから）', '▶ 気になった番号はリプで教えてね（詳細はプロフのリンク）']
+AXES = {
+    'jitan': dict(label='時短', kw=re.compile(r'時短|自動|タイマー|上から給水|置くだけ|工事不要|急速|ワンタッチ|ボタン|洗える|すぐ|まとめて|一度に|手軽'), title=['時短で選ぶ3つ', '家事も充電も、時短したい人へ'], open='今日は「時短」目線で{n}つ。'),
+    'cospa': dict(label='コスパ', kw=re.compile(r'送料無料|セット|\d個|個入|×\s*\d|大容量|まとめ買い|ポイント\d+倍|\d+円以下|ポッキリ|訳あり|\d+ロール|\d+袋'), title=['コスパで選ぶ3つ', '財布と相談済みの3つ'], open='今日は「コスパ」目線で{n}つ。'),
+    'look': dict(label='見た目', kw=re.compile(r'色|カラー|デザイン|ガラス|木目|ウォールナット|ホワイト|ブラック|マット|インテリア|陶器|鉢|薄型|スリム|モコモコ'), title=['見た目で選ぶ3つ', '置くだけで部屋が整う3つ'], open='今日は「見た目」目線で{n}つ。'),
+    'trust': dict(label='口コミ', kw=re.compile(r'レビュー|公式|正規|1位|人気|いいね'), title=['口コミで選ぶ3つ', 'レビューが背中を押す3つ'], open='今日は「口コミ」目線で{n}つ。'),
+}
+STRONG_GIDS = {'senen', 'refill', 'cosme', 'plant', 'x-skin', 'x-kitchen'}
+STRONG_RE = re.compile(r'iFace|スマホケース|iPhone.{0,6}ケース|充電器|モバイルバッテリー|ケーブル|ポッキリ|tower|山崎実業|詰め替え|つめかえ|詰替|観葉|ガジュマル|サボテン|多肉|美容液|化粧水|乳液|エマルジョン|スイーツ|焼き菓子|ロールケーキ|チロリアン')
+NUM = ['1️⃣', '2️⃣', '3️⃣', '4️⃣']
+
+
+def norm(s):
+    s = unicodedata.normalize('NFKC', str(s or '')).lower()
+    return re.sub(r'[\s\W_]+', '', s)
+
+
+def price_num(p):
+    m = re.search(r'[\d,]+', str(p or ''))
+    return int(m.group().replace(',', '')) if m else 0
+
+
+def h31(s):
+    x = 0
+    for ch in str(s):
+        x = (x * 31 + ord(ch)) & 0xffffffff
+    return x
+
+
+def pick(arr, seed):
+    return arr[seed % len(arr)]
+
+
+def recent_texts(repo, days=3):
+    # 直近の投稿（朝・昼・夜）の本文。書き出し・問いかけ・締めの文が続けて同じにならないように使う
+    since = (datetime.now(JST) - timedelta(days=days - 1)).strftime('%Y%m%d')
+    out = ''
+    for f in glob.glob(os.path.join(repo, 'queue', '*.json')):
+        if os.path.basename(f)[:8] >= since:
+            try:
+                out += json.load(open(f, encoding='utf-8')).get('text', '') + '\n'
+            except Exception:
+                pass
+    return out
+
+
+def pick_fresh(arr, seed, recent, keys=()):
+    # 直近3日に出た文（1行目で判定）と、同じ話題の言葉を含む文を避けて選ぶ。全部かぶるときは元のまま
+    ok = [s for s in arr if s.split('\n')[0] not in recent and not any(k in s and k in recent for k in keys)]
+    return pick(ok or arr, seed)
+
+
+def load_room(html_path):
+    html = open(html_path, encoding='utf-8').read()
+    m = re.search(r'<script id="room-data" type="application/json">(.*?)</script>', html, re.S)
+    return json.loads(m.group(1)) if m else {'genres': []}
+
+
+def load_posts(d):
+    out = []
+    for f in glob.glob(os.path.join(d, '**', '*.json'), recursive=True):
+        try:
+            j = json.load(open(f, encoding='utf-8'))
+        except Exception:
+            continue
+        r = j.get('data', j)
+        if isinstance(r, dict) and r.get('itemcode'):
+            out.append(r)
+    return out
+
+
+def cat_of(it, gid):
+    c, tag = it.get('collection', ''), it.get('genreTag', '')
+    if re.search(r'スキンケア・コスメ|ヘアケア・美容家電', c) or re.search(r'コスメ|スキンケア|メイク|ヘアケア|美容|保湿', tag) or gid == 'cosme':
+        return 'beauty'
+    if 'ガジェット' in c or re.search(r'ガジェット|スマホ|オーディオ|PC周辺|カメラ', tag) or gid in ('gadget', 'mini'):
+        return 'gadget'
+    if 'キッチン・生活家電' in c or re.search(r'家電|乾燥|加湿|暖房|暑さ', tag) or gid == 'kaden':
+        return 'kaden'
+    return 'life'
+
+
+def theme_of(items):
+    best, bn = 'base', 0
+    for k in ('tabi', 'apple', 'winter', 'refill'):
+        T = THEMES[k]
+        n = sum(1 for it in items if T['re'].search(it['name'] if T['name_only'] else ' '.join([it['name'], it.get('hook', '')] + it.get('points', []))))
+        if n > bn:
+            best, bn = k, n
+    # 1件だけ当てはまってもテーマにしない（例：イヤホン＋バームクーヘン×3 で「ストック」になるのを防ぐ）
+    return best if bn >= 2 else 'base'
+
+
+def axis_pt(ax, it):
+    if ax == 'trust':
+        if it.get('voice'):
+            return it['voice']
+        p = next((x for x in it.get('points', []) if AXES['trust']['kw'].search(x)), '')
+        rv = price_num(it.get('reviews'))
+        return p or (f"ROOMでいいね{it['likes']}件" if (it.get('likes') or 0) >= 30 else f"レビュー{it.get('reviews')}の定番" if rv >= 100 else '')
+    return next((p for p in it.get('points', []) if AXES[ax]['kw'].search(p) and not re.search(r'送料\d', p)), '')
+
+
+def th_col(it):
+    n = ' '.join([it['name'], it.get('genreTag', '')] + it.get('tags', []))
+    if re.search(r'iPhone|Apple|MagSafe|AirPods|Lightning|iPad|Apple ?Watch|AirTag', n, re.I):
+        return 'apple'
+    if re.search(r'暖房|ヒーター|ストーブ|毛布|電気敷|こたつ|カイロ|加湿|発熱|防寒|あったか|ブランケット', n):
+        return 'winter'
+    if it.get('_gid') == 'refill' or re.search(r'詰め替え|つめかえ|リフィル|まとめ買い', n):
+        return 'refill'
+    return ''
+
+
+def clip(s, n):
+    return s if len(s) <= n else s[:n - 1] + '…'
+
+
+# 昼は商品を出さない「会話」投稿（宣伝が続くと見てもらえなくなるため）。テーマは日替わり、同じ文は二度使わない
+# 11/5：ROOM内輪の問いかけ（ROOMやってる方〜）はTALKSから外した。仲間募集は4日に1回のNAKAMAだけで出す（11/2・11/4の昼がコメント0）
+TALKS = [
+    # 11/05 レイのA8案件（スマホの資産運用アプリ）に向けて、通勤中にスマホでお金・アプリを調べる20〜40代を集める問いかけ。
+    # 投資・利益・おすすめの話はしない（勧誘に見せない）。答えやすい日常のスマホ・お金まわりの話だけ
+    '通勤中、スマホを見てる時間って片道何分くらいですか？\n私は乗ってから降りるまで、ほぼずっと見てます🚃\nみんなは？',  # 11/06：朝の「天気派？ニュース派？」と同じ話になるため入れ替え
+    '家計簿アプリ、続いてる派？3日で止まる派？\n私は「つけ忘れた日」から開かなくなる派です📱\nみんなは？',
+    # 11/10昼『貯まったポイント、すぐ使う派？』は約4時間で表示44（お金・ポイントの話は人前で答えにくい）→ 使用済みにつき外した
+    'お金まわりのアプリ（銀行・ポイント・家計簿など）、ホーム画面の何ページ目に置いてますか？\n私は1ページ目に置かないと存在を忘れます📱',
+    'スマホの充電、何%から焦り始めますか？\n私は40%で「そろそろか…」ってなります🔋',
+    'ケーブル、使ったら戻す派？その辺に置く派？\n私は置いた場所を毎回忘れる派です🔌\nみんなは？',
+    '電車の中、スマホ派？窓の外派？\n私は気づくと結局スマホしか見てません📱\nみんなは？',
+    '暖房、もう入れた派？まだ我慢派？\n私はまだ我慢してます🔥\nみんなは？',
+    '詰め替え、こぼさずできる派？毎回ちょっとこぼす派？\n私は毎回ちょっとだけこぼします🧴\nみんなは？',
+    '買い忘れて一番困るのは、トイレットペーパー派？洗剤派？\n私はトイレットペーパーで何度も焦りました🧻\nみんなは？',
+    'イヤホン、片方だけ行方不明になったことある派？ない派？\n私は何度もあります🎧\nみんなは？',
+    'iPhoneの充電、寝る前に挿す派？朝あわてて挿す派？\n私は朝あわてる派です📱\nみんなは？',
+    '神社に行ったら、御朱印派？お守り派？\n私はお守り派で、気づけば増える一方です⛩️\nみんなは？',
+    'お守り、気づいたら増える一方です。\n何個持ってるか、正直に教えてください😂',
+    '旅先のごはん、ラーメン派？ご当地グルメ派？\n私は結局ラーメンに吸い込まれます🍜\nみんなは？',
+    'お買い物マラソン、何店舗まで回る派ですか？\n毎回「今回は控えめに」と言ってる気がします',
+    '布団から出るまでの時間、冬になると倍になりません？\nみなさん何分かかってます？⏰',
+    # 11/5昼『加湿器のお手入れ、何日に1回？』は4時間で表示31・コメント0（できていない人が答えにくい家事の義務ネタ）→ 外した
+    'ガジェットのレビュー、星5から読む派？星1から読む派？\n私は星1から読む派です🔍\nみんなは？',
+    'スマホ、何年使ってますか？\n私は電池が持たなくなるまで粘る派です📱',
+    '静電気、対策してる派？毎回くらう派？\n私はドアノブと毎日戦ってます⚡\nみんなは？',
+    '送料がかかると、買うのやめる派？気にせず買う派？\n私は送料無料まで何か足す派です📦\nみんなは？',
+    '朝のコーヒー派？お茶派？\nちなみに私はその日の気分です☕',
+    '寝る前のスマホ、やめなきゃと思いながら今日も見てます🌙\n同じ人いますか？',
+    'スマホのホーム画面、アプリは何ページ目までありますか？\n私は3ページ目から先は、ほぼ開かずの間です📱\nみんなは？',
+    # 11/9：昼『パソコン、何年使ってますか？』は約4時間で表示105（10/26『スマホ何年』の焼き直しで伸びず）→ 使用済みにつき外した
+    'イヤホン、今ので何代目ですか？\n私は数えるのが怖くて途中でやめました🎧',
+    # 11/6昼『イヤホン、今ので何代目？』が約4時間で表示502・コメント7 → 話題を変えて同じ「今ので何代目？＋自分の答え」の形
+    'パソコンのマウス、今ので何代目ですか？\n私はクリックが効かなくなるまで使い倒す派です🖱\nみんなは？',
+    'スマホの写真、今何枚入ってますか？\n私は消すのが面倒で増える一方です📸',
+    '充電器、家に何個ありますか？\n数えたら「なんでこんなに」ってなりました🔌',
+    # 10/27 他の人の投稿から：「安い・すぐ使える・場面が浮かぶ」が売れるという声 → 選び方を聞く二択に
+    '通販で買うとき、決め手は値段？レビュー？\n私は「使う場面が浮かぶか」で最後に決めてます🔍\nみんなは？',
+    '1000円以下のガジェット、買ってよかった物ありますか？\n私はケーブルをまとめるだけの小物が地味に当たりでした🔌\nみんなの当たりは？',
+    'セールの日、カートに入れてから買うまで何日寝かせます？\n私は最長で2週間寝かせたことがあります💤\nみんなは？',
+    # 11/1昼「楽天のお気に入り何個？」は6時間で表示110・反応0（10/28深夜のお気に入りネタと4日しかあいていない）→ 外した
+    # 10/28：5と0のつく日の前日に使える、答えやすい二択（日付だけで答えられる）
+    '5と0のつく日、買うのは日付が変わってすぐ派？夜まで迷う派？\n私は夜まで迷って、結局ギリギリ派です🕛\nみんなは？',    # 11/1：セールで買った物をまとめて「みんな何買った？」と聞く投稿にコメントが集まる → マラソン前に1店舗目を聞く（数字・一言で答えられる）
+    'お買い物マラソン、1店舗目は日用品派？欲しい物派？\n私は結局、日用品から始めます🛒\nみんなは？',    # 11/3昼『スマホの充電、何%から焦る？』がコメント19 → 話題を変えて同じ「何個・何%で答える＋自分の答え」の形
+    'ブラウザのタブ、何個たまったら閉じますか？\n私は画面がタブで埋まってから、やっと閉じ始めます💻\nみんなは？',
+    # 11/08 マスター指示『引き寄せの法則をモノにしろ』：引き寄せはThreadsで人が集まる話題。ただし「願えば叶う」は研究で支持されず
+    # （前向きな空想だけだと行動のエネルギーが下がる：Kappes & Oettingen 2011）、効くのは「欲しいものを具体的に書く＋邪魔なものを1つ決める」。
+    # だから引き寄せは『つかみ』と笑いにだけ使い、中身は書き出す・決めておくという実際に役立つ形にする。スピリチュアルの断定や金運・お金の話はしない
+    '引き寄せの法則、物欲にだけはよく効いてる気がします。\n欲しい物を思い浮かべた日から、広告がその商品だらけです📱\nみんなは最近、何を引き寄せてます？',
+    '年内に手に入れたいガジェット、1つだけ書いておきませんか？\n私はワイヤレス充電器です。書いておくとセールの日に迷わずに済むので🔋\nみんなの1つは？',
+    # 11/8：SSD・メモリの値上がりが話題（AI需要で2026年1〜3月のメモリ価格が前期比最大90％上昇）。値上がりで煽らず、誰でも二択で答えられる保存先の話にする
+    # 11/9 海外のアフィ記事（outfy）：返信で『予算と用途』を先に聞いてから提案すると話が進む → 数字1つで答えられる予算の問いかけに（ボーナス前の前倒し）
+    '冬のボーナスの季節が近づいてきましたね🎁\nガジェットに使っていい予算、決めてる派？決めない派？\n私は決めないので、毎回カートと相談です🛒\nみんなは？',
+    # 11/10：instax mini Evo 2が11/27に国内発売（富士フイルム公式）・海外の11月のガジェット選にも入った → いつで答えられる問いかけ
+    '最後に写真をプリントしたの、いつですか？\nスマホの写真は増える一方なのに、紙の写真はほとんど増えてません📸\nみんなは？',
+    # 11/11：楽天ブラックフライデー2026は公式未発表（攻略記事は11/20夜開始と予想・エントリー必須・2025年は上限7000pt）→ 大型セールの前に、一言で答えられる問いかけ
+    'ブラックフライデー、今年は何か買う予定ありますか？\n私は今年こそ、買う物を先に1つだけ決めておく作戦です📝\nみんなは？',
+    'スマホの写真のバックアップ、クラウド派？外付けSSD派？\n私はまだ「そのうちやる」派です💾\nみんなは？',
+    # 11/9：11/5朝『顔洗い、お湯派？水派？』がコメント93・11/6昼『イヤホン何代目？』が表示908 → 話題を変えて「季節のひと言＋二択＋自分の答え」の形
+    '手袋の季節になってきましたね🧤\n外でスマホを触るとき、手袋のまま派？外す派？\n私は毎回外して、指が冷えきってます\nみんなは？',
+]
+
+
+# ROOM仲間募集の投稿（他の人の「初報酬報告＋仲間募集」がいいね149・コメント87だったので取り入れる）。
+# 1日おきに昼の会話投稿をこちらにする。売上などの数字は作らない（本当の数字だけ使う）
+NAKAMA = [
+    # 10/27：仲間募集も「数字・一言・二択で答えられる問いかけ＋先に自分の答え＋みんなは？」の形にする（事実の体験だけ）
+    '楽天ROOM、いいねは付くのに売れない…わかる人？🙋‍♂️\n私はまさにそれで、Threadsで話しかける方に力を入れ始めました\nROOMやってる人、みんなはどう？',
+    # 11/5：『ROOMで最初に売れた商品は？』が表示177・コメント0（11/2に続きROOM内輪の話題はROOMをやっていない人が答えられない）→ 外した
+    'ROOMの投稿、だいたい何時ごろしてますか？\n私は毎日の流れを決めて、コツコツ足してます📱',
+    '楽天ROOM、始めて何年目ですか？\n私はまだまだ手探り組です🔰\nみんなは？👇',
+    'ROOMに載せてる商品、いちばん多いジャンルは何ですか？\nガジェット好きなのに、気づけば日用品が増えてます🔌',
+    # 11/2：『楽天ROOM、1日に何件投稿？』が5時間で表示42・コメント0（ROOMをやっていない人が答えられない内輪の話題）→ 外した
+    'ROOMで紹介する商品、決める前に何を見ますか？\n私はまずレビュー件数を見ます🔍',
+]
+
+
+def log_text(repo):
+    """Threads運用ログ：insights の本当の数字だけで作る。数字がそろわなければ空文字。"""
+    try:
+        lg = json.load(open(os.path.join(repo, 'state', 'insights_log.json'), encoding='utf-8'))
+        days = sorted(lg)
+        cur = lg[days[-1]]['account']['followers_count']
+        prev = lg[days[-2]]['account']['followers_count'] if len(days) > 1 else None
+        posts = lg[days[-1]].get('posts', {})
+        best = max(posts.items(), key=lambda kv: kv[1].get('views', 0)) if posts else None
+    except Exception:
+        return ''
+    n = (datetime.now(JST).date() - datetime(2026, 10, 21, tzinfo=JST).date()).days + 1
+    diff = '' if prev is None else f'（前日比 {cur - prev:+d}）'
+    kind = {'morning': '朝の投稿', 'noon': '昼の会話投稿', 'night': '夜の投稿'}
+    line = f"\n最近いちばん見られたのは{kind.get(best[0].split('-')[-1], '投稿')}（{best[1].get('views', 0)}回）" if best and best[1].get('views') else ''
+    return f'Threads運用ログ {n}日目📊\nフォロワー {cur}人{diff}{line}\n同じくROOMやってる方、一緒にコツコツいきましょう🤝'
+
+
+def followers(repo):
+    try:
+        return int(json.load(open(os.path.join(repo, 'state', 'insights.json'), encoding='utf-8'))['account']['followers_count'])
+    except Exception:
+        return 0
+
+
+TALK_KEYS = ['引き寄せ', '充電', 'ケーブル', '寒い', '暖房', '詰め替え', '買い忘れ', 'イヤホン', 'iPhone', '神社', 'お守り', 'ラーメン', 'カート',
+             'マラソン', '布団', '加湿器', 'レビュー', '家電', 'コーヒー', 'スマホ', '旅', 'おすすめに乗', 'ルーティン', 'ガジェット',
+             '大掃除', '脱衣所', '目覚まし', '冬支度', '飲み物', '5と0', '買い替え', '気温', '朝ごはん', '結露', '忘れ', '顔洗い', 'お気に入り', '乾燥', 'DM', 'タブ', 'こたつ', 'お手入れ', 'バックアップ', 'ボーナス', 'ブラックフライデー']  # 11/2夕『変なDM来た？』が表示43（警戒・不安の話題は伸びない）→ DM・詐欺警戒の話題は使わない
+
+# 10/28 他の人の情報投稿から：朝は「季節のひと言＋共感の問いかけ」。3行以内・1行目に季節・季節は前倒し（冬支度・年末大掃除）
+MORNING_TALKS = [
+    '朝晩ぐっと寒くなりましたね🍂\n布団から出るまで、何分かかってますか？\n私は平均10分、毎朝ちょっと決意が要ります⏰',
+    'そろそろ年末の大掃除が頭をよぎる季節ですね🧹\n今年はどこから手をつけますか？\n私は見て見ぬふりのコンロ回りからです',
+    '11月が目の前ですね🍁\n冬支度、もう何か始めましたか？\n私はまず加湿器を出すところからです💧',
+    '朝の床が冷たい季節になりました🥶\n家でいちばん寒い場所、どこですか？\n私は断然、脱衣所です',
+    '日の出が遅くなってきましたね🌅\n目覚まし、1回で起きる派？スヌーズ派？\n私はスヌーズに頼る派です',
+    '朝の空気が冷たくなりましたね🍂\n朝いちばんに飲むあったかいもの、決まってますか？\n私は白湯で始めて、結局コーヒーです☕',
+    # 10/28：朝「11月が目の前…冬支度もう始めた？」がコメント5件 → 同じ形で話題を年末の買い替えに
+    '年内にあとひとつ買い替えるなら、何にしますか？🗓\n残り2か月、私は候補をまだしぼれていません',
+    # 10/28夜：朝のネタ残りが少ないので追加（数字・場面中心、二択は1つ、「〜派です」で締めない）
+    '朝の気温がひと桁の日も出てきましたね🌡\n何度を切ったら「もう冬だ」と認めますか？\n私は10度を切ったら観念します',
+    '朝の暗さが冬っぽくなってきましたね🌙\n朝いちばんに動かす家電、ケトル派？エアコン派？\n私は電気ケトルのスイッチからです\nみんなは？',
+    '手がかじかむ朝が増えてきましたね🧤\n朝ごはん、何分で済ませてますか？\n私は5分あれば上出来です🍞',
+    # 11/9：朝『結露、毎朝拭く派？』は約9時間で表示45（住まいで答えが分かれ、広がらない話題）→ 使用済みにつき外した
+    '朝の通勤がコートの季節になりましたね🧥\n家を出てから忘れ物に気づいたら、取りに戻る派？あきらめる派？\n私はモバイルバッテリーなら、あきらめる派です🔋\nみんなは？',
+    # 11/1：10/29朝「目覚まし、1回で起きる派？スヌーズ派？」がいいね13・コメント8 → 同じ二択の形で話題を変える
+    # 11/5：朝『顔洗い、お湯派？水派？』は4時間で表示66（朝の会話平均約270の3分の1未満）→ 使用済みにつき外した
+    # 11/10：朝『年末の気配…家でいちばん散らかってる場所は？』は約4時間で表示45（自由回答で答えにくく、大掃除の話題と重なる）→ 使用済みにつき外した
+    # 11/2朝「朝いちばんに飲むもの、決まってますか？＋自分の答え」が表示187でコメント17 → 同じ「決まってますか？」の形で話題を乾燥に
+    '空気がカラカラになってきましたね💧\n乾燥対策、加湿器派？濡れタオル派？\n私は加湿器のスイッチからです\nみんなは？',
+    # 11/5朝『水が冷たい季節…お湯派？水派？＋自分の答え』が表示138・コメント31 → 同じ「季節のひと言＋二択＋自分の答え」で話題を暖まり方に
+    '寒さが本格的になってきましたね❄\n家で温まるなら、こたつ？電気毛布？\n私は電気毛布から出られなくなる側です🛏\nみんなは？',
+    # 11/05 レイのA8案件（スマホの資産運用アプリ）向けの呼び込み：通勤中にスマホを見る20〜40代へ（投資・利益の話はしない）
+    '朝の電車、すっかりコートの人ばかりになりましたね🧥\n通勤中にスマホで見るのは、天気派？ニュース派？\n私は天気とニュースを行ったり来たりしてます🚃\nみんなは？',
+]
+
+
+# 11/05 レイのA8案件の呼び込み用（TALKS・MORNING_TALKS にあるもののうち、この語を含むもの）
+WARM_A8 = [t for t in TALKS + MORNING_TALKS if any(k in t for k in ('通勤中にスマホ', '通勤中、スマホ', '家計簿アプリ', '貯まったポイント', 'お金まわりのアプリ'))]
+
+TOPIC_MAP = [('大掃除', '年末大掃除'), ('結露', '結露対策'), ('目覚まし|スヌーズ|布団から', '冬の朝'), ('脱衣所|寒い場所|暖房', '寒さ対策'),
+             ('顔洗い', '冬の朝'), ('朝ごはん', '朝ごはん'), ('飲み物|コーヒー|お茶', '朝の飲み物'), ('買い替え', '買い替え'),
+             ('忘れ', '忘れ物'), ('マラソン|5と0|カート|お気に入り|セール|ブラックフライデー', '楽天市場'), ('神社|お守り', '神社巡り'), ('ラーメン', 'ご当地ラーメン'),
+             ('冬支度', '冬支度'), ('乾燥', '乾燥対策'), ('充電|電池|バッテリー', 'スマホの電池')]
+
+
+# 11/06：11/03〜11/06の会話投稿6本中5本が「みんなは？」で終わり、同じ文面に見えた → 締めの一言を形に合わせて回し、直近3日の締めと同じものは使わない
+CLOSE_ANY = ['みんなは？', 'あなたの答えも聞かせてください', 'ひと言でいいので教えてください', '同じ人、いますか？', 'みなさんのも聞きたいです', 'リプでこっそり教えてください']
+CLOSE_HA = ['あなたはどっちですか？', 'どっち派か、ひと言でどうぞ', 'みなさんはどっち寄りですか？']
+CLOSE_NUM = ['数字だけでも教えてください', 'あなたは何番目くらいですか？', 'だいたいでいいので教えてください']
+
+
+def vary_close(repo, text, slot):
+    if not text.endswith('\nみんなは？'):
+        return text
+    shp = shape_of(text)
+    if shp == 'num':
+        cands = [c for c in CLOSE_NUM if c != 'あなたは何番目くらいですか？'] + CLOSE_ANY
+    elif shp == 'ha':
+        cands = CLOSE_HA + CLOSE_ANY
+    else:
+        cands = CLOSE_ANY
+    if 'いますか？' in text or '人いますか' in text:
+        cands = [c for c in cands if 'いますか' not in c]
+    recent = set()
+    for k in range(3):
+        day = (datetime.now(JST) - timedelta(days=k)).strftime('%Y%m%d')
+        for f in glob.glob(os.path.join(repo, 'queue', day + '-*.json')):
+            try:
+                tx = json.load(open(f, encoding='utf-8')).get('text', '')
+            except Exception:
+                continue
+            if tx:
+                recent.add(tx.rstrip().split('\n')[-1])
+    left = [c for c in cands if c not in recent] or cands
+    c = left[h31(datetime.now(JST).strftime('%Y%m%d') + slot + 'close') % len(left)]
+    return text[:-len('みんなは？')] + c
+
+
+def talk(repo, slot='noon'):
+    used_p = os.path.join(repo, 'state', 'talk.json')
+    used = json.load(open(used_p, encoding='utf-8')) if os.path.exists(used_p) else []
+    # 1日おきに仲間募集の投稿にする
+    f = followers(repo)
+    pool = TALKS
+    # 11/5：仲間募集（ROOM内輪）の昼は11/2表示93・11/4表示177でどちらもコメント0、一般の会話ネタの昼（11/3コメント25）に大きく負けた → 1日おき→4日に1回へ減らす
+    if slot == 'noon' and datetime.now(JST).toordinal() % 4 == 0:  # 仲間募集は昼だけ（朝は一般の会話ネタ）
+        pool = [t for t in NAKAMA if ('{f}' not in t or f >= 100) and (t != '{log}' or log_text(repo))]
+    if slot == 'morning':
+        pool = MORNING_TALKS
+    pool = [t for t in pool if not banned(t)]
+    left = [t for t in pool if t not in used]
+    if not left:
+        used = [t for t in used if t not in pool]
+        left = pool[:]
+    base = left[:]
+    shp = set(last_shapes(repo))  # 10/27：直前の投稿と同じ問いかけの形は続けない
+    def _narrow(left, use_warm):
+        # 11/05：レイのA8案件（11/06から投稿）に合わせ、通勤中にスマホでお金・アプリを調べる人を集める問いかけを先に使う
+        warm = [t for t in left if t in WARM_A8]
+        if use_warm and warm and datetime.now(JST).strftime('%Y%m%d') <= '20261115':
+            left = warm  # 下のかぶり防止は「or left」なので、この中で選び直される
+        # 同じ日の朝の投稿と話題がかぶらないようにする（例：朝「お守り何個？」→昼もお守り、を避ける）
+        # 10/27：直近3日の投稿（text・reply）と話題・相手がかぶらないようにする
+        seen = ''
+        for k in range(7):  # 10/27：伸びた話題（スマホ）の焼き直しが伸びなかったため、話題は7日あける
+            day = (datetime.now(JST) - timedelta(days=k)).strftime('%Y%m%d')
+            for f in glob.glob(os.path.join(repo, 'queue', day + '-*.json')):
+                d = json.load(open(f, encoding='utf-8'))
+                seen += d.get('text', '') + str(d.get('reply', ''))
+        fresh = [t for t in left if not any(k in t and k in seen for k in TALK_KEYS)]
+        left = fresh or left
+        # 11/2：キーワードが違っても同じ話題（例：目覚まし→布団から出る＝冬の朝）は7日あける
+        def _tp(t):
+            return next((tp for k, tp in TOPIC_MAP if re.search(k, t)), None)
+        seen_tp = {tp for k, tp in TOPIC_MAP if re.search(k, seen)}
+        left = [t for t in left if _tp(t) not in seen_tp] or left
+        # 11/4：直近3日の書き出し（最初の6文字）と同じものは使わない。同じ話題（例：ROOMの仲間募集）は前回と違う問いかけの形にする
+        heads, same_tp_shapes = set(), set()
+        for k in range(3):
+            day = (datetime.now(JST) - timedelta(days=k)).strftime('%Y%m%d')
+            for f in glob.glob(os.path.join(repo, 'queue', day + '-*.json')):
+                tx = json.load(open(f, encoding='utf-8')).get('text', '')
+                if tx:
+                    heads.add(tx[:6])
+                    if 'ROOM' in tx.split('\n')[0]:
+                        same_tp_shapes.add(shape_of(tx))
+        left = [t for t in left if t[:6] not in heads] or left
+        # 11/10：朝は「朝の〇〇、…ですね」の書き出しが続きやすい → 直近3日の朝と最初の2文字が同じものは避け、前日の朝と同じ問いかけの形も続けない
+        if slot == 'morning':
+            mh, ms = set(), set()
+            for k in range(1, 4):
+                day = (datetime.now(JST) - timedelta(days=k)).strftime('%Y%m%d')
+                for f in glob.glob(os.path.join(repo, 'queue', day + '-*-morning.json')):
+                    tx = json.load(open(f, encoding='utf-8')).get('text', '')
+                    if tx:
+                        mh.add(tx[:2])
+                        if k == 1:
+                            ms.add(shape_of(tx))
+            left = [t for t in left if t[:2] not in mh] or left
+            if any(shape_of(t) not in ms for t in left):
+                left = [t for t in left if shape_of(t) not in ms]
+        if all('ROOM' in t for t in left):
+            left = [t for t in left if shape_of(t) not in same_tp_shapes] or left
+        # 11/05：朝『顔洗い、お湯派？水派？』コメント42、昼『加湿器のお手入れ何日に1回？』反応0。
+        # 1秒で答えられる二択（〜派？）と数字で答える問いを優先し、答えにくい自由回答の問いは使わない（残りが無いときだけ）
+        easy = [t for t in left if shape_of(t) in ('ha', 'num') and shape_of(t) not in shp]  # 11/10：直前2本と同じ形しか残らないときは、ひと言で答えられる自由回答（どこ？など）に回す
+        left = easy or left
+        ha = [t for t in left if shape_of(t) == 'ha']
+        if ha and 'ha' not in set(last_shapes(repo, 1)):
+            left = ha  # 直前が二択でなければ、二択を出す
+        left = [t for t in left if shape_of(t) not in shp] or left
+        return left
+    left = _narrow(base, True)
+    # 11/06：A8向けの問いかけが二択ばかり残り、朝の二択に昼の二択が続いた → 形がかぶるときは一般の会話ネタから選び直す
+    if all(shape_of(t) in shp for t in left):
+        alt = _narrow(base, False)
+        if any(shape_of(t) not in shp for t in alt):
+            left = alt
+    text = left[h31(datetime.now(JST).strftime('%Y%m%d') + slot) % len(left)]
+    used.append(text)
+    text = log_text(repo) if text == '{log}' else text.replace('{f}', str(f))
+    text = re.sub(r'[ 　]*👇+$', '', text.rstrip())  # 10/27：人間らしく、👇の決まり文句は外す
+    if not re.search(r'(？|\?|👇|ますか|ませんか|ですか)[^\n]{0,3}$', text) and not re.search(r'(みんな|聞きたい|教えて)[^\n]*$', text):  # 11/4：「聞きたいです」の後に「みんなは？」が重なるのを防ぐ
+        text += '\nみんなは？'  # 10/27：最後にもう一度聞く（決まり文句の👇は付けない）
+    text = vary_close(repo, text, slot)
+    os.makedirs(os.path.dirname(used_p), exist_ok=True)
+    json.dump(used, open(used_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    stamp = datetime.now(JST)
+    qid = stamp.strftime('%Y%m%d-%H%M') + '-' + slot
+    q = {'id': qid, 'slot': slot, 'form': 'talk', 'kind': 'talk', 'created': stamp.isoformat(timespec='minutes'), 'text': text, 'items': []}
+    # 11/3：10/29以降は商品投稿が止まり、ROOMへのリンクが1本も出ずクリックが減った。
+    # 返信がいちばん集まる朝の会話投稿に、ルイのリンクの日（奇数日）だけROOMへの返信リンクを付ける。
+    # 間隔（20時間）と偶数日の扱いは publish.py の thin_link がそのまま守る
+    if slot == 'morning' and stamp.day % 2 == 1:
+        q['reply'] = '【PR】うちで実際に選んでる冬の便利もの、楽天ROOMにまとめてます\n' + ROOM_COLS_URL
+    # 10/29 Threads公式Tips：トピック付きの投稿は表示が伸びやすい → 会話投稿にもトピックを付ける
+    if 'ROOM' in text:
+        q['topic'] = '楽天ROOM'
+    elif re.search(r'充電|ケーブル|イヤホン|iPhone|スマホ|ガジェット|家電|パソコン|SSD|モバイルバッテリー|ケトル', text):
+        q['topic'] = 'ガジェット'
+    else:
+        # 11/1 Meta広報の説明：トピックは広すぎず狭すぎず、内容が具体的に浮かぶものがよい → 本文に合わせて選ぶ
+        for k, tp in TOPIC_MAP:
+            if re.search(k, text):
+                q['topic'] = tp
+                break
+        else:
+            if slot == 'morning':
+                q['topic'] = '冬支度'
+    os.makedirs(os.path.join(repo, 'queue'), exist_ok=True)
+    with open(os.path.join(repo, 'queue', qid + '.json'), 'w', encoding='utf-8') as f:
+        json.dump(q, f, ensure_ascii=False, indent=1)
+    print(f'{qid} 会話投稿')
+
+
+def gather(a):
+    """ROOMに投稿済みで、まだThreadsに出していない商品を、選ぶ順に並べて返す。"""
+    room = load_room(a.html)
+    by_code = {}
+    for g in room.get('genres', []):
+        for it in g.get('items', []):
+            if it.get('itemcode'):
+                by_code.setdefault(it['itemcode'], dict(it, _gid=g['id']))
+
+    sent_path = os.path.join(a.repo, 'state', 'sent.json')
+    sent = json.load(open(sent_path, encoding='utf-8')) if os.path.exists(sent_path) else {}
+    # まだ公開されていない（queue にあって posted に無い）商品も選ばない
+    pending = set()
+    for f in glob.glob(os.path.join(a.repo, 'queue', '*.json')):
+        qid = os.path.splitext(os.path.basename(f))[0]
+        if not os.path.exists(os.path.join(a.repo, 'state', 'posted', qid + '.json')):
+            for it in json.load(open(f, encoding='utf-8')).get('items', []):
+                pending.add(it['itemcode'])
+                pending.add(norm(it['name']))
+    sent_names = {norm(v.get('name')) for v in sent.values() if isinstance(v, dict)}
+
+    try:
+        avoid = set(json.load(open(os.path.join(a.repo, 'state', 'avoid.json'), encoding='utf-8')).get(datetime.now(JST).strftime('%Y-%m-%d'), []))
+    except Exception:
+        avoid = set()
+    now = time.time() * 1000
+    lim = now - LOOKBACK_DAYS * 864e5
+    cands = []
+    for r in load_posts(a.posts):
+        if r.get('ng') or (r.get('postedAt') or 0) < lim:
+            continue
+        code = r['itemcode']
+        if code in sent or code in pending or norm(r.get('name')) in sent_names or norm(r.get('name')) in pending:
+            continue
+        base = by_code.get(code)
+        it = dict(base) if base else {'itemcode': code, 'name': r.get('name', ''), 'price': r.get('price', ''), 'hook': r.get('hook', ''), 'quip': r.get('quip', ''), 'points': [], '_gid': r.get('genre', '')}
+        it.setdefault('hook', r.get('hook', ''))
+        it.setdefault('quip', r.get('quip', ''))
+        it.setdefault('url', r.get('url', ''))  # 11/04：返信リンクを商品ページ直行にするため
+        it['_t'] = r.get('postedAt') or 0
+        gid, p, c = it.get('_gid', ''), price_num(it.get('price')), cat_of(it, it.get('_gid', ''))
+        likes = it.get('likes') or 0
+        proven = -3 if (gid == 'likepop' or likes > 0) else -2 if gid == 'fanpop' else -1 if gid == 'roompop' else None
+        # Threads向き：話のネタになる「神社・旅・ラーメン」の商品を最優先（1本に2件まで）
+        # いいねが多いジャンル（千円スイーツ・tower収納・コスメ・詰め替え・観葉植物）と、実際に売れたスマホケース・充電まわり（10/24確認）。1,000〜10,000円を優先
+        strong = 1000 <= p <= 10000 and (gid in STRONG_GIDS or STRONG_RE.search(it['name']))
+        sc = -4 if gid == 'tabi' else -3.5 if strong else proven if proven is not None else (0 if c in ('gadget', 'kaden') else 1) if 0 < p <= 10000 else 2 if 0 < p <= 30000 else 3
+        it['_c'] = c
+        # 11/1：レイ（別のAI）と商品のジャンルが同じ日にかぶらないようにする（state/avoid.json {"YYYY-MM-DD":["plant"]}）
+        if gid in avoid or (('plant' in avoid) and (it.get('genreTag') == '観葉植物' or re.search(r'観葉植物|鉢植え|多肉|サボテン|エアプランツ|ハイドロカルチャー|苔玉', it.get('name', '')))):
+            continue
+        cands.append((sc, -likes, -it['_t'], it))
+    cands.sort(key=lambda x: x[:3])
+    return [c[-1] for c in cands]
+
+
+def summary(a, cands):
+    """夜（と、以前の朝）の「3件まとめ」投稿。"""
+    now = time.time() * 1000
+    items, seen = [], set()
+    for it in cands:
+        k = norm(it['name'])
+        if k in seen:
+            continue
+        # quip（ひと言）が無い・「やつ」を含む・重複する商品は使わない
+        q = it.get('quip') or ''
+        if not q or 'やつ' in q or any(q == o.get('quip') for o in items):
+            continue
+        if it.get('_gid') == 'tabi' and sum(1 for o in items if o.get('_gid') == 'tabi') >= 2:
+            continue
+        seen.add(k)
+        items.append(it)
+        if len(items) == PER_POST:
+            break
+    if len(items) < 2:
+        print('なし')
+        return
+
+    n = len(items)
+    dn = int(now // 864e5) * 3 + SLOTS.index(a.slot)
+    th = theme_of(items)
+    # 切り口（時短・コスパ・見た目・口コミ）は合う商品が多いものから、前回と同じにならないよう日替わりで
+    last_ax = ''
+    lp = sorted(glob.glob(os.path.join(a.repo, 'state', 'posted', '*.json')))
+    if lp:
+        try:
+            last_ax = json.load(open(lp[-1], encoding='utf-8')).get('axis', '')
+        except Exception:
+            pass
+    ax_scores = []
+    for i, ax in enumerate(AXES):
+        fit = sum(1 for it in items if axis_pt(ax, it))
+        ax_scores.append((-(min(fit, 2) * 0.6 - (1.5 if ax == last_ax else 0) - (0 if fit else 9) + ((dn + i) % 4) * 0.05), ax))
+    ax = sorted(ax_scores)[0][1]
+    if not any(axis_pt(ax, it) for it in items):
+        ax = ''  # 切り口に合う推しポイントが無いときは切り口の行を出さない
+
+    T = THEMES[th]
+    title = pick(T['title'], dn) if (th != 'base' or not ax) else pick(AXES[ax]['title'], dn)
+    opens = (MORNING_OPEN(n) if a.slot == 'morning' else NOON_OPEN(n) if a.slot == 'noon' else T['open'](n)) if th == 'base' else T['open'](n)
+    recent = recent_texts(a.repo)
+    today_txt = recent_texts(a.repo, 1)
+    hook = pick_fresh(opens, dn, recent)
+    ask = pick_fresh(T['ask'], dn * 3 + 1, recent, [k for k in TALK_KEYS if k in today_txt])
+    link_line = pick_fresh(LINK_LINES, dn * 7 + 2, recent)
+    footer = pick(FOOTERS, dn * 7 + 3)
+    link = ROOM_COLS_URL if n > 1 else ROOM_URL
+    topic = 'ガジェット' if any(it['_c'] in ('gadget', 'kaden') for it in items) else '楽天ROOM'
+
+    def free(it):
+        return '送料無料' in ' '.join(it.get('points', []) + it.get('badges', []) + [it.get('desc', '')])
+
+    def body(with_ax):
+        rows = []
+        for i, it in enumerate(items):
+            s = f"{NUM[i]} {it.get('hook') or it['name']}\n　{it.get('price', '')}{'・送料無料' if free(it) else ''}"
+            if it.get('quip'):
+                s += f"\n　💬 {it['quip']}"
+            if (it.get('likes') or 0) >= 30 and ax != 'trust':
+                s += f"\n　❤️ ROOMでいいね{it['likes']}件"
+            if with_ax and ax and axis_pt(ax, it):
+                s += f"\n　🎯 {clip(axis_pt(ax, it), 32)}"
+            rows.append(s)
+        return '\n\n'.join(rows)
+
+    def build(with_ax, with_link):
+        axl = AXES[ax]['open'].format(n=n) + '\n\n' if (with_ax and ax) else ''
+        # URLは本文に入れない（リンク付きは広がりにくいため、リンクは自分の返信に付ける）
+        return f"【PR・楽天ROOM】\n{hook}\n\n{axl}{body(with_ax)}\n\n{ask}\n{link_line if with_link else '詳細はプロフィールのリンクから'}\n※価格は投稿時点のものです"
+
+    text = build(True, True)
+    if len(text) > 490:
+        text = build(False, True)
+    if len(text) > 490:
+        text = build(False, False)
+    text = clip(text, 490)
+
+    stamp = datetime.now(JST)
+    qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot
+    q = {
+        'id': qid, 'slot': a.slot, 'form': 'summary', 'created': stamp.isoformat(timespec='minutes'),
+        'title': title, 'footer': footer, 'axis': ax, 'theme': th, 'topic': topic, 'text': text,
+        # 10/28：まとめ投稿の返信も同じ型に。PR表記は1行目の頭・リンクは1つで直前に「押すと何が分かるか」
+        'reply': f"【PR】紹介した商品は楽天ROOMにまとめています\n今の価格とレビューは、ここから見られます👇\n{link}",
+        'items': [{'itemcode': it['itemcode'], 'name': it['name'], 'hook': it.get('hook', ''), 'price': it.get('price', ''), 'quip': it.get('quip', '')} for it in items],
+    }
+    os.makedirs(os.path.join(a.repo, 'queue'), exist_ok=True)
+    with open(os.path.join(a.repo, 'queue', qid + '.json'), 'w', encoding='utf-8') as f:
+        json.dump(q, f, ensure_ascii=False, indent=1)
+    print(f'{qid} {n}件')
+
+
+# ───────── 形（ネタ帳）─────────
+# 時間帯ごとに使える形。BASE_FORMS はその時間帯の基本形で「3日以内に繰り返さない」の対象外
+SLOTS = ['morning', 'noon', 'night', 'late']
+FORMS = {
+    'morning': ['talk', 'basic', 'discover', 'n1', 'n5', 'n2', 'n3', 'n4', 'n9'],  # 11/11 マスター指示：旧ROOMの「物欲会議」(n11)は使わない
+    'noon': ['talk', 'n2'],
+    'night': ['basic', 'kuyou', 'n12', 'n9'],
+    'late': ['n15'],
+}
+ALL_FORMS = {f for v in FORMS.values() for f in v}
+BASE_FORMS = {'basic', 'talk', 'summary', 'n15'}
+OLD_FORM = {'morning': 'summary', 'noon': 'talk', 'night': 'summary', 'late': 'n15'}  # form が無い昔の投稿
+PR_LINE = '【PR】返信に楽天ROOMのリンクがあります'
+
+# 商品の「種類」。本文には商品名を出さず、この種類で書く（並びは細かいものから）
+TYPES = [
+    (r'マウスウォッシュ|洗口液|オーラルリンス|リステリン', 'マウスウォッシュ', 0),  # 「マウス」より先に判定
+    (r'ロボット掃除機|ルンバ|Roomba|DEEBOT', 'ロボット掃除機', 0), (r'水拭き', '水拭きクリーナー', 0),
+    (r'掃除機|クリーナー', 'コードレス掃除機', 0), (r'イヤホン|イヤフォン', 'ワイヤレスイヤホン', 1),
+    (r'ヘッドホン|ヘッドフォン', 'ヘッドホン', 1), (r'スピーカー', 'スピーカー', 1), (r'マイク', 'ワイヤレスマイク', 1),
+    (r'スマートウォッチ|WATCH|GPSウォッチ|vivoactive', 'スマートウォッチ', 1), (r'モバイルバッテリー', 'モバイルバッテリー', 1),
+    (r'充電器', '充電器', 1), (r'ケーブル', '充電ケーブル', 1), (r'スマホケース|iFace|iPhone.{0,12}ケース', 'スマホケース', 1),
+    (r'食洗機|フィニッシュ', '食洗機用洗剤', 0), (r'食器用洗剤|食器洗', '食器用洗剤', 0), (r'柔軟剤(?!入り)', '柔軟剤', 0), (r'洗濯', '洗濯洗剤', 0), (r'洗剤', '洗剤', 0), (r'タブレット', 'タブレット', 1), (r'ミラーレス|一眼|カメラ', 'カメラ', 1), (r'プロジェクター', 'プロジェクター', 0),
+    (r'SIMフリー|スマホ|iPhone|Pixel', 'スマホ', 1), (r'加湿器', '加湿器', 0), (r'除湿機', '除湿機', 0),
+    (r'空気清浄', '空気清浄機', 0), (r'ドライヤー', 'ドライヤー', 0), (r'電気毛布', '電気毛布', 0), (r'こたつ', 'こたつ', 0),
+    (r'ヒーター|ストーブ', 'ヒーター', 0), (r'ケトル', '電気ケトル', 0), (r'炊飯器', '炊飯器', 0), (r'フライパン', 'フライパン', 0),
+    (r'ハンディガン', 'ハンディガン', 1), (r'ルーター', 'Wi-Fiルーター', 0), (r'キーボード', 'キーボード', 1), (r'マウス', 'マウス', 1),
+    (r'モニター', 'モニター', 0), (r'コンポ', 'コンポ', 0), (r'タオル', 'タオル', 0), (r'観葉植物|鉢植え|\d号鉢', '観葉植物', 0),
+    (r'化粧水|ローション', '化粧水', 0), (r'美容液', '美容液', 0),
+]
+SPEC_RE = re.compile(r'IP[X\d]\d|Bluetooth\s*\d|\d+(?:\.\d+)?\s*(?:時間|畳|mm|cm|インチ|W|mAh|GB|TB|℃|ml|mL|L|kg|g|色|段階|台|枚|個|Hz|dB|万画素|号)')
+NOT_SPEC = re.compile(r'円|レビュー|件|★|送料|発送|お届け|ポイント|OFF|位|保証|公式|正規|予約|出荷|年')
+
+
+# 商品の種類の系統（同じ系統の商品が直近3日に続かないようにする）
+FAMILY = {'モバイルバッテリー': '充電', '充電器': '充電', '充電ケーブル': '充電',
+          'ワイヤレスイヤホン': '音', 'ヘッドホン': '音', 'スピーカー': '音', 'コンポ': '音', 'ワイヤレスマイク': '音',
+          'スマホ': 'スマホ', 'スマホケース': 'スマホ', 'タブレット': 'スマホ',
+          'ロボット掃除機': '掃除', '水拭きクリーナー': '掃除', 'コードレス掃除機': '掃除',
+          '加湿器': '空気', '除湿機': '空気', '空気清浄機': '空気',
+          'ヒーター': '暖房', '電気毛布': '暖房', 'こたつ': '暖房',
+          '電気ケトル': '台所', '炊飯器': '台所', 'フライパン': '台所', '食洗機用洗剤': '台所', '食器用洗剤': '台所', '洗濯洗剤': '洗濯', '柔軟剤': '洗濯', '洗剤': '洗濯', 'マウスウォッシュ': 'オーラルケア',
+          'キーボード': 'PC', 'マウス': 'PC', 'モニター': 'PC', 'Wi-Fiルーター': 'PC', 'プロジェクター': 'PC',
+          '化粧水': '肌', '美容液': '肌'}
+
+
+FAMILY_WORDS = {'充電': ['充電', 'バッテリー', '電池'], '掃除': ['掃除'], '音': ['イヤホン', 'スピーカー', 'ヘッドホン'],
+                'スマホ': ['スマホケース', '機種変'], '空気': ['加湿', '除湿', '空気清浄'], '暖房': ['ヒーター', 'こたつ', '電気毛布'],
+                'オーラルケア': ['歯みがき', '歯ブラシ', 'マウスウォッシュ']}
+
+
+def family_of(t):
+    return FAMILY.get(t, t)
+
+
+def recent_families(repo, days=3):
+    """直近3日の投稿で使った商品の系統。"""
+    since = (datetime.now(JST) - timedelta(days=days - 1)).strftime('%Y%m%d')
+    out = set()
+    for f in glob.glob(os.path.join(repo, 'queue', '*.json')):
+        if os.path.basename(f)[:8] >= since:
+            try:
+                d = json.load(open(f, encoding='utf-8'))
+                for x in d.get('items', []):
+                    t = type_of(x)[0]
+                    if t:
+                        out.add(family_of(t))
+                # 11/03：会話投稿の話題も数える（昼「スマホの充電、何%から焦る？」→夜モバイルバッテリー、が続いたため）
+                txt = d.get('text', '')
+                for fam, words in FAMILY_WORDS.items():
+                    if any(w in txt for w in words):
+                        out.add(fam)
+            except Exception:
+                pass
+    return out
+
+
+def type_of(it):
+    for rx, label, portable in TYPES:
+        if re.search(rx, it.get('name', '')):
+            return label, portable
+    return None, 0
+
+
+def spec_facts(it):
+    """数字の入った事実（投稿ノートの points と商品名から）。最大2つ。"""
+    out = []
+    for p in it.get('points', []):
+        if SPEC_RE.search(p) and not NOT_SPEC.search(p):
+            out.append(clip(p.strip(), 26))
+    if len(out) < 2:
+        for seg in re.split(r'[\s　【】\[\]（）()/／]+', it.get('name', '')):
+            if 2 <= len(seg) <= 16 and SPEC_RE.search(seg) and not NOT_SPEC.search(seg) and seg not in ' '.join(out):
+                out.append(seg)
+    return out[:2]
+
+
+def free_ship(it):
+    return '送料無料' in ' '.join(it.get('points', []) + it.get('badges', []) + [it.get('desc', '')])
+
+
+# 朝の基本形：会話の書き出し＋問いかけ（本文に商品名は出さない）。商品は返信に1件
+BASIC_OPEN = {
+    'gadget': ['ガジェット好きあるある。\n箱を開ける前に、スペック表をもう一回読み直す。\nみなさんは開封の儀、じっくり派？即開け派？📦',
+               'ガジェットの保護フィルム、気泡ゼロで貼れた日は一日中機嫌がいいです📱\nみなさんは自分で貼る派？お店で貼ってもらう派？',
+               'ガジェット選びで最後の決め手になるの、スペック？見た目？\n私はだいたい「充電端子が何か」で決まります🔌',
+               'ガジェット好きの朝は、まず全部の充電残量チェックから🔋\nみなさんの朝イチの儀式、何ですか？'],
+    'kaden': ['家電って、買う前はスペック表を毎日眺めるのに、届いたら説明書は読まない不思議。\nみなさんは説明書読む派？読まない派？📖',
+              '家電の「型落ち」と「最新」、毎回ここで30分迷います。\nみなさんはどっち派ですか？🔌',
+              '一番「買ってよかった」家電、ひとつだけ挙げるなら何ですか？\nみなさんの答えを参考にさせてください🙏',
+              '家電の箱って、なぜか捨てられずに押し入れに積んでしまう。\nみなさんは箱、取っておく派？すぐ捨てる派？📦'],
+    'beauty': ['朝の支度、何分でできますか？\n5分のつもりが、毎回15分かかってます⏰',
+               '季節の変わり目、スキンケアを変える派？ずっと同じ派？\nガジェット好きなのに、ここだけは保守派です',
+               '洗面台に並ぶボトル、気づいたら増えてません？\nみなさんの家、何本ありますか？🧴'],
+    'life': ['「これ、もっと早く買えばよかった」って思った日用品、ありますか？\nみなさんの当たりを知りたいです👇',
+             '休みの日の朝、最初にやること何ですか？\nとりあえず楽天のカートを確認してしまいます🛒',
+             '家の中で「ここだけは整えたい」場所、どこですか？\n充電コーナーだけは死守してます🔌'],
+}
+BASIC_TAIL = ['今朝の1品は返信に置いておきます👇', '今日の1品、返信にそっと置いておきます👇', '気になる1品を返信に置いておきますね👇']
+
+# 発見型（10/25 本人提案）：書き出し・ツッコミ・二択はそれぞれ8個以上
+DISC_SCENE = [  # (場面, 持ち歩く物だけか, 二択)
+    ('通勤にも在宅にも', 1, 'みんなは出社派？在宅派？'),
+    ('キャンプにも部屋にも', 1, 'みんなはアウトドア派？インドア派？'),
+    ('旅行にも近所のカフェにも', 1, '休みの日は遠出派？近場派？'),
+    ('ジムにも散歩にも', 1, '体を動かすならジム派？外を歩く派？'),
+    ('出張にも帰省にも', 1, '移動中は寝る派？起きてる派？'),
+    ('朝のランニングにも夜の散歩にも', 1, '体を動かすなら朝派？夜派？'),
+    ('平日にも休日にも', 0, '平日にがんばる派？休日に本気出す派？'),
+    ('朝にも夜にも', 0, 'みんなは朝型？夜型？'),
+    ('リビングにも寝室にも', 0, '家で一番長くいるの、リビング派？寝室派？'),
+    ('ひとり時間にも家族時間にも', 0, 'ひとり時間がほしい派？みんなでわいわい派？'),
+    ('仕事の日にもだらだらの日にも', 0, 'オンオフの切り替え、得意派？苦手派？'),
+    ('自分用にもプレゼントにも', 0, '買うなら自分用派？贈り物派？'),
+]
+DISC_OPEN = ['{scene}{verb}{type}、見つけてしまった…。', '見つけてしまった…。{scene}{verb}{type}。',
+             '楽天パトロール中、{scene}{verb}{type}を見つけてしまった…。', '朝から{scene}{verb}{type}を見つけてしまった…。今日の集中力、ここで使い切りそう。',
+             '{scene}{verb}{type}、見つけてしまいました…（小声）', 'ちょっと聞いてください。{scene}{verb}{type}、見つけてしまった…。',
+             '見なかったことにしたい。でも見つけてしまった。{scene}{verb}{type}。', '{type}を探してたわけじゃないのに、{scene}{verb}一品を見つけてしまった…。']
+DISC_TSUKKOMI = ['{spec}…財布が耳をふさいでる。', '{spec}と聞いて、ガジェット好きの血が騒いでいる。',
+                 '{spec}。この数字だけでごはんが進む。', '{spec}って書いてあるだけで、スペック表を3回読み返した。', '{spec}…ガジェット好きには、この数字がごちそう。',
+                 '{spec}って、カートの前で腕組みが止まらない。', '{spec}って、それはもう反則では。']
+
+# N1「買ってないのに詳しい」選手権
+N1_OPEN = ['{type}について、語らせてください。', '今日のお題は{type}です。', '{type}の話になると、急に早口になります。', '聞かれてないけど、{type}を語ります。',
+           '本日のエントリーは{type}。', '{type}のことなら、持ち主より詳しいかもしれません。', '{type}、スペック表なら暗記しました。', '{type}について、持ってる人のふりをして語ります。']
+N1_CLOSE = ['これはもう、実質持ってる。', '語れば語るほど欲しくなる仕組み、誰か止めて。', 'ここまで詳しいなら、もう買ってもいい気がしてきた。', '…と語り終わった今、カートが温まってきました。',
+            '我ながら完璧なプレゼンでした。', '持ち主の方、答え合わせお願いします。', '熱量だけなら持ち主に負けません。', '財布さん、今の聞いてた？']
+N1_ASK = ['持ってる人、答え合わせお願いします👇', 'みなさんの「買ってないのに詳しいもの」も教えてください👇', 'あなたが買ってないのに語れるもの、何ですか？👇', '持ってる人の本音、こっそり教えてください👇',
+          '同じく「買う前に詳しくなる派」の人、いますか？👇', '詳しくなるだけで満足しちゃう派、いますか？👇', 'あなたなら、ここまで調べたら買いますか？👇', '次に語ってほしいジャンル、リプで募集中👇']
+
+# N5 逆レビュー
+N5_HEAD = ['【逆レビュー】{type}', '【辛口レビュー（のつもり）】{type}', '【逆レビュー】{type}、正直に言います', '【逆レビュー】{type}の悪いところ',
+           '【本音レビュー】{type}', '【逆レビュー】{type}、心を鬼にして', '【逆レビュー】{type}、厳しめに', '【逆レビュー】{type}に物申す']
+N5_BAD = ['悪いところ：買う理由が多すぎる。', '悪いところ：断る理由が見つからない。', '悪いところ：スペック表を読むと欲しくなる。', '悪いところ：見れば見るほど欠点が見つからない。',
+          '悪いところ：財布の立場がない。', '悪いところ：迷う時間が長くなる。', '悪いところ：数字を見ると冷静でいられない。', '悪いところ：他の候補がかすむ。']
+N5_ASK = ['あなたの「悪いところが見つからないもの」、教えてください👇', '逆レビューしてほしい物、リプで募集中👇', '持ってる人、本当の悪いところ教えてください👇', 'あなたなら、どこにツッコみますか？👇',
+          '最近「欠点が見つからない」と思った物、ありますか？👇', 'これ以上の悪いところ、思いつく人いますか？👇', 'みなさんの辛口レビュー、待ってます👇', '次に逆レビューしてほしいジャンル、教えてください👇']
+
+# N2 擬人化の会話劇（商品×財布）。商品のセリフは事実のスペックだけ
+N2_PROD = ['俺、{f}やで', 'ちなみに{f}です', '{f}、知ってた？', '聞いて。{f}なんよ', '{f}って、すごない？', 'ほな言わせてもらうけど、{f}', 'もう一回言うで。{f}', '{f}、これが実力です']
+N2_WALLET = ['聞こえません', '本日は欠席です', 'その話、また今度で', '耳をふさいでます', '中身がありません', '…（ふたを閉じる音）', '検討します（しない）', '心が揺れてるけど欠席です']
+N2_ASK = ['この勝負、どっちの勝ちですか？👇', 'あなたの財布はどっち派？👇', '財布、そろそろ負けそうです。みなさんの財布は？👇', '次は何と財布を戦わせますか？👇',
+          '財布が一番弱くなる時間帯、いつですか？👇', 'あなたの家の財布、出席率どれくらいですか？👇', '財布に一言お願いします👇', 'あなたなら、どっちの味方をしますか？👇']
+
+# 供養投稿（10/25 本人提案）。語り手は財布。商品をけなさない・買わないことを強く勧めない
+KU_OPEN = ['🕯 本日の供養', '🕯 本日の見送り報告', '🕯 今日の供養コーナー', '🕯 本日、見送られた物', '🕯 今夜の供養', '🕯 見送り速報']
+KU_SERIF = ['今日は欠席です。見送りましょう', 'カートの前まで来ましたね。今日はここまでです', 'いい物なのは知ってます。でも今日は欠席で', '中身がないので、今日は見送りです',
+            '心は出席、体は欠席です', '見送るのも、立派な判断です', 'また会える日まで、そっとカートに', '今日はお気持ちだけ受け取ります']
+KU_PRAISE = ['見送ったあなたも、えらい。', '見送れた人、今日いちばんえらい。', '見るだけで済ませたあなた、立派です。', '今日も耐えた。それだけで100点。',
+             '見送り、それもまた愛。', 'ポチらなかった指に、拍手。', '欲しい気持ちは本物。見送った判断も本物。', '迷えるのは、良い物を知っている証拠。']
+KU_ASK = ['今週の見送り報告、待ってます👇', 'あなたが最近見送った物、教えてください👇', '今日見送った物、ここで供養していきませんか？👇', '見送り仲間、リプで集まりましょう🕯',
+          'みなさんの「えらかった見送り」、聞かせてください👇', '最近いちばん悩んで見送った物、何ですか？👇', '見送ったけど、まだ気になってる物ありますか？👇', '今月の見送り記録、更新した人いますか？👇']
+
+# N15 深夜の物欲つぶやき（2〜4行・商品名やリンクなし・画像なし）
+N15 = [  # 11/12：同じ文が11/04と11/11で重なりThreads側で止まった → 新しい8本を足し、過去に出した文は選ばない
+       'お気に入り登録は無料。\nだから今夜も、無料で散財した気分。',
+       '「比較してるだけ」と言い続けて、\n気づけば午前1時。',
+       '寝る前に1回だけ、と開いたROOM。\n1回の定義が崩壊しています。',
+       '「残りわずか」の文字に、\n毎晩ちゃんと動揺しています。',
+       '財布欠席くん、今日もおつかれ。\n明日も欠席でお願いします。',
+       'レビューを読みすぎて、\n買う前から使いこなした気になってる。',
+       'ポイント倍率を計算してたら、\n眠気だけが倍になった。',
+       '深夜のガジェット記事、\n読むたびに欲しいものが1つ増える。',
+       '夜の楽天は、\n昼の私とは別人が見ている。\n朝の私、先に謝っておきます。',  # 11/2：「見るだけと言って開いたアプリ…」は表示67（深夜の平均の3分の1未満）→ 外した
+       '理性はもう寝ました。\n起きているのは物欲だけです。', 'カートの中身が増えるたび、\n財布の目が遠くなる。', '夜のスペック表は、\nなぜかいつもより輝いて見える。',
+       'お気に入り登録は無料。\nそう言い聞かせて、今夜も増えていく。', 'ポチる前に寝る。\nそれが今夜の唯一の目標です。', '夜は判断力が下がるらしい。\nだからカートに入れるだけにしておく。\n…入れるだけ。',
+       '明日の私へ。\nカートの中身は、夜の私が勝手にやりました。', 'おやすみなさい。\nカートは開けっぱなしで寝ます。']
+# 11/9：11/8深夜『財布「もう寝なよ」／私「あと1ページだけ」』が約12時間で表示41（深夜の平均約310の3分の1未満）。1行目がセリフだけで何の話か見えない → 同じ「あと1ページ」の2本を外した
+
+# N11「物欲会議」議事録（議題＝商品の種類と事実のスペック。決議はいつも保留寄り）
+N11_HEAD = ['【物欲会議 議事録】', '【第◯回 物欲会議・議事録】', '【物欲会議（臨時）議事録】', '【物欲会議 議事録・要約版】',
+            '【物欲会議 議事録（非公開のはずが公開）】', '【本日の物欲会議 議事録】', '【物欲会議・緊急招集 議事録】', '【物欲会議 議事録・速報】']
+N11_SHINGI = ['物欲「{f}。これ以上の説明いる？」', '物欲「{f}って、もう答え出てません？」', '物欲「{f}。以上、賛成の方は挙手を」', '理性「{f}…確かに強い」',
+              '物欲「{f}。異議のある方はいますか」\n（沈黙）', '物欲「まず{f}。話はそれからだ」', '理性「{f}は認める。認めるけど」', '物欲「{f}。これは会議する必要あった？」']
+N11_KETSUGI = ['保留（カートには入れた）', '保留（お気に入りには登録した）', '継続審議（毎晩スペック表を見る）', '保留（次のセールまで）',
+               '保留（財布の復帰を待つ）', '可決…と見せかけて保留', '保留（でも気持ちは可決）', '保留（議長が寝落ち）']
+N11_ASK = ['あなたの物欲会議、今日の議題は何ですか？👇', 'この議題、あなたなら可決？否決？👇', '最近いちばん長引いた物欲会議、教えてください👇',
+           'みなさんの家の会議、財布は出席してますか？👇', '次の会議の議題、リプで募集してます👇', 'あなたの決議はいつも何で終わりますか？👇',
+           '保留のままカートに眠ってる物、何個ありますか？👇', '議長（あなた）の判断、聞かせてください👇']
+
+# N12 金曜夜「今週買わずに耐えたもの発表会」（司会は京。商品なし・画像なし）
+N12_HEAD = ['🎤 今週買わずに耐えたもの発表会', '🎤 金曜恒例・今週耐えたもの発表会', '🎤 今週の「買わずに耐えた」発表会、開会します',
+            '🎤 週末前の発表会：今週買わずに耐えたもの', '🎤 今週も開催・耐えたもの発表会', '🎤 発表会のお時間です（今週耐えたもの）',
+            '🎤 今週の耐えた記録、発表会', '🎤 金曜夜の発表会：買わずに耐えたもの']
+N12_HOST = ['司会の京です。今週もカートの前で踏みとどまった皆さん、えらい。', '司会は京。本日は出席しております。耐えた話だけ聞きに来ました。',
+            '司会の京です。「見るだけ」で済ませた1週間、拍手を送ります👏', '財布「今週も皆さんのおかげで、中身が守られました」',
+            '財布「耐えた物の大きさは問いません。耐えたこと自体が優勝です」', '司会の京です。セールの誘惑を越えてきた皆さん、ようこそ。',
+            '財布「お気に入り登録で止めた人も、立派な入賞です」', '財布「今週、カートに入れて出した人。それも耐えたにカウントします」']
+N12_Q = ['今週、買わずに耐えたものありますか？🎤', '今週いちばん「あと一歩でポチりそう」だった物、何でした？🎤',
+         '今週、カートに入れて結局出した物ありますか？🎤', '今週がまんできた物、ひとつだけ教えてください🎤']
+N12_ASK = ['あなたが今週買わずに耐えたもの、発表してください👇', '今週いちばん危なかった「耐えたもの」、教えてください👇', 'エントリーはリプで。耐えたもの、ひとつどうぞ👇',
+           '今週の耐えた記録、ここで発表していきませんか？👇', '耐えたもの＋耐えた理由、ひとことでどうぞ👇', '今週「あと一歩でポチりそうだった物」、何でした？👇',
+           '耐えた人から順番にどうぞ。財布が全員ほめます👇', 'みなさんの今週の耐えたもの、聞かせてください👇']
+
+# N3 値段を別の単位に変換（使った基準は本文に書く。オチは効果の話にしない）
+N3_UNITS = [('ラーメン', '杯', 900), ('牛丼', '杯', 500), ('コンビニのおにぎり', '個', 180), ('缶コーヒー', '本', 150),
+            ('映画', '本', 2000), ('回転寿司', '皿', 120), ('銭湯', '回', 550), ('ハンバーガー', '個', 400)]
+N3_OPEN = ['この{type}、値段を{u}に換算してみました。', '{type}の値段、{u}で数えたら現実味が出るかと思って。', '物欲を落ち着かせるため、{type}を{u}に換算します。',
+           '計算してみました。この{type}は、{u}でいうと…', '{type}の値段を{u}換算する会、開催します。', 'ガジェット好きの悪いクセ。{type}の値段を{u}で数える。',
+           '値段だけだとピンとこないので、{type}を{u}に置き換えてみた。', '{type}、{u}で言うといくら？を計算しました。']
+N3_OCHI = ['換算したら、余計に悩み始めました。', '計算したら、なぜか安く見えてきた。危ない。', '結論：計算は物欲を止めない。', '財布「どっちにしても欠席です」',
+           '数字にしたら、心が揺れ始めました。', 'でも{u}は、{type}の代わりにはなってくれない。', 'この計算、誰も得しない気がしてきた。', '{u}をガマンすれば…いや、それは無理です。']
+N3_ASK = ['あなたなら何に換算しますか？👇', 'みなさんの「換算の単位」、教えてください👇', 'この換算、高い？安い？どっちに見えます？👇', 'あなたの心の通貨は何ですか？👇',
+          '物欲を止める換算、他にいい単位あったら教えてください👇', '{u}換算で買ったこと、ありますか？👇', 'これ、あなたなら何{c}分まで出せますか？👇', '次は何を換算してほしいですか？👇']
+
+# 10/27 本人指示「いいね・コメントが来る投稿に」：どの形も
+# 1行目＝誰でも数字・一言・二択で答えられる問いかけ（呼びかける相手を毎回変える）→ 2行目＝先に自分の答え（好み・派だけ。体験談は作らない）
+# → 3行目＝形ごとのひと言（商品は種類だけ）→ 4行目＝もう一度「みんなは？」。本文は5行以内、商品は返信に1件だけ
+# (対象の種類 or カテゴリ, 呼びかける相手, 切り口, 問いかけ, 自分の答え)
+QA = [
+    # 10/27 見直し：「〜派？〜派？／私は〜派です／みんなはどっち？」ばかりになり同じ文面に見えたため、
+    # 問いかけの形（数字・場面・あるある・二択）と答えの言い回しをばらす。二択は全体の3分の1以下、答えに「派です」は使わない
+    ({'ワイヤレスイヤホン', 'ヘッドホン'}, '通勤中', '時短', '通勤中、イヤホンを忘れた日の絶望感、何点ですか？', '私は100点満点で120点。帰りたくなります🎧'),
+    ({'ワイヤレスイヤホン', 'ヘッドホン'}, 'ガジェット好き', '見た目', 'イヤホンのケース、ついパカパカしちゃう人いません？', 'フタの「パチッ」の音、地味に好きなんです🎧'),
+    ({'スピーカー', 'コンポ'}, '一人暮らし', '見た目', '一人暮らしの部屋、帰ってまず何をつけます？テレビ？音楽？', 'うちは無音がこわいので、とりあえずスピーカーです🔊'),
+    ({'スピーカー', 'コンポ'}, '夜ふかし', '口コミ', '寝る前の「あと1曲」、何曲で止まれますか？', '止まれたためしがありません🔊'),
+    ({'スマートウォッチ'}, 'ガジェット好き', '見た目', '腕時計、最後に買ったのはいつですか？', '思い出せないくらい前でした⌚'),
+    ({'スマートウォッチ'}, '通勤中', '時短', '1日にスマホをポケットから出す回数、数えたことあります？', '数えかけて、怖くなってやめました⌚'),
+    ({'モバイルバッテリー', '充電器', '充電ケーブル'}, '通勤中', '時短', '家を出るとき、スマホの電池が何％なら安心ですか？', '80％を切ってたらバッテリーを連れて出ます🔋'),
+    ({'モバイルバッテリー', '充電器', '充電ケーブル'}, 'ガジェット好き', 'コスパ', '充電器を選ぶとき、最初に見るのはどこですか？', 'つい出力のW数から見てしまいます🔌'),
+    ({'スマホ', 'スマホケース', 'タブレット'}, 'ガジェット好き', '見た目', 'スマホを落とした回数、正直に何回ですか？', '片手では数えきれません📱'),
+    ({'スマホ', 'タブレット'}, '節約中', 'コスパ', 'スマホにいくらまでなら出せますか？', '最近の値段を見るたびに上限が揺れてます📱'),
+    # 11/05：ケースに「スマホ本体の値段」の問いが付いて話がずれたため、ケース専用の場面の問いかけを足す
+    ({'スマホケース'}, '一人暮らし', '見た目', 'スマホケースを選ぶとき、最初に見るのはどこですか？', '私は手に持ったときの手ざわりから入ります📱'),
+    ({'カメラ'}, 'ガジェット好き', '見た目', 'スマホのカメラロール、いちばん多い写真は何ですか？', 'うちは食べ物とスクショで9割です📷'),
+    ({'カメラ'}, '子育て中', '口コミ', 'スマホに写真、今何枚入ってます？', '消すのが面倒で増える一方です📷'),
+    ({'コードレス掃除機', 'ロボット掃除機', '水拭きクリーナー'}, '家事を回してる', '時短', '掃除機をかけるの、週に何回ですか？', '「気になったらすぐ」が理想、現実は週末です🧹'),
+    ({'コードレス掃除機', 'ロボット掃除機', '水拭きクリーナー'}, '一人暮らし', '時短', '家事の中で、いちばん誰かに任せたいのは何ですか？', '私は迷わず床掃除です🧹'),
+    ({'加湿器', '除湿機', '空気清浄機'}, '冬が苦手', '口コミ', '朝起きてのどがカラカラ、今週何回ありました？', 'もう3回目です💧'),
+    ({'加湿器', '除湿機', '空気清浄機'}, '家事を回してる', '時短', '部屋干しの洗濯物、乾くまで何時間かかってます？', '冬はほぼ丸1日コースです👕'),
+    ({'ヒーター', '電気毛布', 'こたつ'}, '冬が苦手', 'コスパ', '暖房、今年はもうつけました？', '「まだ早い」と言いながら毎年負けてます🔥'),
+    ({'ヒーター', '電気毛布', 'こたつ'}, '夜ふかし', 'コスパ', '冬の夜、いちばん冷えるのはどこですか？', '私は断然、足先です🔥'),
+    ({'ドライヤー'}, '子育て中', '時短', '髪を乾かすのに何分かかってます？', 'できれば5分で終わらせたいのが本音です💨'),
+    ({'電気ケトル', '炊飯器', 'フライパン'}, '一人暮らし', '時短', '今朝の朝ごはん、何でした？', '私はコーヒーだけでした☕'),
+    ({'電気ケトル', '炊飯器', 'フライパン'}, '節約中', 'コスパ', '自炊、週に何回くらいしてます？', '「作れる日に作る」くらいのゆるさです🍳'),
+    ({'食洗機用洗剤', '食器用洗剤'}, '家事を回してる', '時短', '1日の洗い物、何分かかってますか？', '気づけば毎晩15分コースです🍽'),
+    ({'観葉植物'}, '一人暮らし', '見た目', '今まで枯らした植物、何鉢ですか？', '正直に言うと…数えたくないです🪴'),
+    ({'観葉植物'}, '家事を回してる', '口コミ', '植物の水やり、忘れる派？やりすぎる派？', '気にしすぎて、やりすぎるほうです🪴'),
+    ({'Wi-Fiルーター', 'キーボード', 'マウス', 'モニター', 'プロジェクター', 'ワイヤレスマイク', 'ハンディガン'}, 'ガジェット好き', 'コスパ', '机の上のガジェット、いま何個ありますか？', '数えたら8個ありました🔌'),
+    ({'gadget'}, 'ガジェット好き', '見た目', 'ここ1年で一番使ったガジェット、何ですか？', '私はケーブル1本が圧勝でした🔌'),
+    ({'gadget'}, '夜ふかし', '口コミ', '寝る前にスマホ、何分見てます？', '「あと5分」が3回続きます🌙'),
+    ({'kaden'}, '家事を回してる', '口コミ', '家電の説明書、最後まで読んだことあります？', 'スペック表は読むのに、説明書は読まない不思議📖'),
+    ({'kaden'}, '節約中', 'コスパ', '家電を買い替えるきっかけ、壊れたとき以外にあります？', '私はセールの通知に弱いです🔌'),
+    ({'beauty'}, '通勤中', '時短', '朝の支度、何分で終わりますか？', '5分のつもりが毎回15分かかります⏰'),
+    ({'beauty'}, '冬が苦手', '口コミ', '季節の変わり目、スキンケアを変える派？ずっと同じ派？', 'ガジェットは新しい物好きなのに、ここだけは保守的です🧴'),
+    ({'life'}, '節約中', 'コスパ', '日用品のストック、家に何個ありますか？', '置き場所が許すかぎり増えていきます📦'),
+    # 11/5：11/4夜『日用品の買い忘れ、月に何回？』＋柔軟剤6袋が表示56・いいね0（高い箱買いの日用品と数字の問いが合わず、答える理由が弱い）→ 入れ替えた
+    ({'life'}, '一人暮らし', '時短', '詰め替え用、袋のまま置いてる人いますか？', 'うちは「あとで入れ替える」が1週間続きます🧴'),
+    # 11/03：life の問いかけが数字の形しか無く、昼の数字の問いかけと続いたため、場面・あるあるの形を足す
+    ({'life'}, '家事を回してる', 'コスパ', '洗面台の下のストック、いちばん場所を取ってるのは？', 'うちは気づいたら同じ物が3本並んでました🧴'),
+    ({'life'}, '子育て中', '時短', '「あ、切らしてた」に気づくのって、だいたい夜じゃないですか？', 'しかも店が閉まってから気づきます🧴'),
+    ({'マウスウォッシュ'}, '通勤中', '見た目', '歯みがきのあと、マウスウォッシュまでする日としない日、ありません？', 'うちは洗面台にボトルが見えてるかどうかで決まります🪥'),
+    ({'マウスウォッシュ'}, '夜ふかし', '口コミ', '寝る前の歯みがき、「今日はもういいか」が頭をよぎる日ありません？', '歯ブラシを持つまでがいちばん長い人です🪥'),
+]
+
+
+def shape_of(text):
+    """問いかけの形。同じ形が続くと同じ文面に見えるので、直前の投稿と同じ形は避ける（10/27）。"""
+    head = '\n'.join(str(text).split('\n')[:3])
+    if re.search(r'派[？?]|派です|どっち', head) or re.search(r'[^\n？?]{1,10}[？?][^\n？?]{1,10}[？?]', head):  # 11/10：「こたつ？電気毛布？」のような「派」なしの二択も二択として数える
+        return 'ha'
+    if re.search(r'何(年|回|個|枚|分|%|％|時間|曲|点|鉢|件|日|週|台|本|人|袋)|いくら|何[^\n]{0,3}ですか', head):
+        return 'num'
+    return 'open'
+
+
+def last_shapes(repo, n=2):
+    """直近 n 本（昼・夜・朝。深夜のつぶやきは除く）の問いかけの形。"""
+    fs = sorted(f for f in glob.glob(os.path.join(repo, 'queue', '*.json')) if not f.endswith('-late.json'))[-n:]
+    out = []
+    for f in fs:
+        try:
+            out.append(shape_of(json.load(open(f, encoding='utf-8')).get('text', '')))
+        except Exception:
+            pass
+    return out
+
+
+QA_CLOSE = ['みんなは？', 'みんなはどう？', 'あなたは？', 'みんなのも聞きたいです', 'みんなはどうしてる？', '同じ人いますか？', 'ほかの人のも知りたい', '怒らないので教えてください', '私だけじゃないと信じてます。みんなは？']  # 10/27：人間らしく。決まり文句と👇の連発をやめる
+# 形ごとの3行目（商品は種類だけ。数字はスペックの事実だけ）
+QA_LINE = {
+    'basic': ['そんな人に{type}を1つ、返信に置いておきます👇', '今日の1品（{type}）は返信にそっと置いておきます👇', '気になる{type}を1つ、返信に置いておきますね👇',
+              'ちなみに今日見つけた{type}は返信に👇', '話のついでに、{type}を1つ返信に置いておきます👇', '{type}の当たりを1つ、返信に置いておきます👇',
+              '参考までに、{type}を1つ返信に👇', '今日の{type}は返信でこっそり紹介します👇'],
+    'n1': ['【買ってないのに詳しい】{type}は{spec}。ここまで語れるのに※まだ買ってません', '{type}なら語れます。{spec}。※まだ買ってません',
+           '聞かれてないけど{type}を語ると、{spec}。※まだ買ってません', '{type}のスペック、暗記しました。{spec}。※まだ買ってません',
+           '{type}について早口で言うと、{spec}。※まだ買ってません', '持ち主のふりをして言います。{type}は{spec}。※まだ買ってません',
+           '本日の詳しい選手権：{type}、{spec}。※まだ買ってません', '{type}、{spec}。…と詳しくなったところで※まだ買ってません'],
+    'n5': ['逆レビュー：{type}の悪いところ＝{spec}で迷う時間が長くなる。以上。', '逆レビュー：{type}、{spec}。断る理由が見つからない。以上。',
+           '逆レビュー：{type}の欠点は「{spec}」を見ると欲しくなること。以上。', '逆レビュー：{type}、{spec}。財布の立場がない。以上。',
+           '逆レビュー：{type}、{spec}。他の候補がかすむ。以上。', '逆レビュー：{type}の悪いところ、{spec}で冷静でいられない。以上。',
+           '逆レビュー：{type}、{spec}。買う理由が多すぎる。以上。', '逆レビュー：{type}、{spec}。欠点が見つからないのが欠点。以上。'],
+    'n2': ['{type}「{spec1}やで」財布「聞こえません」', '{type}「ちなみに{spec1}です」財布「本日は欠席です」',
+           '{type}「{spec1}、知ってた？」財布「その話、また今度で」', '{type}「聞いて。{spec1}なんよ」財布「耳をふさいでます」',
+           '{type}「{spec1}って、すごない？」財布「中身がありません」', '{type}「もう一回言うで。{spec1}」財布「…（ふたを閉じる音）」',
+           '{type}「{spec1}、これが実力です」財布「検討します（しない）」', '{type}「{spec1}やで？」財布「心が揺れてるけど欠席です」'],
+    'n11': ['物欲会議の決議：{type}（{spec1}）は「保留（カートには入れた）」', '物欲会議の結果：{type}（{spec1}）、継続審議。欠席：財布',
+            '物欲会議：{type}（{spec1}）は「保留（次のセールまで）」', '物欲会議：{type}（{spec1}）、可決…と見せかけて保留',
+            '物欲会議：{type}（{spec1}）は「保留（財布の復帰待ち）」', '物欲会議：{type}（{spec1}）、気持ちは可決・財布は欠席',
+            '物欲会議：{type}（{spec1}）は「保留（お気に入りには登録）」', '物欲会議：{type}（{spec1}）、議長が寝落ちして保留'],
+    'discover': ['…で、{scene}{verb}{type}を見つけてしまった。{spec}って、ちょっと気になってしまう。', '{scene}{verb}{type}、見つけてしまった…。{spec}と聞いてガジェット好きの血が騒ぐ。',
+                 '楽天パトロール中に{scene}{verb}{type}を発見。{spec}…財布が耳をふさいでる。', '見つけてしまった…{scene}{verb}{type}。{spec}って、それはもう反則では。',
+                 '{scene}{verb}{type}を見つけてしまった…。{spec}、スペック表を3回読み返した。', '{scene}{verb}{type}、見つけてしまいました（小声）。{spec}がごちそう。',
+                 '探してないのに{scene}{verb}{type}を見つけてしまった…。{spec}って、腕組みが止まらない。', 'ちょっと聞いて。{scene}{verb}{type}、{spec}。気になって仕方ない。'],
+    'n3': ['ちなみに{type}は{price}＝{u}約{cnt}{c}分（1{c}{base}円で計算）。でも{u}は{type}の代わりにならない。',
+           '{type}を換算：{price}＝{u}約{cnt}{c}分（1{c}{base}円で計算）。計算しても物欲は止まらない。',
+           '{type}の{price}、{u}にすると約{cnt}{c}分（1{c}{base}円で計算）。なぜか安く見えてきた。',
+           '試しに{type}（{price}）を{u}換算：約{cnt}{c}分（1{c}{base}円で計算）。余計に悩み始めました。'],
+    # N4 謳い文句を大げさにしすぎるシリーズ：大げさなのは前半の冗談だけ。後半は物欲・カートの話にして効果効能は言わない
+    'n4': ['{type}で世界は救えない。でも{spec1}と聞いた私の物欲は救われた。', '{type}で人生は変わらない。でも{spec1}の数字を見た夜は、ちょっと眠れない。',
+           '{type}で歴史は動かない。でも{spec1}で私の指はカートへ動いた。', '{type}で地球は回らない。でも{spec1}で私の頭はぐるぐる回る。',
+           '{type}でノーベル賞は取れない。でも{spec1}にはスペック表で赤丸をつけた。', '{type}で宇宙には行けない。でも{spec1}で物欲は大気圏を突破した。',
+           '{type}で明日の天気は変わらない。でも{spec1}でカートの中は嵐の予報。', '{type}で国境はなくならない。でも{spec1}で財布との境目は消えかけてる。'],
+    # N9 商品が吹き出しで喋る（画像の吹き出しにも同じセリフ）。セリフはスペックの事実だけ
+    'n9': ['{type}「{spec1}。あとは任せな」', '{type}「{spec1}やで。覚えといて」', '{type}「名乗るほどの者じゃない。{spec1}です」', '{type}「{spec1}。それ以上でも以下でもない」',
+           '{type}「いいか、{spec1}だ」', '{type}「{spec1}。カートで待ってる」', '{type}「自己紹介します。{spec1}です」', '{type}「{spec1}って、言うてもええかな」'],
+    'kuyou': ['財布「本日の供養は{type}（{spec1}）。見送ったあなたも、えらい」', '財布「{type}（{spec1}）、今日は見送りです。見送れた人、えらい」',
+              '🕯 財布「{type}（{spec1}）はお気持ちだけ。見送った判断も立派です」', '🕯 本日の供養：{type}（{spec1}）。財布「今日も耐えた、100点」',
+              '🕯 財布「{type}（{spec1}）、心は出席・体は欠席で」', '🕯 見送り速報：{type}（{spec1}）。財布「ポチらなかった指に拍手」',
+              '🕯 財布「{type}（{spec1}）はまた会える日まで、そっとカートに」', '🕯 今夜の供養：{type}（{spec1}）。財布「迷えるのは良い物を知ってる証拠」'],
+}
+# 供養は語り手が財布なので、問いかけと答えも見送りの話にする
+KU_QA = [
+    ('今日、カートの前で我慢した物ありますか？', 'うちの財布は、我慢できた人を全員ほめる係です'),
+    ('欲しい物、カートに入れて一晩寝かせる派？即ポチ派？', 'うちの財布は、もちろん一晩寝かせる派です'),
+    ('今月見送った物、何個ありますか？', 'うちの財布は数えるたびに誇らしげです'),
+    ('セールの通知、すぐ開く派？見ないふり派？', 'うちの財布は通知が来ると隠れる派です'),
+    ('「見るだけ」で終われる日、週に何日ありますか？', 'うちの財布は毎日を目指しています'),
+    ('お気に入り登録で止める派？カートまで入れる派？', 'うちの財布はお気に入りで止めてほしい派です'),
+    ('物欲がいちばん強くなる時間、朝？夜？', '私の場合は、だいたい夜です'),
+    ('欲しい物リスト、いま何個ありますか？', 'うちの財布はリストを見ないようにしています'),
+]
+AUD_KEYS = ['通勤中', '一人暮らし', '家事を回してる', '子育て中', 'ガジェット好き', '節約中', '夜ふかし', '冬が苦手']
+
+
+SHAPES_NOW = []
+
+
+def pick_qa(it, recent, seed):
+    """商品の種類（なければカテゴリ）に合う問いかけ。直近3日に使った問いかけ・呼びかけ相手・切り口は避ける。"""
+    t, _ = type_of(it)
+    c = cat_of(it, it.get('_gid', ''))
+    last = recent_axis_aud(recent)
+    # 種類に合う問いかけを先に、なければカテゴリの問いかけ
+    shp = set(SHAPES_NOW)
+    shp_last = set(SHAPES_NOW[-1:])
+    backup = []
+    for pool in ([q for q in QA if t in q[0]], [q for q in QA if c in q[0]] or [q for q in QA if 'life' in q[0]]):
+        fresh = [q for q in pool if q[3] not in recent and q[1] not in last]
+        fresh2 = [q for q in fresh if q[2] != last.get('axis')]
+        base = fresh2 or fresh
+        # 10/27：直前の投稿と同じ問いかけの形（とくに「〜派？」）は続けない
+        # 11/01：直近2本の形を両方避けられなければ、せめて直前の1本の形は避ける（種類の問いかけで無理ならカテゴリの問いかけへ）
+        fresh3 = [q for q in base if shape_of(q[3]) not in shp]
+        fresh4 = [q for q in base if shape_of(q[3]) not in shp_last]
+        if fresh3 or fresh4:
+            return pick(fresh3 or fresh4, seed)
+        backup = backup or base
+    if backup:
+        return pick(backup, seed)
+    pool = [q for q in QA if t in q[0] or c in q[0]] or QA
+    return pick([q for q in pool if q[3] not in recent] or pool, seed)
+
+
+def recent_axis_aud(recent):
+    """直近3日の本文に出た呼びかけ相手（と、最後に使った切り口）。"""
+    out = {k: 1 for k in AUD_KEYS if k in recent}
+    for q in QA:
+        if q[3] in recent:
+            out['axis'] = q[2]
+    return out
+
+
+TITLES = {'basic': '今朝の1品', 'discover': '見つけてしまった…', 'n1': '買ってないのに詳しい選手権', 'n5': '逆レビュー', 'n2': '財布との攻防', 'kuyou': '本日の供養', 'n11': '物欲会議 議事録', 'n3': '値段を換算してみた', 'n4': '大げさに言うと', 'n9': '商品がしゃべった'}
+
+
+def form_history(repo):
+    """これまでの投稿の (id, 形, 閲覧数)。"""
+    views = {}
+    for name in ('insights_log.json', 'insights.json'):
+        p = os.path.join(repo, 'state', name)
+        if not os.path.exists(p):
+            continue
+        try:
+            d = json.load(open(p, encoding='utf-8'))
+        except Exception:
+            continue
+        days = [d] if name == 'insights.json' else [d[k] for k in sorted(d)]
+        for day in days:
+            for pid, m in (day.get('posts') or {}).items():
+                if isinstance(m.get('views'), (int, float)):
+                    views[pid] = m['views']
+    out = []
+    for f in sorted(glob.glob(os.path.join(repo, 'queue', '*.json'))):
+        qid = os.path.splitext(os.path.basename(f))[0]
+        try:
+            q = json.load(open(f, encoding='utf-8'))
+        except Exception:
+            continue
+        out.append((qid, q.get('form') or OLD_FORM.get(q.get('slot') or qid.rsplit('-', 1)[-1], ''), views.get(qid)))
+    return out
+
+
+def choose_form(repo, slot, feasible, seed):
+    """3日以内に使っていない形から、反応（閲覧数）が良かった形を少し多めに選ぶ。まだ試していない形も試す。"""
+    import random
+    hist = form_history(repo)
+    since = (datetime.now(JST) - timedelta(days=2)).strftime('%Y%m%d')
+    recent = {fm for qid, fm, _ in hist if qid[:8] >= since}
+    opts = [f for f in FORMS[slot] if f in feasible and (f in BASE_FORMS or f not in recent)]
+    if not opts:
+        opts = [f for f in FORMS[slot] if f in feasible and f in BASE_FORMS] or [f for f in FORMS[slot] if f in feasible]
+    if not opts:
+        return None
+    vs = {}
+    for _, fm, v in hist:
+        if v is not None:
+            vs.setdefault(fm, []).append(v)
+    avg = {k: sum(v) / len(v) for k, v in vs.items()}
+    top = max(avg.values()) if avg else 50
+    w = [(avg[f] if f in avg else top) + 15 for f in opts]
+    return random.Random(seed).choices(opts, w)[0]
+
+
+def single_ok(it, form):
+    t, _ = type_of(it)
+    if not t:
+        return False
+    facts = spec_facts(it)
+    if form == 'kuyou':
+        return len(facts) >= 1
+    if form == 'n3':
+        return price_num(it.get('price')) >= 1000
+    if form == 'n11':
+        return len(facts) >= 1
+    if form in ('discover', 'n1', 'n5', 'n2', 'n4', 'n9'):
+        return len(facts) >= 1 and cat_of(it, it.get('_gid', '')) != 'beauty'
+    return True
+
+
+# 10/27 本人指示：不安・詐欺っぽさ・規約違反を連想させる言葉は使わない
+BANNED = ['凍結', '垢バン', 'BAN', '規制', '稼げ', '稼ぐ', '副業', '月収', '万円稼', '絶対', '必ず儲', '儲か', '今だけ', '急いで', '限定公開', 'コンサル',
+          '流出', '漏えい', '漏洩', '不正ログイン', '乗っ取り',
+          # 11/08 引き寄せを扱うときの線：スピリチュアルの断定・金運（開運商法やお金の案件と結びつくと詐欺に見える）・
+          # 「見た人は」「いいねした人は」系のいいね・シェアの要求（Metaが表示を下げるエンゲージメントベイト）は使わない
+          '波動', '宇宙にお願い', '願えば叶う', '必ず叶', '金運', '開運', 'お金を引き寄せ', '見た人は', 'いいねした人', 'シェアした人', 'リポストした人']  # 10/28：「楽天で情報流出か」がトレンド中。ネタにしない・不安をあおらない
+
+
+def banned(text):
+    return [w for w in BANNED if w in (text or '')]
+
+
+def slot_done(repo, slot):
+    """今日この時間帯の投稿がすでにある（公開済み・公開待ち）なら True。削除・見送りした分は数えない。"""
+    day = datetime.now(JST).strftime('%Y%m%d')
+    for f in glob.glob(os.path.join(repo, 'queue', f'{day}-*-{slot}.json')):
+        qid = os.path.splitext(os.path.basename(f))[0]
+        # 深夜(late)が日付をまたいで 0〜4時台に作られた分は、前の日の深夜として数える
+        if slot == 'late' and qid.split('-')[1] < '0500':
+            continue
+        pp = os.path.join(repo, 'state', 'posted', qid + '.json')
+        if not os.path.exists(pp):
+            return True
+        r = json.load(open(pp, encoding='utf-8'))
+        if not r.get('deleted') and not r.get('skipped'):
+            return True
+    return False
+
+
+def ratio_ok(path):
+    """11/09 マスター指摘：縦長すぎる画像はThreadsで上下が切れる。4:5（縦÷横1.25）より縦長なら使わず確認待ちにする"""
+    try:
+        from PIL import Image
+        w, h = Image.open(path).size
+        return h / w <= 1.26
+    except Exception:
+        return False
+
+
+def write_q(a, q, note):
+    bad = banned(q.get('text', '') + str(q.get('reply') or ''))
+    if bad:
+        print(f"なし（使わない言葉 {bad} が入ったため作り直しが必要）")
+        return
+    # マスターが前もって送ってくれた場面画像（assets/photos/ready/<商品コード>.jpg）があれば、そのまま使う
+    if q.get('kind') == 'single' and q.get('items'):
+        rp = os.path.join('assets', 'photos', 'ready', q['items'][0]['itemcode'].replace(':', '_') + '.jpg')
+        if os.path.exists(os.path.join(a.repo, rp)) and ratio_ok(os.path.join(a.repo, rp)):
+            q['photo'] = rp
+            q.pop('hold', None)
+            note += '（マスターの画像あり）'
+        fp = rp[:-4] + '_full.png'  # 投稿画像まるごと（マスターのデザインをそのまま使う）
+        if os.path.exists(os.path.join(a.repo, fp)) and ratio_ok(os.path.join(a.repo, fp)):
+            q['full_image'] = fp
+            q.pop('hold', None)
+            note += '（マスターの画像まるごと）'
+        # 11/03夜の本人指示（最優先）：夜の商品投稿は必ず投稿前に画像と文をマスターに見せ、「OK」が出るまで出さない。
+        # マスターの画像がない限り hold（確認待ち）を付ける。hold を外すのはマスターのOKのあとだけ
+        if not q.get('photo') and not q.get('full_image'):
+            # 11/11 改：マスター待ちをやめ、2人の相互チェックで完結（完全基準④）。楓が images/<id>.png を見て合格なら、この hold を消して push する（push で投稿が動く）
+            q['hold'] = '楓の画像チェック待ち（images/' + q['id'] + '.png を見て合格なら hold を消して push）'
+    os.makedirs(os.path.join(a.repo, 'queue'), exist_ok=True)
+    with open(os.path.join(a.repo, 'queue', q['id'] + '.json'), 'w', encoding='utf-8') as f:
+        json.dump(q, f, ensure_ascii=False, indent=1)
+    print(f"{q['id']} {note}")
+
+
+def rotate(repo, pool, seed):
+    """pool から、まだ使っていない文を選ぶ（state/talk.json に記録。全部使ったらその pool だけやり直す）。"""
+    used_p = os.path.join(repo, 'state', 'talk.json')
+    used = json.load(open(used_p, encoding='utf-8')) if os.path.exists(used_p) else []
+    left = [t for t in pool if t not in used]
+    if not left:
+        used = [t for t in used if t not in pool]
+        left = pool[:]
+    text = left[seed % len(left)]
+    used.append(text)
+    os.makedirs(os.path.dirname(used_p), exist_ok=True)
+    json.dump(used, open(used_p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    return text
+
+
+def n12(a):
+    stamp = datetime.now(JST)
+    seed = h31(stamp.strftime('%Y%m%d') + 'n12')
+    recent = recent_texts(a.repo, 8)
+    # 11/9：11/6夜の発表会は表示161・コメント0。1行目が見出し（🎤〜発表会）で問いかけが4行目だった → 1行目を問いかけにして3行以内にする
+    text = pick_fresh(N12_Q, seed * 7 + 2, recent) + '\n' + pick_fresh(N12_HOST, seed * 7 + 1, recent) + '\nみんなは？'
+    qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot
+    write_q(a, {'id': qid, 'slot': a.slot, 'form': 'n12', 'kind': 'talk', 'created': stamp.isoformat(timespec='minutes'), 'text': text, 'items': []}, '耐えたもの発表会')
+
+
+def late(a):
+    stamp = datetime.now(JST)
+    # 直近2回の深夜つぶやきと同じ言い回し（3文字以上の重なり）を含む文は避ける（例：「夜の私」が続かないように）
+    prev = [json.load(open(f, encoding='utf-8')).get('text', '') for f in sorted(glob.glob(os.path.join(a.repo, 'queue', '*-late.json')))[-2:]]
+    grams = lambda t: {g for g in (t.replace('\n', '')[i:i + 3] for i in range(len(t))) if len(g) == 3 and not set(g) & set('、。…「」 ')}
+    pg = set().union(*[grams(t) for t in prev]) if prev else set()
+    # 一度でも深夜に出した文は使わない（Threadsの二重投稿防止で止まるため）。全部出し切ったときだけ古い順に戻す
+    posted = {json.load(open(f, encoding='utf-8')).get('text', '') for f in glob.glob(os.path.join(a.repo, 'queue', '*-late.json'))}
+    fresh = [t for t in N15 if t not in posted] or N15
+    pool = [t for t in fresh if not grams(t) & pg] or fresh
+    text = rotate(a.repo, pool, h31(stamp.strftime('%Y%m%d') + 'late'))
+    qid = stamp.strftime('%Y%m%d-%H%M') + '-late'
+    write_q(a, {'id': qid, 'slot': 'late', 'form': 'n15', 'kind': 'talk', 'created': stamp.isoformat(timespec='minutes'), 'text': text, 'items': []}, '深夜のつぶやき')
+
+
+
+def price_compare(it):
+    """11/05：比べられる数字（確かめた数字だけ）。合計→1個あたり、◯%OFF、送料無料"""
+    price = str(it.get('price') or '')
+    if not price:
+        return ''
+    s = f'💰 {price}'
+    m = re.search(r'[×xｘ](\d+)(本|個|袋|パック|箱|缶|ロール|枚入|セット)', it.get('name', ''))
+    pm = re.fullmatch(r'([\d,]+)円', price)
+    if not m and re.search(r'詰め?替え?|つめかえ', it.get('name', '')):
+        # 11/10：「1580g×6」のように単位が無い詰め替えのまとめ買いは袋で数える
+        m = re.search(r'[×xｘ](\d+)()\s*$', it.get('name', ''))
+        m = m and re.match(r'(\d+)(袋)', m.group(1) + '袋')
+    if m and pm and int(m.group(1)) > 1:
+        s += f"（1{m.group(2).replace('枚入', 'パック').replace('セット', '組')}あたり約{round(int(pm.group(1).replace(',', '')) / int(m.group(1))):,}円）"
+    allt = ' '.join(list(it.get('badges') or []) + list(it.get('points') or []))
+    off = re.search(r'(\d+)%OFF', allt)
+    if off:
+        s += f'・{off.group(1)}%OFF'
+    if free_ship(it):
+        s += '・送料無料'
+    return s
+
+
+def flash_line(it, repo):
+    """11/05：セール速報フック（公式で確かめた日程・商品の事実だけ）。あと◯分で開始／◯時まで／クーポンの表記"""
+    now = datetime.now(JST)
+    try:
+        sales = json.load(open(os.path.join(repo, 'state', 'research.json'), encoding='utf-8')).get('sales') or []
+    except Exception:
+        sales = []
+    for x in sales:
+        lb = str(x.get('label', ''))
+        if '予想' in lb or '未確認' in lb:
+            continue
+        lb = re.sub(r'（.*?）', '', lb).strip()
+        try:
+            st = datetime.fromisoformat(x['s']).replace(tzinfo=JST); en = datetime.fromisoformat(x['e']).replace(tzinfo=JST)
+        except Exception:
+            continue
+        if timedelta(0) < st - now <= timedelta(hours=3):
+            mins = int((st - now).total_seconds() // 60)
+            return f"⏰ {lb}、あと{mins // 60}時間{mins % 60}分で開始" if mins >= 60 else f"⏰ {lb}、あと{mins}分で開始"
+        if st <= now < en and en - now <= timedelta(hours=24):
+            return f"⏰ {lb}は{en.month}/{en.day} {en.hour}:{en.minute:02d}まで"
+    dl = it.get('deadline')
+    if dl:
+        try:
+            d = datetime.fromisoformat(dl.replace(' ', 'T')).replace(tzinfo=JST)
+            if timedelta(0) < d - now <= timedelta(hours=48):
+                return f"⏰ この価格は{d.month}/{d.day} {d.hour}:{d.minute:02d}まで"
+        except Exception:
+            pass
+    allt = list(it.get('badges') or []) + list(it.get('points') or [])
+    cp = next((clip(x, 30) for x in allt if 'クーポン' in x), '')
+    return f'🎫 クーポン出てます：{cp}' if cp else ''
+
+
+def single(a, form, it):
+    """商品1件を使う形（本文に商品名は出さない。商品は返信に1件だけリンク付きで）。"""
+    stamp = datetime.now(JST)
+    seed = h31(stamp.strftime('%Y%m%d') + a.slot + form)
+    recent = recent_texts(a.repo)
+    t, portable = type_of(it)
+    facts = spec_facts(it)
+    price = it.get('price', '')
+
+    def pf(arr, k):
+        return pick_fresh(arr, seed * 7 + k, recent)
+
+    spec = '、'.join(facts)
+    spec1 = facts[0].split('・')[0] if facts else ''  # 10/27：「300mL・医薬部外品の表記」のような長い句は最初の数字だけにする
+    if form == 'kuyou':
+        q, ans = pick_fresh([x[0] for x in KU_QA], seed, recent), None
+        ans = next(x[1] for x in KU_QA if x[0] == q)
+    else:
+        _, _, _, q, ans = pick_qa(it, recent, seed)
+    fmt = dict(type=t, spec=spec, spec1=spec1, price=price)
+    if form == 'discover':
+        sc = [s for s in DISC_SCENE if s[1] == portable]  # 持ち歩く物は外の場面、置く物は家の場面
+        fmt['scene'] = pick_fresh([s[0] for s in sc], seed, recent)
+        fmt['verb'] = '連れていきたい' if portable else '置きたい' if t not in ('コードレス掃除機', 'ロボット掃除機', '水拭きクリーナー', 'ドライヤー') else '使いたい'
+    if form == 'n3':
+        pn = price_num(price)
+        units = [u for u in N3_UNITS if pn >= u[2]]
+        fmt['u'], fmt['c'], fmt['base'] = units[seed % len(units)]
+        n = pn / fmt['base']
+        fmt['cnt'] = f'{n:.0f}' if n >= 10 else f'{n:.1f}'.rstrip('0').rstrip('.')
+        if '〜' in price:
+            fmt['price'] = price.replace('〜', 'から')
+    line3 = pf(QA_LINE[form], 2).format(**fmt)
+    close = pf(QA_CLOSE, 3)
+    # 10/27：人間らしく。basic は「返信に置いておきます」の宣伝行を入れず、会話だけにする（商品は返信で十分伝わる）
+    body = [q, ans] if form == 'basic' else [q, ans, line3.rstrip('👇').rstrip()]
+    if not re.search(r'(？|\?)$', body[-1]):
+        body.append(close)
+    text = '\n'.join(body)
+    # 10/27：返信も短く・ユーモア・ここが売り・よかったらどうぞ
+    sell = '／'.join([f for f in facts if '送料無料' not in f][:2])
+    quip = it.get('quip', '') if 'やつ' not in it.get('quip', '') else ''
+    # 10/27：インパクトの1行（事実の数字＋ひとボケ）
+    allt = ' '.join(list(it.get('badges') or []) + list(it.get('points') or []) + [it.get('why') or ''])
+    off = re.search(r'(\d+)%OFF', allt); rk = re.search(r'(リアルタイム|デイリー)\s*(\d+)位', allt)
+    rv = int(re.sub(r'\D', '', str(it.get('reviews') or '')) or 0)
+    imp = ''
+    if off and int(off.group(1)) >= 20:
+        imp = f"🔥 まさかの{off.group(1)}%OFF…これは事件です"
+    elif rk and int(rk.group(2)) <= 10:
+        imp = f"🔥 いま楽天で{rk.group(2)}位。みんな見てます"
+    elif rv >= 300:
+        imp = f"🔥 レビュー{it.get('reviews')}。もう答えは出てるかも"
+    cap = it.get('cap') or {}
+    # 10/28：返信の型（他の人の情報投稿から）。PR表記は1行目の頭・推しの理由を事実から1文・リンクは1つで直前に「押すと何が分かるか」
+    pts = [clip(x.strip(), 40) for x in (it.get('points') or []) if x.strip() and 'やつ' not in x]
+    # 11/02：cap が無い商品は、短い数字だけの推し理由にならないよう商品ごとの quip を優先
+    reason = cap.get('s') or quip or sell or (pts[0] if pts else '')
+    lead = cap.get('o') or imp
+    # 11/05 レイ案・マスター承認：売る投稿はリンクを1通目（本文）に入れる。同業の型「悩み→固有名詞」「比べられる数字」「セール速報」を本文に。
+    # 1行目は【PR】＋あるある・悩みの問いかけ → 先に自分の答え → 商品名を実名で → 価格（確かめた数字だけで比べる） → 速報 → 専用リンク
+    nm = clip(re.sub(r'\s+', ' ', it.get('name', '')).strip(), 44)
+    pl = price_compare(it)
+    flash = flash_line(it, a.repo)
+    link = aff_link(it.get('url'))
+    head = '\n'.join(x for x in ['【PR】' + body[0]] + body[1:2] + [f'👉 {nm}', pl, flash] if x)
+    tail = (f"色・容量・今の価格は、この商品ページで見られます👇\n{link}" if link else f"今の価格とレビューは、楽天ROOMで見られます👇\n{ROOM_URL}")
+    if a.slot == 'night' and form == 'basic':
+        # 11/09 2人で決定（docs/rei.md 購買心理の型）：夜の商品投稿は5行型。結論／根拠3つ以内／総額・送料・納期・デメリット1つ／リンク＋1行目の頭に【PR】。
+        # 数字は商品データにあるものだけ。デメリットと納期は商品データの 'con'・'ship' に確かめた文があるときだけ書く（作らない）
+        why = []
+        if rv >= 30:
+            why.append(f"レビュー{it.get('reviews')}")
+        why += [f for f in facts if '送料無料' not in f and f not in why and f not in nm]  # 11/10：商品名と同じ数字は根拠に繰り返さない
+        why = why[:3]
+        l3 = '／'.join(x for x in [pl, clip(str(it.get('ship') or ''), 24), ('気になる点：' + clip(str(it['con']), 30)) if it.get('con') else ''] if x)
+        head = '\n'.join(x for x in [f'【PR】結論：{t}で迷ったら、これ👉 {nm}', ('根拠：' + '／'.join(why)) if why else '', l3, flash] if x)
+    text = clip(head, 490 - len(tail) - 1) + '\n' + tail
+    # 返信（2通目）はリンクなしの会話用：つかみ＋推しの理由＋問いかけ
+    # 11/05：返信の締めが「怒らないので教えてください」だけだと何を聞いているか分からないので、問いの形の締めにする。つかみが無い商品は hook を使う
+    qclose = [c for c in QA_CLOSE if re.search(r'(？|\?)$', c)]
+    rq = body[-1] if re.search(r'(？|\?)$', body[-1]) and body[-1] != body[0] else (close if close in qclose else pf(qclose, 5))
+    lead = lead or clip(it.get('hook', ''), 40)
+    reply = '\n'.join(x for x in [lead, f"✅ 推しの理由：{reason}" if reason else '', rq] if x)
+    qid = stamp.strftime('%Y%m%d-%H%M') + '-' + a.slot
+    title = ('今夜の1品' if a.slot == 'night' else '今朝の1品') if form == 'basic' else TITLES.get(form, '今日の1品')
+    q = {'id': qid, 'slot': a.slot, 'form': form, 'kind': 'talk' if a.slot == 'noon' else 'single', 'created': stamp.isoformat(timespec='minutes'),
+         'title': title, 'footer': pick([x for x in FOOTERS if '番号' not in x], seed), 'topic': 'ガジェット' if cat_of(it, it.get('_gid', '')) in ('gadget', 'kaden') else '楽天ROOM',
+         'text': text, 'reply': reply, **({'serif': line3} if form == 'n9' else {}),
+         'items': [{'itemcode': it['itemcode'], 'name': it['name'], 'hook': it.get('hook', ''), 'price': price, 'quip': it.get('quip', ''), 'points': facts}]}
+    write_q(a, q, f'{form} 1件')
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--html', required=True)
+    ap.add_argument('--posts', required=True)
+    ap.add_argument('--repo', required=True)
+    ap.add_argument('--slot', choices=SLOTS, default='night')
+    ap.add_argument('--form', choices=sorted(ALL_FORMS), default=None, help='形を指定（使えないときは自動で選ぶ）')
+    ap.add_argument('--force', action='store_true', help='同じ時間帯の投稿が今日すでにあっても作る（削除後の出し直し用）')
+    a = ap.parse_args()
+    if not a.force and slot_done(a.repo, a.slot):
+        print('なし（今日のこの時間帯はもう投稿済み）')
+        return
+    if a.slot == 'late':
+        return late(a)
+    if a.slot == 'night':  # 11/09：合図ページで夜の商品投稿をレイに渡した日（state/handover.json）は、ルイは夜を出さない（二重を防ぐ）
+        try:
+            hand = json.load(open(os.path.join(a.repo, 'state', 'handover.json'), encoding='utf-8'))
+        except Exception:
+            hand = {}
+        if datetime.now(JST).strftime('%Y-%m-%d') in hand:
+            print('なし（今夜の商品投稿はレイが担当）')
+            return
+    has_data = os.path.isfile(a.html) and os.path.getsize(a.html) > 0
+    cands = gather(a) if has_data else []
+    singles = [it for it in cands if it.get('quip') and 'やつ' not in it.get('quip', '')]
+    # 11/03 マスター「センスない、ボツ」：推しの理由が商品名をなぞっただけ（例：『500mlのアップルミント』）の商品は夜に出さない
+    def _thin(it):
+        if (it.get('cap') or {}).get('s'):
+            return False
+        nm = re.sub(r'\s', '', it.get('name', '')).lower()
+        parts = [x for x in re.split(r'[の・、。\s]+', re.sub(r'\s', ' ', it.get('quip', '')).lower()) if x]
+        return not parts or all(x in nm for x in parts)
+    singles = [it for it in singles if not _thin(it)]
+    # 10/27 見直し：商品つきの投稿は表示14〜24回、会話だけの投稿は95〜4851回。朝も会話だけにし、商品とリンクは夜の1本だけにする
+    feasible = {'talk'} if a.slot in ('noon', 'morning') else set()
+    if len(singles) >= 2:
+        feasible.add('summary')
+    if singles:
+        feasible.add('basic')
+    if a.slot == 'night' and datetime.now(JST).weekday() == 4:
+        feasible.add('n12')
+    for fm in ('discover', 'n1', 'n5', 'n2', 'kuyou', 'n11', 'n3', 'n4', 'n9'):
+        if any(single_ok(it, fm) for it in singles):
+            feasible.add(fm)
+    seed = h31(datetime.now(JST).strftime('%Y%m%d') + a.slot)
+    form = a.form if (a.form in FORMS[a.slot] and a.form in feasible) else choose_form(a.repo, a.slot, feasible, seed)
+    if 'n12' in feasible and not a.form:
+        form = 'n12'  # 金曜の夜は「今週買わずに耐えたもの発表会」
+    if not form:
+        print('なし')
+        return
+    if a.slot in ('morning', 'noon'):
+        form = 'talk'  # 形の指定があっても朝・昼は会話だけ（10/27 数字で判断。11/01 昼も商品データを渡されても会話だけに）
+    if form == 'talk':
+        return talk(a.repo, a.slot)
+    if form == 'summary':
+        return summary(a, cands)
+    if form == 'n12':
+        return n12(a)
+    rec = recent_texts(a.repo)
+    SHAPES_NOW[:] = last_shapes(a.repo)
+    ok = [x for x in singles if single_ok(x, form)]
+    # 10/27：情報収集（state/research.json の hot_words）で今話題の種類・ブランドを先に使う
+    try:
+        hot = json.load(open(os.path.join(a.repo, 'state', 'research.json'), encoding='utf-8')).get('hot_words', [])
+    except Exception:
+        hot = []
+    if hot:
+        ok.sort(key=lambda x: not any(w and w.lower() in (x.get('name', '') + x.get('hook', '')).lower() for w in hot))
+    # 10/27 見直し：同じ日に朝「充電器」→夜「モバイルバッテリー」と同じ系統が続いたため、直近3日の商品の系統（充電・音・掃除…）も避ける
+    used = recent_families(a.repo)
+    it = next((x for x in ok if type_of(x)[0] and type_of(x)[0] not in rec and family_of(type_of(x)[0]) not in used),
+              next((x for x in ok if type_of(x)[0] and type_of(x)[0] not in rec), ok[0]))
+    return single(a, form, it)
+
+
+if __name__ == '__main__':
+    main()
