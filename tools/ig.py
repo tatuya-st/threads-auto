@@ -5,7 +5,8 @@
 モード:
   oauth    … 許可コード（CODE）とインスタのアプリの鍵（IG_SECRET）からトークンを作る（60日有効）
   refresh  … トークンを延長する（週1回）
-  insights … アカウントと最近の投稿の数字を state/ig_insights.json に保存する（反応の記録と一緒に実行）
+  insights … アカウントと最近の投稿の数字を state/ig_insights.json に保存する（反応の記録と一緒に実行）。
+             続けて state/ig_comments_queue.json の「まだ」のコメント（京より）を書き込む
 """
 import json, os, subprocess, sys, urllib.parse, urllib.request
 
@@ -99,7 +100,40 @@ def insights():
     with open(os.path.join(ROOT, 'state', 'ig_insights.json'), 'w') as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
     print(f"インスタ：フォロワー{acc.get('followers_count')}・投稿{acc.get('media_count')}件を記録しました")
+    comments(tok)
+
+
+def comments(tok):
+    """state/ig_comments_queue.json の「まだ」のコメントを、言葉が一致する投稿（11/11以降）に1回だけ書き込む。"""
+    import datetime
+    q = os.path.join(ROOT, 'state', 'ig_comments_queue.json')
+    if not os.path.exists(q):
+        return
+    items = json.load(open(q))
+    todo = [i for i in items if i.get('status') == 'まだ']
+    if not todo:
+        return
+    G = 'https://graph.instagram.com/v21.0/'
+    media = call('GET', G + 'me/media', {'fields': 'id,caption,timestamp,permalink', 'limit': 25, 'access_token': tok}, 'コメント先の投稿').get('data', [])
+    now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).strftime('%Y-%m-%dT%H:%M+09:00')
+    for it in todo:
+        hit = [m for m in media if (m.get('timestamp') or '') >= it.get('after', '2026-11-11')
+               and any(k in (m.get('caption') or '') for k in it['keywords'])]
+        if len(hit) != 1:
+            it['note'] = f'{now} 投稿が{len(hit)}件見つかり書き込まず（1件だけのときに書く）'
+            continue
+        try:
+            r = call('POST', G + hit[0]['id'] + '/comments', {'message': it['text'], 'access_token': tok}, 'コメントを書く')
+            it.update(status='済み', comment_id=r.get('id'), permalink=hit[0].get('permalink'), at=now)
+            it.pop('note', None)
+        except SystemExit as e:
+            it['note'] = f'{now} {str(e)[:200]}'
+            if '"code":10' in str(e) or 'permission' in str(e).lower():
+                break
+    with open(q, 'w') as f:
+        json.dump(items, f, ensure_ascii=False, indent=1)
+    print('インスタのコメント：' + '／'.join(f"{i['name']}={i['status']}" for i in items))
 
 
 if __name__ == '__main__':
-    {'oauth': oauth, 'refresh': refresh, 'insights': insights}[sys.argv[1]]()
+    {'oauth': oauth, 'refresh': refresh, 'insights': insights, 'comments': lambda: comments(load())}[sys.argv[1]]()
