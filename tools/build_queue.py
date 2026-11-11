@@ -789,7 +789,16 @@ KU_ASK = ['今週の見送り報告、待ってます👇', 'あなたが最近�
           'みなさんの「えらかった見送り」、聞かせてください👇', '最近いちばん悩んで見送った物、何ですか？👇', '見送ったけど、まだ気になってる物ありますか？👇', '今月の見送り記録、更新した人いますか？👇']
 
 # N15 深夜の物欲つぶやき（2〜4行・商品名やリンクなし・画像なし）
-N15 = ['夜の楽天は、\n昼の私とは別人が見ている。\n朝の私、先に謝っておきます。',  # 11/2：「見るだけと言って開いたアプリ…」は表示67（深夜の平均の3分の1未満）→ 外した
+N15 = [  # 11/12：同じ文が11/04と11/11で重なりThreads側で止まった → 新しい8本を足し、過去に出した文は選ばない
+       'お気に入り登録は無料。\nだから今夜も、無料で散財した気分。',
+       '「比較してるだけ」と言い続けて、\n気づけば午前1時。',
+       '寝る前に1回だけ、と開いたROOM。\n1回の定義が崩壊しています。',
+       '「残りわずか」の文字に、\n毎晩ちゃんと動揺しています。',
+       '財布欠席くん、今日もおつかれ。\n明日も欠席でお願いします。',
+       'レビューを読みすぎて、\n買う前から使いこなした気になってる。',
+       'ポイント倍率を計算してたら、\n眠気だけが倍になった。',
+       '深夜のガジェット記事、\n読むたびに欲しいものが1つ増える。',
+       '夜の楽天は、\n昼の私とは別人が見ている。\n朝の私、先に謝っておきます。',  # 11/2：「見るだけと言って開いたアプリ…」は表示67（深夜の平均の3分の1未満）→ 外した
        '理性はもう寝ました。\n起きているのは物欲だけです。', 'カートの中身が増えるたび、\n財布の目が遠くなる。', '夜のスペック表は、\nなぜかいつもより輝いて見える。',
        'お気に入り登録は無料。\nそう言い聞かせて、今夜も増えていく。', 'ポチる前に寝る。\nそれが今夜の唯一の目標です。', '夜は判断力が下がるらしい。\nだからカートに入れるだけにしておく。\n…入れるだけ。',
        '明日の私へ。\nカートの中身は、夜の私が勝手にやりました。', 'おやすみなさい。\nカートは開けっぱなしで寝ます。']
@@ -1164,7 +1173,10 @@ def late(a):
     prev = [json.load(open(f, encoding='utf-8')).get('text', '') for f in sorted(glob.glob(os.path.join(a.repo, 'queue', '*-late.json')))[-2:]]
     grams = lambda t: {g for g in (t.replace('\n', '')[i:i + 3] for i in range(len(t))) if len(g) == 3 and not set(g) & set('、。…「」 ')}
     pg = set().union(*[grams(t) for t in prev]) if prev else set()
-    pool = [t for t in N15 if not grams(t) & pg] or N15
+    # 一度でも深夜に出した文は使わない（Threadsの二重投稿防止で止まるため）。全部出し切ったときだけ古い順に戻す
+    posted = {json.load(open(f, encoding='utf-8')).get('text', '') for f in glob.glob(os.path.join(a.repo, 'queue', '*-late.json'))}
+    fresh = [t for t in N15 if t not in posted] or N15
+    pool = [t for t in fresh if not grams(t) & pg] or fresh
     text = rotate(a.repo, pool, h31(stamp.strftime('%Y%m%d') + 'late'))
     qid = stamp.strftime('%Y%m%d-%H%M') + '-late'
     write_q(a, {'id': qid, 'slot': 'late', 'form': 'n15', 'kind': 'talk', 'created': stamp.isoformat(timespec='minutes'), 'text': text, 'items': []}, '深夜のつぶやき')
