@@ -134,6 +134,12 @@ def read_comments(tok, media):
         cid = next((i.get('comment_id') for i in json.load(open(q)) if i.get('comment_id')), None)
         if cid:
             tests['京のコメント'] = (cid, {'fields': 'id,text,username,from,media,replies'})
+            tests['京のコメント_文字だけ'] = (cid, {'fields': 'text,timestamp'})
+            tests['京のコメント_素'] = (cid, {})
+    if out:
+        tests['comments_文字だけ'] = (out[0]['media_id'] + '/comments', {'fields': 'id,text,timestamp'})
+        tests['v23_comments'] = ('../v23.0/' + out[0]['media_id'] + '/comments', {'fields': 'id,text,username,timestamp'})
+        tests['me_権限'] = ('me', {'fields': 'user_id,username'})
     for k, (path, prm) in tests.items():
         try:
             dbg[k] = call('GET', G + path, {**prm, 'access_token': tok}, k)
