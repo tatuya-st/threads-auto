@@ -122,6 +122,25 @@ def read_comments(tok, media):
                                               for r in (c.get('replies') or {}).get('data', [])]} for c in cs]})
     with open(os.path.join(ROOT, 'state', 'ig_comments_seen.json'), 'w') as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
+    # 調べ用（コメントが0件で返る原因を探す。原因がわかったら消す）
+    dbg = {}
+    q = os.path.join(ROOT, 'state', 'ig_comments_queue.json')
+    tests = {}
+    if out:
+        mid = out[0]['media_id']
+        tests['comments_素'] = (mid + '/comments', {})
+        tests['media_comments欄'] = (mid, {'fields': 'comments_count,comments{id,text,username,from}'})
+    if os.path.exists(q):
+        cid = next((i.get('comment_id') for i in json.load(open(q)) if i.get('comment_id')), None)
+        if cid:
+            tests['京のコメント'] = (cid, {'fields': 'id,text,username,from,media,replies'})
+    for k, (path, prm) in tests.items():
+        try:
+            dbg[k] = call('GET', G + path, {**prm, 'access_token': tok}, k)
+        except SystemExit as e:
+            dbg[k] = str(e)[:400]
+    with open(os.path.join(ROOT, 'state', 'ig_comments_debug.json'), 'w') as f:
+        json.dump(dbg, f, ensure_ascii=False, indent=1)
 
 
 def comments(tok):
