@@ -1,30 +1,6 @@
 {
- "at": "2026-11-11T07:30+09:00",
+ "at": "2026-11-11T12:30+09:00",
  "notes": [
-  {
-   "what": "自分の成績：11/6昼『イヤホン、今ので何代目？』は約4時間で表示502・コメント7（会話投稿でよく伸びた側）。11/6朝『天気派？ニュース派？』は表示92・コメント9で朝の平均の3分の1以上のため伸びなかった投稿には入れない",
-   "src": "state/insights.json",
-   "src2": "",
-   "done": "TALKSに同じ「今ので何代目？」の形でマウスの問いかけを1つ追加"
-  },
-  {
-   "what": "海外③：Metaは2026年7月からFacebook・Instagramの広告で、AIで作成・編集した広告に『AI生成』の表示を自動で付ける。Threadsへの言及はなく、通常の投稿は従来のAI表示タグのまま",
-   "src": "https://marketingdive.com/news/sociable-meta-adds-updated-disclosure-tags-for-ai-generated-ads/824833",
-   "src2": "",
-   "done": "仕組みの変更なし（広告は出していないため。記録のみ）"
-  },
-  {
-   "what": "公式(f)楽天ROOM：アプリ最新版7.1.0（10/19）は動画投稿の読み込みの遅れの修正のみで、ランク条件・規約の変更は検索でも見当たらず",
-   "src": "https://apps.apple.com/jp/app/id892359812",
-   "src2": "",
-   "done": "変更なし。official_turnを2へ"
-  },
-  {
-   "what": "(e)『A8 高単価』『スレッズ 伸びない』でThreads内の投稿は検索に出ず、クラウドソーシング等の無関係な結果のみ",
-   "src": "https://crowdworks.jp/consultation/threads/9713",
-   "src2": "",
-   "done": "なし（次回は別のクエリで）"
-  },
   {
    "what": "自分の成績：11/6昼『イヤホン、今ので何代目？』が表示880・コメント30で最も伸びた（形は前回『マウス何代目』でTALKSに反映済み）。11/6朝185・夜141は平均の3分の1以上で伸びなかった投稿なし。11/7〜11/8朝は自動投稿のタスクが使用量の上限で止まり投稿なし",
    "src": "state/insights.json",
@@ -240,6 +216,30 @@
    "src": "https://affiliate.rakuten.co.jp/info/",
    "src2": "https://creatorshelp.automattic.com/2026/04/24/social-media-affiliate-marketing-creators/",
    "done": "見送り（未確認のため次回に回す）"
+  },
+  {
+   "what": "自分の成績：11/11朝『家で温まるなら、こたつ？電気毛布？』は約4時間で表示77・コメント6（朝の平均並み）。直近3日に新しい伸びなかった投稿なし",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "変更なし"
+  },
+  {
+   "what": "(b)楽天ブラックフライデー2026は10/19時点で公式未発表（攻略記事は予想のみ）。公式ページはエントリー必須・2025年は上限7000pt",
+   "src": "https://gamewith.jp/gaming-pc/530990",
+   "src2": "",
+   "done": "salesは予想のまま据え置き（公式ページは開く許可が得られず未確認）。TALKSにブラックフライデー前の問いかけを1つ・TALK_KEYSとTOPIC_MAPに追加"
+  },
+  {
+   "what": "公式(f)楽天アフィリエイト：10〜11月のお知らせは料率・規約・禁止事項の変更なし。11/01にSNSリンク別レポート11月分のエントリー開始（11月中・12/10頃メール）",
+   "src": "https://affiliate.rakuten.co.jp/info/",
+   "src2": "",
+   "done": "変更なし・official_turnを1へ"
+  },
+  {
+   "what": "海外③：Metaは2026年3月から商業広告にもAI開示を義務化（自社AIツールは自動ラベル、外部ツールは広告設定で手動開示）。有償の広告が対象で、Threadsへの言及なし",
+   "src": "https://www.contentgrip.com/meta-branded-content-rules-update/",
+   "src2": "",
+   "done": "記録のみ（有償広告は使っていない。AI画像には本文に『※画像はAIで作成したイメージです』を入れる今の決まりで足りる）"
   }
  ],
  "hot_words": [
@@ -554,5 +554,5 @@
    "fix": "TALKSから外した"
   }
  ],
- "official_turn": 0
+ "official_turn": 1
 }
