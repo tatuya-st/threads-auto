@@ -1,30 +1,6 @@
 {
- "at": "2026-11-11T19:35+09:00",
+ "at": "2026-11-12T07:35+09:00",
  "notes": [
-  {
-   "what": "海外④：TikTokで話題のガジェット（Anker Soundcore Boom 2・MOFTの見えないスタンド・instax mini Link 3など）。記事は2025年7月で古い",
-   "src": "https://gagadget.com/en/577968-trending-tiktok-tech/",
-   "src2": "",
-   "done": "見送り（情報が古く『海外で話題』と言える根拠が弱い。使用量上限で他のタスクが止まったため重い商品追加の実行も控えた）"
-  },
-  {
-   "what": "引き寄せの法則（マスター指示11/08）：『前向きに思い描くだけ』は研究では逆効果（理想を空想すると達成したような気分になり、行動のエネルギーと達成数が下がる）。効くのは『欲しいものを具体的に＋邪魔なものを1つ決める』（メンタル・コントラスティング）",
-   "src": "https://www.bps.org.uk/research-digest/why-positive-fantasies-make-your-dreams-less-likely-come-true",
-   "src2": "https://greatergood.berkeley.edu/article/item/can_positive_thinking_really_make_dreams_come_true",
-   "done": "TALKSに引き寄せをつかみにした問いかけ2つ（物欲あるある・年内に欲しいガジェットを1つ書く）、TALK_KEYSに『引き寄せ』"
-  },
-  {
-   "what": "Metaは『いいねした人は〜』『シェアして』のようにいいね・シェア・コメントを求める投稿（エンゲージメントベイト）の表示を下げる。助言やおすすめを求める本当の質問は対象外。引き寄せ系でよくある『この投稿を見た人は〜』型はこれに当たる",
-   "src": "https://about.fb.com/news/2017/12/news-feed-fyi-fighting-engagement-bait-on-facebook/",
-   "src2": "",
-   "done": "BANNEDに『見た人は』『いいねした人』『シェアした人』『リポストした人』と、断定・金運の言葉（波動・願えば叶う・金運・開運など）を追加"
-  },
-  {
-   "what": "自分の成績：11/8昼『楽天ROOM、始めて何年目？』は約6時間で表示248・いいね11・コメント4（会話投稿の平均並み）。11/7・11/8朝は投稿なし。伸びなかった投稿の新規なし",
-   "src": "state/insights.json",
-   "src2": "",
-   "done": "weakの追加なし"
-  },
   {
    "what": "(d)SSD・メモリがAI需要で値上がり中（2026年1〜3月のメモリ価格は前期比最大90％上昇、ノートPCの部材費に占めるCPU・メモリ・SSDの割合は68％へ）",
    "src": "https://atmarkit.itmedia.co.jp/ait/articles/2609/11/news029.html",
@@ -240,6 +216,30 @@
    "src": "https://www.goal.com/jp/%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%B9/when-is-rakuten-black-friday/blt66245e20356341ca",
    "src2": "https://www.phileweb.com/sp/news/hobby/202611/04/8676.html",
    "done": "sales は予想のまま据え置き。公式(f)楽天ROOMは今回開く回数が足りず次回に回す（official_turn据え置き）"
+  },
+  {
+   "what": "自分の成績：直近3日に新しい伸びなかった投稿なし（11/11昼の充電器は表示436・コメント11で昼の平均並み）。朝の予約『朝ごはん何分』は新しい話題で weak と重ならない",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "変更なし"
+  },
+  {
+   "what": "(a)(b)：ROOMのフォロワーを増やす投稿は公開部分に具体策なし。楽天ブラックフライデー2026は11/12朝時点でも公式未発表（記事は2025年版のみ）",
+   "src": "https://library.libecity.com/articles/01M3BRPQC5HPSK8HX9MQ0RNXAE",
+   "src2": "",
+   "done": "sales は予想のまま。終わったマラソンと11/10の5と0の日を消した"
+  },
+  {
+   "what": "海外⑤：Threadsのトレンドは日本と米国で表示。関係ない話題にトピックを付けても反応はほぼなく、トレンドに自分の見方を結びつけた投稿が伸びた（個人1投稿の例で統計ではない）",
+   "src": "https://buffer.com/resources/trending-topics-threads",
+   "src2": "",
+   "done": "記録のみ（build_queue.py は本文の中身に合う話題だけを topic に付ける作りで、すでに合っている）"
+  },
+  {
+   "what": "公式(f)楽天ROOM：ランクボーナスは常時・エントリー不要。S+3%/A+2%/B+1%、上限は月S50万・A10万・B1万円、1商品1,000円。関連商品経由・自分の購入・定期購入・店舗依頼の紹介は対象外。変更点なし",
+   "src": "https://room.rakuten.co.jp/feature/aff_bonus_5/",
+   "src2": "",
+   "done": "変更なし・official_turnを2へ"
   }
  ],
  "hot_words": [
@@ -260,16 +260,6 @@
   "毛玉取り"
  ],
  "sales": [
-  {
-   "label": "お買い物マラソン（公式確認済み・エントリー必須・上限7000pt）",
-   "s": "2026-11-04T20:00",
-   "e": "2026-11-11T01:59"
-  },
-  {
-   "label": "5と0のつく日（エントリー＋楽天カード・月の上限1000pt）",
-   "s": "2026-11-10T00:00",
-   "e": "2026-11-10T23:59"
-  },
   {
    "label": "楽天ブラックフライデースロット（予想・公式未確認）",
    "s": "2026-11-12T10:00",
@@ -565,5 +555,5 @@
    "cause": "書き出しが弱い（1行目が店の名乗りと説明で、答える理由が最後まで見えない。朝の会話の直後で表示も分かれた。会話投稿の平均の3分の1未満）"
   }
  ],
- "official_turn": 1
+ "official_turn": 2
 }
