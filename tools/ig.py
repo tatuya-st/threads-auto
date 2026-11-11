@@ -100,7 +100,28 @@ def insights():
     with open(os.path.join(ROOT, 'state', 'ig_insights.json'), 'w') as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
     print(f"インスタ：フォロワー{acc.get('followers_count')}・投稿{acc.get('media_count')}件を記録しました")
+    try:
+        read_comments(tok, media)
+    except SystemExit as e:
+        print(f'インスタのコメント読み取り：{e}')
     comments(tok)
+
+
+def read_comments(tok, media):
+    """コメントのある投稿（11/11以降）のコメントと返信を state/ig_comments_seen.json に保存する（京が返事を書くため）。"""
+    G = 'https://graph.instagram.com/v21.0/'
+    out = []
+    for m in media:
+        if (m.get('timestamp') or '') < '2026-11-11' or not m.get('comments_count'):
+            continue
+        cs = call('GET', G + m['id'] + '/comments', {'fields': 'id,text,username,timestamp,replies{id,text,username,timestamp}',
+                                                    'limit': 50, 'access_token': tok}, 'コメントを読む').get('data', [])
+        out.append({'media_id': m['id'], 'permalink': m.get('permalink'), 'caption': (m.get('caption') or '')[:40],
+                    'comments': [{'id': c['id'], 'user': c.get('username'), 'text': c.get('text'), 'at': c.get('timestamp'),
+                                  'replies': [{'id': r['id'], 'user': r.get('username'), 'text': r.get('text')}
+                                              for r in (c.get('replies') or {}).get('data', [])]} for c in cs]})
+    with open(os.path.join(ROOT, 'state', 'ig_comments_seen.json'), 'w') as f:
+        json.dump(out, f, ensure_ascii=False, indent=1)
 
 
 def comments(tok):
@@ -117,6 +138,14 @@ def comments(tok):
     media = call('GET', G + 'me/media', {'fields': 'id,caption,timestamp,permalink', 'limit': 25, 'access_token': tok}, 'コメント先の投稿').get('data', [])
     now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).strftime('%Y-%m-%dT%H:%M+09:00')
     for it in todo:
+        if it.get('reply_to'):
+            try:
+                r = call('POST', G + it['reply_to'] + '/replies', {'message': it['text'], 'access_token': tok}, 'コメントに返信')
+                it.update(status='済み', comment_id=r.get('id'), at=now)
+                it.pop('note', None)
+            except SystemExit as e:
+                it['note'] = f'{now} {str(e)[:200]}'
+            continue
         hit = [m for m in media if (m.get('timestamp') or '') >= it.get('after', '2026-11-11')
                and any(k in (m.get('caption') or '') for k in it['keywords'])]
         if len(hit) != 1:
