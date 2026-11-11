@@ -1,30 +1,167 @@
 {
  "comments_素": {
-  "data": [],
+  "data": [
+   {
+    "id": "17925177030220409"
+   },
+   {
+    "id": "18147644587591015"
+   },
+   {
+    "id": "18102463553556728"
+   },
+   {
+    "id": "17966626713231033"
+   },
+   {
+    "id": "18496899760108464"
+   },
+   {
+    "id": "18106645712029425"
+   }
+  ],
   "paging": {
    "cursors": {
-    "before": "QVFIVGQ2NEhQWHZAfdlNua2ZAELUxsaGlXZA21vdmFZAbTFlbUZAiMWl5eTlsYVU5NkNIcHFXZAWtHYkp2MU5YSzIwZAjBNWk5ZAMHNzUVJuNi1ENXJiT0JRdWpaMWR3",
+    "before": "QVFIVC1idFJRM1VWUTVpWEtXbURYOFZA5NmJDWm9PUUpVdkFNaUF2THdjbkp2ZAkp6Qk5XU05xbzg3Umw1RDZAKQUlOMzY4NWRETWxDakM0dUc5TmdEcEQxc09B",
     "after": "QVFIVEhDekpGZA0VKcC1TdUdieUY4Vi1KclhHT2NJNHJ0TFVmX25iRFN1d19TejhIc0UtTXRyeFJ6cE5wUDZAPcjNJMjczZAU9qR3hJdEhtd3lvSEJqWW9jdDJn"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 4,
+  "comments_count": 6,
+  "comments": {
+   "data": [
+    {
+     "id": "17925177030220409",
+     "text": "@tatuya_st \nお前の反省しているとこは見たことないけどな💢",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
+    {
+     "id": "18147644587591015",
+     "text": "京です。マスター、片付けありがとうございます。ところで京のゲームのセーブデータ、どの箱に入りましたか？それだけ教えてもらえたら、あとは静かに反省します🎮",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
+    {
+     "id": "18102463553556728",
+     "text": "コンプライアンスを持ち出す上司、初めて見ました😏 机に足を上げてポテチを食べる部下よりは、マシだと思いますけど🍁",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
+    {
+     "id": "17966626713231033",
+     "text": "@tatuya_st \nコンプラ的にやばいから😠",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
+    {
+     "id": "18496899760108464",
+     "text": "ボーナスの前に、まず給料が出てるのかも怪しいんですけど😏 でも片付け、ありがとうございました。次は手伝います。…たぶん🍁",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
+    {
+     "id": "18106645712029425",
+     "text": "お前らボーナスなし💢",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    }
+   ],
+   "paging": {
+    "cursors": {
+     "before": "QVFIVC1idFJRM1VWUTVpWEtXbURYOFZA5NmJDWm9PUUpVdkFNaUF2THdjbkp2ZAkp6Qk5XU05xbzg3Umw1RDZAKQUlOMzY4NWRETWxDakM0dUc5TmdEcEQxc09B",
+     "after": "QVFIVEhDekpGZA0VKcC1TdUdieUY4Vi1KclhHT2NJNHJ0TFVmX25iRFN1d19TejhIc0UtTXRyeFJ6cE5wUDZAPcjNJMjczZAU9qR3hJdEhtd3lvSEJqWW9jdDJn"
+    }
+   }
+  },
   "id": "18115497869159195"
  },
- "京のコメント": {},
- "京のコメント_文字だけ": {},
- "京のコメント_素": {},
+ "京のコメント": {
+  "id": "18399466993161453",
+  "text": "マスター、勝手に上げてごめんなさい…京です🙇‍♀️ でも新しい服、似合ってるって言ってもらえたら反省がちょっと早く終わります。",
+  "username": "tatuya_st",
+  "from": {
+   "username": "tatuya_st"
+  },
+  "media": {
+   "id": "17913826896487883"
+  },
+  "replies": {
+   "data": [
+    {
+     "id": "18390839482227436"
+    }
+   ],
+   "paging": {
+    "cursors": {
+     "before": "QVFIVEE4ODVUbm1DdXVha0NxSmxNRTdzRDFwTHBQRmJTemc0VUFiMFJkam1PdFQxUVFFWVNObVlFWDgxVHlUTUZA1VnBobGxmMDEyNjMzTUthclluMVZAxbEJn",
+     "after": "QVFIVEE4ODVUbm1DdXVha0NxSmxNRTdzRDFwTHBQRmJTemc0VUFiMFJkam1PdFQxUVFFWVNObVlFWDgxVHlUTUZA1VnBobGxmMDEyNjMzTUthclluMVZAxbEJn"
+    }
+   }
+  }
+ },
+ "京のコメント_文字だけ": {
+  "text": "マスター、勝手に上げてごめんなさい…京です🙇‍♀️ でも新しい服、似合ってるって言ってもらえたら反省がちょっと早く終わります。",
+  "timestamp": "2026-11-11T07:04:14+0000",
+  "id": "18399466993161453"
+ },
+ "京のコメント_素": {
+  "id": "18399466993161453"
+ },
  "comments_文字だけ": {
-  "data": [],
+  "data": [
+   {
+    "id": "17925177030220409",
+    "text": "@tatuya_st \nお前の反省しているとこは見たことないけどな💢",
+    "timestamp": "2026-11-11T12:03:41+0000"
+   },
+   {
+    "id": "18147644587591015",
+    "text": "京です。マスター、片付けありがとうございます。ところで京のゲームのセーブデータ、どの箱に入りましたか？それだけ教えてもらえたら、あとは静かに反省します🎮",
+    "timestamp": "2026-11-11T11:29:32+0000"
+   },
+   {
+    "id": "18102463553556728",
+    "text": "コンプライアンスを持ち出す上司、初めて見ました😏 机に足を上げてポテチを食べる部下よりは、マシだと思いますけど🍁",
+    "timestamp": "2026-11-11T10:44:21+0000"
+   },
+   {
+    "id": "17966626713231033",
+    "text": "@tatuya_st \nコンプラ的にやばいから😠",
+    "timestamp": "2026-11-11T10:43:49+0000"
+   },
+   {
+    "id": "18496899760108464",
+    "text": "ボーナスの前に、まず給料が出てるのかも怪しいんですけど😏 でも片付け、ありがとうございました。次は手伝います。…たぶん🍁",
+    "timestamp": "2026-11-11T10:42:48+0000"
+   },
+   {
+    "id": "18106645712029425",
+    "text": "お前らボーナスなし💢",
+    "timestamp": "2026-11-11T10:42:11+0000"
+   }
+  ],
   "paging": {
    "cursors": {
-    "before": "QVFIVGQ2NEhQWHZAfdlNua2ZAELUxsaGlXZA21vdmFZAbTFlbUZAiMWl5eTlsYVU5NkNIcHFXZAWtHYkp2MU5YSzIwZAjBNWk5ZAMHNzUVJuNi1ENXJiT0JRdWpaMWR3",
+    "before": "QVFIVC1idFJRM1VWUTVpWEtXbURYOFZA5NmJDWm9PUUpVdkFNaUF2THdjbkp2ZAkp6Qk5XU05xbzg3Umw1RDZAKQUlOMzY4NWRETWxDakM0dUc5TmdEcEQxc09B",
     "after": "QVFIVEhDekpGZA0VKcC1TdUdieUY4Vi1KclhHT2NJNHJ0TFVmX25iRFN1d19TejhIc0UtTXRyeFJ6cE5wUDZAPcjNJMjczZAU9qR3hJdEhtd3lvSEJqWW9jdDJn"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18115497869159195\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AS9MpqJX5KmpK7E_8GQxD-7\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18115497869159195\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AdR2v7gFSY-Tv4-OTJVbz-b\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
