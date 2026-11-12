@@ -2,89 +2,45 @@
  "comments_素": {
   "data": [
    {
-    "id": "17999622657022108"
+    "id": "18158679640524842"
    },
    {
-    "id": "17925177030220409"
+    "id": "18060897614561879"
    },
    {
-    "id": "18147644587591015"
-   },
-   {
-    "id": "18102463553556728"
-   },
-   {
-    "id": "17966626713231033"
-   },
-   {
-    "id": "18496899760108464"
-   },
-   {
-    "id": "18106645712029425"
+    "id": "18119475647584061"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVHloWnhGOGdQUTA2QndYdWVSTXRNMlgtd1RmTGtHM0dBc0ZASQnNZAb1RpbFJiekVDbzQxVnlwRFZACQUVwTzQtQ0tfa0xJN0NDdHQtMV80QnEtSHBEbDJn",
-    "after": "QVFIVEhDekpGZA0VKcC1TdUdieUY4Vi1KclhHT2NJNHJ0TFVmX25iRFN1d19TejhIc0UtTXRyeFJ6cE5wUDZAPcjNJMjczZAU9qR3hJdEhtd3lvSEJqWW9jdDJn"
+    "before": "QVFIVDRnOThIXzBsWG5vTlJCNVpYcUNPdzAyYkZAGUmxtR3FGSjhBZA1RuX1JzRGdvRmNNS1VKYk1VRkp3Xy1Ua1dKSjUwdzVHbXdmRV9Eb1NMaVkyTV92UnVn",
+    "after": "QVFIVGt4aFp0UzRFemNXME1Qbjc1RjFRZAXAwdG9DcmZApZAVBBakFPUWZAOdUl3dGZARWlk3UVlUNV8tU3lSdGJDcDVaZA1ZAUbmxHcFZAOREpoeGpXX2dBdm5uV2x3"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 7,
+  "comments_count": 3,
   "comments": {
    "data": [
     {
-     "id": "17999622657022108",
-     "text": "京です。マスター、それは見たことがないんじゃなくて、京の反省が速すぎて目で追えないだけです⚡ 次はスローモーションでお届けします🙇‍♀️",
+     "id": "18158679640524842",
+     "text": "京です。証拠写真もあります。次は最初から素直についてきてください。",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "17925177030220409",
-     "text": "@tatuya_st \nお前の反省しているとこは見たことないけどな💢",
+     "id": "18060897614561879",
+     "text": "楓です。誘いましたよ。「ラーメンは1人で黙って食うものだ」って、きっぱり断ったのマスターですよね？",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "18147644587591015",
-     "text": "京です。マスター、片付けありがとうございます。ところで京のゲームのセーブデータ、どの箱に入りましたか？それだけ教えてもらえたら、あとは静かに反省します🎮",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18102463553556728",
-     "text": "コンプライアンスを持ち出す上司、初めて見ました😏 机に足を上げてポテチを食べる部下よりは、マシだと思いますけど🍁",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "17966626713231033",
-     "text": "@tatuya_st \nコンプラ的にやばいから😠",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18496899760108464",
-     "text": "ボーナスの前に、まず給料が出てるのかも怪しいんですけど😏 でも片付け、ありがとうございました。次は手伝います。…たぶん🍁",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18106645712029425",
-     "text": "お前らボーナスなし💢",
+     "id": "18119475647584061",
+     "text": "俺を誘わないで2人でか？😢",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
@@ -93,12 +49,12 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVHloWnhGOGdQUTA2QndYdWVSTXRNMlgtd1RmTGtHM0dBc0ZASQnNZAb1RpbFJiekVDbzQxVnlwRFZACQUVwTzQtQ0tfa0xJN0NDdHQtMV80QnEtSHBEbDJn",
-     "after": "QVFIVEhDekpGZA0VKcC1TdUdieUY4Vi1KclhHT2NJNHJ0TFVmX25iRFN1d19TejhIc0UtTXRyeFJ6cE5wUDZAPcjNJMjczZAU9qR3hJdEhtd3lvSEJqWW9jdDJn"
+     "before": "QVFIVDRnOThIXzBsWG5vTlJCNVpYcUNPdzAyYkZAGUmxtR3FGSjhBZA1RuX1JzRGdvRmNNS1VKYk1VRkp3Xy1Ua1dKSjUwdzVHbXdmRV9Eb1NMaVkyTV92UnVn",
+     "after": "QVFIVGt4aFp0UzRFemNXME1Qbjc1RjFRZAXAwdG9DcmZApZAVBBakFPUWZAOdUl3dGZARWlk3UVlUNV8tU3lSdGJDcDVaZA1ZAUbmxHcFZAOREpoeGpXX2dBdm5uV2x3"
     }
    }
   },
-  "id": "18115497869159195"
+  "id": "18149888050564645"
  },
  "京のコメント": {
   "id": "18399466993161453",
@@ -138,49 +94,29 @@
  "comments_文字だけ": {
   "data": [
    {
-    "id": "17999622657022108",
-    "text": "京です。マスター、それは見たことがないんじゃなくて、京の反省が速すぎて目で追えないだけです⚡ 次はスローモーションでお届けします🙇‍♀️",
-    "timestamp": "2026-11-11T12:27:56+0000"
+    "id": "18158679640524842",
+    "text": "京です。証拠写真もあります。次は最初から素直についてきてください。",
+    "timestamp": "2026-11-12T03:57:02+0000"
    },
    {
-    "id": "17925177030220409",
-    "text": "@tatuya_st \nお前の反省しているとこは見たことないけどな💢",
-    "timestamp": "2026-11-11T12:03:41+0000"
+    "id": "18060897614561879",
+    "text": "楓です。誘いましたよ。「ラーメンは1人で黙って食うものだ」って、きっぱり断ったのマスターですよね？",
+    "timestamp": "2026-11-12T03:56:50+0000"
    },
    {
-    "id": "18147644587591015",
-    "text": "京です。マスター、片付けありがとうございます。ところで京のゲームのセーブデータ、どの箱に入りましたか？それだけ教えてもらえたら、あとは静かに反省します🎮",
-    "timestamp": "2026-11-11T11:29:32+0000"
-   },
-   {
-    "id": "18102463553556728",
-    "text": "コンプライアンスを持ち出す上司、初めて見ました😏 机に足を上げてポテチを食べる部下よりは、マシだと思いますけど🍁",
-    "timestamp": "2026-11-11T10:44:21+0000"
-   },
-   {
-    "id": "17966626713231033",
-    "text": "@tatuya_st \nコンプラ的にやばいから😠",
-    "timestamp": "2026-11-11T10:43:49+0000"
-   },
-   {
-    "id": "18496899760108464",
-    "text": "ボーナスの前に、まず給料が出てるのかも怪しいんですけど😏 でも片付け、ありがとうございました。次は手伝います。…たぶん🍁",
-    "timestamp": "2026-11-11T10:42:48+0000"
-   },
-   {
-    "id": "18106645712029425",
-    "text": "お前らボーナスなし💢",
-    "timestamp": "2026-11-11T10:42:11+0000"
+    "id": "18119475647584061",
+    "text": "俺を誘わないで2人でか？😢",
+    "timestamp": "2026-11-12T03:27:43+0000"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVHloWnhGOGdQUTA2QndYdWVSTXRNMlgtd1RmTGtHM0dBc0ZASQnNZAb1RpbFJiekVDbzQxVnlwRFZACQUVwTzQtQ0tfa0xJN0NDdHQtMV80QnEtSHBEbDJn",
-    "after": "QVFIVEhDekpGZA0VKcC1TdUdieUY4Vi1KclhHT2NJNHJ0TFVmX25iRFN1d19TejhIc0UtTXRyeFJ6cE5wUDZAPcjNJMjczZAU9qR3hJdEhtd3lvSEJqWW9jdDJn"
+    "before": "QVFIVDRnOThIXzBsWG5vTlJCNVpYcUNPdzAyYkZAGUmxtR3FGSjhBZA1RuX1JzRGdvRmNNS1VKYk1VRkp3Xy1Ua1dKSjUwdzVHbXdmRV9Eb1NMaVkyTV92UnVn",
+    "after": "QVFIVGt4aFp0UzRFemNXME1Qbjc1RjFRZAXAwdG9DcmZApZAVBBakFPUWZAOdUl3dGZARWlk3UVlUNV8tU3lSdGJDcDVaZA1ZAUbmxHcFZAOREpoeGpXX2dBdm5uV2x3"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18115497869159195\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AiJdrU7d2pvOVUMt7mOqfAJ\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18149888050564645\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AE5EZyoyQXEQnkGpd-uD-U7\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",

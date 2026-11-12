@@ -3503,11 +3503,11 @@
  },
  "2026-11-12": {
   "account": {
-   "views": 1499,
-   "likes": 12,
-   "replies": 72,
+   "views": 1565,
+   "likes": 17,
+   "replies": 88,
    "reposts": 0,
-   "followers_count": 1061
+   "followers_count": 1062
   },
   "posts": {
    "20261101-0902-morning": {
@@ -3707,22 +3707,29 @@
     "quotes": 0
    },
    "20261111-0744-morning": {
-    "views": 171,
+    "views": 174,
     "likes": 3,
-    "replies": 28,
+    "replies": 33,
     "reposts": 0,
     "quotes": 0
    },
    "20261111-1243-noon": {
-    "views": 490,
-    "likes": 7,
+    "views": 494,
+    "likes": 8,
     "replies": 11,
     "reposts": 0,
     "quotes": 0
    },
    "20261112-0552-morning": {
-    "views": 63,
-    "likes": 3,
+    "views": 75,
+    "likes": 4,
+    "replies": 0,
+    "reposts": 0,
+    "quotes": 0
+   },
+   "20261112-1243-noon": {
+    "views": 17,
+    "likes": 1,
     "replies": 0,
     "reposts": 0,
     "quotes": 0
