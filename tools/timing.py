@@ -20,8 +20,18 @@ def main():
     pending = []
     for f in sorted(glob.glob(os.path.join(ROOT, 'queue', '*.json'))):
         qid = os.path.splitext(os.path.basename(f))[0]
-        if not os.path.exists(os.path.join(ROOT, 'state', 'posted', qid + '.json')):
-            pending.append(qid)
+        if os.path.exists(os.path.join(ROOT, 'state', 'posted', qid + '.json')):
+            continue
+        # hold（楓の画像待ち・持ち越しなど。文字の hold も含む）と、先の日付で用意した投稿は
+        # publish.py が出さないので、待ち時間の基準にしない（11/12：翌日分の持ち越しで深夜が20時間待ちになった）
+        try:
+            if json.load(open(f, encoding='utf-8')).get('hold'):
+                continue
+            if made_at(qid) > datetime.now(JST) + timedelta(minutes=5):
+                continue
+        except (ValueError, OSError):
+            pass
+        pending.append(qid)
     if not pending:
         # コメント返信（queue/replies/）だけのときは待たずにすぐ出す
         print(0)
