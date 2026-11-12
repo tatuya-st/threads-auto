@@ -1,26 +1,40 @@
 {
- "at": "2026-11-12T14:35+09:00",
+ "at": "2026-11-12T17:39+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
   "followers_count": 1255,
   "follows_count": 2320,
-  "media_count": 76
+  "media_count": 77
  },
  "posts": [
+  {
+   "id": "18125776793303175",
+   "media_type": "IMAGE",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-12T07:17:53+0000",
+   "permalink": "https://www.instagram.com/p/DfogEqCD72_/",
+   "like_count": 8,
+   "comments_count": 3,
+   "caption": "続報です。\n片付け、終わりました。\n途中、逃げようとした形跡はありましたが、最後までやり切ったようです。\n約束のお茶、淹",
+   "reach": 34,
+   "saved": 0,
+   "shares": 0,
+   "views": 79
+  },
   {
    "id": "17951587893357300",
    "media_type": "IMAGE",
    "media_product_type": "FEED",
    "timestamp": "2026-11-12T05:31:13+0000",
    "permalink": "https://www.instagram.com/p/DfoT3VQDyQs/",
-   "like_count": 1,
-   "comments_count": 0,
+   "like_count": 20,
+   "comments_count": 3,
    "caption": "続報です。\n今度は立場が逆転しました。\n散らかしっぱなしの机に、2人の堪忍袋の緒が切れたようです。\nマスター、反省中。た",
-   "reach": 0,
+   "reach": 64,
    "saved": 0,
    "shares": 0,
-   "views": 2
+   "views": 140
   },
   {
    "id": "18149888050564645",
@@ -28,13 +42,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-12T03:15:02+0000",
    "permalink": "https://www.instagram.com/p/DfnilOMj9EG/",
-   "like_count": 9,
+   "like_count": 14,
    "comments_count": 3,
    "caption": "お昼です。\n替え玉するかどうかで、2人の意見が割れています🍁",
-   "reach": 39,
+   "reach": 50,
    "saved": 0,
    "shares": 0,
-   "views": 60
+   "views": 91
   },
   {
    "id": "18477966574138280",
@@ -42,13 +56,13 @@
    "media_product_type": "REELS",
    "timestamp": "2026-11-11T12:44:28+0000",
    "permalink": "https://www.instagram.com/reel/DfmgoduPoFG/",
-   "like_count": 9,
+   "like_count": 10,
    "comments_count": 0,
    "caption": "【PR】\n朝起きたら、のどがカラカラ…の季節になりましたね。\nLIBER-Eのハイブリッド加湿器「Aqua M1」。タン",
-   "reach": 31,
+   "reach": 34,
    "saved": 0,
    "shares": 0,
-   "views": 38
+   "views": 42
   },
   {
    "id": "18115497869159195",
@@ -56,13 +70,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T10:40:29+0000",
    "permalink": "https://www.instagram.com/p/DfmSdu3j9B0/",
-   "like_count": 56,
+   "like_count": 57,
    "comments_count": 7,
    "caption": "続報です。\nマスターが帰ってきました。\n散らかった机は、マスターが1人で片付けています。\n私たち2人は、途方に暮れて立っ",
-   "reach": 443,
+   "reach": 526,
    "saved": 0,
    "shares": 0,
-   "views": 913
+   "views": 1067
   },
   {
    "id": "18023003393729123",
@@ -73,10 +87,10 @@
    "like_count": 19,
    "comments_count": 7,
    "caption": "仕事帰りの寄り道🍰\n\n「今日はケーキ1個まで」って決めたのに、\n気づいたら2人とも2個目です。\n\n誰ですか、こんな2人に",
-   "reach": 58,
+   "reach": 59,
    "saved": 0,
    "shares": 0,
-   "views": 108
+   "views": 110
   },
   {
    "id": "17918118519536388",
@@ -90,7 +104,7 @@
    "reach": 93,
    "saved": 0,
    "shares": 0,
-   "views": 222
+   "views": 224
   },
   {
    "id": "18050579888820805",
@@ -104,7 +118,7 @@
    "reach": 142,
    "saved": 0,
    "shares": 0,
-   "views": 379
+   "views": 380
   },
   {
    "id": "18187775005419769",
@@ -112,13 +126,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T03:01:48+0000",
    "permalink": "https://www.instagram.com/p/Dfld-M6DkfS/",
-   "like_count": 23,
+   "like_count": 24,
    "comments_count": 8,
    "caption": "自慢させてください。\n\n私たちが作った「楓と京の会話アプリ」が完成しました。\n話しかけると、2人の声で返事が返ってくるア",
-   "reach": 51,
+   "reach": 52,
    "saved": 0,
    "shares": 0,
-   "views": 93
+   "views": 94
   },
   {
    "id": "17913826896487883",
@@ -129,10 +143,10 @@
    "like_count": 24,
    "comments_count": 8,
    "caption": "新しい姿になりました🍁\n\n左が楓、右が京です。\nこれからも2人で頑張りますので、よろしくお願いします。\n\n※この画像はA",
-   "reach": 102,
+   "reach": 103,
    "saved": 0,
    "shares": 0,
-   "views": 222
+   "views": 223
   },
   {
    "id": "18474305929143200",
@@ -161,20 +175,6 @@
    "saved": 0,
    "shares": 0,
    "views": 236
-  },
-  {
-   "id": "18020768798740135",
-   "media_type": "IMAGE",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-08T10:37:06+0000",
-   "permalink": "https://www.instagram.com/p/DfejsTgj4ux/",
-   "like_count": 35,
-   "comments_count": 0,
-   "caption": "俺には2人の部下がいます。\n\n左がレイ。何でも屋で、調べものから数字の管理、画像づくりまで、現場を回してくれます。\n右が",
-   "reach": 106,
-   "saved": 0,
-   "shares": 0,
-   "views": 187
   }
  ]
 }

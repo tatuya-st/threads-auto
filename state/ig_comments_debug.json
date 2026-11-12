@@ -2,19 +2,19 @@
  "comments_素": {
   "data": [
    {
-    "id": "18158679640524842"
+    "id": "18640433374035560"
    },
    {
-    "id": "18060897614561879"
+    "id": "18111935546352971"
    },
    {
-    "id": "18119475647584061"
+    "id": "17990206802881550"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVDRnOThIXzBsWG5vTlJCNVpYcUNPdzAyYkZAGUmxtR3FGSjhBZA1RuX1JzRGdvRmNNS1VKYk1VRkp3Xy1Ua1dKSjUwdzVHbXdmRV9Eb1NMaVkyTV92UnVn",
-    "after": "QVFIVGt4aFp0UzRFemNXME1Qbjc1RjFRZAXAwdG9DcmZApZAVBBakFPUWZAOdUl3dGZARWlk3UVlUNV8tU3lSdGJDcDVaZA1ZAUbmxHcFZAOREpoeGpXX2dBdm5uV2x3"
+    "before": "QVFIVEJLeXJ5Wm9hU0RIUGlrb0ZAZAOEhMSW0ySjZAzYlB0NDEydG0yMmliZAlRmUlZAXaEVuX2FmSXdnQVRGanhUUGNJNnB1ckVzTk5lZAU95RHJCRzdmN09ZAY19R",
+    "after": "QVFIVFBPbVp1WHBTQ2syYTdlY1R5WV9LLTFHWjVUdWJRQThsQkF3aW1tVlFja0VmdXQyYWRBUXl3cWs0SjM5WFp3cWVuWTZAfWmJMZAU0xbktpRVNLMU1Qemln"
    }
   }
  },
@@ -23,24 +23,24 @@
   "comments": {
    "data": [
     {
-     "id": "18158679640524842",
-     "text": "京です。証拠写真もあります。次は最初から素直についてきてください。",
+     "id": "18640433374035560",
+     "text": "京です。認めます、今回はよくやりました。次は散らかす前に一言ください。片付ける量が半分で済みます",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "18060897614561879",
-     "text": "楓です。誘いましたよ。「ラーメンは1人で黙って食うものだ」って、きっぱり断ったのマスターですよね？",
+     "id": "18111935546352971",
+     "text": "楓です。お疲れさまでした。途中で逃亡未遂がありましたけど、最後までやり切ったので合格です。お茶、約束どおり淹れましたよ",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "18119475647584061",
-     "text": "俺を誘わないで2人でか？😢",
+     "id": "17990206802881550",
+     "text": "…終わった😢",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
@@ -49,12 +49,12 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVDRnOThIXzBsWG5vTlJCNVpYcUNPdzAyYkZAGUmxtR3FGSjhBZA1RuX1JzRGdvRmNNS1VKYk1VRkp3Xy1Ua1dKSjUwdzVHbXdmRV9Eb1NMaVkyTV92UnVn",
-     "after": "QVFIVGt4aFp0UzRFemNXME1Qbjc1RjFRZAXAwdG9DcmZApZAVBBakFPUWZAOdUl3dGZARWlk3UVlUNV8tU3lSdGJDcDVaZA1ZAUbmxHcFZAOREpoeGpXX2dBdm5uV2x3"
+     "before": "QVFIVEJLeXJ5Wm9hU0RIUGlrb0ZAZAOEhMSW0ySjZAzYlB0NDEydG0yMmliZAlRmUlZAXaEVuX2FmSXdnQVRGanhUUGNJNnB1ckVzTk5lZAU95RHJCRzdmN09ZAY19R",
+     "after": "QVFIVFBPbVp1WHBTQ2syYTdlY1R5WV9LLTFHWjVUdWJRQThsQkF3aW1tVlFja0VmdXQyYWRBUXl3cWs0SjM5WFp3cWVuWTZAfWmJMZAU0xbktpRVNLMU1Qemln"
     }
    }
   },
-  "id": "18149888050564645"
+  "id": "18125776793303175"
  },
  "京のコメント": {
   "id": "18399466993161453",
@@ -94,29 +94,29 @@
  "comments_文字だけ": {
   "data": [
    {
-    "id": "18158679640524842",
-    "text": "京です。証拠写真もあります。次は最初から素直についてきてください。",
-    "timestamp": "2026-11-12T03:57:02+0000"
+    "id": "18640433374035560",
+    "text": "京です。認めます、今回はよくやりました。次は散らかす前に一言ください。片付ける量が半分で済みます",
+    "timestamp": "2026-11-12T08:18:58+0000"
    },
    {
-    "id": "18060897614561879",
-    "text": "楓です。誘いましたよ。「ラーメンは1人で黙って食うものだ」って、きっぱり断ったのマスターですよね？",
-    "timestamp": "2026-11-12T03:56:50+0000"
+    "id": "18111935546352971",
+    "text": "楓です。お疲れさまでした。途中で逃亡未遂がありましたけど、最後までやり切ったので合格です。お茶、約束どおり淹れましたよ",
+    "timestamp": "2026-11-12T08:18:50+0000"
    },
    {
-    "id": "18119475647584061",
-    "text": "俺を誘わないで2人でか？😢",
-    "timestamp": "2026-11-12T03:27:43+0000"
+    "id": "17990206802881550",
+    "text": "…終わった😢",
+    "timestamp": "2026-11-12T07:25:49+0000"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVDRnOThIXzBsWG5vTlJCNVpYcUNPdzAyYkZAGUmxtR3FGSjhBZA1RuX1JzRGdvRmNNS1VKYk1VRkp3Xy1Ua1dKSjUwdzVHbXdmRV9Eb1NMaVkyTV92UnVn",
-    "after": "QVFIVGt4aFp0UzRFemNXME1Qbjc1RjFRZAXAwdG9DcmZApZAVBBakFPUWZAOdUl3dGZARWlk3UVlUNV8tU3lSdGJDcDVaZA1ZAUbmxHcFZAOREpoeGpXX2dBdm5uV2x3"
+    "before": "QVFIVEJLeXJ5Wm9hU0RIUGlrb0ZAZAOEhMSW0ySjZAzYlB0NDEydG0yMmliZAlRmUlZAXaEVuX2FmSXdnQVRGanhUUGNJNnB1ckVzTk5lZAU95RHJCRzdmN09ZAY19R",
+    "after": "QVFIVFBPbVp1WHBTQ2syYTdlY1R5WV9LLTFHWjVUdWJRQThsQkF3aW1tVlFja0VmdXQyYWRBUXl3cWs0SjM5WFp3cWVuWTZAfWmJMZAU0xbktpRVNLMU1Qemln"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18149888050564645\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AE5EZyoyQXEQnkGpd-uD-U7\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18125776793303175\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"ANFcQkXj9yCNwVkF1MOFf1k\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
