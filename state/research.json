@@ -1,24 +1,6 @@
 {
- "at": "2026-11-12T12:35+09:00",
+ "at": "2026-11-12T19:25+09:00",
  "notes": [
-  {
-   "what": "(a)楽天ROOM：相互フォローで数か月にフォロワー約1000人増やしても売上はほぼ増えず、数を追うのをやめて買う人とつながる方針に変えたという体験（具体策は会員限定で読まず）",
-   "src": "https://library.libecity.com/articles/01KYA2SM1NXY5ZWH0GEKWRPZ2G",
-   "src2": "",
-   "done": "見送り（相互フォロー目的の大量フォローは採用しない。12/03判定のフォロワー数は、問いかけ投稿からの自然な訪問で伸ばす方針のまま）"
-  },
-  {
-   "what": "海外①：Threadsのインサイトが9月に刷新（Meta AIの要約・直近比で高い/低い表示・反応したコミュニティ・リーチの高い曜日と時間帯）。リンクのクリック数は表示されなくなり、Metaは「検討中」",
-   "src": "https://engadget.com/2251592/threads-is-overhauling-its-in-app-analytics-with-more-details-except-for-link-clicks",
-   "src2": "",
-   "done": "記録のみ（API側の数字で成績を見ている。クリック数は今までどおり楽天の管理画面で週1確認）"
-  },
-  {
-   "what": "公式(f)消費者庁：ステマ規制のページに2026年の運用基準の改正はなし。景品表示法ガイドブック2026年3月改訂版で、アフィリエイト広告も広告主の管理の対象と明記。業界のWOMJガイドラインは2026年1月7日改訂（社員クチコミの明示文言の変更）",
-   "src": "https://www.caa.go.jp/policies/policy/representation/fair_labeling/stealth_marketing/",
-   "src2": "https://www.caa.go.jp/policies/policy/representation/fair_labeling/assets/representation_cms201_260723_01.pdf",
-   "done": "変更なし（【PR】を1行目の頭に置く今の処理で足りる）。official_turnを0（楽天アフィリエイト公式）に戻した"
-  },
   {
    "what": "自分の成績：11/8深夜『財布「もう寝なよ」』が約12時間で表示41で伸びず（書き出しが弱い）。11/8昼『ROOM何年目』は表示480・コメント21で平均並み。11/9朝『結露』はまだ3時間未満のデータで判定は次回",
    "src": "state/insights.json",
@@ -240,6 +222,24 @@
    "src": "https://event.rakuten.co.jp/family/campaign/blackfriday/",
    "src2": "",
    "done": "salesに反映済み。official_turnを進めた"
+  },
+  {
+   "what": "自分の成績：11/12昼『ROOMで紹介する商品、決める前に何を見る？』は約5時間で表示103・いいね6・コメント0。昼の平均の3分の1は超えるので伸びなかった投稿には入れない。直近3日に新しいweakなし",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "記録のみ"
+  },
+  {
+   "what": "(e)：リンク付き投稿は反応が下がるという調査（ニーマン・ラボ、18メディア）はXの話でThreadsへの言及なし",
+   "src": "https://gigazine.net/news/20260410-x-post-with-link-low-engagement-with-link/",
+   "src2": "",
+   "done": "見送り（Xの調査でThreadsにそのまま当てはまらない。売る投稿は本文1通目にリンクの形を崩さない）"
+  },
+  {
+   "what": "公式(f)/海外⑤Meta：Threads APIの最近の更新は長文テキスト添付（最大1万字）・返信の承認・投稿/削除のWebhook・テキストのみのゴースト投稿は24時間で自動アーカイブ。リンクや投稿数の上限の変更はなし",
+   "src": "https://developers.facebook.com/blog/post/2026/04/14/whats-new-in-the-threads-api/",
+   "src2": "",
+   "done": "変更なしを確認（publish.pyの上限・リンク間隔はそのまま）。official_turnを進めた"
   }
  ],
  "hot_words": [
@@ -568,5 +568,5 @@
    "fix": "MORNING_TALKSから外した"
   }
  ],
- "official_turn": 3
+ "official_turn": 4
 }
