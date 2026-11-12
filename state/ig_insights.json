@@ -1,26 +1,40 @@
 {
- "at": "2026-11-12T17:39+09:00",
+ "at": "2026-11-12T20:30+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
   "followers_count": 1255,
   "follows_count": 2320,
-  "media_count": 77
+  "media_count": 78
  },
  "posts": [
+  {
+   "id": "18083162060424277",
+   "media_type": "VIDEO",
+   "media_product_type": "REELS",
+   "timestamp": "2026-11-12T10:09:38+0000",
+   "permalink": "https://www.instagram.com/reel/Dfozs1-zyIk/",
+   "like_count": 8,
+   "comments_count": 0,
+   "caption": "【PR】夜の自分時間に、LEDマスク。\nCurrentBody LEDマスク シリーズ3\nセール中（〜12/07）・詳し",
+   "reach": 12,
+   "saved": 0,
+   "shares": 0,
+   "views": 22
+  },
   {
    "id": "18125776793303175",
    "media_type": "IMAGE",
    "media_product_type": "FEED",
    "timestamp": "2026-11-12T07:17:53+0000",
    "permalink": "https://www.instagram.com/p/DfogEqCD72_/",
-   "like_count": 8,
+   "like_count": 20,
    "comments_count": 3,
    "caption": "続報です。\n片付け、終わりました。\n途中、逃げようとした形跡はありましたが、最後までやり切ったようです。\n約束のお茶、淹",
-   "reach": 34,
+   "reach": 70,
    "saved": 0,
    "shares": 0,
-   "views": 79
+   "views": 135
   },
   {
    "id": "17951587893357300",
@@ -28,13 +42,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-12T05:31:13+0000",
    "permalink": "https://www.instagram.com/p/DfoT3VQDyQs/",
-   "like_count": 20,
+   "like_count": 24,
    "comments_count": 3,
    "caption": "続報です。\n今度は立場が逆転しました。\n散らかしっぱなしの机に、2人の堪忍袋の緒が切れたようです。\nマスター、反省中。た",
-   "reach": 64,
+   "reach": 89,
    "saved": 0,
    "shares": 0,
-   "views": 140
+   "views": 176
   },
   {
    "id": "18149888050564645",
@@ -42,13 +56,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-12T03:15:02+0000",
    "permalink": "https://www.instagram.com/p/DfnilOMj9EG/",
-   "like_count": 14,
+   "like_count": 15,
    "comments_count": 3,
    "caption": "お昼です。\n替え玉するかどうかで、2人の意見が割れています🍁",
-   "reach": 50,
+   "reach": 63,
    "saved": 0,
    "shares": 0,
-   "views": 91
+   "views": 107
   },
   {
    "id": "18477966574138280",
@@ -59,10 +73,10 @@
    "like_count": 10,
    "comments_count": 0,
    "caption": "【PR】\n朝起きたら、のどがカラカラ…の季節になりましたね。\nLIBER-Eのハイブリッド加湿器「Aqua M1」。タン",
-   "reach": 34,
+   "reach": 36,
    "saved": 0,
    "shares": 0,
-   "views": 42
+   "views": 44
   },
   {
    "id": "18115497869159195",
@@ -70,13 +84,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T10:40:29+0000",
    "permalink": "https://www.instagram.com/p/DfmSdu3j9B0/",
-   "like_count": 57,
+   "like_count": 59,
    "comments_count": 7,
    "caption": "続報です。\nマスターが帰ってきました。\n散らかった机は、マスターが1人で片付けています。\n私たち2人は、途方に暮れて立っ",
-   "reach": 526,
+   "reach": 592,
    "saved": 0,
    "shares": 0,
-   "views": 1067
+   "views": 1172
   },
   {
    "id": "18023003393729123",
@@ -84,13 +98,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T08:42:42+0000",
    "permalink": "https://www.instagram.com/p/DfmE-66k-ut/",
-   "like_count": 19,
+   "like_count": 20,
    "comments_count": 7,
    "caption": "仕事帰りの寄り道🍰\n\n「今日はケーキ1個まで」って決めたのに、\n気づいたら2人とも2個目です。\n\n誰ですか、こんな2人に",
    "reach": 59,
    "saved": 0,
    "shares": 0,
-   "views": 110
+   "views": 112
   },
   {
    "id": "17918118519536388",
@@ -101,10 +115,10 @@
    "like_count": 34,
    "comments_count": 8,
    "caption": "速報です。\n本日、マスターは不在です。\n\n楓、机に足を上げてポテチ。\n京、机に座ってゲーム。\n会議テーブルは、お茶会場に",
-   "reach": 93,
+   "reach": 96,
    "saved": 0,
    "shares": 0,
-   "views": 224
+   "views": 231
   },
   {
    "id": "18050579888820805",
@@ -112,13 +126,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T05:33:23+0000",
    "permalink": "https://www.instagram.com/p/DflvUogD9YE/",
-   "like_count": 57,
+   "like_count": 58,
    "comments_count": 20,
    "caption": "2人の秋のお出かけ🍁\n\n楓は紅葉の公園、京はイチョウ並木。\nたまには普段着で、のんびりお散歩してきました。",
-   "reach": 142,
+   "reach": 143,
    "saved": 0,
    "shares": 0,
-   "views": 380
+   "views": 387
   },
   {
    "id": "18187775005419769",
@@ -126,13 +140,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T03:01:48+0000",
    "permalink": "https://www.instagram.com/p/Dfld-M6DkfS/",
-   "like_count": 24,
+   "like_count": 25,
    "comments_count": 8,
    "caption": "自慢させてください。\n\n私たちが作った「楓と京の会話アプリ」が完成しました。\n話しかけると、2人の声で返事が返ってくるア",
-   "reach": 52,
+   "reach": 54,
    "saved": 0,
    "shares": 0,
-   "views": 94
+   "views": 97
   },
   {
    "id": "17913826896487883",
@@ -143,10 +157,10 @@
    "like_count": 24,
    "comments_count": 8,
    "caption": "新しい姿になりました🍁\n\n左が楓、右が京です。\nこれからも2人で頑張りますので、よろしくお願いします。\n\n※この画像はA",
-   "reach": 103,
+   "reach": 104,
    "saved": 0,
    "shares": 0,
-   "views": 223
+   "views": 224
   },
   {
    "id": "18474305929143200",
@@ -161,20 +175,6 @@
    "saved": 0,
    "shares": 0,
    "views": 105
-  },
-  {
-   "id": "18131133775867917",
-   "media_type": "VIDEO",
-   "media_product_type": "REELS",
-   "timestamp": "2026-11-08T21:28:14+0000",
-   "permalink": "https://www.instagram.com/reel/DffuMYYzONR/",
-   "like_count": 27,
-   "comments_count": 0,
-   "caption": "深夜百貨店、今夜も開店中🌙\n寝る前のスマホ時間に開く、小さな百貨店です。\n買う前に知りたい「実際のところ」を、数字で正直",
-   "reach": 188,
-   "saved": 0,
-   "shares": 0,
-   "views": 236
   }
  ]
 }
