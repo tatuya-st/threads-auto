@@ -10,6 +10,7 @@
 ・次の山：11/10 ヒーターリール19:00投稿済み（初期数字は下記台帳。KISO連動パック2通目は出し直しまで完了・検品合格）、・会話アプリ完成11/12に前倒し（声は2人とも女性で固定）、11/11 01:59 お買い物マラソン終了、11/12 CurrentBody投稿＋リール（リンク取得済み・見送り合意は覆った）、11/12 CurrentBody特典期限・AmazonスマイルSALE終了
 
 ■投稿台帳（新しい順）
+・11/12 深夜 京／Threads／会話投稿「ポイント倍率を計算してたら、眠気だけが倍になった。」（商品なし。11/13 00:50投稿）https://www.threads.com/@tatuya_st/post/DfpayTfEYc6
 ・11/12 夜 楓／Threads／CurrentBody商品投稿（CurrentBody LEDマスク シリーズ3、【PR】1行目頭・画像2枚・A8リンク（素材010）入り。価格行は代替行「セール中（〜12/07）・詳しくは商品ページで」、FANCB名なし）https://www.threads.com/@tatuya_st/post/Dfo-oEVjxWe（20:45投稿。実行時ゲートG1〜G6すべて合格、公開後の読み戻しで【PR】・リンクの一致を確認。A8掲載URL提出完了（提出済み一覧で確認、更新日時2026-11-12 20:47:58）。投稿キャンペーン第1期エントリーも提出完了（記事URL＝Threads投稿、備考にリール https://www.instagram.com/reel/Dfozs1-zyIk/ を併記して1回で提出、「応募完了しました」表示を確認））
 ・11/12 夜 楓／Instagram／CurrentBodyリール（商品リール3本目、CurrentBody LEDマスク シリーズ3、【PR】1行目頭・@currentbody_jpタグ付け・AI注記入り。価格行は代替行「セール中（〜12/07）・詳しくは商品ページで」、FANCB名なし）https://www.instagram.com/reel/Dfozs1-zyIk/（19:09投稿。実行時ゲートG1〜G5すべて合格：在庫は公式ページのJSON-LD InStock・対象バリアントAvailableで再確認。対のストーリーズ2枚も投稿済み＝1枚目リールへのリンクスタンプ／2枚目A8リンクスタンプ（素材010）。ハイライト「LEDマスク」への追加はCLIでは完結しないためアプリ操作が別途必要。タイアップ投稿ラベルはCLIに設定手段なし）
 ・11/12 昼 京／Threads／会話投稿「ROOMで紹介する商品、決める前に何を見ますか？」（商品なし。13:59投稿）https://www.threads.com/@tatuya_st/post/DfoQQ58AF-9 （16:47確認：いいね6。14:46回の1から+5）
