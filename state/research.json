@@ -1,30 +1,6 @@
 {
- "at": "2026-11-12T07:35+09:00",
+ "at": "2026-11-12T12:35+09:00",
  "notes": [
-  {
-   "what": "(d)SSD・メモリがAI需要で値上がり中（2026年1〜3月のメモリ価格は前期比最大90％上昇、ノートPCの部材費に占めるCPU・メモリ・SSDの割合は68％へ）",
-   "src": "https://atmarkit.itmedia.co.jp/ait/articles/2609/11/news029.html",
-   "src2": "https://www.itmedia.co.jp/news/article/2512/11/1251211109/",
-   "done": "TALKSに保存先の二択（クラウド派？外付けSSD派？）を1つ、TALK_KEYSに『バックアップ』。煽らない形。レイへ1行"
-  },
-  {
-   "what": "海外⑤：Threads APIの4月更新で、ゴースト投稿（24時間で自動アーカイブ）・テキスト添付（最大1万字）・スポイラー・GIF投稿・返信承認・投稿の公開/削除のWebhookに対応。リンクやインサイト指標の変更はなし",
-   "src": "https://developers.facebook.com/blog/post/2026/04/14/whats-new-in-the-threads-api/",
-   "src2": "https://pipedot.org/6ZSRS",
-   "done": "記録のみ（今の投稿の形・LINK_GAP_Hは変えない）"
-  },
-  {
-   "what": "公式(f)Meta/Threads：AIコンテンツの表示のヘルプ・透明性センターのページは本文が読めず、変更点は確かめられなかった（前回記録の『広告のAI生成表示』から新しい告知は検索に出ず）",
-   "src": "https://www.meta.com/en-gb/help/artificial-intelligence/1783222608822690/",
-   "src2": "",
-   "done": "変更なし扱い。official_turnを4へ"
-  },
-  {
-   "what": "自分の成績：11/6夜の発表会（表示161・コメント0）と11/8夜のマウスウォッシュ商品投稿（表示72）が伸びず。11/6昼イヤホン何代目（908・コメント39）、11/8昼ROOM何年目（461・18）は好調",
-   "src": "state/insights.json",
-   "src2": "",
-   "done": "weakに2件。発表会は1行目を問いかけにして3行以内に（build_queue.py n12）。hot_wordsから歯磨き・マウスウォッシュを外した。TALKSに「季節のひと言＋二択」の手袋とスマホを1つ追加"
-  },
   {
    "what": "(a)楽天ROOM：相互フォローで数か月にフォロワー約1000人増やしても売上はほぼ増えず、数を追うのをやめて買う人とつながる方針に変えたという体験（具体策は会員限定で読まず）",
    "src": "https://library.libecity.com/articles/01KYA2SM1NXY5ZWH0GEKWRPZ2G",
@@ -240,6 +216,30 @@
    "src": "https://room.rakuten.co.jp/feature/aff_bonus_5/",
    "src2": "",
    "done": "変更なし・official_turnを2へ"
+  },
+  {
+   "what": "自分の成績：11/12朝『朝ごはん何分』は約4時間で表示63・コメント0（朝の会話平均約200の3分の1未満）。11/11朝『こたつ？電気毛布？』はコメント28、昼の充電器は表示490",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "weakに記録・MORNING_TALKSから外し、こたつの型で「電動歯ブラシ派？手みがき派？」を1つ足した"
+  },
+  {
+   "what": "海外①：Threadsが米国でGems開始（2026/10/8）。会話を生む・独自の視点・転載やクロスポストでない投稿と直接の返信を自動で選び表彰。日本は対象外",
+   "src": "https://socialmediatoday.com/news/threads-recognizes-top-posts-with-in-app-gems-program/832577",
+   "src2": "https://www.heyorca.com/blog/threads-social-news",
+   "done": "今の方針（自前の問いかけ＋自分の答え・転載しない・返信に答える）と一致。日本に来たら見直す。コード変更なし"
+  },
+  {
+   "what": "(c)：楽天カードはリボ手数料を11月請求分から日割りに・会員規約を11/11改定。アフィ料率・ROOM・ポイント施策への影響なし。A8の11月特集・ROOMの新キャンペーンは公開検索で見つからず（libecityの11/2記事も公開部分に具体策なし）",
+   "src": "https://www.rakuten-card.co.jp/info/news/20260810/",
+   "src2": "https://library.libecity.com/articles/01M6CMVMPK2JEVGB8EXG7E881S",
+   "done": "記録のみ（つなげる先なし）"
+  },
+  {
+   "what": "公式(f)楽天イベント：ブラックフライデーは11/12に楓が公式確認済み（エントリー11/12〜・本番11/19 20:00〜11/25 01:59・上限7000pt）のため再読せず",
+   "src": "https://event.rakuten.co.jp/family/campaign/blackfriday/",
+   "src2": "",
+   "done": "salesに反映済み。official_turnを進めた"
   }
  ],
  "hot_words": [
@@ -553,7 +553,20 @@
    "time": "07:59（朝の会話投稿の15分後）",
    "views": 22,
    "cause": "書き出しが弱い（1行目が店の名乗りと説明で、答える理由が最後まで見えない。朝の会話の直後で表示も分かれた。会話投稿の平均の3分の1未満）"
+  },
+  {
+   "id": "20261112-0552-morning",
+   "topic": "朝ごはん何分",
+   "open": "手がかじかむ朝が増えてきましたね🧤",
+   "shape": "季節のひと言＋数字で答える問いかけ＋自分の答え＋「同じ人、いますか？」",
+   "image": "なし",
+   "time": "08:32",
+   "views": 63,
+   "likes": 3,
+   "replies": 0,
+   "cause": "テーマが悪い（朝ごはんの時間はガジェット・家電と関係が薄く、数字を答えても話が広がらない。朝の会話平均の3分の1未満）",
+   "fix": "MORNING_TALKSから外した"
   }
  ],
- "official_turn": 2
+ "official_turn": 3
 }
