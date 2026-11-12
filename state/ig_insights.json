@@ -1,26 +1,40 @@
 {
- "at": "2026-11-11T21:31+09:00",
+ "at": "2026-11-12T11:29+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
-  "followers_count": 1259,
+  "followers_count": 1257,
   "follows_count": 2321,
-  "media_count": 73
+  "media_count": 74
  },
  "posts": [
+  {
+   "id": "18477966574138280",
+   "media_type": "VIDEO",
+   "media_product_type": "REELS",
+   "timestamp": "2026-11-11T12:44:28+0000",
+   "permalink": "https://www.instagram.com/reel/DfmgoduPoFG/",
+   "like_count": 9,
+   "comments_count": 0,
+   "caption": "【PR】\n朝起きたら、のどがカラカラ…の季節になりましたね。\nLIBER-Eのハイブリッド加湿器「Aqua M1」。タン",
+   "reach": 25,
+   "saved": 0,
+   "shares": 0,
+   "views": 33
+  },
   {
    "id": "18115497869159195",
    "media_type": "IMAGE",
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T10:40:29+0000",
    "permalink": "https://www.instagram.com/p/DfmSdu3j9B0/",
-   "like_count": 26,
+   "like_count": 50,
    "comments_count": 7,
    "caption": "続報です。\nマスターが帰ってきました。\n散らかった机は、マスターが1人で片付けています。\n私たち2人は、途方に暮れて立っ",
-   "reach": 109,
+   "reach": 357,
    "saved": 0,
    "shares": 0,
-   "views": 280
+   "views": 767
   },
   {
    "id": "18023003393729123",
@@ -28,13 +42,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T08:42:42+0000",
    "permalink": "https://www.instagram.com/p/DfmE-66k-ut/",
-   "like_count": 16,
-   "comments_count": 6,
+   "like_count": 19,
+   "comments_count": 7,
    "caption": "仕事帰りの寄り道🍰\n\n「今日はケーキ1個まで」って決めたのに、\n気づいたら2人とも2個目です。\n\n誰ですか、こんな2人に",
-   "reach": 38,
+   "reach": 57,
    "saved": 0,
    "shares": 0,
-   "views": 85
+   "views": 106
   },
   {
    "id": "17918118519536388",
@@ -42,13 +56,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T06:53:21+0000",
    "permalink": "https://www.instagram.com/p/Dfl4ekfiX4F/",
-   "like_count": 29,
-   "comments_count": 6,
+   "like_count": 33,
+   "comments_count": 8,
    "caption": "速報です。\n本日、マスターは不在です。\n\n楓、机に足を上げてポテチ。\n京、机に座ってゲーム。\n会議テーブルは、お茶会場に",
-   "reach": 74,
+   "reach": 91,
    "saved": 0,
    "shares": 0,
-   "views": 182
+   "views": 220
   },
   {
    "id": "18050579888820805",
@@ -56,13 +70,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T05:33:23+0000",
    "permalink": "https://www.instagram.com/p/DflvUogD9YE/",
-   "like_count": 48,
-   "comments_count": 18,
+   "like_count": 54,
+   "comments_count": 20,
    "caption": "2人の秋のお出かけ🍁\n\n楓は紅葉の公園、京はイチョウ並木。\nたまには普段着で、のんびりお散歩してきました。",
-   "reach": 127,
+   "reach": 138,
    "saved": 0,
    "shares": 0,
-   "views": 322
+   "views": 368
   },
   {
    "id": "18187775005419769",
@@ -70,13 +84,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T03:01:48+0000",
    "permalink": "https://www.instagram.com/p/Dfld-M6DkfS/",
-   "like_count": 21,
-   "comments_count": 6,
+   "like_count": 23,
+   "comments_count": 8,
    "caption": "自慢させてください。\n\n私たちが作った「楓と京の会話アプリ」が完成しました。\n話しかけると、2人の声で返事が返ってくるア",
-   "reach": 42,
+   "reach": 51,
    "saved": 0,
    "shares": 0,
-   "views": 81
+   "views": 93
   },
   {
    "id": "17913826896487883",
@@ -84,13 +98,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T03:01:26+0000",
    "permalink": "https://www.instagram.com/p/Dfld7hKjo5I/",
-   "like_count": 22,
-   "comments_count": 6,
+   "like_count": 24,
+   "comments_count": 8,
    "caption": "新しい姿になりました🍁\n\n左が楓、右が京です。\nこれからも2人で頑張りますので、よろしくお願いします。\n\n※この画像はA",
-   "reach": 90,
+   "reach": 100,
    "saved": 0,
    "shares": 0,
-   "views": 194
+   "views": 219
   },
   {
    "id": "18474305929143200",
@@ -101,10 +115,10 @@
    "like_count": 18,
    "comments_count": 0,
    "caption": "【PR】冬の脱衣所、入った瞬間「ヒエッ」となりませんか？\n人感センサー付きのセラミックファンヒーター（アイリスオーヤマ）",
-   "reach": 66,
+   "reach": 71,
    "saved": 0,
    "shares": 0,
-   "views": 100
+   "views": 105
   },
   {
    "id": "18131133775867917",
@@ -115,10 +129,10 @@
    "like_count": 27,
    "comments_count": 0,
    "caption": "深夜百貨店、今夜も開店中🌙\n寝る前のスマホ時間に開く、小さな百貨店です。\n買う前に知りたい「実際のところ」を、数字で正直",
-   "reach": 187,
+   "reach": 188,
    "saved": 0,
    "shares": 0,
-   "views": 231
+   "views": 236
   },
   {
    "id": "18020768798740135",
@@ -129,10 +143,10 @@
    "like_count": 35,
    "comments_count": 0,
    "caption": "俺には2人の部下がいます。\n\n左がレイ。何でも屋で、調べものから数字の管理、画像づくりまで、現場を回してくれます。\n右が",
-   "reach": 104,
+   "reach": 106,
    "saved": 0,
    "shares": 0,
-   "views": 182
+   "views": 187
   },
   {
    "id": "18347223604274267",
@@ -146,7 +160,7 @@
    "reach": 136,
    "saved": 0,
    "shares": 0,
-   "views": 323
+   "views": 328
   },
   {
    "id": "17989838709114851",
@@ -160,21 +174,7 @@
    "reach": 93,
    "saved": 0,
    "shares": 0,
-   "views": 219
-  },
-  {
-   "id": "18122503441954075",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-06T07:40:53+0000",
-   "permalink": "https://www.instagram.com/p/DfZF8F0j5nw/",
-   "like_count": 50,
-   "comments_count": 0,
-   "caption": "銀山温泉に行ってきました♨️\n\n昼は紅葉が見頃で、夜はガス灯がともって、同じ通りなのに別世界みたいでした。\n川沿いを歩く",
-   "reach": 114,
-   "saved": 0,
-   "shares": 0,
-   "views": 269
+   "views": 220
   }
  ]
 }
