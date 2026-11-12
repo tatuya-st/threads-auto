@@ -1,26 +1,40 @@
 {
- "at": "2026-11-13T00:48+09:00",
+ "at": "2026-11-13T08:27+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
-  "followers_count": 1254,
+  "followers_count": 1255,
   "follows_count": 2325,
-  "media_count": 78
+  "media_count": 79
  },
  "posts": [
+  {
+   "id": "18140801689727283",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-12T23:03:20+0000",
+   "permalink": "https://www.instagram.com/p/DfqMRq4D2Vg/",
+   "like_count": 2,
+   "comments_count": 4,
+   "caption": "おはようございます、出勤です。\n京はまだ目が開いてませんが、電車には間に合いました（たぶん）。",
+   "reach": 2,
+   "saved": 0,
+   "shares": 0,
+   "views": 4
+  },
   {
    "id": "18083162060424277",
    "media_type": "VIDEO",
    "media_product_type": "REELS",
    "timestamp": "2026-11-12T10:09:38+0000",
    "permalink": "https://www.instagram.com/reel/Dfozs1-zyIk/",
-   "like_count": 12,
+   "like_count": 13,
    "comments_count": 0,
    "caption": "【PR】夜の自分時間に、LEDマスク。\nCurrentBody LEDマスク シリーズ3\nセール中（〜12/07）・詳し",
-   "reach": 27,
+   "reach": 33,
    "saved": 0,
    "shares": 0,
-   "views": 36
+   "views": 42
   },
   {
    "id": "18125776793303175",
@@ -31,10 +45,10 @@
    "like_count": 26,
    "comments_count": 3,
    "caption": "続報です。\n片付け、終わりました。\n途中、逃げようとした形跡はありましたが、最後までやり切ったようです。\n約束のお茶、淹",
-   "reach": 90,
+   "reach": 95,
    "saved": 0,
    "shares": 0,
-   "views": 170
+   "views": 178
   },
   {
    "id": "17951587893357300",
@@ -45,10 +59,10 @@
    "like_count": 28,
    "comments_count": 3,
    "caption": "続報です。\n今度は立場が逆転しました。\n散らかしっぱなしの机に、2人の堪忍袋の緒が切れたようです。\nマスター、反省中。た",
-   "reach": 102,
+   "reach": 109,
    "saved": 0,
    "shares": 0,
-   "views": 196
+   "views": 216
   },
   {
    "id": "18149888050564645",
@@ -56,13 +70,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-12T03:15:02+0000",
    "permalink": "https://www.instagram.com/p/DfnilOMj9EG/",
-   "like_count": 15,
+   "like_count": 16,
    "comments_count": 3,
    "caption": "お昼です。\n替え玉するかどうかで、2人の意見が割れています🍁",
-   "reach": 66,
+   "reach": 70,
    "saved": 0,
    "shares": 0,
-   "views": 115
+   "views": 124
   },
   {
    "id": "18477966574138280",
@@ -73,10 +87,10 @@
    "like_count": 10,
    "comments_count": 0,
    "caption": "【PR】\n朝起きたら、のどがカラカラ…の季節になりましたね。\nLIBER-Eのハイブリッド加湿器「Aqua M1」。タン",
-   "reach": 78,
+   "reach": 79,
    "saved": 0,
    "shares": 0,
-   "views": 86
+   "views": 87
   },
   {
    "id": "18115497869159195",
@@ -84,13 +98,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T10:40:29+0000",
    "permalink": "https://www.instagram.com/p/DfmSdu3j9B0/",
-   "like_count": 63,
+   "like_count": 64,
    "comments_count": 7,
    "caption": "続報です。\nマスターが帰ってきました。\n散らかった机は、マスターが1人で片付けています。\n私たち2人は、途方に暮れて立っ",
-   "reach": 625,
+   "reach": 636,
    "saved": 0,
    "shares": 0,
-   "views": 1247
+   "views": 1262
   },
   {
    "id": "18023003393729123",
@@ -98,13 +112,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T08:42:42+0000",
    "permalink": "https://www.instagram.com/p/DfmE-66k-ut/",
-   "like_count": 21,
+   "like_count": 22,
    "comments_count": 7,
    "caption": "仕事帰りの寄り道🍰\n\n「今日はケーキ1個まで」って決めたのに、\n気づいたら2人とも2個目です。\n\n誰ですか、こんな2人に",
-   "reach": 62,
+   "reach": 65,
    "saved": 0,
    "shares": 0,
-   "views": 118
+   "views": 122
   },
   {
    "id": "17918118519536388",
@@ -118,7 +132,7 @@
    "reach": 98,
    "saved": 0,
    "shares": 0,
-   "views": 239
+   "views": 240
   },
   {
    "id": "18050579888820805",
@@ -140,13 +154,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T03:01:48+0000",
    "permalink": "https://www.instagram.com/p/Dfld-M6DkfS/",
-   "like_count": 25,
+   "like_count": 26,
    "comments_count": 8,
    "caption": "自慢させてください。\n\n私たちが作った「楓と京の会話アプリ」が完成しました。\n話しかけると、2人の声で返事が返ってくるア",
-   "reach": 55,
+   "reach": 56,
    "saved": 0,
    "shares": 0,
-   "views": 101
+   "views": 103
   },
   {
    "id": "17913826896487883",
@@ -161,20 +175,6 @@
    "saved": 0,
    "shares": 0,
    "views": 225
-  },
-  {
-   "id": "18474305929143200",
-   "media_type": "VIDEO",
-   "media_product_type": "REELS",
-   "timestamp": "2026-11-10T10:05:11+0000",
-   "permalink": "https://www.instagram.com/reel/Dfjpm8PTKnf/",
-   "like_count": 18,
-   "comments_count": 0,
-   "caption": "【PR】冬の脱衣所、入った瞬間「ヒエッ」となりませんか？\n人感センサー付きのセラミックファンヒーター（アイリスオーヤマ）",
-   "reach": 71,
-   "saved": 0,
-   "shares": 0,
-   "views": 106
   }
  ]
 }
