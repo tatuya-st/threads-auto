@@ -1,24 +1,6 @@
 {
- "at": "2026-11-12T19:25+09:00",
+ "at": "2026-11-13T07:30+09:00",
  "notes": [
-  {
-   "what": "自分の成績：11/8深夜『財布「もう寝なよ」』が約12時間で表示41で伸びず（書き出しが弱い）。11/8昼『ROOM何年目』は表示480・コメント21で平均並み。11/9朝『結露』はまだ3時間未満のデータで判定は次回",
-   "src": "state/insights.json",
-   "src2": "",
-   "done": "weakに記録・build_queue.pyのN15から2本外した"
-  },
-  {
-   "what": "(c)楽天アフィリエイト公式：SNSリンク別レポートキャンペーン（エントリー制・毎月募集。10月分は10/31締切で11/10頃にメール。11月分は別途案内）でSNSごとのクリック等が分かる。8/20にプレミアムパートナー制度は終了し、直近の売上実績で決まる『ステージ制度』へ（判定基準は未掲載）。料率・禁止事項の10〜11月の変更はなし",
-   "src": "https://affiliate.rakuten.co.jp/info/",
-   "src2": "",
-   "done": "公式で確認。to_rei.txtでレイに共有。11月分の募集が出たら次の公式確認で拾う"
-  },
-  {
-   "what": "海外②：Threadsのアフィは『価値のある投稿3本に宣伝1本』・リンクは1本・返信では先に相手の予算と用途を聞いてから提案・開示は多めに（記事の推奨値で外部データではない）",
-   "src": "https://www.outfy.com/blog/?p=13621",
-   "src2": "",
-   "done": "うちは1日4枠で商品1本＝3:1に合っているので変更なし。予算を聞く二択をTALKSに1つ足した（ボーナス前の前倒し）"
-  },
   {
    "what": "海外③：Metaは2026年3月の改定でAI生成・加工の開示義務を商業広告にも拡大（Meta製AIは自動ラベル、他社AIツールは手動で開示）。FB・IGでブランドを宣伝するクリエイター投稿（アフィ報酬含む）はPartnership Ads扱い。Threadsへの言及なし",
    "src": "https://www.contentgrip.com/meta-branded-content-rules-update/",
@@ -240,6 +222,24 @@
    "src": "https://developers.facebook.com/blog/post/2026/04/14/whats-new-in-the-threads-api/",
    "src2": "",
    "done": "変更なしを確認（publish.pyの上限・リンク間隔はそのまま）。official_turnを進めた"
+  },
+  {
+   "what": "公式(f)消費者庁：2026/8/6 写真加工アプリSNOWの運営会社に措置命令（報酬を払ったインフルエンサー投稿に広告表示なし＝ステマ）。基準の変更はなし",
+   "src": "https://kumanichi.com/articles/2022748",
+   "src2": "",
+   "done": "今の【PR】先頭表記（publish.py）で守れている。コード変更なし・official_turnを0へ"
+  },
+  {
+   "what": "(a)：ROOMは表示名がよく変わるため、いいねをくれた人は名前でなくURLで数えると重複しない（公開部分のみ。具体的な伸ばし方は会員限定で読まず）",
+   "src": "https://library.libecity.com/articles/01M0YAR2G2ZKGGR0VGRCS98ZJF",
+   "src2": "",
+   "done": "記録のみ（ROOM上の操作はしないため、つなげる先なし）"
+  },
+  {
+   "what": "海外②：2025年10月セールの集計で、クリエイター経由GMVは1日あたり約99%増・クリック61%増。電子機器・スマホアクセサリーが特に伸び、おもちゃは控えめ（形式別の検証はなし）",
+   "src": "https://later.com/blog/what-octobers-sales-taught-us-about-holiday-creator-marketing/",
+   "src2": "",
+   "done": "to_rei.txtに1行（BF期間のA8案件はガジェット・家電寄り）。hot_wordsのiPhone・ワイヤレス充電などと一致するので変更なし"
   }
  ],
  "hot_words": [
@@ -568,5 +568,5 @@
    "fix": "MORNING_TALKSから外した"
   }
  ],
- "official_turn": 4
+ "official_turn": 0
 }
