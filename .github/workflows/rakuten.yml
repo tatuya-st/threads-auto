@@ -1,0 +1,28 @@
+name: 楽天APIで商品候補を集める
+on:
+  schedule:
+    - cron: '17 1 * * 1'  # 毎週月曜 10:17（日本時間）
+  workflow_dispatch:
+    inputs:
+      genre:
+        description: '楽天のジャンルID（空なら家電 562637）'
+        required: false
+permissions:
+  contents: write
+jobs:
+  candidates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: ランキングから候補を作る
+        env:
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+          GENRE: ${{ github.event.inputs.genre }}
+        run: python3 tools/rakuten_api.py ranking ${GENRE:+--genre $GENRE}
+      - name: 候補を保存
+        run: |
+          git config user.name tatuya-st
+          git config user.email "github-actions@users.noreply.github.com"
+          git add state/rakuten_candidates.json 2>/dev/null || true
+          git diff --cached --quiet || (git commit -qm "楽天の商品候補" && git pull -q --rebase && git push -q)

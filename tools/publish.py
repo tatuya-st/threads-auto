@@ -434,6 +434,14 @@ def publish():
             print(f'{qid} はほかの実行で公開済みなので出しません')
             continue
         q = thin_link(q)
+        # 11/14 マスター指示：楽天APIで価格・送料・在庫を投稿の直前に確かめる（Secrets が無ければ何もしない）
+        try:
+            import rakuten_api
+            q, rk_notes, rk_stop = rakuten_api.refresh_queue(q)
+        except Exception as e:
+            rk_notes, rk_stop = [f'楽天APIの確認を飛ばした：{e}'], None
+        for n_ in rk_notes:
+            print('楽天API', qid, n_)
         # 二重投稿の最終チェック：すでに Threads に出した商品が入っていたら公開しない
         # 商品つきの投稿には必ずPR表記を入れる（ステマ規制対策）
         # 11/05 レイ決定：PR表記は【PR】に統一（※PR は使わない）。ROOM全体への誘導投稿も同じ
@@ -463,7 +471,11 @@ def publish():
             rec = None
             print(f'{qid} は最近の投稿を確認できないため、今回は出さずに次の実行に回します')
             continue
-        if head and head in live:
+        if rk_notes:
+            rec['rakuten'] = rk_notes
+        if rk_stop:
+            rec.update(skipped=f'楽天APIの確認で見送り：{rk_stop}')
+        elif head and head in live:
             rec.update(skipped='Threadsに同じ本文がすでにあるため公開せず')
         elif dup:
             rec.update(skipped='二重投稿になるため公開せず', dup=dup)
