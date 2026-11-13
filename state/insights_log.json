@@ -3750,11 +3750,11 @@
  },
  "2026-11-13": {
   "account": {
-   "views": 1296,
-   "likes": 16,
-   "replies": 33,
+   "views": 711,
+   "likes": 1,
+   "replies": 8,
    "reposts": 0,
-   "followers_count": 1079
+   "followers_count": 1081
   },
   "posts": {
    "20261101-0902-morning": {
@@ -3954,51 +3954,51 @@
     "quotes": 0
    },
    "20261111-0744-morning": {
-    "views": 188,
+    "views": 189,
     "likes": 3,
-    "replies": 40,
+    "replies": 43,
     "reposts": 0,
     "quotes": 0
    },
    "20261111-1243-noon": {
-    "views": 511,
+    "views": 512,
     "likes": 8,
     "replies": 11,
     "reposts": 0,
     "quotes": 0
    },
    "20261112-0552-morning": {
-    "views": 111,
+    "views": 112,
     "likes": 6,
     "replies": 0,
     "reposts": 0,
     "quotes": 0
    },
    "20261112-1243-noon": {
-    "views": 159,
+    "views": 160,
     "likes": 6,
     "replies": 0,
     "reposts": 0,
     "quotes": 0
    },
    "20261112-2343-late": {
-    "views": 146,
+    "views": 149,
     "likes": 2,
     "replies": 0,
     "reposts": 0,
     "quotes": 0
    },
    "20261113-0743-morning": {
-    "views": 50,
+    "views": 56,
     "likes": 1,
     "replies": 1,
     "reposts": 0,
     "quotes": 0
    },
    "20261113-1243-noon": {
-    "views": 44,
-    "likes": 2,
-    "replies": 0,
+    "views": 72,
+    "likes": 3,
+    "replies": 3,
     "reposts": 0,
     "quotes": 0
    }
@@ -4014,7 +4014,7 @@
    "https://px.a8.net/svt/ejp?a8mat=4BESU6+1RPEIA+4W8G+5Z6WY": 0,
    "https://px.a8.net/svt/ejp?a8mat=4BESU6+2EXB3M+4KJC+I0KRM": 0,
    "https://room.rakuten.co.jp/room_a9a129c5a9/collections": 0,
-   "https://room.rakuten.co.jp/room_a9a129c5a9/items": 7
+   "https://room.rakuten.co.jp/room_a9a129c5a9/items": 5
   }
  }
 }

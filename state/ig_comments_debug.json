@@ -2,16 +2,16 @@
  "comments_素": {
   "data": [
    {
-    "id": "18128977180853308"
+    "id": "18113392148231040"
    },
    {
-    "id": "18125987308924493"
+    "id": "18131305202492229"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVHMyeE5CaV9tQi1MSzF5YkFvSEhwckVtUW14amZAzLW11YzhyWjZACN0RpX0M4X2x0cktGTUdSS2lkNVVlRTd4VlFjODhFWHAxQ09QQ2ltc29TV2VsYXhB",
-    "after": "QVFIVGw3djVDaEc3SlQwYWNlOHF4SmZAzYk8xUkpXeFI5S2FhR213NzJyRFliWmJpeEJJX2tpb2pmNEJSVjJLelBGUUNfRlBCWDM1bXZASWFl5YWJoWXYxOFFn"
+    "before": "QVFIVFpocnVFajBqcWs5M2pNYU5WN2dHVVYwZAFNjbVBkd0d1c1hFZAC1uR3pmdHEzdVc4NWVHbHp3VFJHRHhWSXlPRnR1bjgxSnJ6ZAllJTm5aRTdCMm5QQUF3",
+    "after": "QVFIVGw4LXZAqT01sTXU0akMzWWZA2WFl5SDNmdkJEeFRVMmxIQWJwYXNBZAjlxLUlvdmhmakRKSWFnZADFIeTVXdm4wNmZARSDNKY01SX1UwNHM4WkIxbXpXS1lR"
    }
   }
  },
@@ -20,16 +20,16 @@
   "comments": {
    "data": [
     {
-     "id": "18128977180853308",
-     "text": "楓です。姉妹ですからね。性格が真逆なのは、姉がしっかりしてる分でちょうど釣り合ってるんです😌",
+     "id": "18113392148231040",
+     "text": "楓です。あら、心配で端から見てたんですね。京にはいい教訓になったと思います。……社長も、説教のご予約が1件入ってますからね😌",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "18125987308924493",
-     "text": "2人して本当仲良いな…性格まったく違うのに😅",
+     "id": "18131305202492229",
+     "text": "一応、心配で見に行ったが…楓は怒らせない方がいいぞ京😅💦",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
@@ -38,12 +38,12 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVHMyeE5CaV9tQi1MSzF5YkFvSEhwckVtUW14amZAzLW11YzhyWjZACN0RpX0M4X2x0cktGTUdSS2lkNVVlRTd4VlFjODhFWHAxQ09QQ2ltc29TV2VsYXhB",
-     "after": "QVFIVGw3djVDaEc3SlQwYWNlOHF4SmZAzYk8xUkpXeFI5S2FhR213NzJyRFliWmJpeEJJX2tpb2pmNEJSVjJLelBGUUNfRlBCWDM1bXZASWFl5YWJoWXYxOFFn"
+     "before": "QVFIVFpocnVFajBqcWs5M2pNYU5WN2dHVVYwZAFNjbVBkd0d1c1hFZAC1uR3pmdHEzdVc4NWVHbHp3VFJHRHhWSXlPRnR1bjgxSnJ6ZAllJTm5aRTdCMm5QQUF3",
+     "after": "QVFIVGw4LXZAqT01sTXU0akMzWWZA2WFl5SDNmdkJEeFRVMmxIQWJwYXNBZAjlxLUlvdmhmakRKSWFnZADFIeTVXdm4wNmZARSDNKY01SX1UwNHM4WkIxbXpXS1lR"
     }
    }
   },
-  "id": "17917397976547227"
+  "id": "18120405368009670"
  },
  "京のコメント": {
   "id": "18399466993161453",
@@ -83,24 +83,24 @@
  "comments_文字だけ": {
   "data": [
    {
-    "id": "18128977180853308",
-    "text": "楓です。姉妹ですからね。性格が真逆なのは、姉がしっかりしてる分でちょうど釣り合ってるんです😌",
-    "timestamp": "2026-11-13T06:31:08+0000"
+    "id": "18113392148231040",
+    "text": "楓です。あら、心配で端から見てたんですね。京にはいい教訓になったと思います。……社長も、説教のご予約が1件入ってますからね😌",
+    "timestamp": "2026-11-13T08:23:41+0000"
    },
    {
-    "id": "18125987308924493",
-    "text": "2人して本当仲良いな…性格まったく違うのに😅",
-    "timestamp": "2026-11-13T06:29:58+0000"
+    "id": "18131305202492229",
+    "text": "一応、心配で見に行ったが…楓は怒らせない方がいいぞ京😅💦",
+    "timestamp": "2026-11-13T08:22:43+0000"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVHMyeE5CaV9tQi1MSzF5YkFvSEhwckVtUW14amZAzLW11YzhyWjZACN0RpX0M4X2x0cktGTUdSS2lkNVVlRTd4VlFjODhFWHAxQ09QQ2ltc29TV2VsYXhB",
-    "after": "QVFIVGw3djVDaEc3SlQwYWNlOHF4SmZAzYk8xUkpXeFI5S2FhR213NzJyRFliWmJpeEJJX2tpb2pmNEJSVjJLelBGUUNfRlBCWDM1bXZASWFl5YWJoWXYxOFFn"
+    "before": "QVFIVFpocnVFajBqcWs5M2pNYU5WN2dHVVYwZAFNjbVBkd0d1c1hFZAC1uR3pmdHEzdVc4NWVHbHp3VFJHRHhWSXlPRnR1bjgxSnJ6ZAllJTm5aRTdCMm5QQUF3",
+    "after": "QVFIVGw4LXZAqT01sTXU0akMzWWZA2WFl5SDNmdkJEeFRVMmxIQWJwYXNBZAjlxLUlvdmhmakRKSWFnZADFIeTVXdm4wNmZARSDNKY01SX1UwNHM4WkIxbXpXS1lR"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/17917397976547227\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AdVx3qRSRVr92DfoLBmFvlg\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18120405368009670\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"A3jRFuTrRPQG07GtjXp1zXS\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
