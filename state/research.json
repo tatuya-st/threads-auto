@@ -1,30 +1,6 @@
 {
- "at": "2026-11-13T07:30+09:00",
+ "at": "2026-11-13T12:25+09:00",
  "notes": [
-  {
-   "what": "海外③：Metaは2026年3月の改定でAI生成・加工の開示義務を商業広告にも拡大（Meta製AIは自動ラベル、他社AIツールは手動で開示）。FB・IGでブランドを宣伝するクリエイター投稿（アフィ報酬含む）はPartnership Ads扱い。Threadsへの言及なし",
-   "src": "https://www.contentgrip.com/meta-branded-content-rules-update/",
-   "src2": "",
-   "done": "レイへ（IGリールでAI画像を使うときの開示）。こちらは広告を出していないのでコード変更なし"
-  },
-  {
-   "what": "(e)Threadsが伸びない原因：投稿直後に外部リンクへ誘導するコメントを付けるのは業者アカウントの特徴と見られる。評価はいいね数より返信の質・再訪で見る（2026/4/16）",
-   "src": "https://www.luft.co.jp/media/threads-is-unpopular/",
-   "src2": "",
-   "done": "今の形（売る投稿のリンクは本文1通目・返信にリンクを足さない）と一致するので変更なし"
-  },
-  {
-   "what": "(e)リベシティのThreads×アフィ記事は本文が会員限定",
-   "src": "https://library.libecity.com/articles/01KY5NEGYP3SQ71GY8MWWC7MX4",
-   "src2": "",
-   "done": "見送り（会員限定ページのため中には入らない）"
-  },
-  {
-   "what": "公式(f)楽天ROOM：公式のお知らせは検索で出ず、ネットショップ担当者フォーラムにも10〜11月のROOMの仕様変更・ランク条件の記事はなし（変化の確認なし）",
-   "src": "https://netshop.impress.co.jp/g/room",
-   "src2": "",
-   "done": "変更なし。official_turnを進めた"
-  },
   {
    "what": "自分の成績：11/9朝『結露』表示45・11/9昼『パソコン何年』表示105で伸びず（会話の平均の3分の1未満）。11/8昼『ROOM何年目』は表示496・コメント23で好調",
    "src": "state/insights.json",
@@ -240,6 +216,30 @@
    "src": "https://later.com/blog/what-octobers-sales-taught-us-about-holiday-creator-marketing/",
    "src2": "",
    "done": "to_rei.txtに1行（BF期間のA8案件はガジェット・家電寄り）。hot_wordsのiPhone・ワイヤレス充電などと一致するので変更なし"
+  },
+  {
+   "what": "自分の成績：11/13朝『ケトル派？エアコン派？』は約3時間20分で表示37・いいね0・コメント1（朝の会話平均の3分の1未満）。11/12昼のROOM商品選びは表示157まで伸びた",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "weakに記録・MORNING_TALKSから外した（朝の行動の順番ネタは2日続けて伸びず）"
+  },
+  {
+   "what": "(b)：楽天イーグルス感謝祭2026は11/13昼時点で楽天市場の公式ページが見つからず（まとめ記事は11/14〜16を予想・エントリー要・上限5000ptは前年の条件）。球団のファン感謝祭は11/23",
+   "src": "https://appllio.com/rakuten-eagles-thanks-sale",
+   "src2": "https://bestcalendar.jp/press/157649",
+   "done": "salesのラベルを「公式未発見・無い可能性」に直した（TALKSは足さない）"
+  },
+  {
+   "what": "海外③：Metaの広告のAIラベルは2026年6月に「About this ad」へ統合、写実的なAI人物はSponsoredの横に表示、外部ツール製もメタデータで検出予定。Threadsや通常投稿への言及なし、反応への影響の数字もなし",
+   "src": "https://www.contentgrip.com/meta-ai-ad-labels/",
+   "src2": "https://about.fb.com/news/2025/02/gen-ai-transparency-metas-ads-products/",
+   "done": "記録のみ（こちらは広告を出さない通常投稿のため、コード変更なし）"
+  },
+  {
+   "what": "公式(f)楽天アフィリエイト：お知らせは10/1のSNSリンク別レポート以降、新しいもの・料率・禁止事項の変更なし",
+   "src": "https://affiliate.rakuten.co.jp/info/",
+   "src2": "",
+   "done": "変更なしを確認。official_turnを1へ"
   }
  ],
  "hot_words": [
@@ -266,7 +266,7 @@
    "e": "2026-11-25T01:59"
   },
   {
-   "label": "楽天イーグルス感謝祭（予想・公式未確認）",
+   "label": "楽天イーグルス感謝祭（予想・11/13昼時点で公式ページ未発見。BFの前週のため今年は無い可能性）",
    "s": "2026-11-14T10:00",
    "e": "2026-11-16T23:59"
   },
@@ -566,7 +566,20 @@
    "replies": 0,
    "cause": "テーマが悪い（朝ごはんの時間はガジェット・家電と関係が薄く、数字を答えても話が広がらない。朝の会話平均の3分の1未満）",
    "fix": "MORNING_TALKSから外した"
+  },
+  {
+   "id": "20261113-0743-morning",
+   "topic": "朝いちばんに動かす家電（ケトル？エアコン？）",
+   "open": "朝の暗さが冬っぽくなってきましたね🌙",
+   "shape": "季節のひと言＋二択＋自分の答え＋「みなさんはどっち寄り？」",
+   "image": "なし",
+   "time": "08:26",
+   "views": 37,
+   "likes": 0,
+   "replies": 1,
+   "cause": "テーマが悪い（11/12朝ごはんに続き「朝の行動の順番」の話で、答えても話が広がらない。朝の会話平均の3分の1未満）",
+   "fix": "MORNING_TALKSから外した"
   }
  ],
- "official_turn": 0
+ "official_turn": 1
 }
