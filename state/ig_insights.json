@@ -1,26 +1,40 @@
 {
- "at": "2026-11-13T14:34+09:00",
+ "at": "2026-11-13T15:34+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
   "followers_count": 1254,
   "follows_count": 2325,
-  "media_count": 79
+  "media_count": 80
  },
  "posts": [
+  {
+   "id": "17917397976547227",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-13T06:24:30+0000",
+   "permalink": "https://www.instagram.com/p/Dfq-w4Wj_S6/",
+   "like_count": 3,
+   "comments_count": 2,
+   "caption": "楓です。休みの日の秋さんぽ、3枚です。\n公園で落ち葉を見て、カフェで温まって、夕方は商店街へ。紙袋が増えたのは、だいたい",
+   "reach": 0,
+   "saved": 0,
+   "shares": 0,
+   "views": 24
+  },
   {
    "id": "18140801689727283",
    "media_type": "CAROUSEL_ALBUM",
    "media_product_type": "FEED",
    "timestamp": "2026-11-12T23:03:20+0000",
    "permalink": "https://www.instagram.com/p/DfqMRq4D2Vg/",
-   "like_count": 6,
+   "like_count": 7,
    "comments_count": 8,
    "caption": "おはようございます、出勤です。\n京はまだ目が開いてませんが、電車には間に合いました（たぶん）。",
-   "reach": 9,
+   "reach": 12,
    "saved": 0,
    "shares": 0,
-   "views": 22
+   "views": 24
   },
   {
    "id": "18083162060424277",
@@ -31,10 +45,10 @@
    "like_count": 15,
    "comments_count": 0,
    "caption": "【PR】夜の自分時間に、LEDマスク。\nCurrentBody LEDマスク シリーズ3\nセール中（〜12/07）・詳し",
-   "reach": 44,
+   "reach": 78,
    "saved": 0,
    "shares": 0,
-   "views": 65
+   "views": 105
   },
   {
    "id": "18125776793303175",
@@ -45,10 +59,10 @@
    "like_count": 29,
    "comments_count": 3,
    "caption": "続報です。\n片付け、終わりました。\n途中、逃げようとした形跡はありましたが、最後までやり切ったようです。\n約束のお茶、淹",
-   "reach": 106,
+   "reach": 108,
    "saved": 0,
    "shares": 0,
-   "views": 196
+   "views": 200
   },
   {
    "id": "17951587893357300",
@@ -62,7 +76,7 @@
    "reach": 128,
    "saved": 0,
    "shares": 0,
-   "views": 243
+   "views": 244
   },
   {
    "id": "18149888050564645",
@@ -98,13 +112,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-11T10:40:29+0000",
    "permalink": "https://www.instagram.com/p/DfmSdu3j9B0/",
-   "like_count": 66,
+   "like_count": 67,
    "comments_count": 7,
    "caption": "続報です。\nマスターが帰ってきました。\n散らかった机は、マスターが1人で片付けています。\n私たち2人は、途方に暮れて立っ",
-   "reach": 671,
+   "reach": 672,
    "saved": 0,
    "shares": 0,
-   "views": 1308
+   "views": 1317
   },
   {
    "id": "18023003393729123",
@@ -161,20 +175,6 @@
    "saved": 0,
    "shares": 0,
    "views": 106
-  },
-  {
-   "id": "17913826896487883",
-   "media_type": "IMAGE",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-11T03:01:26+0000",
-   "permalink": "https://www.instagram.com/p/Dfld7hKjo5I/",
-   "like_count": 24,
-   "comments_count": 8,
-   "caption": "新しい姿になりました🍁\n\n左が楓、右が京です。\nこれからも2人で頑張りますので、よろしくお願いします。\n\n※この画像はA",
-   "reach": 105,
-   "saved": 0,
-   "shares": 0,
-   "views": 226
   }
  ]
 }

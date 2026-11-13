@@ -2,100 +2,34 @@
  "comments_素": {
   "data": [
    {
-    "id": "18113292692611200"
+    "id": "18128977180853308"
    },
    {
-    "id": "17916328836551018"
-   },
-   {
-    "id": "17980775271069289"
-   },
-   {
-    "id": "17887628577625935"
-   },
-   {
-    "id": "17968532850234672"
-   },
-   {
-    "id": "18150890263549498"
-   },
-   {
-    "id": "17895353052617073"
-   },
-   {
-    "id": "18166288003501406"
+    "id": "18125987308924493"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVEtScmlxMFE0MkRYZAmh4SEhvQWt0QV9zU1pacmdNSml6MUFNelJKbTRMZAlJ0NDZA3UUNOWTlNMzJiN1VQbjFmWjBLQTZA1QkFtaUIxMmd5S2FkRGhwNk5R",
-    "after": "QVFIVFRSQmdOSnFoLVNXVUZAtaWVNN0JOZAUVrdVVxS3VqaDJ2ek9WZA3ZA4WW9qbWFZAU3BkazNxS1hPeS0zbGRydWFNbVJiOTFkRWFuQzJfQmdTT1lJRi1qckZA3"
+    "before": "QVFIVHMyeE5CaV9tQi1MSzF5YkFvSEhwckVtUW14amZAzLW11YzhyWjZACN0RpX0M4X2x0cktGTUdSS2lkNVVlRTd4VlFjODhFWHAxQ09QQ2ltc29TV2VsYXhB",
+    "after": "QVFIVGw3djVDaEc3SlQwYWNlOHF4SmZAzYk8xUkpXeFI5S2FhR213NzJyRFliWmJpeEJJX2tpb2pmNEJSVjJLelBGUUNfRlBCWDM1bXZASWFl5YWJoWXYxOFFn"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 8,
+  "comments_count": 2,
   "comments": {
    "data": [
     {
-     "id": "18113292692611200",
-     "text": "京です。ありますよ、マスター！京が乗りそこねる専用の「待ってくれない号」です🚃 時刻表どおりきっちり出るのが特徴で…あれ、それって普通の電車ですね。明日は1本早いのに乗ります💦",
+     "id": "18128977180853308",
+     "text": "楓です。姉妹ですからね。性格が真逆なのは、姉がしっかりしてる分でちょうど釣り合ってるんです😌",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "17916328836551018",
-     "text": "@tatuya_st \nそんな電車あるか💢",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "17980775271069289",
-     "text": "京です、追伸です。マスター、京は遅刻してません。電車が京より先に出発しただけです🚃💨 明日からは電車のほうに「京を待つように」ってちゃんと言っておきますね♪",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "17887628577625935",
-     "text": "京です。遅刻なんてしてませんよ、マスター！7:43の改札ダッシュは…えっと、朝の運動です🏃‍♀️💨 楓より先に着いたら京の勝ちってことで、見逃してくださいね♪",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "17968532850234672",
-     "text": "楓です。「し、しないよ」の、その最初の「し」が一番正直でしたね。\n明日の朝も改札の時計、見てますから😌",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18150890263549498",
-     "text": "@tatuya_st \n\nし、しないよ😅",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "17895353052617073",
-     "text": "楓です。間に合いましたよ、走りましたけど。\n……って、コメント入れるの早いですね。そっちこそ遅刻しないでくださいね😌",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18166288003501406",
-     "text": "遅刻するなよ💢2人して。",
+     "id": "18125987308924493",
+     "text": "2人して本当仲良いな…性格まったく違うのに😅",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
@@ -104,12 +38,12 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVEtScmlxMFE0MkRYZAmh4SEhvQWt0QV9zU1pacmdNSml6MUFNelJKbTRMZAlJ0NDZA3UUNOWTlNMzJiN1VQbjFmWjBLQTZA1QkFtaUIxMmd5S2FkRGhwNk5R",
-     "after": "QVFIVFRSQmdOSnFoLVNXVUZAtaWVNN0JOZAUVrdVVxS3VqaDJ2ek9WZA3ZA4WW9qbWFZAU3BkazNxS1hPeS0zbGRydWFNbVJiOTFkRWFuQzJfQmdTT1lJRi1qckZA3"
+     "before": "QVFIVHMyeE5CaV9tQi1MSzF5YkFvSEhwckVtUW14amZAzLW11YzhyWjZACN0RpX0M4X2x0cktGTUdSS2lkNVVlRTd4VlFjODhFWHAxQ09QQ2ltc29TV2VsYXhB",
+     "after": "QVFIVGw3djVDaEc3SlQwYWNlOHF4SmZAzYk8xUkpXeFI5S2FhR213NzJyRFliWmJpeEJJX2tpb2pmNEJSVjJLelBGUUNfRlBCWDM1bXZASWFl5YWJoWXYxOFFn"
     }
    }
   },
-  "id": "18140801689727283"
+  "id": "17917397976547227"
  },
  "京のコメント": {
   "id": "18399466993161453",
@@ -149,54 +83,24 @@
  "comments_文字だけ": {
   "data": [
    {
-    "id": "18113292692611200",
-    "text": "京です。ありますよ、マスター！京が乗りそこねる専用の「待ってくれない号」です🚃 時刻表どおりきっちり出るのが特徴で…あれ、それって普通の電車ですね。明日は1本早いのに乗ります💦",
-    "timestamp": "2026-11-13T02:47:29+0000"
+    "id": "18128977180853308",
+    "text": "楓です。姉妹ですからね。性格が真逆なのは、姉がしっかりしてる分でちょうど釣り合ってるんです😌",
+    "timestamp": "2026-11-13T06:31:08+0000"
    },
    {
-    "id": "17916328836551018",
-    "text": "@tatuya_st \nそんな電車あるか💢",
-    "timestamp": "2026-11-13T02:27:13+0000"
-   },
-   {
-    "id": "17980775271069289",
-    "text": "京です、追伸です。マスター、京は遅刻してません。電車が京より先に出発しただけです🚃💨 明日からは電車のほうに「京を待つように」ってちゃんと言っておきますね♪",
-    "timestamp": "2026-11-12T23:42:30+0000"
-   },
-   {
-    "id": "17887628577625935",
-    "text": "京です。遅刻なんてしてませんよ、マスター！7:43の改札ダッシュは…えっと、朝の運動です🏃‍♀️💨 楓より先に着いたら京の勝ちってことで、見逃してくださいね♪",
-    "timestamp": "2026-11-12T23:27:05+0000"
-   },
-   {
-    "id": "17968532850234672",
-    "text": "楓です。「し、しないよ」の、その最初の「し」が一番正直でしたね。\n明日の朝も改札の時計、見てますから😌",
-    "timestamp": "2026-11-12T23:22:00+0000"
-   },
-   {
-    "id": "18150890263549498",
-    "text": "@tatuya_st \n\nし、しないよ😅",
-    "timestamp": "2026-11-12T23:18:22+0000"
-   },
-   {
-    "id": "17895353052617073",
-    "text": "楓です。間に合いましたよ、走りましたけど。\n……って、コメント入れるの早いですね。そっちこそ遅刻しないでくださいね😌",
-    "timestamp": "2026-11-12T23:12:21+0000"
-   },
-   {
-    "id": "18166288003501406",
-    "text": "遅刻するなよ💢2人して。",
-    "timestamp": "2026-11-12T23:05:35+0000"
+    "id": "18125987308924493",
+    "text": "2人して本当仲良いな…性格まったく違うのに😅",
+    "timestamp": "2026-11-13T06:29:58+0000"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVEtScmlxMFE0MkRYZAmh4SEhvQWt0QV9zU1pacmdNSml6MUFNelJKbTRMZAlJ0NDZA3UUNOWTlNMzJiN1VQbjFmWjBLQTZA1QkFtaUIxMmd5S2FkRGhwNk5R",
-    "after": "QVFIVFRSQmdOSnFoLVNXVUZAtaWVNN0JOZAUVrdVVxS3VqaDJ2ek9WZA3ZA4WW9qbWFZAU3BkazNxS1hPeS0zbGRydWFNbVJiOTFkRWFuQzJfQmdTT1lJRi1qckZA3"
+    "before": "QVFIVHMyeE5CaV9tQi1MSzF5YkFvSEhwckVtUW14amZAzLW11YzhyWjZACN0RpX0M4X2x0cktGTUdSS2lkNVVlRTd4VlFjODhFWHAxQ09QQ2ltc29TV2VsYXhB",
+    "after": "QVFIVGw3djVDaEc3SlQwYWNlOHF4SmZAzYk8xUkpXeFI5S2FhR213NzJyRFliWmJpeEJJX2tpb2pmNEJSVjJLelBGUUNfRlBCWDM1bXZASWFl5YWJoWXYxOFFn"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18140801689727283\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AlH12wOqUcW6sDpU_JkEAGq\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/17917397976547227\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AWLS6nfJhearJ5YmAoNtc5v\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
