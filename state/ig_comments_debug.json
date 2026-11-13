@@ -2,6 +2,12 @@
  "comments_素": {
   "data": [
    {
+    "id": "17965634397214930"
+   },
+   {
+    "id": "18039542519851482"
+   },
+   {
     "id": "18114333701271514"
    },
    {
@@ -22,15 +28,31 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVDRWek96LVR1elBTWG9jMFBpYzJCcmt5RDViVW5yTjk4V3FEbzBzN2w5Y29YRklqcmJhQm1CbUNieXgzeTJrdE54SXRkZA2x6V2lyVWM3MEU0Y21aeERR",
+    "before": "QVFIVFdLSW9mTURrQjMxYjMxVFpGc3hqR3pqejVlZAnNsTmxxb1FHNWktaEw3Qk1HTWkwbS13SF9ZARTJEVkpDdmdxOUVFWFZANYWZAFU2RHdEo2Q2taZAmZAlRE1R",
     "after": "QVFIVGw4LXZAqT01sTXU0akMzWWZA2WFl5SDNmdkJEeFRVMmxIQWJwYXNBZAjlxLUlvdmhmakRKSWFnZADFIeTVXdm4wNmZARSDNKY01SX1UwNHM4WkIxbXpXS1lR"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 6,
+  "comments_count": 8,
   "comments": {
    "data": [
+    {
+     "id": "17965634397214930",
+     "text": "楓です。ケーキはお客様用です、説教する側はいただきませんのでご安心を。ダイエット中でも、説教のキレだけは落ちないんです😌",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
+    {
+     "id": "18039542519851482",
+     "text": "@tatuya_st \n…楓、ダイエット中って言ってなかったか？😮",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
     {
      "id": "18114333701271514",
      "text": "@tatuya_st \n知ってるか？今、楓はダイエット中だ、さらに説教が割り増しになるぞ😢",
@@ -82,7 +104,7 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVDRWek96LVR1elBTWG9jMFBpYzJCcmt5RDViVW5yTjk4V3FEbzBzN2w5Y29YRklqcmJhQm1CbUNieXgzeTJrdE54SXRkZA2x6V2lyVWM3MEU0Y21aeERR",
+     "before": "QVFIVFdLSW9mTURrQjMxYjMxVFpGc3hqR3pqejVlZAnNsTmxxb1FHNWktaEw3Qk1HTWkwbS13SF9ZARTJEVkpDdmdxOUVFWFZANYWZAFU2RHdEo2Q2taZAmZAlRE1R",
      "after": "QVFIVGw4LXZAqT01sTXU0akMzWWZA2WFl5SDNmdkJEeFRVMmxIQWJwYXNBZAjlxLUlvdmhmakRKSWFnZADFIeTVXdm4wNmZARSDNKY01SX1UwNHM4WkIxbXpXS1lR"
     }
    }
@@ -127,6 +149,16 @@
  "comments_文字だけ": {
   "data": [
    {
+    "id": "17965634397214930",
+    "text": "楓です。ケーキはお客様用です、説教する側はいただきませんのでご安心を。ダイエット中でも、説教のキレだけは落ちないんです😌",
+    "timestamp": "2026-11-13T08:38:06+0000"
+   },
+   {
+    "id": "18039542519851482",
+    "text": "@tatuya_st \n…楓、ダイエット中って言ってなかったか？😮",
+    "timestamp": "2026-11-13T08:36:53+0000"
+   },
+   {
     "id": "18114333701271514",
     "text": "@tatuya_st \n知ってるか？今、楓はダイエット中だ、さらに説教が割り増しになるぞ😢",
     "timestamp": "2026-11-13T08:35:53+0000"
@@ -159,12 +191,12 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVDRWek96LVR1elBTWG9jMFBpYzJCcmt5RDViVW5yTjk4V3FEbzBzN2w5Y29YRklqcmJhQm1CbUNieXgzeTJrdE54SXRkZA2x6V2lyVWM3MEU0Y21aeERR",
+    "before": "QVFIVFdLSW9mTURrQjMxYjMxVFpGc3hqR3pqejVlZAnNsTmxxb1FHNWktaEw3Qk1HTWkwbS13SF9ZARTJEVkpDdmdxOUVFWFZANYWZAFU2RHdEo2Q2taZAmZAlRE1R",
     "after": "QVFIVGw4LXZAqT01sTXU0akMzWWZA2WFl5SDNmdkJEeFRVMmxIQWJwYXNBZAjlxLUlvdmhmakRKSWFnZADFIeTVXdm4wNmZARSDNKY01SX1UwNHM4WkIxbXpXS1lR"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18120405368009670\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AEQgAvfyx_bAMDQdJzwdMIE\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18120405368009670\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AEasSWnv390MulxUBAQ0bxz\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
