@@ -1,30 +1,6 @@
 {
- "at": "2026-11-13T12:25+09:00",
+ "at": "2026-11-13T19:50+09:00",
  "notes": [
-  {
-   "what": "自分の成績：11/9朝『結露』表示45・11/9昼『パソコン何年』表示105で伸びず（会話の平均の3分の1未満）。11/8昼『ROOM何年目』は表示496・コメント23で好調",
-   "src": "state/insights.json",
-   "src2": "",
-   "done": "weakに2件記録・TALKSから2つ外した"
-  },
-  {
-   "what": "公式(f)楽天イベント：ママ割のブラックフライデーページはまだ2025年版（エントリー11/12 10:00〜、ポイントアップ11/20 20:00〜11/27 01:59、上限1000pt、エントリー前の買い物は対象外）。2026年の公式発表はまだなし",
-   "src": "https://event.rakuten.co.jp/family/campaign/blackfriday/",
-   "src2": "https://www.bcnretail.com/market/detail/20251116_573230.html",
-   "done": "sales の楽天ブラックフライデーは「予想・公式未確認」のまま据え置き"
-  },
-  {
-   "what": "海外④：冬の定番の話題商品はDreoの首振りヒーター・Levoitの加湿器・Owalaのボトルなど（2025年12月の記事で新味は薄い）",
-   "src": "https://www.buzzfeed.com/taylor_steele/useful-products-youll-use-all-winter",
-   "src2": "",
-   "done": "ヒーター・加湿器は hot_words に既にあるため追加なし。売れ筋リサーチの起動は見送り（新しい具体商品なし）"
-  },
-  {
-   "what": "(a)楽天ROOMのいいね減少の原因を探したが、Threadsの公開投稿は出ず、リベシティ記事は本文が会員限定（公開部分は『一時的な伸びを安定した集客と思わない』程度）",
-   "src": "https://library.libecity.com/articles/01M32260CM3Y1V0EQHTG4WXREC",
-   "src2": "",
-   "done": "見送り（会員限定のため中は読まない）"
-  },
   {
    "what": "自分の成績：11/10朝『年末の散らかり場所』が約4時間で表示45（朝の会話平均263の3分の1未満）。11/9深夜『ポチる前に寝る』は表示92で基準ぎりぎり",
    "src": "state/insights.json",
@@ -240,6 +216,30 @@
    "src": "https://affiliate.rakuten.co.jp/info/",
    "src2": "",
    "done": "変更なしを確認。official_turnを1へ"
+  },
+  {
+   "what": "(e)：Threads運用会社の解説。末尾の問いかけ・返信を放置しない・1投稿ハッシュタグ1つ。時間帯7〜9/12〜13/21〜23時は自社の経験則で根拠の数字なし",
+   "src": "https://stock-sun.com/?p=134319",
+   "src2": "",
+   "done": "今の仕組み（3行・末尾の問いかけ・朝昼夜の枠）と同じで変更なし。昼投稿が14:03にずれて伸びなかった件の裏づけとしてweakのcauseに使用"
+  },
+  {
+   "what": "(a)：ROOMで8か月、途中から伸ばすジャンルを『インテリア・寝具・収納』に絞って投稿・いいね・フォローの仕方を変えたら5桁の成果（本人申告・セール要因もありと本人も注記）",
+   "src": "https://library.libecity.com/articles/01M2SVVYRKN5F90D3TQ3Q8KR8P",
+   "src2": "",
+   "done": "ジャンルを絞る考え方のみ記録。hot_wordsのブランケット・布団乾燥機・電気毛布（寝具寄り）は維持"
+  },
+  {
+   "what": "海外④：TikTokで話題のガジェット（2026/6の記事）は医療機器・赤色光の頭皮ケアなど効果をうたう物が中心。ノートPCスタンドのみ一般品",
+   "src": "https://techsesh.co/gadgets/whats-new-in-tech-26",
+   "src2": "",
+   "done": "見送り（記事が古い・効果効能の表現が薬機法に触れやすい）"
+  },
+  {
+   "what": "公式(f)楽天ROOM：事務局ブログの直近は10/26 Androidのポイントミッション達成状況が更新されない不具合のお知らせ。ランク・報酬・規約の変更なし",
+   "src": "https://plaza.rakuten.co.jp/roomjp/diaryall/",
+   "src2": "",
+   "done": "変更なしを確認。official_turnを2へ"
   }
  ],
  "hot_words": [
@@ -579,7 +579,20 @@
    "replies": 1,
    "cause": "テーマが悪い（11/12朝ごはんに続き「朝の行動の順番」の話で、答えても話が広がらない。朝の会話平均の3分の1未満）",
    "fix": "MORNING_TALKSから外した"
+  },
+  {
+   "id": "20261113-1243-noon",
+   "topic": "布団から出るまでの時間（冬の朝）",
+   "open": "布団から出るまでの時間、冬になると倍になりません？",
+   "shape": "共感の問いかけ＋自分の答え＋「みなさん何分？」",
+   "image": "なし",
+   "time": "14:03（予定の12:43から遅れ）",
+   "views": 72,
+   "likes": 3,
+   "replies": 3,
+   "cause": "時間が悪い（昼枠が14:03にずれ、昼休みの山を外した。昼平均の3分の1未満）",
+   "fix": "TALKSとMORNING_TALKSから布団の2本を外した"
   }
  ],
- "official_turn": 1
+ "official_turn": 2
 }
