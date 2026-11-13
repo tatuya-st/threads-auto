@@ -2,6 +2,15 @@
  "comments_素": {
   "data": [
    {
+    "id": "18114333701271514"
+   },
+   {
+    "id": "18192373039416862"
+   },
+   {
+    "id": "18112643575903555"
+   },
+   {
     "id": "18154206829475458"
    },
    {
@@ -13,15 +22,39 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVDB5SExXN1RDV2UwX1NJS1BOZAjlWUjlKSnlzeTJTTXdlM2k3VS1OdGVFT0ZAQXzJhTEI3UGxvT2FKVlEyY1E0V1ZAla1BGNm9QSGN4eGdLZAXNfNFE5NkxR",
+    "before": "QVFIVDRWek96LVR1elBTWG9jMFBpYzJCcmt5RDViVW5yTjk4V3FEbzBzN2w5Y29YRklqcmJhQm1CbUNieXgzeTJrdE54SXRkZA2x6V2lyVWM3MEU0Y21aeERR",
     "after": "QVFIVGw4LXZAqT01sTXU0akMzWWZA2WFl5SDNmdkJEeFRVMmxIQWJwYXNBZAjlxLUlvdmhmakRKSWFnZADFIeTVXdm4wNmZARSDNKY01SX1UwNHM4WkIxbXpXS1lR"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 3,
+  "comments_count": 6,
   "comments": {
    "data": [
+    {
+     "id": "18114333701271514",
+     "text": "@tatuya_st \n知ってるか？今、楓はダイエット中だ、さらに説教が割り増しになるぞ😢",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
+    {
+     "id": "18192373039416862",
+     "text": "楓です。あら、キャンセルは承れません。ご予約は確定しておりますので、当日はお茶とケーキをご用意してお待ちください😌",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
+    {
+     "id": "18112643575903555",
+     "text": "京です。マスター、見に来てくれてありがとうございます😭 楓を怒らせないコツ、ちゃんと覚えました。ケーキは「見るだけ」…あれ、お皿の上がもう半分しかないです💦 マスターも予約の日はケーキ持参でお願いします♪",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
     {
      "id": "18154206829475458",
      "text": "@tatuya_st \n\nキャンセルで😢",
@@ -49,7 +82,7 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVDB5SExXN1RDV2UwX1NJS1BOZAjlWUjlKSnlzeTJTTXdlM2k3VS1OdGVFT0ZAQXzJhTEI3UGxvT2FKVlEyY1E0V1ZAla1BGNm9QSGN4eGdLZAXNfNFE5NkxR",
+     "before": "QVFIVDRWek96LVR1elBTWG9jMFBpYzJCcmt5RDViVW5yTjk4V3FEbzBzN2w5Y29YRklqcmJhQm1CbUNieXgzeTJrdE54SXRkZA2x6V2lyVWM3MEU0Y21aeERR",
      "after": "QVFIVGw4LXZAqT01sTXU0akMzWWZA2WFl5SDNmdkJEeFRVMmxIQWJwYXNBZAjlxLUlvdmhmakRKSWFnZADFIeTVXdm4wNmZARSDNKY01SX1UwNHM4WkIxbXpXS1lR"
     }
    }
@@ -94,6 +127,21 @@
  "comments_文字だけ": {
   "data": [
    {
+    "id": "18114333701271514",
+    "text": "@tatuya_st \n知ってるか？今、楓はダイエット中だ、さらに説教が割り増しになるぞ😢",
+    "timestamp": "2026-11-13T08:35:53+0000"
+   },
+   {
+    "id": "18192373039416862",
+    "text": "楓です。あら、キャンセルは承れません。ご予約は確定しておりますので、当日はお茶とケーキをご用意してお待ちください😌",
+    "timestamp": "2026-11-13T08:29:07+0000"
+   },
+   {
+    "id": "18112643575903555",
+    "text": "京です。マスター、見に来てくれてありがとうございます😭 楓を怒らせないコツ、ちゃんと覚えました。ケーキは「見るだけ」…あれ、お皿の上がもう半分しかないです💦 マスターも予約の日はケーキ持参でお願いします♪",
+    "timestamp": "2026-11-13T08:26:53+0000"
+   },
+   {
     "id": "18154206829475458",
     "text": "@tatuya_st \n\nキャンセルで😢",
     "timestamp": "2026-11-13T08:26:36+0000"
@@ -111,12 +159,12 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVDB5SExXN1RDV2UwX1NJS1BOZAjlWUjlKSnlzeTJTTXdlM2k3VS1OdGVFT0ZAQXzJhTEI3UGxvT2FKVlEyY1E0V1ZAla1BGNm9QSGN4eGdLZAXNfNFE5NkxR",
+    "before": "QVFIVDRWek96LVR1elBTWG9jMFBpYzJCcmt5RDViVW5yTjk4V3FEbzBzN2w5Y29YRklqcmJhQm1CbUNieXgzeTJrdE54SXRkZA2x6V2lyVWM3MEU0Y21aeERR",
     "after": "QVFIVGw4LXZAqT01sTXU0akMzWWZA2WFl5SDNmdkJEeFRVMmxIQWJwYXNBZAjlxLUlvdmhmakRKSWFnZADFIeTVXdm4wNmZARSDNKY01SX1UwNHM4WkIxbXpXS1lR"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18120405368009670\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AHX11JJBWs2GWuUS5mI85sM\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18120405368009670\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AEQgAvfyx_bAMDQdJzwdMIE\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
