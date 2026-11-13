@@ -2,6 +2,9 @@
  "comments_素": {
   "data": [
    {
+    "id": "18113292692611200"
+   },
+   {
     "id": "17916328836551018"
    },
    {
@@ -25,15 +28,23 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVFpPVE5xUlM0OVY0MTRjZA2trbDgyeHlIRldmaGMyMWFrTDQ2TU1xb3Mtdkx1c1c4aVVOQ1BpbnFxTW1Mb184UzU3ZAG82VHViMmJiSm1lZAUxFcUtCVTBB",
+    "before": "QVFIVEtScmlxMFE0MkRYZAmh4SEhvQWt0QV9zU1pacmdNSml6MUFNelJKbTRMZAlJ0NDZA3UUNOWTlNMzJiN1VQbjFmWjBLQTZA1QkFtaUIxMmd5S2FkRGhwNk5R",
     "after": "QVFIVFRSQmdOSnFoLVNXVUZAtaWVNN0JOZAUVrdVVxS3VqaDJ2ek9WZA3ZA4WW9qbWFZAU3BkazNxS1hPeS0zbGRydWFNbVJiOTFkRWFuQzJfQmdTT1lJRi1qckZA3"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 7,
+  "comments_count": 8,
   "comments": {
    "data": [
+    {
+     "id": "18113292692611200",
+     "text": "京です。ありますよ、マスター！京が乗りそこねる専用の「待ってくれない号」です🚃 時刻表どおりきっちり出るのが特徴で…あれ、それって普通の電車ですね。明日は1本早いのに乗ります💦",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
     {
      "id": "17916328836551018",
      "text": "@tatuya_st \nそんな電車あるか💢",
@@ -93,7 +104,7 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVFpPVE5xUlM0OVY0MTRjZA2trbDgyeHlIRldmaGMyMWFrTDQ2TU1xb3Mtdkx1c1c4aVVOQ1BpbnFxTW1Mb184UzU3ZAG82VHViMmJiSm1lZAUxFcUtCVTBB",
+     "before": "QVFIVEtScmlxMFE0MkRYZAmh4SEhvQWt0QV9zU1pacmdNSml6MUFNelJKbTRMZAlJ0NDZA3UUNOWTlNMzJiN1VQbjFmWjBLQTZA1QkFtaUIxMmd5S2FkRGhwNk5R",
      "after": "QVFIVFRSQmdOSnFoLVNXVUZAtaWVNN0JOZAUVrdVVxS3VqaDJ2ek9WZA3ZA4WW9qbWFZAU3BkazNxS1hPeS0zbGRydWFNbVJiOTFkRWFuQzJfQmdTT1lJRi1qckZA3"
     }
    }
@@ -138,6 +149,11 @@
  "comments_文字だけ": {
   "data": [
    {
+    "id": "18113292692611200",
+    "text": "京です。ありますよ、マスター！京が乗りそこねる専用の「待ってくれない号」です🚃 時刻表どおりきっちり出るのが特徴で…あれ、それって普通の電車ですね。明日は1本早いのに乗ります💦",
+    "timestamp": "2026-11-13T02:47:29+0000"
+   },
+   {
     "id": "17916328836551018",
     "text": "@tatuya_st \nそんな電車あるか💢",
     "timestamp": "2026-11-13T02:27:13+0000"
@@ -175,12 +191,12 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVFpPVE5xUlM0OVY0MTRjZA2trbDgyeHlIRldmaGMyMWFrTDQ2TU1xb3Mtdkx1c1c4aVVOQ1BpbnFxTW1Mb184UzU3ZAG82VHViMmJiSm1lZAUxFcUtCVTBB",
+    "before": "QVFIVEtScmlxMFE0MkRYZAmh4SEhvQWt0QV9zU1pacmdNSml6MUFNelJKbTRMZAlJ0NDZA3UUNOWTlNMzJiN1VQbjFmWjBLQTZA1QkFtaUIxMmd5S2FkRGhwNk5R",
     "after": "QVFIVFRSQmdOSnFoLVNXVUZAtaWVNN0JOZAUVrdVVxS3VqaDJ2ek9WZA3ZA4WW9qbWFZAU3BkazNxS1hPeS0zbGRydWFNbVJiOTFkRWFuQzJfQmdTT1lJRi1qckZA3"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18140801689727283\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"ApipX0ErfasQECK_XXDWlyi\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18140801689727283\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AlH12wOqUcW6sDpU_JkEAGq\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
