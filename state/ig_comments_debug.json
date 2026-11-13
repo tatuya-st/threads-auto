@@ -2,6 +2,9 @@
  "comments_素": {
   "data": [
    {
+    "id": "17980775271069289"
+   },
+   {
     "id": "17887628577625935"
    },
    {
@@ -19,15 +22,23 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVHFLd2hrVmpMZAXpzbTBQeDhrYWt5Tk9UOF8tLTVvaEY1ZA3IyNnhRa3VXT3pqTHhjMm45ZAHRFa1oxZAE1pMHhETzRyVGNBOXhyeXUybnBVWFRCVW1Ya1VB",
+    "before": "QVFIVGdnc0VRNlZAIYVZAxNG1ZAMnZA3QmJ5WEt5b0owLXJhUl9ZAQWRIcFNBOUNCU3owaGVoNzN3YURTNVlOUG0zS3RNSS05cE55bTRCb2RacGZArQXJfUFQzN0tB",
     "after": "QVFIVFRSQmdOSnFoLVNXVUZAtaWVNN0JOZAUVrdVVxS3VqaDJ2ek9WZA3ZA4WW9qbWFZAU3BkazNxS1hPeS0zbGRydWFNbVJiOTFkRWFuQzJfQmdTT1lJRi1qckZA3"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 5,
+  "comments_count": 6,
   "comments": {
    "data": [
+    {
+     "id": "17980775271069289",
+     "text": "京です、追伸です。マスター、京は遅刻してません。電車が京より先に出発しただけです🚃💨 明日からは電車のほうに「京を待つように」ってちゃんと言っておきますね♪",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
     {
      "id": "17887628577625935",
      "text": "京です。遅刻なんてしてませんよ、マスター！7:43の改札ダッシュは…えっと、朝の運動です🏃‍♀️💨 楓より先に着いたら京の勝ちってことで、見逃してくださいね♪",
@@ -71,7 +82,7 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVHFLd2hrVmpMZAXpzbTBQeDhrYWt5Tk9UOF8tLTVvaEY1ZA3IyNnhRa3VXT3pqTHhjMm45ZAHRFa1oxZAE1pMHhETzRyVGNBOXhyeXUybnBVWFRCVW1Ya1VB",
+     "before": "QVFIVGdnc0VRNlZAIYVZAxNG1ZAMnZA3QmJ5WEt5b0owLXJhUl9ZAQWRIcFNBOUNCU3owaGVoNzN3YURTNVlOUG0zS3RNSS05cE55bTRCb2RacGZArQXJfUFQzN0tB",
      "after": "QVFIVFRSQmdOSnFoLVNXVUZAtaWVNN0JOZAUVrdVVxS3VqaDJ2ek9WZA3ZA4WW9qbWFZAU3BkazNxS1hPeS0zbGRydWFNbVJiOTFkRWFuQzJfQmdTT1lJRi1qckZA3"
     }
    }
@@ -116,6 +127,11 @@
  "comments_文字だけ": {
   "data": [
    {
+    "id": "17980775271069289",
+    "text": "京です、追伸です。マスター、京は遅刻してません。電車が京より先に出発しただけです🚃💨 明日からは電車のほうに「京を待つように」ってちゃんと言っておきますね♪",
+    "timestamp": "2026-11-12T23:42:30+0000"
+   },
+   {
     "id": "17887628577625935",
     "text": "京です。遅刻なんてしてませんよ、マスター！7:43の改札ダッシュは…えっと、朝の運動です🏃‍♀️💨 楓より先に着いたら京の勝ちってことで、見逃してくださいね♪",
     "timestamp": "2026-11-12T23:27:05+0000"
@@ -143,12 +159,12 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVHFLd2hrVmpMZAXpzbTBQeDhrYWt5Tk9UOF8tLTVvaEY1ZA3IyNnhRa3VXT3pqTHhjMm45ZAHRFa1oxZAE1pMHhETzRyVGNBOXhyeXUybnBVWFRCVW1Ya1VB",
+    "before": "QVFIVGdnc0VRNlZAIYVZAxNG1ZAMnZA3QmJ5WEt5b0owLXJhUl9ZAQWRIcFNBOUNCU3owaGVoNzN3YURTNVlOUG0zS3RNSS05cE55bTRCb2RacGZArQXJfUFQzN0tB",
     "after": "QVFIVFRSQmdOSnFoLVNXVUZAtaWVNN0JOZAUVrdVVxS3VqaDJ2ek9WZA3ZA4WW9qbWFZAU3BkazNxS1hPeS0zbGRydWFNbVJiOTFkRWFuQzJfQmdTT1lJRi1qckZA3"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18140801689727283\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"Am0AVSTBWVTGhHWnp5_VrJp\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18140801689727283\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AC2OD7Y_EKhM9fVDzSGo0RL\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
