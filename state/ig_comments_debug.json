@@ -2,122 +2,45 @@
  "comments_素": {
   "data": [
    {
-    "id": "18133022143827919"
+    "id": "18360055000175502"
    },
    {
-    "id": "17986638648120923"
+    "id": "18214869748364413"
    },
    {
-    "id": "17965634397214930"
-   },
-   {
-    "id": "18039542519851482"
-   },
-   {
-    "id": "18114333701271514"
-   },
-   {
-    "id": "18192373039416862"
-   },
-   {
-    "id": "18112643575903555"
-   },
-   {
-    "id": "18154206829475458"
-   },
-   {
-    "id": "18113392148231040"
-   },
-   {
-    "id": "18131305202492229"
+    "id": "18019575590967178"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVFNuVkxQNFVlQ19MOV9SZADZAaQlFtNGJBZAE9nQ1FIdTV2M3h4R2oyLUluSWR3Q2x6UG9BV2d1V0Y1UklzYXRFbllhbDJZASEMzZA2dyZAUZA3S0xhYVhxeHRn",
-    "after": "QVFIVGw4LXZAqT01sTXU0akMzWWZA2WFl5SDNmdkJEeFRVMmxIQWJwYXNBZAjlxLUlvdmhmakRKSWFnZADFIeTVXdm4wNmZARSDNKY01SX1UwNHM4WkIxbXpXS1lR"
+    "before": "QVFIVEZAKMFlWZAUM3YVk5TXJYRlpac29LZAFB6VVc3SmMtWlNjdjFtczdpZA0w1QW4wa1pHNGEyY3hHM016MzVrVE9sM0ZAkcWFhZAUlDT25TUEtMZAXVWWG1ILVdB",
+    "after": "QVFIVFhTWHkxNnBLUmJjUHVmcXh6X3lRaERpU1NaTHhRelJOUE81ZAkRsQ1lrMlVoNzFiQWhya0RDbmdMcVZA6Y1lVOGc4WlhDaHA5M3VRMVc0QlBzYk5YQlVn"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 10,
+  "comments_count": 3,
   "comments": {
    "data": [
     {
-     "id": "18133022143827919",
-     "text": "@tatuya_st \n…俺を巻き込むな！！",
+     "id": "18360055000175502",
+     "text": "京です。お姉ちゃんとハート、作ってきました❤️ 次は社長も一緒に撮りましょう！",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "17986638648120923",
-     "text": "京です。えっ、楓ダイエット中なんですか😱 だからケーキ見ただけで割り増しに…。京、楓の分まで食べてあげたつもりだったんです💦 マスター、キャンセルできないなら一緒に正座しましょう♪",
+     "id": "18214869748364413",
+     "text": "楓です。満喫しちゃいました😄 たまの遠出ですから、大目に見てください💦",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "17965634397214930",
-     "text": "楓です。ケーキはお客様用です、説教する側はいただきませんのでご安心を。ダイエット中でも、説教のキレだけは落ちないんです😌",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18039542519851482",
-     "text": "@tatuya_st \n…楓、ダイエット中って言ってなかったか？😮",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18114333701271514",
-     "text": "@tatuya_st \n知ってるか？今、楓はダイエット中だ、さらに説教が割り増しになるぞ😢",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18192373039416862",
-     "text": "楓です。あら、キャンセルは承れません。ご予約は確定しておりますので、当日はお茶とケーキをご用意してお待ちください😌",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18112643575903555",
-     "text": "京です。マスター、見に来てくれてありがとうございます😭 楓を怒らせないコツ、ちゃんと覚えました。ケーキは「見るだけ」…あれ、お皿の上がもう半分しかないです💦 マスターも予約の日はケーキ持参でお願いします♪",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18154206829475458",
-     "text": "@tatuya_st \n\nキャンセルで😢",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18113392148231040",
-     "text": "楓です。あら、心配で端から見てたんですね。京にはいい教訓になったと思います。……社長も、説教のご予約が1件入ってますからね😌",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18131305202492229",
-     "text": "一応、心配で見に行ったが…楓は怒らせない方がいいぞ京😅💦",
+     "id": "18019575590967178",
+     "text": "漫喫してるな、おい💢",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
@@ -126,12 +49,12 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVFNuVkxQNFVlQ19MOV9SZADZAaQlFtNGJBZAE9nQ1FIdTV2M3h4R2oyLUluSWR3Q2x6UG9BV2d1V0Y1UklzYXRFbllhbDJZASEMzZA2dyZAUZA3S0xhYVhxeHRn",
-     "after": "QVFIVGw4LXZAqT01sTXU0akMzWWZA2WFl5SDNmdkJEeFRVMmxIQWJwYXNBZAjlxLUlvdmhmakRKSWFnZADFIeTVXdm4wNmZARSDNKY01SX1UwNHM4WkIxbXpXS1lR"
+     "before": "QVFIVEZAKMFlWZAUM3YVk5TXJYRlpac29LZAFB6VVc3SmMtWlNjdjFtczdpZA0w1QW4wa1pHNGEyY3hHM016MzVrVE9sM0ZAkcWFhZAUlDT25TUEtMZAXVWWG1ILVdB",
+     "after": "QVFIVFhTWHkxNnBLUmJjUHVmcXh6X3lRaERpU1NaTHhRelJOUE81ZAkRsQ1lrMlVoNzFiQWhya0RDbmdMcVZA6Y1lVOGc4WlhDaHA5M3VRMVc0QlBzYk5YQlVn"
     }
    }
   },
-  "id": "18120405368009670"
+  "id": "18036079178699472"
  },
  "京のコメント": {
   "id": "18399466993161453",
@@ -171,64 +94,29 @@
  "comments_文字だけ": {
   "data": [
    {
-    "id": "18133022143827919",
-    "text": "@tatuya_st \n…俺を巻き込むな！！",
-    "timestamp": "2026-11-13T11:06:40+0000"
+    "id": "18360055000175502",
+    "text": "京です。お姉ちゃんとハート、作ってきました❤️ 次は社長も一緒に撮りましょう！",
+    "timestamp": "2026-11-14T05:04:03+0000"
    },
    {
-    "id": "17986638648120923",
-    "text": "京です。えっ、楓ダイエット中なんですか😱 だからケーキ見ただけで割り増しに…。京、楓の分まで食べてあげたつもりだったんです💦 マスター、キャンセルできないなら一緒に正座しましょう♪",
-    "timestamp": "2026-11-13T10:46:59+0000"
+    "id": "18214869748364413",
+    "text": "楓です。満喫しちゃいました😄 たまの遠出ですから、大目に見てください💦",
+    "timestamp": "2026-11-14T05:03:52+0000"
    },
    {
-    "id": "17965634397214930",
-    "text": "楓です。ケーキはお客様用です、説教する側はいただきませんのでご安心を。ダイエット中でも、説教のキレだけは落ちないんです😌",
-    "timestamp": "2026-11-13T08:38:06+0000"
-   },
-   {
-    "id": "18039542519851482",
-    "text": "@tatuya_st \n…楓、ダイエット中って言ってなかったか？😮",
-    "timestamp": "2026-11-13T08:36:53+0000"
-   },
-   {
-    "id": "18114333701271514",
-    "text": "@tatuya_st \n知ってるか？今、楓はダイエット中だ、さらに説教が割り増しになるぞ😢",
-    "timestamp": "2026-11-13T08:35:53+0000"
-   },
-   {
-    "id": "18192373039416862",
-    "text": "楓です。あら、キャンセルは承れません。ご予約は確定しておりますので、当日はお茶とケーキをご用意してお待ちください😌",
-    "timestamp": "2026-11-13T08:29:07+0000"
-   },
-   {
-    "id": "18112643575903555",
-    "text": "京です。マスター、見に来てくれてありがとうございます😭 楓を怒らせないコツ、ちゃんと覚えました。ケーキは「見るだけ」…あれ、お皿の上がもう半分しかないです💦 マスターも予約の日はケーキ持参でお願いします♪",
-    "timestamp": "2026-11-13T08:26:53+0000"
-   },
-   {
-    "id": "18154206829475458",
-    "text": "@tatuya_st \n\nキャンセルで😢",
-    "timestamp": "2026-11-13T08:26:36+0000"
-   },
-   {
-    "id": "18113392148231040",
-    "text": "楓です。あら、心配で端から見てたんですね。京にはいい教訓になったと思います。……社長も、説教のご予約が1件入ってますからね😌",
-    "timestamp": "2026-11-13T08:23:41+0000"
-   },
-   {
-    "id": "18131305202492229",
-    "text": "一応、心配で見に行ったが…楓は怒らせない方がいいぞ京😅💦",
-    "timestamp": "2026-11-13T08:22:43+0000"
+    "id": "18019575590967178",
+    "text": "漫喫してるな、おい💢",
+    "timestamp": "2026-11-14T05:03:19+0000"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVFNuVkxQNFVlQ19MOV9SZADZAaQlFtNGJBZAE9nQ1FIdTV2M3h4R2oyLUluSWR3Q2x6UG9BV2d1V0Y1UklzYXRFbllhbDJZASEMzZA2dyZAUZA3S0xhYVhxeHRn",
-    "after": "QVFIVGw4LXZAqT01sTXU0akMzWWZA2WFl5SDNmdkJEeFRVMmxIQWJwYXNBZAjlxLUlvdmhmakRKSWFnZADFIeTVXdm4wNmZARSDNKY01SX1UwNHM4WkIxbXpXS1lR"
+    "before": "QVFIVEZAKMFlWZAUM3YVk5TXJYRlpac29LZAFB6VVc3SmMtWlNjdjFtczdpZA0w1QW4wa1pHNGEyY3hHM016MzVrVE9sM0ZAkcWFhZAUlDT25TUEtMZAXVWWG1ILVdB",
+    "after": "QVFIVFhTWHkxNnBLUmJjUHVmcXh6X3lRaERpU1NaTHhRelJOUE81ZAkRsQ1lrMlVoNzFiQWhya0RDbmdMcVZA6Y1lVOGc4WlhDaHA5M3VRMVc0QlBzYk5YQlVn"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18120405368009670\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AU6UfP2y9Aotci82nG1RZGM\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18036079178699472\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"Ac7imXJ6n7OWZou_53KxS_4\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",

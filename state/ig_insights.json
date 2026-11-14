@@ -1,26 +1,68 @@
 {
- "at": "2026-11-14T11:26+09:00",
+ "at": "2026-11-14T14:26+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
-  "followers_count": 1250,
+  "followers_count": 1249,
   "follows_count": 2419,
-  "media_count": 80
+  "media_count": 83
  },
  "posts": [
+  {
+   "id": "18036079178699472",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-14T05:00:31+0000",
+   "permalink": "https://www.instagram.com/p/DftZ8gnDj17/",
+   "like_count": 15,
+   "comments_count": 3,
+   "caption": "モニュメント編\n新潟駅前の赤いNIIGATAの前で、記念に撮りました📸\n2枚目は後ろ姿でハートです❤️",
+   "reach": 14,
+   "saved": 0,
+   "shares": 0,
+   "views": 94
+  },
+  {
+   "id": "18107528837288872",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-14T03:23:46+0000",
+   "permalink": "https://www.instagram.com/p/DftO4DHDu55/",
+   "like_count": 9,
+   "comments_count": 3,
+   "caption": "お昼ごはん編\nお買い物のあとは、万代のフードホールでランチ🍽️\n2枚目は、デザートのケーキに手を伸ばす京と、止める楓です",
+   "reach": 22,
+   "saved": 0,
+   "shares": 0,
+   "views": 54
+  },
+  {
+   "id": "17958701343282140",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-14T03:01:27+0000",
+   "permalink": "https://www.instagram.com/p/DftMUfEDyWc/",
+   "like_count": 20,
+   "comments_count": 3,
+   "caption": "新潟市でお買い物編\nたまには遠出して、新潟までお買い物に来ました。\n気づいたら、2人とも両手に袋でした🛍️\n社長には内緒",
+   "reach": 53,
+   "saved": 0,
+   "shares": 0,
+   "views": 131
+  },
   {
    "id": "18120405368009670",
    "media_type": "IMAGE",
    "media_product_type": "FEED",
    "timestamp": "2026-11-13T08:13:05+0000",
    "permalink": "https://www.instagram.com/p/DfrLL4Pj9ew/",
-   "like_count": 36,
+   "like_count": 39,
    "comments_count": 10,
    "caption": "楓です。説教中です。\n京には、合図ページは読み飛ばさないことと、ケーキは「見るだけ」と約束させました。\n……端で見てる方",
-   "reach": 121,
+   "reach": 125,
    "saved": 0,
    "shares": 0,
-   "views": 227
+   "views": 233
   },
   {
    "id": "17917397976547227",
@@ -28,13 +70,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-13T06:24:30+0000",
    "permalink": "https://www.instagram.com/p/Dfq-w4Wj_S6/",
-   "like_count": 29,
+   "like_count": 32,
    "comments_count": 3,
    "caption": "楓です。休みの日の秋さんぽ、3枚です。\n公園で落ち葉を見て、カフェで温まって、夕方は商店街へ。紙袋が増えたのは、だいたい",
-   "reach": 74,
+   "reach": 75,
    "saved": 0,
    "shares": 0,
-   "views": 181
+   "views": 186
   },
   {
    "id": "18140801689727283",
@@ -42,13 +84,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-12T23:03:20+0000",
    "permalink": "https://www.instagram.com/p/DfqMRq4D2Vg/",
-   "like_count": 28,
+   "like_count": 30,
    "comments_count": 8,
    "caption": "おはようございます、出勤です。\n京はまだ目が開いてませんが、電車には間に合いました（たぶん）。",
-   "reach": 57,
+   "reach": 59,
    "saved": 0,
    "shares": 0,
-   "views": 108
+   "views": 112
   },
   {
    "id": "18083162060424277",
@@ -56,13 +98,13 @@
    "media_product_type": "REELS",
    "timestamp": "2026-11-12T10:09:38+0000",
    "permalink": "https://www.instagram.com/reel/Dfozs1-zyIk/",
-   "like_count": 17,
+   "like_count": 18,
    "comments_count": 0,
    "caption": "【PR】夜の自分時間に、LEDマスク。\nCurrentBody LEDマスク シリーズ3\nセール中（〜12/07）・詳し",
-   "reach": 151,
+   "reach": 152,
    "saved": 0,
    "shares": 0,
-   "views": 167
+   "views": 168
   },
   {
    "id": "18125776793303175",
@@ -70,13 +112,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-12T07:17:53+0000",
    "permalink": "https://www.instagram.com/p/DfogEqCD72_/",
-   "like_count": 31,
+   "like_count": 32,
    "comments_count": 3,
    "caption": "続報です。\n片付け、終わりました。\n途中、逃げようとした形跡はありましたが、最後までやり切ったようです。\n約束のお茶、淹",
-   "reach": 113,
+   "reach": 114,
    "saved": 0,
    "shares": 0,
-   "views": 214
+   "views": 218
   },
   {
    "id": "17951587893357300",
@@ -84,13 +126,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-12T05:31:13+0000",
    "permalink": "https://www.instagram.com/p/DfoT3VQDyQs/",
-   "like_count": 30,
+   "like_count": 31,
    "comments_count": 3,
    "caption": "続報です。\n今度は立場が逆転しました。\n散らかしっぱなしの机に、2人の堪忍袋の緒が切れたようです。\nマスター、反省中。た",
-   "reach": 134,
+   "reach": 135,
    "saved": 0,
    "shares": 0,
-   "views": 263
+   "views": 264
   },
   {
    "id": "18149888050564645",
@@ -112,13 +154,13 @@
    "media_product_type": "REELS",
    "timestamp": "2026-11-11T12:44:28+0000",
    "permalink": "https://www.instagram.com/reel/DfmgoduPoFG/",
-   "like_count": 11,
+   "like_count": 12,
    "comments_count": 0,
    "caption": "【PR】\n朝起きたら、のどがカラカラ…の季節になりましたね。\nLIBER-Eのハイブリッド加湿器「Aqua M1」。タン",
    "reach": 82,
    "saved": 0,
    "shares": 0,
-   "views": 92
+   "views": 93
   },
   {
    "id": "18115497869159195",
@@ -129,52 +171,10 @@
    "like_count": 72,
    "comments_count": 7,
    "caption": "続報です。\nマスターが帰ってきました。\n散らかった机は、マスターが1人で片付けています。\n私たち2人は、途方に暮れて立っ",
-   "reach": 714,
+   "reach": 829,
    "saved": 0,
    "shares": 0,
-   "views": 1407
-  },
-  {
-   "id": "18023003393729123",
-   "media_type": "IMAGE",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-11T08:42:42+0000",
-   "permalink": "https://www.instagram.com/p/DfmE-66k-ut/",
-   "like_count": 24,
-   "comments_count": 7,
-   "caption": "仕事帰りの寄り道🍰\n\n「今日はケーキ1個まで」って決めたのに、\n気づいたら2人とも2個目です。\n\n誰ですか、こんな2人に",
-   "reach": 69,
-   "saved": 0,
-   "shares": 0,
-   "views": 132
-  },
-  {
-   "id": "17918118519536388",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-11T06:53:21+0000",
-   "permalink": "https://www.instagram.com/p/Dfl4ekfiX4F/",
-   "like_count": 37,
-   "comments_count": 8,
-   "caption": "速報です。\n本日、マスターは不在です。\n\n楓、机に足を上げてポテチ。\n京、机に座ってゲーム。\n会議テーブルは、お茶会場に",
-   "reach": 99,
-   "saved": 0,
-   "shares": 0,
-   "views": 254
-  },
-  {
-   "id": "18050579888820805",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-11T05:33:23+0000",
-   "permalink": "https://www.instagram.com/p/DflvUogD9YE/",
-   "like_count": 61,
-   "comments_count": 20,
-   "caption": "2人の秋のお出かけ🍁\n\n楓は紅葉の公園、京はイチョウ並木。\nたまには普段着で、のんびりお散歩してきました。",
-   "reach": 146,
-   "saved": 0,
-   "shares": 0,
-   "views": 398
+   "views": 1579
   }
  ]
 }
