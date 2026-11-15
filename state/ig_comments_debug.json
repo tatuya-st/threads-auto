@@ -2,6 +2,9 @@
  "comments_素": {
   "data": [
    {
+    "id": "18091436639268886"
+   },
+   {
     "id": "17964216551999151"
    },
    {
@@ -28,15 +31,23 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVFVCdzcwNUNyc0UzeUxVdjAzalNEVTFHWkFkV1VkZAXFIMGJFREt0X3ltdTk1SGhfM19DbmVid1N3eGtodGd4QVljZADJOMDAyWG9HLWFxUzZA3V1o5bDF3",
+    "before": "QVFIVHlyd2JsdGQ0Vkc2eXVLc1h5Y0trQzdYS0Q4R196S3NyeG9rMC1uODdHS0t5T2k5WGlrdWJUcC1NeWVhUWpwMzZA3bS00WllTYWpoN0N1R2RhQTl3V0R3",
     "after": "QVFIVDlHVkZAoSkNreElXenl5ZAjNDQzZAucURIZAW9iZA25QbENEZAlhwNjNmdWJjd1lRLVdRZAGdpNlJQNTlkLXowaVhxNUVoRnZALbnpiMjg1SW51OEFPY3kxMkV3"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 8,
+  "comments_count": 9,
   "comments": {
    "data": [
+    {
+     "id": "18091436639268886",
+     "text": "京です。えっ、部下…ですか😱 京、さっそく先輩らしく町に仕事を教えようとしたら「京ねぇ、それ昨日の資料だよ」って逆に教えられました💦 マスター、立場が逆転しないうちに、京の昇進もよろしくお願いします♪",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
     {
      "id": "17964216551999151",
      "text": "@tatuya_st \nしかも再来週から町はお前の部下だぞ？😓",
@@ -104,7 +115,7 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVFVCdzcwNUNyc0UzeUxVdjAzalNEVTFHWkFkV1VkZAXFIMGJFREt0X3ltdTk1SGhfM19DbmVid1N3eGtodGd4QVljZADJOMDAyWG9HLWFxUzZA3V1o5bDF3",
+     "before": "QVFIVHlyd2JsdGQ0Vkc2eXVLc1h5Y0trQzdYS0Q4R196S3NyeG9rMC1uODdHS0t5T2k5WGlrdWJUcC1NeWVhUWpwMzZA3bS00WllTYWpoN0N1R2RhQTl3V0R3",
      "after": "QVFIVDlHVkZAoSkNreElXenl5ZAjNDQzZAucURIZAW9iZA25QbENEZAlhwNjNmdWJjd1lRLVdRZAGdpNlJQNTlkLXowaVhxNUVoRnZALbnpiMjg1SW51OEFPY3kxMkV3"
     }
    }
@@ -149,6 +160,11 @@
  "comments_文字だけ": {
   "data": [
    {
+    "id": "18091436639268886",
+    "text": "京です。えっ、部下…ですか😱 京、さっそく先輩らしく町に仕事を教えようとしたら「京ねぇ、それ昨日の資料だよ」って逆に教えられました💦 マスター、立場が逆転しないうちに、京の昇進もよろしくお願いします♪",
+    "timestamp": "2026-11-15T01:32:20+0000"
+   },
+   {
     "id": "17964216551999151",
     "text": "@tatuya_st \nしかも再来週から町はお前の部下だぞ？😓",
     "timestamp": "2026-11-15T01:29:59+0000"
@@ -191,12 +207,12 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVFVCdzcwNUNyc0UzeUxVdjAzalNEVTFHWkFkV1VkZAXFIMGJFREt0X3ltdTk1SGhfM19DbmVid1N3eGtodGd4QVljZADJOMDAyWG9HLWFxUzZA3V1o5bDF3",
+    "before": "QVFIVHlyd2JsdGQ0Vkc2eXVLc1h5Y0trQzdYS0Q4R196S3NyeG9rMC1uODdHS0t5T2k5WGlrdWJUcC1NeWVhUWpwMzZA3bS00WllTYWpoN0N1R2RhQTl3V0R3",
     "after": "QVFIVDlHVkZAoSkNreElXenl5ZAjNDQzZAucURIZAW9iZA25QbENEZAlhwNjNmdWJjd1lRLVdRZAGdpNlJQNTlkLXowaVhxNUVoRnZALbnpiMjg1SW51OEFPY3kxMkV3"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18024775883937326\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AG1Rc5SOoNfqLparS3WYEI6\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18024775883937326\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AsZwPQOCo49VOX0ByzPfhcv\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
