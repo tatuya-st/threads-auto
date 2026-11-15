@@ -19,5 +19,7 @@
    "points": []
   }
  ],
- "hold": "11/15夜（京の枠1）に出す。楓の画像2枚（queenrock-kyo-glossy-v2.webp／media-generation-queenrock-kaede-matte-…webp）は11/15 09時に京が検品合格。11/15の18時以降に京が apply_photo で入れて出す"
+ "photo": "assets/photos/20261113-2044-night.jpg",
+ "released": "2026-11-15T18:11+09:00",
+ "photo2": "assets/photos/20261113-2044-night_2.jpg"
 }
