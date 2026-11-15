@@ -441,7 +441,8 @@ def talk(repo, slot='noon'):
     # 11/3：10/29以降は商品投稿が止まり、ROOMへのリンクが1本も出ずクリックが減った。
     # 返信がいちばん集まる朝の会話投稿に、ルイのリンクの日（奇数日）だけROOMへの返信リンクを付ける。
     # 間隔（20時間）と偶数日の扱いは publish.py の thin_link がそのまま守る
-    if slot == 'morning' and stamp.day % 2 == 1:
+    # 11/15 2枠制：京のリンクは枠1（夜の商品投稿）だけにするため、朝のROOM返信リンクは止める
+    if False and slot == 'morning' and stamp.day % 2 == 1:
         q['reply'] = '【PR】うちで実際に選んでる冬の便利もの、楽天ROOMにまとめてます\n' + ROOM_COLS_URL
     # 10/29 Threads公式Tips：トピック付きの投稿は表示が伸びやすい → 会話投稿にもトピックを付ける
     if 'ROOM' in text:

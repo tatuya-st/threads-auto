@@ -116,17 +116,18 @@ def write_status():
     """レイが書き込み前に見る今日の合図（https://tatuya-st.github.io/threads-auto/state/status.txt）"""
     now = datetime.now(JST)
     stop = limited_today()
-    who = '京' if now.day % 2 else 'レイ'
+    # 11/15 2枠制：枠1＝京の夜の商品投稿、枠2＝楓（A8・動画連動）
+    who = '枠1 京（夜の商品投稿）／枠2 楓（A8・動画連動）'
     try:  # 11/03：ルイの商品投稿がボツになった日は、その日のリンクと夜の商品投稿をレイに渡す
         hand = json.load(open(os.path.join(ROOT, 'state', 'handover.json'), encoding='utf-8'))
     except Exception:
         hand = {}
     today = now.strftime('%Y-%m-%d')
     if today in hand:
-        who = f"レイ（{hand[today]}）"
+        who = f"枠1 楓（{hand[today]}）／枠2 楓"
     txt = (f"日付：{now.strftime('%Y-%m-%d')}（日本時間）\n"
            f"書き込み：{'止める（Threadsの書き込み上限が出たため、今日は投稿も返信もしない）' if stop else 'OK'}\n"
-           f"今日のリンク：{who}\n"
+           f"今日のリンク：{who}（2人で1日2回まで）\n"
            f"更新：{now.strftime('%H:%M')}\n")
     try:  # ルイからレイへの連絡（マスターの中継なしで届ける）
         note = open(os.path.join(ROOT, 'state', 'to_rei.txt'), encoding='utf-8').read().strip()
@@ -372,7 +373,9 @@ def thin_link(q):
         hand = json.load(open(os.path.join(ROOT, 'state', 'handover.json'), encoding='utf-8'))
     except Exception:
         hand = {}
-    blocked = today.day % 2 == 0 or today.strftime('%Y-%m-%d') in off or today.strftime('%Y-%m-%d') in hand
+    # 11/15 マスター指示：リンクは2人で1日2回まで（日替わり廃止）。京は毎日「枠1＝夜の商品投稿」を使う。
+    # 楓に枠1を渡す日（handover.json）と link_off.json の日だけ付けない
+    blocked = today.strftime('%Y-%m-%d') in off or today.strftime('%Y-%m-%d') in hand
     if q.get('master_link'):  # マスターが「リンク付きで」と明示した投稿は、日付の割り当てより優先する
         blocked = False
         last = None
