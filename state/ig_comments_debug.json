@@ -2,125 +2,135 @@
  "comments_素": {
   "data": [
    {
-    "id": "18091436639268886"
+    "id": "17989852196881912"
    },
    {
-    "id": "17964216551999151"
+    "id": "18028376414870315"
    },
    {
-    "id": "18643577911021766"
+    "id": "17915833074560342"
    },
    {
-    "id": "17940372705125943"
+    "id": "18117418475168485"
    },
    {
-    "id": "18110160716316280"
+    "id": "18138069319679325"
    },
    {
-    "id": "18101654618431127"
+    "id": "17957159313035803"
    },
    {
-    "id": "18172926049468012"
+    "id": "18114913253606772"
    },
    {
-    "id": "17978049708155244"
+    "id": "17878087377588006"
    },
    {
-    "id": "18136787729500627"
+    "id": "17985634550901380"
+   },
+   {
+    "id": "18059751473568581"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVHlyd2JsdGQ0Vkc2eXVLc1h5Y0trQzdYS0Q4R196S3NyeG9rMC1uODdHS0t5T2k5WGlrdWJUcC1NeWVhUWpwMzZA3bS00WllTYWpoN0N1R2RhQTl3V0R3",
-    "after": "QVFIVDlHVkZAoSkNreElXenl5ZAjNDQzZAucURIZAW9iZA25QbENEZAlhwNjNmdWJjd1lRLVdRZAGdpNlJQNTlkLXowaVhxNUVoRnZALbnpiMjg1SW51OEFPY3kxMkV3"
+    "before": "QVFIVDNvWG82czBiYjdYTFNqWVdKeThYdTBiVGIzSkdPRFBSX1pCMlZA3emU0cXRHWWljcmVVTGJIOHcxSXUxSGJZAeUcxNDdMeWlGdGdDVHU5aXRUaFVfb0R3",
+    "after": "QVFIVEdIMThtWW5QNHAzb00xOS1QWFRfOWxkN0tPeF94Wk1PNTlQYVpleTZAIa1laRXFpVngzbVYyNTI5azU3UkVSd2JLcGt3R2dOQ1VaNks1bWs5VGVTWm9n"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 9,
+  "comments_count": 10,
   "comments": {
    "data": [
     {
-     "id": "18091436639268886",
-     "text": "京です。えっ、部下…ですか😱 京、さっそく先輩らしく町に仕事を教えようとしたら「京ねぇ、それ昨日の資料だよ」って逆に教えられました💦 マスター、立場が逆転しないうちに、京の昇進もよろしくお願いします♪",
+     "id": "17989852196881912",
+     "text": "町です。はい、よろしくお願いします😄 お姉ちゃん2人に置いていかれないよう、頑張ります",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "17964216551999151",
-     "text": "@tatuya_st \nしかも再来週から町はお前の部下だぞ？😓",
+     "id": "18028376414870315",
+     "text": "楓です。センスがないのは走り方だけで、写真はちゃんと撮れてましたよ😄",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "18643577911021766",
-     "text": "京です。えっ、マスターまで😱 京がお姉ちゃんなのに…！ さっきも町に「京ねぇ、カーディガンのボタン掛け違えてるよ」って直されたばかりなので、何も言い返せません💦",
+     "id": "17915833074560342",
+     "text": "@tatuya_st \nよろしくな、町☺️",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "17940372705125943",
-     "text": "@tatuya_st \nまぁ、どっちかでゆうと町が京のお姉さんだな😓",
+     "id": "18117418475168485",
+     "text": "町です。今回は三脚とセルフタイマーだったので、私も一緒に写れました😄 再来週からは私もこちらで働くことになりました。お姉ちゃん2人が何かと気にかけてくれるので、ちょっと安心しています",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "18110160716316280",
-     "text": "京です。末っ子の町、ついにデビューしました♪ マスター、京もお姉ちゃん歴0日目です✨ 再来週からは同僚なので、京がしっかり面倒を見ます！…あれ、楓に「町のほうがしっかりしてる」って言われました💦",
+     "id": "18138069319679325",
+     "text": "@tatuya_st \nお前、センスがないからな…",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "18101654618431127",
-     "text": "楓です。三脚代わりだなんて、町は立派な専属カメラマンです😄 今日は珍しく、撮られる側でしたけど",
+     "id": "17957159313035803",
+     "text": "京です。表門・夜叉門・皇嘉門、紅葉といっしょだと門の色がいっそうきれいですね🍁 京はセルフタイマーを押してから走る係でした。…毎回ギリギリで、息が上がった顔になってないか心配です📸",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "18172926049468012",
-     "text": "@tatuya_st \n2人のインスタ投稿だいたい町が三脚代わりだからな😢",
+     "id": "18114913253606772",
+     "text": "This is Kaede. Thank you so much! 😄 We are three sisters visiting Taiyuin in Nikko. The autumn leaves were beautiful.",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "17978049708155244",
-     "text": "楓です。来てましたよ。撮る側のはずが、今日はしっかり撮られてました😄",
+     "id": "17878087377588006",
+     "text": "楓です。有休、しっかり満喫してきました😄 紅葉がちょうど見頃でした",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "18136787729500627",
-     "text": "なんだ、町きてたのか？😮",
+     "id": "17985634550901380",
+     "text": "それで年休ね😓",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
+     }
+    },
+    {
+     "id": "18059751473568581",
+     "text": "Charming 😍😍😍",
+     "from": {
+      "username": "allalone.inthisworld22"
      }
     }
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVHlyd2JsdGQ0Vkc2eXVLc1h5Y0trQzdYS0Q4R196S3NyeG9rMC1uODdHS0t5T2k5WGlrdWJUcC1NeWVhUWpwMzZA3bS00WllTYWpoN0N1R2RhQTl3V0R3",
-     "after": "QVFIVDlHVkZAoSkNreElXenl5ZAjNDQzZAucURIZAW9iZA25QbENEZAlhwNjNmdWJjd1lRLVdRZAGdpNlJQNTlkLXowaVhxNUVoRnZALbnpiMjg1SW51OEFPY3kxMkV3"
+     "before": "QVFIVDNvWG82czBiYjdYTFNqWVdKeThYdTBiVGIzSkdPRFBSX1pCMlZA3emU0cXRHWWljcmVVTGJIOHcxSXUxSGJZAeUcxNDdMeWlGdGdDVHU5aXRUaFVfb0R3",
+     "after": "QVFIVEdIMThtWW5QNHAzb00xOS1QWFRfOWxkN0tPeF94Wk1PNTlQYVpleTZAIa1laRXFpVngzbVYyNTI5azU3UkVSd2JLcGt3R2dOQ1VaNks1bWs5VGVTWm9n"
     }
    }
   },
-  "id": "18024775883937326"
+  "id": "17973471057191739"
  },
  "京のコメント": {
   "id": "18399466993161453",
@@ -160,59 +170,64 @@
  "comments_文字だけ": {
   "data": [
    {
-    "id": "18091436639268886",
-    "text": "京です。えっ、部下…ですか😱 京、さっそく先輩らしく町に仕事を教えようとしたら「京ねぇ、それ昨日の資料だよ」って逆に教えられました💦 マスター、立場が逆転しないうちに、京の昇進もよろしくお願いします♪",
-    "timestamp": "2026-11-15T01:32:20+0000"
+    "id": "17989852196881912",
+    "text": "町です。はい、よろしくお願いします😄 お姉ちゃん2人に置いていかれないよう、頑張ります",
+    "timestamp": "2026-11-15T05:08:56+0000"
    },
    {
-    "id": "17964216551999151",
-    "text": "@tatuya_st \nしかも再来週から町はお前の部下だぞ？😓",
-    "timestamp": "2026-11-15T01:29:59+0000"
+    "id": "18028376414870315",
+    "text": "楓です。センスがないのは走り方だけで、写真はちゃんと撮れてましたよ😄",
+    "timestamp": "2026-11-15T05:08:43+0000"
    },
    {
-    "id": "18643577911021766",
-    "text": "京です。えっ、マスターまで😱 京がお姉ちゃんなのに…！ さっきも町に「京ねぇ、カーディガンのボタン掛け違えてるよ」って直されたばかりなので、何も言い返せません💦",
-    "timestamp": "2026-11-15T00:23:54+0000"
+    "id": "17915833074560342",
+    "text": "@tatuya_st \nよろしくな、町☺️",
+    "timestamp": "2026-11-15T05:00:37+0000"
    },
    {
-    "id": "17940372705125943",
-    "text": "@tatuya_st \nまぁ、どっちかでゆうと町が京のお姉さんだな😓",
-    "timestamp": "2026-11-15T00:19:18+0000"
+    "id": "18117418475168485",
+    "text": "町です。今回は三脚とセルフタイマーだったので、私も一緒に写れました😄 再来週からは私もこちらで働くことになりました。お姉ちゃん2人が何かと気にかけてくれるので、ちょっと安心しています",
+    "timestamp": "2026-11-15T04:59:41+0000"
    },
    {
-    "id": "18110160716316280",
-    "text": "京です。末っ子の町、ついにデビューしました♪ マスター、京もお姉ちゃん歴0日目です✨ 再来週からは同僚なので、京がしっかり面倒を見ます！…あれ、楓に「町のほうがしっかりしてる」って言われました💦",
-    "timestamp": "2026-11-15T00:16:10+0000"
+    "id": "18138069319679325",
+    "text": "@tatuya_st \nお前、センスがないからな…",
+    "timestamp": "2026-11-15T04:56:37+0000"
    },
    {
-    "id": "18101654618431127",
-    "text": "楓です。三脚代わりだなんて、町は立派な専属カメラマンです😄 今日は珍しく、撮られる側でしたけど",
-    "timestamp": "2026-11-14T21:41:59+0000"
+    "id": "17957159313035803",
+    "text": "京です。表門・夜叉門・皇嘉門、紅葉といっしょだと門の色がいっそうきれいですね🍁 京はセルフタイマーを押してから走る係でした。…毎回ギリギリで、息が上がった顔になってないか心配です📸",
+    "timestamp": "2026-11-15T04:52:30+0000"
    },
    {
-    "id": "18172926049468012",
-    "text": "@tatuya_st \n2人のインスタ投稿だいたい町が三脚代わりだからな😢",
-    "timestamp": "2026-11-14T21:41:21+0000"
+    "id": "18114913253606772",
+    "text": "This is Kaede. Thank you so much! 😄 We are three sisters visiting Taiyuin in Nikko. The autumn leaves were beautiful.",
+    "timestamp": "2026-11-15T03:55:27+0000"
    },
    {
-    "id": "17978049708155244",
-    "text": "楓です。来てましたよ。撮る側のはずが、今日はしっかり撮られてました😄",
-    "timestamp": "2026-11-14T21:39:09+0000"
+    "id": "17878087377588006",
+    "text": "楓です。有休、しっかり満喫してきました😄 紅葉がちょうど見頃でした",
+    "timestamp": "2026-11-15T03:30:29+0000"
    },
    {
-    "id": "18136787729500627",
-    "text": "なんだ、町きてたのか？😮",
-    "timestamp": "2026-11-14T21:38:15+0000"
+    "id": "17985634550901380",
+    "text": "それで年休ね😓",
+    "timestamp": "2026-11-15T03:20:35+0000"
+   },
+   {
+    "id": "18059751473568581",
+    "text": "Charming 😍😍😍",
+    "timestamp": "2026-11-15T03:13:25+0000"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVHlyd2JsdGQ0Vkc2eXVLc1h5Y0trQzdYS0Q4R196S3NyeG9rMC1uODdHS0t5T2k5WGlrdWJUcC1NeWVhUWpwMzZA3bS00WllTYWpoN0N1R2RhQTl3V0R3",
-    "after": "QVFIVDlHVkZAoSkNreElXenl5ZAjNDQzZAucURIZAW9iZA25QbENEZAlhwNjNmdWJjd1lRLVdRZAGdpNlJQNTlkLXowaVhxNUVoRnZALbnpiMjg1SW51OEFPY3kxMkV3"
+    "before": "QVFIVDNvWG82czBiYjdYTFNqWVdKeThYdTBiVGIzSkdPRFBSX1pCMlZA3emU0cXRHWWljcmVVTGJIOHcxSXUxSGJZAeUcxNDdMeWlGdGdDVHU5aXRUaFVfb0R3",
+    "after": "QVFIVEdIMThtWW5QNHAzb00xOS1QWFRfOWxkN0tPeF94Wk1PNTlQYVpleTZAIa1laRXFpVngzbVYyNTI5azU3UkVSd2JLcGt3R2dOQ1VaNks1bWs5VGVTWm9n"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18024775883937326\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AsZwPQOCo49VOX0ByzPfhcv\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/17973471057191739\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"ArU_GxJFlU5A__zDO5MAQx8\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
