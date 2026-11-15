@@ -23,3 +23,7 @@ date,time,platform,metric,value,unit,source,note
 2026-11-15,10:25,Instagram,post_views_18036079178699472,4566,回,Instagramアプリ表示（マスター共有スクショ）,モニュメント編。いいね118・コメント3。ig_insightsのviewsとは取得面が異なるため別行で管理
 2026-11-15,10:25,Instagram,post_likes_18036079178699472,118,件,Instagramアプリ表示（マスター共有スクショ）,モニュメント編
 2026-11-15,10:25,Instagram,post_comments_18036079178699472,3,件,Instagramアプリ表示（マスター共有スクショ）,モニュメント編
+2026-11-15,10:46,Threads,followers,1417,人,定時調査メモ（accounts取得）,
+2026-11-15,10:32,Instagram,followers,1253,人,ig_insights.json,投稿数84
+2026-11-15,10:46,ROOM,likes_total,9315,件,定時調査メモ（公開ページ確認）,京の判定案9100超で維持圏
+2026-11-15,10:32,Instagram,post_views_18036079178699472,4804,回,ig_insights.json,モニュメント編。いいね118・リーチ2807。アプリ画面値とは別定義
