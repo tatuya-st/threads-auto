@@ -270,6 +270,10 @@ def _photo(scene, seed):
     return im
 
 
+class NoPhoto(Exception):
+    pass
+
+
 def make(q, out):
     scene = q.get('scene_talk') or pick_scene(q)
     seed = int(hashlib.md5((q.get('id', '') + scene).encode()).hexdigest(), 16)
@@ -277,6 +281,14 @@ def make(q, out):
     im = Image.new('RGB', (W, H), (252, 250, 246))
     PH = H  # 画面いっぱいに場面
     ph = _photo(scene, seed)
+    if ph is None:  # 11/16 楓の警告：イラスト・イメージ図は禁止。ほかの場面の実写風の写真で代える
+        for alt in ('night', 'morning', 'winter', 'shopping', 'desk', 'cafe'):
+            ph = _photo(alt, seed)
+            if ph is not None:
+                scene = alt
+                break
+    if ph is None:
+        raise NoPhoto('実写風の場面写真が assets/scenes_talk/ にありません（イラストは禁止）')
     if ph is not None:
         r = max(W / ph.size[0], PH / ph.size[1])
         ph = ph.resize((int(ph.size[0] * r + 1), int(ph.size[1] * r + 1)), Image.LANCZOS)
@@ -305,6 +317,10 @@ def attach(repo, q):
         sc = make(q, os.path.join(repo, 'images', q['id'] + '.png'))
         q['image'] = True
         q['scene_talk'] = sc
+    except NoPhoto as e:
+        # 画像なしでは出さない（11/15 場面画像は必須）・イラストでも出さない（11/16）。楓の写真を待つ
+        q['hold'] = '楓の実写風の場面写真待ち（assets/scenes_talk/。イラスト禁止）'
+        print('場面写真がないので hold：', e)
     except Exception as e:
         print('場面の画像を作れませんでした：', e)
     return q
