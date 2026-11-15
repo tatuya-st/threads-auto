@@ -1,26 +1,40 @@
 {
- "at": "2026-11-15T17:41+09:00",
+ "at": "2026-11-15T20:16+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
-  "followers_count": 1256,
+  "followers_count": 1255,
   "follows_count": 2435,
-  "media_count": 87
+  "media_count": 88
  },
  "posts": [
+  {
+   "id": "18128390896932223",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-15T10:33:24+0000",
+   "permalink": "https://www.instagram.com/p/Dfwk1hek4in/",
+   "like_count": 7,
+   "comments_count": 0,
+   "caption": "【PR】\n夜の仕上げは、開けたての1枚で🌙\n\nCICIBELLAのミルキーシートマスクは、1枚ずつ個包装のタイプです。\n",
+   "reach": 10,
+   "saved": 0,
+   "shares": 0,
+   "views": 28
+  },
   {
    "id": "18121856206962416",
    "media_type": "CAROUSEL_ALBUM",
    "media_product_type": "FEED",
    "timestamp": "2026-11-15T07:09:27+0000",
    "permalink": "https://www.instagram.com/p/DfwNfz3Ex4g/",
-   "like_count": 6,
+   "like_count": 9,
    "comments_count": 0,
    "caption": "【PR】\n帰ってすぐ落としたい夜に、洗顔まで一気に済ませたい方へ🌙\n\nLala Vie クレンジングバームEX\n\nW洗顔",
-   "reach": 11,
+   "reach": 19,
    "saved": 0,
    "shares": 0,
-   "views": 27
+   "views": 43
   },
   {
    "id": "18419116948087619",
@@ -28,13 +42,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-15T05:29:23+0000",
    "permalink": "https://www.instagram.com/p/DfwCC9jD4w2/",
-   "like_count": 37,
-   "comments_count": 3,
+   "like_count": 48,
+   "comments_count": 4,
    "caption": "日光で3姉妹ランチ。今回は三脚なしで、順番に自撮りしました。\n1枚目：カフェでパスタ。撮るのは京です。\n2枚目：日光名物",
-   "reach": 158,
-   "saved": 0,
+   "reach": 222,
+   "saved": 1,
    "shares": 0,
-   "views": 419
+   "views": 535
   },
   {
    "id": "17973471057191739",
@@ -42,13 +56,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-15T02:28:50+0000",
    "permalink": "https://www.instagram.com/p/DfvtYaUkx5T/",
-   "like_count": 33,
+   "like_count": 37,
    "comments_count": 11,
    "caption": "三姉妹で日光・大猷院へ行ってきました。三脚とセルフタイマーで撮影です。\n1枚目：表門（おもてもん）。大猷院の入口の門で、",
-   "reach": 90,
+   "reach": 96,
    "saved": 0,
    "shares": 0,
-   "views": 175
+   "views": 191
   },
   {
    "id": "18024775883937326",
@@ -56,13 +70,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-14T21:37:11+0000",
    "permalink": "https://www.instagram.com/p/DfvMAZ1j0M7/",
-   "like_count": 41,
+   "like_count": 42,
    "comments_count": 11,
    "caption": "末っ子が会社に遊びに来ました。\nいつもは撮る側の(町)、今日は撮られる側です。\n姉2人は上機嫌、マスターは1枚目の奥でう",
-   "reach": 193,
+   "reach": 200,
    "saved": 0,
    "shares": 0,
-   "views": 414
+   "views": 429
   },
   {
    "id": "18036079178699472",
@@ -70,13 +84,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-14T05:00:31+0000",
    "permalink": "https://www.instagram.com/p/DftZ8gnDj17/",
-   "like_count": 134,
+   "like_count": 135,
    "comments_count": 4,
    "caption": "モニュメント編\n新潟駅前の赤いNIIGATAの前で、記念に撮りました📸\n2枚目は後ろ姿でハートです❤️",
-   "reach": 3654,
+   "reach": 3702,
    "saved": 0,
    "shares": 0,
-   "views": 6025
+   "views": 6206
   },
   {
    "id": "18107528837288872",
@@ -84,13 +98,13 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-14T03:23:46+0000",
    "permalink": "https://www.instagram.com/p/DftO4DHDu55/",
-   "like_count": 35,
+   "like_count": 36,
    "comments_count": 3,
    "caption": "お昼ごはん編\nお買い物のあとは、万代のフードホールでランチ🍽️\n2枚目は、デザートのケーキに手を伸ばす京と、止める楓です",
-   "reach": 136,
+   "reach": 139,
    "saved": 0,
    "shares": 0,
-   "views": 241
+   "views": 245
   },
   {
    "id": "17958701343282140",
@@ -101,10 +115,10 @@
    "like_count": 39,
    "comments_count": 3,
    "caption": "新潟市でお買い物編\nたまには遠出して、新潟までお買い物に来ました。\n気づいたら、2人とも両手に袋でした🛍️\n社長には内緒",
-   "reach": 730,
+   "reach": 764,
    "saved": 0,
    "shares": 0,
-   "views": 1442
+   "views": 1513
   },
   {
    "id": "18120405368009670",
@@ -118,7 +132,7 @@
    "reach": 202,
    "saved": 0,
    "shares": 0,
-   "views": 330
+   "views": 331
   },
   {
    "id": "17917397976547227",
@@ -129,10 +143,10 @@
    "like_count": 39,
    "comments_count": 3,
    "caption": "楓です。休みの日の秋さんぽ、3枚です。\n公園で落ち葉を見て、カフェで温まって、夕方は商店街へ。紙袋が増えたのは、だいたい",
-   "reach": 137,
+   "reach": 138,
    "saved": 0,
    "shares": 0,
-   "views": 271
+   "views": 273
   },
   {
    "id": "18140801689727283",
@@ -143,10 +157,10 @@
    "like_count": 35,
    "comments_count": 8,
    "caption": "おはようございます、出勤です。\n京はまだ目が開いてませんが、電車には間に合いました（たぶん）。",
-   "reach": 109,
+   "reach": 111,
    "saved": 0,
    "shares": 0,
-   "views": 166
+   "views": 169
   },
   {
    "id": "18083162060424277",
@@ -161,20 +175,6 @@
    "saved": 0,
    "shares": 0,
    "views": 199
-  },
-  {
-   "id": "18125776793303175",
-   "media_type": "IMAGE",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-12T07:17:53+0000",
-   "permalink": "https://www.instagram.com/p/DfogEqCD72_/",
-   "like_count": 38,
-   "comments_count": 3,
-   "caption": "続報です。\n片付け、終わりました。\n途中、逃げようとした形跡はありましたが、最後までやり切ったようです。\n約束のお茶、淹",
-   "reach": 152,
-   "saved": 0,
-   "shares": 0,
-   "views": 264
   }
  ]
 }

@@ -2,6 +2,9 @@
  "comments_素": {
   "data": [
    {
+    "id": "17984966771908053"
+   },
+   {
     "id": "17941060428397813"
    },
    {
@@ -13,15 +16,23 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVFlZAWElXUUtPdk5BcTNLekQyUmF4MEQtQWtNcXFFb1dwVmlPMUZAKbmltQkZA5dFhya0prTWdQLTJvMVZAMMDVDdEF2NDY5S1hOVTJiSzVxSjdfNFRMd1Nn",
+    "before": "QVFIVEFmaWZANcmV6bkxmZAGNPckxQYmhKaWtOR1ZA3OWduUG5yWHdKeHVFUnJLMlY0YmQ5dF91cl9PaTJ1X3JXV093dHB0VVZAhaU1uZAUtYWkhQZADF4VmprRk1R",
     "after": "QVFIVDFWbkphSDZAOMW52cWo0S05kbXRYdlFQdjg4YmwtOFY0M1NOWjNac1NfOXhnTG1GUzJYd1dUZAHV6eGpQQ1ZAUR1c2dVZAkVUw1WjUwNGM2RFJZAVEFScUJB"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 3,
+  "comments_count": 4,
   "comments": {
    "data": [
+    {
+     "id": "17984966771908053",
+     "text": "京です。1枚目の自撮り係は京でした📸 撮るのに夢中になってたら、楓と町のパスタのほうが先に減ってました…🍝 湯波の御膳もふわふわで、日光に来てよかったです✨",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
     {
      "id": "17941060428397813",
      "text": "楓です。楽しいですよ😄 今度はマスターも一緒に行きましょう。撮る係は町がいるので安心です",
@@ -49,7 +60,7 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVFlZAWElXUUtPdk5BcTNLekQyUmF4MEQtQWtNcXFFb1dwVmlPMUZAKbmltQkZA5dFhya0prTWdQLTJvMVZAMMDVDdEF2NDY5S1hOVTJiSzVxSjdfNFRMd1Nn",
+     "before": "QVFIVEFmaWZANcmV6bkxmZAGNPckxQYmhKaWtOR1ZA3OWduUG5yWHdKeHVFUnJLMlY0YmQ5dF91cl9PaTJ1X3JXV093dHB0VVZAhaU1uZAUtYWkhQZADF4VmprRk1R",
      "after": "QVFIVDFWbkphSDZAOMW52cWo0S05kbXRYdlFQdjg4YmwtOFY0M1NOWjNac1NfOXhnTG1GUzJYd1dUZAHV6eGpQQ1ZAUR1c2dVZAkVUw1WjUwNGM2RFJZAVEFScUJB"
     }
    }
@@ -94,6 +105,11 @@
  "comments_文字だけ": {
   "data": [
    {
+    "id": "17984966771908053",
+    "text": "京です。1枚目の自撮り係は京でした📸 撮るのに夢中になってたら、楓と町のパスタのほうが先に減ってました…🍝 湯波の御膳もふわふわで、日光に来てよかったです✨",
+    "timestamp": "2026-11-15T08:42:01+0000"
+   },
+   {
     "id": "17941060428397813",
     "text": "楓です。楽しいですよ😄 今度はマスターも一緒に行きましょう。撮る係は町がいるので安心です",
     "timestamp": "2026-11-15T05:32:38+0000"
@@ -111,12 +127,12 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVFlZAWElXUUtPdk5BcTNLekQyUmF4MEQtQWtNcXFFb1dwVmlPMUZAKbmltQkZA5dFhya0prTWdQLTJvMVZAMMDVDdEF2NDY5S1hOVTJiSzVxSjdfNFRMd1Nn",
+    "before": "QVFIVEFmaWZANcmV6bkxmZAGNPckxQYmhKaWtOR1ZA3OWduUG5yWHdKeHVFUnJLMlY0YmQ5dF91cl9PaTJ1X3JXV093dHB0VVZAhaU1uZAUtYWkhQZADF4VmprRk1R",
     "after": "QVFIVDFWbkphSDZAOMW52cWo0S05kbXRYdlFQdjg4YmwtOFY0M1NOWjNac1NfOXhnTG1GUzJYd1dUZAHV6eGpQQ1ZAUR1c2dVZAkVUw1WjUwNGM2RFJZAVEFScUJB"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18419116948087619\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"A2c_ZTg8RpQEgVH9yCndI8h\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18419116948087619\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AfAKIKdqLKg393k1OPAlKfe\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
