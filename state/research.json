@@ -1,30 +1,6 @@
 {
- "at": "2026-11-15T12:30+09:00",
+ "at": "2026-11-16T07:30+09:00",
  "notes": [
-  {
-   "what": "自分の成績：11/10昼『貯まったポイント、すぐ使う派？』が約4時間で表示44・コメント0で伸びず",
-   "src": "state/insights.json",
-   "src2": "",
-   "done": "weakに記録・TALKSから外した"
-  },
-  {
-   "what": "(d)富士フイルム instax mini Evo 2が2026/11/27国内発売（オープン価格・4.5型タッチ液晶・撮影前5秒動画）。海外の11月のガジェット8選にも入った",
-   "src": "https://www.fujifilm.com/jp/ja/news/list/14132",
-   "src2": "https://www.yankodesign.com/?p=657144",
-   "done": "TALKSに写真プリントの問いかけを1つ・hot_wordsに「インスタントカメラ」。売れ筋リサーチの起動は権限で止められ未実行（次回以降に再挑戦）"
-  },
-  {
-   "what": "海外①：Threadsの2026年9〜11月の新しい仕様変更は見つからず（トレンドタブは国ごとに順次・長文は認証済みのみ）",
-   "src": "https://www.lilachbullock.com/threads-app-news-2026-update/",
-   "src2": "",
-   "done": "変更なし"
-  },
-  {
-   "what": "公式(f)消費者庁：2026/6/29高光製薬に措置命令。依頼投稿の画像を切り出して自社LPや楽天の店舗ページに載せ「SNSでも大人気」と表示したのがステマ告示違反。PR表示は該当箇所の近く・転載時も残す",
-   "src": "https://www.commercepick.com/archives/96722",
-   "src2": "消費者庁PDF（representation_cms210_260629_01）は読み込み許可が得られず未確認",
-   "done": "【PR】を頭に付ける今の処理と一致・コード変更なし。ROOMの「Threadsで話題」バッジは根拠URLがある商品だけに付ける形を守る。レイへ1行。official_turnを0に戻した"
-  },
   {
    "what": "自分の成績：11/10夜の商品投稿は期限切れのholdで未公開、11/10深夜『財布欠席くんの目が遠くなる』はマスター指示（旧ROOM関連は全部削除）で削除を実行。新しい伸びなかった投稿の追加なし",
    "src": "state/insights.json",
@@ -240,6 +216,30 @@
    "src": "https://event.rakuten.co.jp/campaign/point-up/everyday/point/?l-id=ss_pc_pre_top",
    "src2": "",
    "done": "変更なしを確認。official_turnを3へ"
+  },
+  {
+   "what": "自分の成績：11/15昼『家計簿アプリ続いてる派？』は約10.5時間で表示45・コメント0（昼平均の3分の1未満）。お金の話は答えにくい傾向が2回目",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "weakに記録・TALKSから外した"
+  },
+  {
+   "what": "(a)：ROOMの相互フォローで数か月にフォロワー約1000人増えたが売上ほぼゼロ→数を追わず買う人とつながる方針に切替（7/29・本文は会員限定のため公開部分のみ）",
+   "src": "https://library.libecity.com/articles/01KYA2SM1NXY5ZWH0GEKWRPZ2G",
+   "src2": "",
+   "done": "方針どおり（相互フォロー目的の大量フォローはしない）・変更なし"
+  },
+  {
+   "what": "海外①：Threadsのインサイト刷新（9月）でAI要約・反応が良かった曜日と時間帯・閲覧者の年齢性別が見えるようになり、リンククリックのデータは削除（再提供は検討中）",
+   "src": "https://engadget.com/2251592/threads-is-overhauling-its-in-app-analytics-with-more-details-except-for-link-clicks",
+   "src2": "https://www.remio.ai/post/threads-analytics-update-adds-ai-insight-but-link-clicks-stay-hidden",
+   "done": "insights.jsonのclicksが全部0なのはこのためで、クリック0＝押されていないではない。クリックは楽天・A8の管理画面で見る形のまま。楓へ1行"
+  },
+  {
+   "what": "公式(f)Meta/Threads：API変更履歴の最新は8/18（debug_token）。9月以降の変更なし。リンク5件超の投稿は失敗（12/22〜）は既知で1リンク運用に影響なし",
+   "src": "https://developers.facebook.com/documentation/threads/changelog",
+   "src2": "",
+   "done": "変更なし・official_turnを進めた"
   }
  ],
  "hot_words": [
@@ -312,32 +312,6 @@
   "2026-11-01": 1
  },
  "weak": [
-  {
-   "id": "20261027-1545-noon",
-   "topic": "スマホケース何年替えてない",
-   "open": "スマホケース、何年替えてないですか？",
-   "shape": "何年？＋自分の答え",
-   "image": "なし",
-   "time": "16:47",
-   "views": 689,
-   "likes": 4,
-   "replies": 0,
-   "cause": "テーマが悪い（前日に伸びた「スマホ何年」の焼き直し）",
-   "fix": "TALKSから「スマホのケース、何回替えましたか？」を外した"
-  },
-  {
-   "id": "20261028-1300-noon",
-   "topic": "フォロワー500人お礼＋ハロウィンのボケ",
-   "open": "フォロワー500人、ありがとうございます🎃",
-   "shape": "お礼＋「お供えしてください」（答えを先に言わない）",
-   "image": "あり",
-   "time": "13:02",
-   "views": 33,
-   "likes": 0,
-   "replies": 0,
-   "cause": "書き出しが弱い（1行目が読む人に関係ないお礼。12:54の同じ本文を消して出し直した直後で、二重扱いも疑い）",
-   "fix": "お礼・節目の投稿は会話ネタに入れない。1行目は読む人が答えられる問いにする（TALKS・NAKAMAには元から無し）"
-  },
   {
    "id": "20261101-1244-noon",
    "topic": "楽天のお気に入り何個",
@@ -579,7 +553,20 @@
    "replies": 1,
    "cause": "テーマが悪い（11/12朝ごはんに続き「朝の行動の順番」の話で、答えても話が広がらない。朝の会話平均の3分の1未満）",
    "fix": "MORNING_TALKSから外した"
+  },
+  {
+   "id": "20261115-1243-noon",
+   "topic": "家計簿アプリ続く？",
+   "open": "家計簿アプリ、続いてる派？3日で止まる派？",
+   "shape": "二択＋自分の答え＋「みんなは？」",
+   "image": "なし",
+   "time": "13:52",
+   "views": 45,
+   "likes": 2,
+   "replies": 0,
+   "cause": "テーマが悪い（ガジェットから離れたお金・家計の話で人前で答えにくい。11/10ポイントの使い方と同じ傾向。昼平均の3分の1未満）",
+   "fix": "TALKSから外した"
   }
  ],
- "official_turn": 3
+ "official_turn": 4
 }
