@@ -33,3 +33,9 @@ date,time,platform,metric,value,unit,source,note
 2026-11-15,11:28,Instagram,followers,1253,人,ig_insights.json,投稿数84
 2026-11-15,11:28,Instagram,post_views_18036079178699472,5120,回,ig_insights.json,モニュメント編。いいね120・リーチ3063
 2026-11-15,12:49,A8,clicks_total_all_period,1795,件,A8管理画面（全期間2026-01-01〜11-15）,発生0件・確定0件。匠本舗2件＝11/16投稿前の基準値として確定。CurrentBody12件
+2026-11-15,14:46,Threads,followers,1423,人,定時調査メモ（accounts取得）,
+2026-11-15,14:46,ROOM,likes_total,9308,件,定時調査メモ（公開ページ確認）,京の判定基準9100超で維持圏
+2026-11-15,14:46,ROOM,items,1875,件,定時調査メモ（公開ページ確認）,
+2026-11-15,14:28,Instagram,followers,1255,人,ig_insights.json,投稿数85
+2026-11-15,14:28,Instagram,post_views_18036079178699472,5757,回,ig_insights.json,モニュメント編。いいね128・リーチ3455
+2026-11-15,14:28,Instagram,post_views_17973471057191739,137,回,ig_insights.json,大猷院の秋3枚。いいね30・コメント10・リーチ70
