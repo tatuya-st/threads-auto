@@ -20,3 +20,6 @@ date,time,platform,metric,value,unit,source,note
 2026-11-15,08:46,ROOM,items,1875,件,定時調査メモ／作戦ノート,
 2026-11-14,02:56,A8,clicks_total_all_period,1793,件,A8管理画面（全期間2026-01-01〜11-13）,発生0件・確定0件
 2026-11-13,,RakutenAffiliate,sales_count,2,件,楽天アフィリエイト成果（マスター共有スクショ）,"売上4,780円・成果報酬191円（未確定）"
+2026-11-15,10:25,Instagram,post_views_18036079178699472,4566,回,Instagramアプリ表示（マスター共有スクショ）,モニュメント編。いいね118・コメント3。ig_insightsのviewsとは取得面が異なるため別行で管理
+2026-11-15,10:25,Instagram,post_likes_18036079178699472,118,件,Instagramアプリ表示（マスター共有スクショ）,モニュメント編
+2026-11-15,10:25,Instagram,post_comments_18036079178699472,3,件,Instagramアプリ表示（マスター共有スクショ）,モニュメント編
