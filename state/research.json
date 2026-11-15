@@ -1,30 +1,6 @@
 {
- "at": "2026-11-13T19:50+09:00",
+ "at": "2026-11-15T12:30+09:00",
  "notes": [
-  {
-   "what": "自分の成績：11/10朝『年末の散らかり場所』が約4時間で表示45（朝の会話平均263の3分の1未満）。11/9深夜『ポチる前に寝る』は表示92で基準ぎりぎり",
-   "src": "state/insights.json",
-   "src2": "",
-   "done": "weakに1件記録・MORNING_TALKSから外した"
-  },
-  {
-   "what": "(b)楽天ブラックフライデー2026の公式発表は検索で出ず（出てくるのは2025年版：エントリー11/12 10:00〜、本番11/20 20:00〜11/27 01:59、1店舗1000円以上で買いまわり対象）",
-   "src": "https://gourmet.watch.impress.co.jp/docs/news/2062896.html",
-   "src2": "",
-   "done": "sales の予想日程は据え置き（公式未確認のまま）"
-  },
-  {
-   "what": "海外⑤：2026/10/15ごろThreadsがフォロー中のアカウントの投稿を増やす方向にフィードを更新。同週に米国で、独自の投稿や会話を生む直接の返信に紫の「Gems」バッジを付けるテスト（リポスト・返信への返信は対象外）",
-   "src": "https://arynews.tv/meta-changes-threads-feed-to-prioritize-posts-from-followed-creators",
-   "src2": "https://stackinfluence.com/blog/october-2026-social-media-news-and-updates-for-creators",
-   "done": "フォロワーを増やす問いかけ型・自分の言葉の投稿という今の方針と一致。日本未提供のためコード変更なし"
-  },
-  {
-   "what": "公式(f)Meta/Threads：Threadsにはブランドコンテンツツールがないため、タイアップはテキストかハッシュタグで明示が必要（500字・リンク・写真・カルーセル・5分動画）",
-   "src": "https://about.instagram.com/ja-jp/threads",
-   "src2": "",
-   "done": "【PR】を頭に付ける今の処理（publish.py）と一致。変更なし。official_turnを進めた"
-  },
   {
    "what": "自分の成績：11/10昼『貯まったポイント、すぐ使う派？』が約4時間で表示44・コメント0で伸びず",
    "src": "state/insights.json",
@@ -240,6 +216,30 @@
    "src": "https://plaza.rakuten.co.jp/roomjp/diaryall/",
    "src2": "",
    "done": "変更なしを確認。official_turnを2へ"
+  },
+  {
+   "what": "自分の成績：11/13昼『布団から出るまでの時間』は14:03に遅れて出たが、その後に表示161・返信12まで伸びて昼平均（返信11.7）並み。伸びなかった投稿ではなかった",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "weakから外し、同じ形（冬あるある＋自分の答え＋何分？）のドライヤーの問いかけをTALKSに1つ足した"
+  },
+  {
+   "what": "(c)：A8.netの2026年11月の報酬アップ・高単価特集は公開ページで見つからず（直近の公開情報は5月のリンク管理ツールの特別報酬）",
+   "src": "https://aeo.washinmura.jp/ai/fancs-com/en/news/2026-05-20-a8-net-launches-bonus-reward-campaign-fo",
+   "src2": "",
+   "done": "記録のみ（新しいものなし）"
+  },
+  {
+   "what": "海外⑤：ThreadsでアプリAI『Muse』・トレンドの横スクロール欄・プロフィールのカバー画像を開発中との報道（11/8、リーク情報で公式発表なし・提供時期未定）",
+   "src": "https://runtimewire.com/article/threads-muse-assistant-trending-ticker-profile-cover",
+   "src2": "",
+   "done": "記録のみ（公式未確認のため仕組みは変えない）"
+  },
+  {
+   "what": "公式(f)楽天イベント：SPUのページは2026/7/1更新から変化なし。エントリーが要るのはモバイル系3つだけ。5と0の日は別ページ（ポイント4倍）",
+   "src": "https://event.rakuten.co.jp/campaign/point-up/everyday/point/?l-id=ss_pc_pre_top",
+   "src2": "",
+   "done": "変更なしを確認。official_turnを3へ"
   }
  ],
  "hot_words": [
@@ -579,20 +579,7 @@
    "replies": 1,
    "cause": "テーマが悪い（11/12朝ごはんに続き「朝の行動の順番」の話で、答えても話が広がらない。朝の会話平均の3分の1未満）",
    "fix": "MORNING_TALKSから外した"
-  },
-  {
-   "id": "20261113-1243-noon",
-   "topic": "布団から出るまでの時間（冬の朝）",
-   "open": "布団から出るまでの時間、冬になると倍になりません？",
-   "shape": "共感の問いかけ＋自分の答え＋「みなさん何分？」",
-   "image": "なし",
-   "time": "14:03（予定の12:43から遅れ）",
-   "views": 72,
-   "likes": 3,
-   "replies": 3,
-   "cause": "時間が悪い（昼枠が14:03にずれ、昼休みの山を外した。昼平均の3分の1未満）",
-   "fix": "TALKSとMORNING_TALKSから布団の2本を外した"
   }
  ],
- "official_turn": 2
+ "official_turn": 3
 }
