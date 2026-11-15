@@ -164,7 +164,7 @@
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18024775883937326\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"ARFc2Pth15sYPA0KjmWs860\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18024775883937326\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AC0I-AYVWuzvS_K9f-lEo7H\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
