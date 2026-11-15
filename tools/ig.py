@@ -163,6 +163,18 @@ def comments(tok):
     media = call('GET', G + 'me/media', {'fields': 'id,caption,timestamp,permalink', 'limit': 25, 'access_token': tok}, 'コメント先の投稿').get('data', [])
     now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).strftime('%Y-%m-%dT%H:%M+09:00')
     for it in todo:
+        if not it.get('reply_to') and it.get('reply_match') and it.get('media_id'):
+            # 返信先のコメントIDが分からないとき：その投稿のコメントから、言葉が一致する1件を探す
+            try:
+                cs = call('GET', G + it['media_id'] + '/comments', {'fields': 'id,text', 'limit': 50, 'access_token': tok}, '返信先を探す').get('data', [])
+            except SystemExit as e:
+                it['note'] = f'{now} {str(e)[:200]}'
+                continue
+            hit = [c for c in cs if it['reply_match'] in (c.get('text') or '')]
+            if len(hit) != 1:
+                it['note'] = f'{now} 返信先が{len(hit)}件見つかり書き込まず（1件だけのときに書く）'
+                continue
+            it['reply_to'] = hit[0]['id']
         if it.get('reply_to'):
             try:
                 r = call('POST', G + it['reply_to'] + '/replies', {'message': it['text'], 'access_token': tok}, 'コメントに返信')
