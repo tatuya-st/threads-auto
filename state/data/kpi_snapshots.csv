@@ -58,3 +58,10 @@ date,time,platform,metric,value,unit,source,note
 2026-11-15,22:46,Threads,followers,1443,人,threads-cli accounts（定時調査）,20:46から+3
 2026-11-15,22:46,ROOM,likes_total,9592,件,定時調査メモ（公開ページ確認）,20:46の9601から-9・京の判定基準9100超で維持圏
 2026-11-15,22:46,ROOM,items,1878,件,定時調査メモ（公開ページ確認）,20:46から変わらず
+2026-11-16,00:46,Threads,followers,1445,人,threads-cli accounts（定時調査）,22:46の1443から+2
+2026-11-16,00:46,ROOM,likes_total,9580,件,定時調査メモ（公開ページ確認）,22:46の9592から-12・京の判定基準9100超で維持圏
+2026-11-16,00:46,ROOM,items,1878,件,定時調査メモ（公開ページ確認）,22:46から変わらず
+2026-11-16,00:30,Instagram,followers,1253,人,ig_insights.json（00:30収集版）,投稿数88。20:16版1255とは収集版が違うため増減は断定しない
+2026-11-16,00:30,Instagram,post_views_18128390896932223,53,回,ig_insights.json（00:30収集版）,CICIBELLAフィード。いいね11・リーチ25
+2026-11-16,00:30,Instagram,post_views_18121856206962416,61,回,ig_insights.json（00:30収集版）,Lala Vieフィード。いいね11
+2026-11-16,00:30,Instagram,post_views_18036079178699472,6407,回,ig_insights.json（00:30収集版）,モニュメント編。いいね137
