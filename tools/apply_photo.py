@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """マスターがMUSEで作った画像を、夜の商品投稿の画像に入れる（ルイが訂正してから投稿する用）。
 使い方: python3 tools/apply_photo.py queue/<id>.json <画像1> [<画像2>] [ひと言]
+　　　　python3 tools/apply_photo.py --asis queue/<id>.json <仕上がり1枚目> <仕上がり2枚目>（11/16からの統一型。文字を足さない）
 - 画像を2枚渡すと2枚投稿（1枚目と2枚目で別の女性。同じ人に見えたら使わない）
 - 投稿画像まるごと（縦長）なら、場面の部分だけを切り出して使う
 - 場面の写真（横長など）なら、場面の枠に合わせて切り抜く
@@ -27,7 +28,34 @@ def panel(src):
     return im.resize((PW, PH), Image.LANCZOS)
 
 
+def asis(qp, srcs):
+    """11/15 マスター決定（IGとThreadsの型統一・11/16から）：楓の仕上がり2枚（1枚目＝商品だけ＋縦書きコピー／2枚目＝3人の日替わり出演＋確認ポイント帯）を
+    文字を足さずにそのまま入れる。比率は4:5（1080×1350）にそろえる。検品に合格した画像だけに使う。"""
+    if len(srcs) != 2:
+        sys.exit('--asis は画像を2枚渡してください（1枚目＝商品だけ＋縦書きコピー、2枚目＝出演＋確認ポイント帯）')
+    q = json.load(open(qp, encoding='utf-8'))
+    outs = []
+    for i, s in enumerate(srcs):
+        im = Image.open(s).convert('RGB')
+        w, h = im.size
+        if not (1.0 <= h / w <= 1.26):
+            sys.exit(f'{s} の比率が4:5以内ではありません（{w}×{h}）')
+        im = im.resize((1080, int(1080 * h / w)))
+        rel = f"images/{q['id']}{'' if i == 0 else '_2'}.png"
+        im.save(os.path.join(ROOT, rel))
+        outs.append(rel)
+    q['photo'], q['photo2'], q['asis'] = outs[0], outs[1], True
+    q.pop('hold', None)
+    from datetime import datetime, timezone, timedelta
+    q['released'] = datetime.now(timezone(timedelta(hours=9))).isoformat(timespec='minutes')
+    json.dump(q, open(qp, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    print('\n'.join(outs))
+
+
 def main():
+    if '--asis' in sys.argv:
+        a = [x for x in sys.argv[1:] if x != '--asis']
+        return asis(a[0], a[1:])
     qp, src = sys.argv[1], sys.argv[2]
     q = json.load(open(qp, encoding='utf-8'))
     os.makedirs(os.path.join(ROOT, 'assets', 'photos'), exist_ok=True)

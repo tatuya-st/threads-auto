@@ -1324,7 +1324,7 @@ def single(a, form, it):
         if rv >= 30:
             why.append(f"レビュー{it.get('reviews')}")
         why += [f for f in facts if '送料無料' not in f and f not in why and f not in nm]  # 11/10：商品名と同じ数字は根拠に繰り返さない
-        why = why[:3]
+        why = why[:2]  # 11/15 マスター決定（IGとThreadsの型統一・11/16から）：本文はフック＋ポイント1〜2、残りは2通目、ハッシュタグなし
         l3 = '／'.join(x for x in [pl, clip(str(it.get('ship') or ''), 24), ('気になる点：' + clip(str(it['con']), 30)) if it.get('con') else ''] if x)
         head = '\n'.join(x for x in [f'【PR】結論：{t}で迷ったら、これ👉 {nm}', ('根拠：' + '／'.join(why)) if why else '', l3, flash] if x)
     text = clip(head, 490 - len(tail) - 1) + '\n' + tail
