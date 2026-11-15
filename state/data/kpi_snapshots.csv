@@ -42,3 +42,9 @@ date,time,platform,metric,value,unit,source,note
 2026-11-15,16:46,Threads,followers,1429,人,定時調査メモ（accounts取得）,
 2026-11-15,16:46,ROOM,likes_total,9308,件,定時調査メモ（公開ページ確認）,京の判定基準9100超で維持圏・14:46から±0
 2026-11-15,16:46,ROOM,items,1875,件,定時調査メモ（公開ページ確認）,
+2026-11-15,18:46,Threads,followers,1434,人,定時調査メモ（accounts取得）,
+2026-11-15,18:46,ROOM,likes_total,9305,件,定時調査メモ（公開ページ確認）,京の判定基準9100超で維持圏・16:46から-3
+2026-11-15,18:46,ROOM,items,1875,件,定時調査メモ（公開ページ確認）,
+2026-11-15,17:41,Instagram,followers,1256,人,ig_insights.json,投稿数87
+2026-11-15,17:41,Instagram,post_views_18036079178699472,6025,回,ig_insights.json,モニュメント編。いいね134・リーチ3654
+2026-11-15,17:41,Instagram,post_views_17973471057191739,175,回,ig_insights.json,大猷院の秋3枚。いいね33・コメント11・リーチ90
