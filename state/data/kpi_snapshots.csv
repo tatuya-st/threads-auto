@@ -55,3 +55,6 @@ date,time,platform,metric,value,unit,source,note
 2026-11-15,20:16,Instagram,post_views_18128390896932223,28,回,ig_insights.json,CICIBELLAフィード。いいね7・リーチ10
 2026-11-15,20:16,Instagram,post_views_18121856206962416,43,回,ig_insights.json,Lala Vieフィード。いいね9・リーチ19
 2026-11-15,20:16,Instagram,post_views_18036079178699472,6206,回,ig_insights.json,モニュメント編。いいね135・リーチ3702
+2026-11-15,22:46,Threads,followers,1443,人,threads-cli accounts（定時調査）,20:46から+3
+2026-11-15,22:46,ROOM,likes_total,9592,件,定時調査メモ（公開ページ確認）,20:46の9601から-9・京の判定基準9100超で維持圏
+2026-11-15,22:46,ROOM,items,1878,件,定時調査メモ（公開ページ確認）,20:46から変わらず
