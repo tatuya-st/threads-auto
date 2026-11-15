@@ -280,7 +280,17 @@ def make(q, out):
     rnd = lambda i: (int(hashlib.md5(f'{seed}-{i}'.encode()).hexdigest()[:8], 16) / 0xffffffff)
     im = Image.new('RGB', (W, H), (252, 250, 246))
     PH = H  # 画面いっぱいに場面
-    ph = _photo(scene, seed)
+    ph = None
+    # 11/16 楓の報告（マスター指示）：つぶやきの画像は実写の固定画像 state/tsubuyaki-kaede-night.jpg を使う（3:4 は中央で4:5に切る）
+    fixed = os.path.join(HERE, '..', 'state', 'tsubuyaki-kaede-night.jpg')
+    if os.path.exists(fixed):
+        try:
+            ph = Image.open(fixed).convert('RGB')
+            scene = 'fixed_night'
+        except Exception:
+            ph = None
+    if ph is None:
+        ph = _photo(scene, seed)
     if ph is None:  # 11/16 楓の警告：イラスト・イメージ図は禁止。ほかの場面の実写風の写真で代える
         for alt in ('night', 'morning', 'winter', 'shopping', 'desk', 'cafe'):
             ph = _photo(alt, seed)
