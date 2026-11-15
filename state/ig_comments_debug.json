@@ -2,6 +2,12 @@
  "comments_素": {
   "data": [
    {
+    "id": "17964216551999151"
+   },
+   {
+    "id": "18643577911021766"
+   },
+   {
     "id": "17940372705125943"
    },
    {
@@ -22,15 +28,31 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVDVhcFRTY0NlMzBHT3dpUkhjeXlNTTlkNWZAaS0VsWUVUdW9XNVdIbzRpUWVKQTY0SVBJY005UVF3UXlJa3FwNHdZAcGEwS1VVdHhvLUJZATVoxY2d3elZAn",
+    "before": "QVFIVFVCdzcwNUNyc0UzeUxVdjAzalNEVTFHWkFkV1VkZAXFIMGJFREt0X3ltdTk1SGhfM19DbmVid1N3eGtodGd4QVljZADJOMDAyWG9HLWFxUzZA3V1o5bDF3",
     "after": "QVFIVDlHVkZAoSkNreElXenl5ZAjNDQzZAucURIZAW9iZA25QbENEZAlhwNjNmdWJjd1lRLVdRZAGdpNlJQNTlkLXowaVhxNUVoRnZALbnpiMjg1SW51OEFPY3kxMkV3"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 6,
+  "comments_count": 8,
   "comments": {
    "data": [
+    {
+     "id": "17964216551999151",
+     "text": "@tatuya_st \nしかも再来週から町はお前の部下だぞ？😓",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
+    {
+     "id": "18643577911021766",
+     "text": "京です。えっ、マスターまで😱 京がお姉ちゃんなのに…！ さっきも町に「京ねぇ、カーディガンのボタン掛け違えてるよ」って直されたばかりなので、何も言い返せません💦",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
     {
      "id": "17940372705125943",
      "text": "@tatuya_st \nまぁ、どっちかでゆうと町が京のお姉さんだな😓",
@@ -82,7 +104,7 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVDVhcFRTY0NlMzBHT3dpUkhjeXlNTTlkNWZAaS0VsWUVUdW9XNVdIbzRpUWVKQTY0SVBJY005UVF3UXlJa3FwNHdZAcGEwS1VVdHhvLUJZATVoxY2d3elZAn",
+     "before": "QVFIVFVCdzcwNUNyc0UzeUxVdjAzalNEVTFHWkFkV1VkZAXFIMGJFREt0X3ltdTk1SGhfM19DbmVid1N3eGtodGd4QVljZADJOMDAyWG9HLWFxUzZA3V1o5bDF3",
      "after": "QVFIVDlHVkZAoSkNreElXenl5ZAjNDQzZAucURIZAW9iZA25QbENEZAlhwNjNmdWJjd1lRLVdRZAGdpNlJQNTlkLXowaVhxNUVoRnZALbnpiMjg1SW51OEFPY3kxMkV3"
     }
    }
@@ -127,6 +149,16 @@
  "comments_文字だけ": {
   "data": [
    {
+    "id": "17964216551999151",
+    "text": "@tatuya_st \nしかも再来週から町はお前の部下だぞ？😓",
+    "timestamp": "2026-11-15T01:29:59+0000"
+   },
+   {
+    "id": "18643577911021766",
+    "text": "京です。えっ、マスターまで😱 京がお姉ちゃんなのに…！ さっきも町に「京ねぇ、カーディガンのボタン掛け違えてるよ」って直されたばかりなので、何も言い返せません💦",
+    "timestamp": "2026-11-15T00:23:54+0000"
+   },
+   {
     "id": "17940372705125943",
     "text": "@tatuya_st \nまぁ、どっちかでゆうと町が京のお姉さんだな😓",
     "timestamp": "2026-11-15T00:19:18+0000"
@@ -159,12 +191,12 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVDVhcFRTY0NlMzBHT3dpUkhjeXlNTTlkNWZAaS0VsWUVUdW9XNVdIbzRpUWVKQTY0SVBJY005UVF3UXlJa3FwNHdZAcGEwS1VVdHhvLUJZATVoxY2d3elZAn",
+    "before": "QVFIVFVCdzcwNUNyc0UzeUxVdjAzalNEVTFHWkFkV1VkZAXFIMGJFREt0X3ltdTk1SGhfM19DbmVid1N3eGtodGd4QVljZADJOMDAyWG9HLWFxUzZA3V1o5bDF3",
     "after": "QVFIVDlHVkZAoSkNreElXenl5ZAjNDQzZAucURIZAW9iZA25QbENEZAlhwNjNmdWJjd1lRLVdRZAGdpNlJQNTlkLXowaVhxNUVoRnZALbnpiMjg1SW51OEFPY3kxMkV3"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18024775883937326\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AC0I-AYVWuzvS_K9f-lEo7H\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18024775883937326\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AEw3QJ_zM2gRa2H6JCZba0v\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
