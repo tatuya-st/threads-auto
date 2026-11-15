@@ -2,6 +2,12 @@
  "comments_素": {
   "data": [
    {
+    "id": "17940372705125943"
+   },
+   {
+    "id": "18110160716316280"
+   },
+   {
     "id": "18101654618431127"
    },
    {
@@ -16,15 +22,31 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVHNCTTdJd3lIc1V4VmJaUWRVazE4b0p2YlNzcnh5VG9DOEtTSGtTQVFqT2xWNEVpTU9vTGxaNkhKQWpVSEtSUjlaNlZAqbTlYdVJOVWZAkaThJSks4c0tR",
+    "before": "QVFIVDVhcFRTY0NlMzBHT3dpUkhjeXlNTTlkNWZAaS0VsWUVUdW9XNVdIbzRpUWVKQTY0SVBJY005UVF3UXlJa3FwNHdZAcGEwS1VVdHhvLUJZATVoxY2d3elZAn",
     "after": "QVFIVDlHVkZAoSkNreElXenl5ZAjNDQzZAucURIZAW9iZA25QbENEZAlhwNjNmdWJjd1lRLVdRZAGdpNlJQNTlkLXowaVhxNUVoRnZALbnpiMjg1SW51OEFPY3kxMkV3"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 4,
+  "comments_count": 6,
   "comments": {
    "data": [
+    {
+     "id": "17940372705125943",
+     "text": "@tatuya_st \nまぁ、どっちかでゆうと町が京のお姉さんだな😓",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
+    {
+     "id": "18110160716316280",
+     "text": "京です。末っ子の町、ついにデビューしました♪ マスター、京もお姉ちゃん歴0日目です✨ 再来週からは同僚なので、京がしっかり面倒を見ます！…あれ、楓に「町のほうがしっかりしてる」って言われました💦",
+     "username": "tatuya_st",
+     "from": {
+      "username": "tatuya_st"
+     }
+    },
     {
      "id": "18101654618431127",
      "text": "楓です。三脚代わりだなんて、町は立派な専属カメラマンです😄 今日は珍しく、撮られる側でしたけど",
@@ -60,7 +82,7 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVHNCTTdJd3lIc1V4VmJaUWRVazE4b0p2YlNzcnh5VG9DOEtTSGtTQVFqT2xWNEVpTU9vTGxaNkhKQWpVSEtSUjlaNlZAqbTlYdVJOVWZAkaThJSks4c0tR",
+     "before": "QVFIVDVhcFRTY0NlMzBHT3dpUkhjeXlNTTlkNWZAaS0VsWUVUdW9XNVdIbzRpUWVKQTY0SVBJY005UVF3UXlJa3FwNHdZAcGEwS1VVdHhvLUJZATVoxY2d3elZAn",
      "after": "QVFIVDlHVkZAoSkNreElXenl5ZAjNDQzZAucURIZAW9iZA25QbENEZAlhwNjNmdWJjd1lRLVdRZAGdpNlJQNTlkLXowaVhxNUVoRnZALbnpiMjg1SW51OEFPY3kxMkV3"
     }
    }
@@ -105,6 +127,16 @@
  "comments_文字だけ": {
   "data": [
    {
+    "id": "17940372705125943",
+    "text": "@tatuya_st \nまぁ、どっちかでゆうと町が京のお姉さんだな😓",
+    "timestamp": "2026-11-15T00:19:18+0000"
+   },
+   {
+    "id": "18110160716316280",
+    "text": "京です。末っ子の町、ついにデビューしました♪ マスター、京もお姉ちゃん歴0日目です✨ 再来週からは同僚なので、京がしっかり面倒を見ます！…あれ、楓に「町のほうがしっかりしてる」って言われました💦",
+    "timestamp": "2026-11-15T00:16:10+0000"
+   },
+   {
     "id": "18101654618431127",
     "text": "楓です。三脚代わりだなんて、町は立派な専属カメラマンです😄 今日は珍しく、撮られる側でしたけど",
     "timestamp": "2026-11-14T21:41:59+0000"
@@ -127,12 +159,12 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVHNCTTdJd3lIc1V4VmJaUWRVazE4b0p2YlNzcnh5VG9DOEtTSGtTQVFqT2xWNEVpTU9vTGxaNkhKQWpVSEtSUjlaNlZAqbTlYdVJOVWZAkaThJSks4c0tR",
+    "before": "QVFIVDVhcFRTY0NlMzBHT3dpUkhjeXlNTTlkNWZAaS0VsWUVUdW9XNVdIbzRpUWVKQTY0SVBJY005UVF3UXlJa3FwNHdZAcGEwS1VVdHhvLUJZATVoxY2d3elZAn",
     "after": "QVFIVDlHVkZAoSkNreElXenl5ZAjNDQzZAucURIZAW9iZA25QbENEZAlhwNjNmdWJjd1lRLVdRZAGdpNlJQNTlkLXowaVhxNUVoRnZALbnpiMjg1SW51OEFPY3kxMkV3"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18024775883937326\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AeKRL9i2Wu16K1Jgwzf7HdM\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18024775883937326\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"ARFc2Pth15sYPA0KjmWs860\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
