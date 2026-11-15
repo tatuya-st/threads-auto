@@ -1,0 +1,26 @@
+{
+ "id": "20261115-2044-night",
+ "slot": "night",
+ "form": "n9",
+ "kind": "single",
+ "created": "2026-11-15T20:44+09:00",
+ "title": "商品がしゃべった",
+ "footer": "▶ レビューも見てから決めてね（プロフィールのリンクから）",
+ "topic": "楽天ROOM",
+ "text": "【PR】日用品のストック、家に何個ありますか？\n置き場所が許すかぎり増えていきます📦\n👉 フレア フレグランス IROKA 柔軟剤 詰め替え 1200ml×6\n💰 8,580円（1袋あたり約1,430円）\n⏰ 5と0のつく日は11/15 23:59まで\n色・容量・今の価格は、この商品ページで見られます👇\nhttps://hb.afl.rakuten.co.jp/ichiba/5922d1d2.3399bc73.5922d1d3.9a2e2310/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fspeedy-street%2F4901301397355set6%2F&link_type=hybrid_url",
+ "reply": "フレアフレグランスIROKAを使っている人の、大容量つめかえ6袋に\n✅ 推しの理由：iroka切れの朝、もう来ない\n私だけじゃないと信じてます。みんなは？",
+ "serif": "柔軟剤「1200ml×6。カートで待ってる」",
+ "items": [
+  {
+   "itemcode": "speedy-street:10000543",
+   "name": "フレア フレグランス IROKA 柔軟剤 詰め替え 1200ml×6",
+   "hook": "フレアフレグランスIROKAを使っている人の、大容量つめかえ6袋に",
+   "price": "8,580円",
+   "quip": "iroka切れの朝、もう来ない",
+   "points": [
+    "1200ml×6"
+   ]
+  }
+ ],
+ "hold": "楓の画像チェック待ち（images/20261115-2044-night.png を見て合格なら hold を消して push）"
+}
