@@ -1,0 +1,12 @@
+{
+ "id": "20261116-0743-morning",
+ "slot": "morning",
+ "form": "talk",
+ "kind": "talk",
+ "created": "2026-11-16T07:43+09:00",
+ "text": "朝の洗面所がひんやりする季節になりましたね🥶\n歯みがき、電動歯ブラシ派？手みがき派？\n私は電動歯ブラシ派です🪥\nあなたの答えも聞かせてください",
+ "items": [],
+ "topic": "冬支度",
+ "image": true,
+ "scene_talk": "fixed_night"
+}
