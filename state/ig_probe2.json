@@ -1,0 +1,47 @@
+{
+ "AIラベル付きの画像の入れ物を作る（公開しない）": {
+  "ok": true,
+  "sample": "{\"id\": \"18122855776951418\"}"
+ },
+ "入れ物の状態とAIラベルを読む": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（入れ物の状態とAIラベルを読む）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (is_ai_generated)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"AV9ZBDwvXOYymEx_pKuwFml\"}}"
+ },
+ "トライアルリールの入れ物を作る（公開しない）": {
+  "ok": true,
+  "sample": "{\"id\": \"18122855806951418\"}"
+ },
+ "トライアルリールの入れ物の状態": {
+  "ok": true,
+  "sample": "{\"id\": \"18122855806951418\", \"status_code\": \"IN_PROGRESS\", \"status\": \"IN_PROGRESS\"}"
+ },
+ "削除（未公開の入れ物で試す）": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（削除（未公開の入れ物で試す））：400 {\"error\":{\"message\":\"Unsupported delete request. Object with ID '18122855776951418' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"type\":\"IGApiException\",\"code\":100,\"error_subcode\":33,\"fbtrace_id\":\"AZ41-jj_eaJ9Uh0U"
+ },
+ "公開済み投稿のAIラベル項目": {
+  "ok": true,
+  "sample": "{\"id\": \"18117153647132410\", \"is_ai_generated\": false}"
+ },
+ "リールのスキップ率": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（リールのスキップ率）：400 {\"error\":{\"message\":\"The Media Insights API does not support the reels_skip_rate metric for this media product type.\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"AuOov0J9Gk5F3HKaRDe4OT2\"}}"
+ },
+ "アカウントのリポスト数": {
+  "ok": true,
+  "sample": "{\"data\": [{\"name\": \"reposts\", \"period\": \"day\", \"title\": \"Reposts\", \"description\": \"The total number of times your content was reposted. A repost occurs when another account shares your content to their own profile.\", \"total_value\": {\"value\": 0}, \"id\": \"17841428542530621/insights/reposts/day\"}]}"
+ },
+ "いいねを付ける（自分の投稿）": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（いいねを付ける（自分の投稿））：400 {\"error\":{\"message\":\"Unsupported post request. Object with ID 'me' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"type\":\"IGApiException\",\"code\":100,\"error_subcode\":33,\"fbtrace_id\":\"ARnODB5NbmSykoo76ZJPnqy\"}}"
+ },
+ "コラボ招待（正しい呼び方）": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（コラボ招待（正しい呼び方））：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (collaboration_invites)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"ADAoIvyCKKGlldEkpOdxNrd\"}}"
+ },
+ "音源検索（ig_audio）": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（音源検索（ig_audio））：400 {\"error\":{\"message\":\"Unsupported get request. Object with ID 'ig_audio' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"type\":\"IGApiException\",\"code\":100,\"error_subcode\":33,\"fbtrace_id\":\"AwEwkqoDNlObbOgivHM-v3B\"}}"
+ },
+ "at": "2026-11-16T19:48+09:00"
+}
