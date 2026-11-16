@@ -82,10 +82,19 @@ def insights():
     acc = call('GET', G + 'me', {'fields': 'user_id,username,account_type,followers_count,follows_count,media_count', 'access_token': tok}, 'アカウント')
     media = call('GET', G + 'me/media', {'fields': 'id,caption,media_type,media_product_type,timestamp,permalink,like_count,comments_count,is_ai_generated',
                                          'limit': 12, 'access_token': tok}, '最近の投稿').get('data', [])
+    paid = {}
+    try:
+        # タイアップ投稿ラベル（is_paid_partnership）は読めるか別に聞く。だめでも他の記録は止めない
+        for d in call('GET', G + 'me/media', {'fields': 'id,is_paid_partnership', 'limit': 12, 'access_token': tok},
+                      'タイアップ投稿ラベル').get('data', []):
+            paid[d['id']] = d.get('is_paid_partnership')
+    except SystemExit as e:
+        paid = {'_error': str(e)[:200]}
     posts = []
     for m in media:
         row = {k: m.get(k) for k in ('id', 'media_type', 'media_product_type', 'timestamp', 'permalink', 'like_count', 'comments_count', 'is_ai_generated')}
         row['caption'] = (m.get('caption') or '')[:60]
+        row['is_paid_partnership'] = paid.get(m['id'], paid.get('_error'))
         for metric in ('reach,saved,shares,views', 'reach,saved'):
             try:
                 ins = call('GET', G + m['id'] + '/insights', {'metric': metric, 'access_token': tok}, '投稿の数字')
