@@ -1,13 +1,6 @@
 {
- "at": "2026-11-16T11:39+09:00",
+ "at": "2026-11-16T14:53+09:00",
  "posts": {
-  "20261102-1244-noon": {
-   "views": 103,
-   "likes": 9,
-   "replies": 0,
-   "reposts": 0,
-   "quotes": 0
-  },
   "20261102-1526-noon": {
    "views": 62,
    "likes": 1,
@@ -198,47 +191,54 @@
    "quotes": 0
   },
   "20261112-2343-late": {
-   "views": 179,
+   "views": 180,
    "likes": 3,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261113-0743-morning": {
-   "views": 118,
+   "views": 120,
    "likes": 1,
    "replies": 1,
    "reposts": 0,
    "quotes": 0
   },
   "20261113-1243-noon": {
-   "views": 180,
+   "views": 184,
    "likes": 6,
    "replies": 12,
    "reposts": 0,
    "quotes": 0
   },
   "20261113-2343-late": {
-   "views": 125,
+   "views": 129,
    "likes": 4,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261115-1243-noon": {
-   "views": 47,
+   "views": 51,
    "likes": 2,
+   "replies": 0,
+   "reposts": 0,
+   "quotes": 0
+  },
+  "20261116-1105-redo": {
+   "views": 18,
+   "likes": 1,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   }
  },
  "account": {
-  "views": 453,
-  "likes": 6,
+  "views": 511,
+  "likes": 8,
   "replies": 3,
   "reposts": 0,
-  "followers_count": 1124
+  "followers_count": 1127
  },
  "clicks": {
   "https://px.a8.net/svt/ejp?a8mat=4BESU6+2HWH4I+54TM+60H7M": 0,
