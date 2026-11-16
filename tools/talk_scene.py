@@ -270,6 +270,30 @@ def _photo(scene, seed):
     return im
 
 
+# 11/16 マスター命令「モデルも三姉妹でローテ組め」「服装もその都度変えろ」（完全基準37〜39項と同じ）：
+# つぶやきの写真のモデルは楓・京・町で回し、単独・2人・3人を混ぜる。服装は毎回ちがう最新ファッション（同じ服は使わない）。
+ROTA = ['京', '楓', '町', '京と楓', '京と町', '楓と町', '3人（楓・京・町）']
+ROTA_LOG = os.path.join(HERE, '..', 'state', 'talk_models.json')
+
+
+def model_for(q):
+    """この投稿のモデル。決まっていればそれ、無ければ記録の続きから次の番を決めて記録する。"""
+    if q.get('model'):
+        return q['model']
+    try:
+        log = json.load(open(ROTA_LOG, encoding='utf-8'))
+    except Exception:
+        log = []
+    for r in log:
+        if r.get('id') == q.get('id'):
+            return r['model']
+    last = log[-1]['model'] if log else None
+    m = ROTA[(ROTA.index(last) + 1) % len(ROTA)] if last in ROTA else ROTA[0]
+    log.append({'id': q.get('id'), 'model': m, 'outfit': ''})
+    json.dump(log, open(ROTA_LOG, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    return m
+
+
 class NoPhoto(Exception):
     pass
 
@@ -282,7 +306,7 @@ def make(q, out):
     PH = H  # 画面いっぱいに場面
     ph = None
     # 11/16 マスター命令：「つぶやきと画像が全く違う」「つぶやき画像は京がモデル」。
-    # 固定画像（楓の夜の写真）と共通の場面写真はやめ、投稿ごとに楓が作る「京がモデル・本文と同じ場面」の実写風写真だけを使う。
+    # 固定画像（楓の夜の写真）と共通の場面写真はやめ、投稿ごとに楓が作る「本文と同じ場面」の実写風写真だけを使う（モデルは三姉妹ローテ・下の ROTA）。
     # 置き場所：assets/photos/ready/talk-<id>.jpg|png|webp（4:5以内）。無ければ hold で楓の写真を待つ。
     fs = sorted(glob.glob(os.path.join(HERE, '..', 'assets', 'photos', 'ready', 'talk-' + q.get('id', '') + '.*')))
     fs = [f for f in fs if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp'))]
@@ -324,7 +348,9 @@ def attach(repo, q):
         q['scene_talk'] = sc
     except NoPhoto as e:
         # 画像なしでは出さない（11/15 場面画像は必須）・イラストでも出さない（11/16）。楓の写真を待つ
-        q['hold'] = '楓の写真待ち（京がモデル・本文と同じ場面の実写風・4:5。assets/photos/ready/talk-' + q['id'] + '.jpg に置く。京が検品して hold を外す）'
+        q['model'] = model_for(q)
+        q['hold'] = ('楓の写真待ち（モデル：' + q['model'] + '・本文と同じ場面の実写風・服装は前回までと違う最新ファッション・4:5。'
+                     'assets/photos/ready/talk-' + q['id'] + '.jpg に置く。京が検品して hold を外す）')
         print('場面写真がないので hold：', e)
     except Exception as e:
         print('場面の画像を作れませんでした：', e)
