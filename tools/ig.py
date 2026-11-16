@@ -104,7 +104,45 @@ def insights():
         read_comments(tok, media)
     except SystemExit as e:
         print(f'インスタのコメント読み取り：{e}')
+    if not os.path.exists(os.path.join(ROOT, 'state', 'ig_probe.json')):
+        try:
+            probe(tok, media)
+        except Exception as e:
+            print(f'インスタの機能確認：{e}')
     comments(tok)
+
+
+def probe(tok, media):
+    """新しい機能が今のトークンで通るかを、読むだけで確かめる（書き込み・削除はしない）。結果は state/ig_probe.json。"""
+    import datetime
+    out = {}
+    for ver in ('v21.0', 'v25.0'):
+        G = f'https://graph.instagram.com/{ver}/'
+        mid = media[0]['id'] if media else ''
+        reel = next((m['id'] for m in media if m.get('media_product_type') == 'REELS'), mid)
+        tests = {
+            '投稿の残り枠': ('me/content_publishing_limit', {'fields': 'quota_usage,config'}),
+            'タグ付けされた投稿': ('me/tags', {'limit': 3}),
+            'ストーリーズ一覧': ('me/stories', {}),
+            'コラボ招待': ('me/collaboration_invites', {}),
+            'コラボ投稿一覧': ('me/collaborative_media', {}),
+            '投稿の新しい項目（保存・シェア・リポスト数・AIラベル）': (mid, {'fields': 'saved_count,shares_count,reposts_count,is_ai_generated,alt_text'}),
+            'リールの新しい数字（スキップ率・リポスト）': (reel + '/insights', {'metric': 'reels_skip_rate,reposts'}),
+            'アカウントの属性（年齢・性別）': ('me/insights', {'metric': 'follower_demographics', 'period': 'lifetime', 'metric_type': 'total_value', 'breakdown': 'age,gender'}),
+            '音源の検索（Audio API）': ('me/audio', {'q': 'cafe'}),
+        }
+        res = {}
+        for name, (path, params) in tests.items():
+            try:
+                r = call('GET', G + path, {**params, 'access_token': tok}, name)
+                res[name] = {'ok': True, 'sample': json.dumps(r, ensure_ascii=False)[:300]}
+            except SystemExit as e:
+                res[name] = {'ok': False, 'error': str(e)[:300]}
+        out[ver] = res
+    out['at'] = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).strftime('%Y-%m-%dT%H:%M+09:00')
+    with open(os.path.join(ROOT, 'state', 'ig_probe.json'), 'w') as f:
+        json.dump(out, f, ensure_ascii=False, indent=1)
+    print('インスタの機能確認：' + '・'.join(f"{k}={'OK' if v['ok'] else 'NG'}" for k, v in out['v25.0'].items()))
 
 
 def read_comments(tok, media):
