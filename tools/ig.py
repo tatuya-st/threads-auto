@@ -111,6 +111,13 @@ def insights():
         read_comments(tok, media)
     except SystemExit as e:
         print(f'インスタのコメント読み取り：{e}')
+    req2 = os.path.join(ROOT, 'state', 'ig_probe2.request')
+    if os.path.exists(req2):
+        os.remove(req2)
+        try:
+            probe2(tok, media)
+        except Exception as e:
+            print(f'インスタの全部試す：{e}')
     if not os.path.exists(os.path.join(ROOT, 'state', 'ig_probe.json')):
         try:
             probe(tok, media)
@@ -150,6 +157,57 @@ def probe(tok, media):
     with open(os.path.join(ROOT, 'state', 'ig_probe.json'), 'w') as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
     print('インスタの機能確認：' + '・'.join(f"{k}={'OK' if v['ok'] else 'NG'}" for k, v in out['v25.0'].items()))
+
+
+def probe2(tok, media):
+    """「全て試せ」用。投稿は公開しない（入れ物を作るだけ）。いいねは自分の投稿に付けてすぐ外す。結果は state/ig_probe2.json。"""
+    import datetime, time
+    G = 'https://graph.instagram.com/v25.0/'
+    PAGES = 'https://tatuya-st.github.io/threads-auto/'
+    out = {}
+    def t(name, method, path, params):
+        try:
+            r = call(method, G + path, {**params, 'access_token': tok}, name)
+            out[name] = {'ok': True, 'sample': json.dumps(r, ensure_ascii=False)[:300]}
+            return r
+        except SystemExit as e:
+            out[name] = {'ok': False, 'error': str(e)[:300]}
+            return None
+    mid = media[0]['id'] if media else ''
+    reel = next((m['id'] for m in media if m.get('media_product_type') == 'REELS'), mid)
+    # 1. AIラベル付きの入れ物（公開しない）
+    c = t('AIラベル付きの画像の入れ物を作る（公開しない）', 'POST', 'me/media',
+          {'image_url': PAGES + 'assets/photos/ready/takumihonpo-kyo-final.jpg', 'caption': 'テスト（公開しません）', 'is_ai_generated': 'true'})
+    cid = (c or {}).get('id')
+    if cid:
+        t('入れ物の状態とAIラベルを読む', 'GET', cid, {'fields': 'id,status_code,is_ai_generated'})
+    # 2. トライアルリールの入れ物（公開しない）
+    r = t('トライアルリールの入れ物を作る（公開しない）', 'POST', 'me/media',
+          {'media_type': 'REELS', 'video_url': PAGES + 'assets/photos/ready/currentbody-2026-11-12/reel-currentbody-v3.mp4',
+           'caption': 'テスト（公開しません）', 'trial_params': json.dumps({'graduation_strategy': 'MANUAL'}), 'is_ai_generated': 'true'})
+    rid = (r or {}).get('id')
+    if rid:
+        time.sleep(20)
+        t('トライアルリールの入れ物の状態', 'GET', rid, {'fields': 'id,status_code,status'})
+    # 3. 削除の権限（公開していない入れ物を消す。公開中の投稿には触らない）
+    if cid:
+        t('削除（未公開の入れ物で試す）', 'DELETE', cid, {})
+    # 4. 公開済み投稿のAIラベル項目を読む
+    if mid:
+        t('公開済み投稿のAIラベル項目', 'GET', mid, {'fields': 'id,is_ai_generated,alt_text'})
+    # 5. 数字（1つずつ）
+    t('リールのスキップ率', 'GET', reel + '/insights', {'metric': 'reels_skip_rate'})
+    t('アカウントのリポスト数', 'GET', 'me/insights', {'metric': 'reposts', 'period': 'day', 'metric_type': 'total_value'})
+    # 6. いいね（自分の最新投稿に付けてすぐ外す）
+    if mid and t('いいねを付ける（自分の投稿）', 'POST', 'me/likes', {'media_id': mid}):
+        t('いいねを外す（元に戻す）', 'DELETE', 'me/likes', {'media_id': mid})
+    # 7. 正しい呼び方でもう一度（公式ではFacebookログイン版のみの印あり）
+    t('コラボ招待（正しい呼び方）', 'GET', 'me/collaboration_invites', {})
+    t('音源検索（ig_audio）', 'GET', 'ig_audio', {'audio_type': 'music'})
+    out['at'] = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).strftime('%Y-%m-%dT%H:%M+09:00')
+    with open(os.path.join(ROOT, 'state', 'ig_probe2.json'), 'w') as f:
+        json.dump(out, f, ensure_ascii=False, indent=1)
+    print('インスタの全部試す：' + '・'.join(f"{k}={'OK' if v['ok'] else 'NG'}" for k, v in out.items() if k != 'at'))
 
 
 def read_comments(tok, media):
