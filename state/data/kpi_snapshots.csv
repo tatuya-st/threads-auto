@@ -85,3 +85,6 @@ date,time,platform,metric,value,unit,source,note
 2026-11-16,12:46,ROOM,items,1882,件,定時調査メモ（公開ページ確認）,10:46から変わらず
 2026-11-16,12:46,Instagram,followers,1252,人,state/ig_insights.json 11:39収集版,00:30版1253から-1
 2026-11-16,12:46,Instagram,posts,89,件,state/ig_insights.json 11:39収集版,00:30版88から+1
+2026-11-16,14:46,Threads,followers,1456,人,threads-cli accounts（定時調査）,12:46の1455から+1
+2026-11-16,14:46,ROOM,likes_total,9549,件,定時調査メモ（公開ページ確認）,12:46の9550から-1・京の判定基準9100超で維持圏
+2026-11-16,14:46,ROOM,items,1882,件,定時調査メモ（公開ページ確認）,12:46から変わらず
