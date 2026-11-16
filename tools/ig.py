@@ -81,7 +81,7 @@ def insights():
     G = 'https://graph.instagram.com/v21.0/'
     acc = call('GET', G + 'me', {'fields': 'user_id,username,account_type,followers_count,follows_count,media_count', 'access_token': tok}, 'アカウント')
     media = call('GET', G + 'me/media', {'fields': 'id,caption,media_type,media_product_type,timestamp,permalink,like_count,comments_count,is_ai_generated',
-                                         'limit': 30, 'access_token': tok}, '最近の投稿').get('data', [])
+                                         'limit': 12, 'access_token': tok}, '最近の投稿').get('data', [])
     posts = []
     for m in media:
         row = {k: m.get(k) for k in ('id', 'media_type', 'media_product_type', 'timestamp', 'permalink', 'like_count', 'comments_count', 'is_ai_generated')}
