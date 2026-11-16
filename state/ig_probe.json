@@ -1,0 +1,79 @@
+{
+ "v21.0": {
+  "投稿の残り枠": {
+   "ok": true,
+   "sample": "{\"data\": [{\"quota_usage\": 0, \"config\": {\"quota_total\": 100, \"quota_duration\": 86400}}]}"
+  },
+  "タグ付けされた投稿": {
+   "ok": true,
+   "sample": "{\"data\": []}"
+  },
+  "ストーリーズ一覧": {
+   "ok": true,
+   "sample": "{\"data\": []}"
+  },
+  "コラボ招待": {
+   "ok": false,
+   "error": "インスタの返事がエラーでした（コラボ招待）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (collaboration_invites)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"Ai2uA35Rofe2WB3RI6fLxPL\"}}"
+  },
+  "コラボ投稿一覧": {
+   "ok": false,
+   "error": "インスタの返事がエラーでした（コラボ投稿一覧）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (collaborative_media)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"A-f1_qYz0yc8SfLFwodQoF0\"}}"
+  },
+  "投稿の新しい項目（保存・シェア・リポスト数・AIラベル）": {
+   "ok": false,
+   "error": "インスタの返事がエラーでした（投稿の新しい項目（保存・シェア・リポスト数・AIラベル））：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (saved_count)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"AvR9k1Zn7meE_ik3q2FWzvf\"}}"
+  },
+  "リールの新しい数字（スキップ率・リポスト）": {
+   "ok": false,
+   "error": "インスタの返事がエラーでした（リールの新しい数字（スキップ率・リポスト））：400 {\"error\":{\"message\":\"Instagram Insights Media API endpoint does not support the metrics: reposts. Please refer to https:\\/\\/developers.facebook.com\\/docs\\/instagram\\/reference\\/media#insights for more details.\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\""
+  },
+  "アカウントの属性（年齢・性別）": {
+   "ok": true,
+   "sample": "{\"data\": [{\"name\": \"follower_demographics\", \"period\": \"lifetime\", \"title\": \"Follower demographics\", \"description\": \"The demographic characteristics of followers, including countries, cities and gender distribution.\", \"total_value\": {\"breakdowns\": [{\"dimension_keys\": [\"age\", \"gender\"], \"results\": [{\""
+  },
+  "音源の検索（Audio API）": {
+   "ok": false,
+   "error": "インスタの返事がエラーでした（音源の検索（Audio API））：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (audio)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"Aa11Q035EFKRU8sPUXAsDC4\"}}"
+  }
+ },
+ "v25.0": {
+  "投稿の残り枠": {
+   "ok": true,
+   "sample": "{\"data\": [{\"quota_usage\": 0, \"config\": {\"quota_total\": 100, \"quota_duration\": 86400}}]}"
+  },
+  "タグ付けされた投稿": {
+   "ok": true,
+   "sample": "{\"data\": []}"
+  },
+  "ストーリーズ一覧": {
+   "ok": true,
+   "sample": "{\"data\": []}"
+  },
+  "コラボ招待": {
+   "ok": false,
+   "error": "インスタの返事がエラーでした（コラボ招待）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (collaboration_invites)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"AgiI-ChN1dbMzCB4Md2MFM3\"}}"
+  },
+  "コラボ投稿一覧": {
+   "ok": false,
+   "error": "インスタの返事がエラーでした（コラボ投稿一覧）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (collaborative_media)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"AeBAJoXkw742l3Wc5NA--x_\"}}"
+  },
+  "投稿の新しい項目（保存・シェア・リポスト数・AIラベル）": {
+   "ok": false,
+   "error": "インスタの返事がエラーでした（投稿の新しい項目（保存・シェア・リポスト数・AIラベル））：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (saved_count)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"A-y26sghPlqjxThybc8CyvY\"}}"
+  },
+  "リールの新しい数字（スキップ率・リポスト）": {
+   "ok": false,
+   "error": "インスタの返事がエラーでした（リールの新しい数字（スキップ率・リポスト））：400 {\"error\":{\"message\":\"Instagram Insights Media API endpoint does not support the metrics: reposts. Please refer to https:\\/\\/developers.facebook.com\\/docs\\/instagram\\/reference\\/media#insights for more details.\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\""
+  },
+  "アカウントの属性（年齢・性別）": {
+   "ok": true,
+   "sample": "{\"data\": [{\"name\": \"follower_demographics\", \"period\": \"lifetime\", \"title\": \"Follower demographics\", \"description\": \"The demographic characteristics of followers, including countries, cities and gender distribution.\", \"total_value\": {\"breakdowns\": [{\"dimension_keys\": [\"age\", \"gender\"], \"results\": [{\""
+  },
+  "音源の検索（Audio API）": {
+   "ok": false,
+   "error": "インスタの返事がエラーでした（音源の検索（Audio API））：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (audio)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"AgWpoUo7U9-5cV3nfAXR_Tt\"}}"
+  }
+ },
+ "at": "2026-11-16T19:40+09:00"
+}
