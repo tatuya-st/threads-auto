@@ -97,6 +97,13 @@ def insights():
         posts.append(row)
     now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).strftime('%Y-%m-%dT%H:%M+09:00')
     out = {'at': now, 'account': {k: acc.get(k) for k in ('username', 'account_type', 'followers_count', 'follows_count', 'media_count')}, 'posts': posts}
+    try:
+        dem = call('GET', G + 'me/insights', {'metric': 'follower_demographics', 'period': 'lifetime', 'metric_type': 'total_value',
+                                              'breakdown': 'age,gender', 'access_token': tok}, 'フォロワーの年齢・性別')
+        res = dem['data'][0]['total_value']['breakdowns'][0]['results']
+        out['followers_age_gender'] = {'-'.join(r['dimension_values']): r['value'] for r in res}
+    except (SystemExit, KeyError, IndexError) as e:
+        print(f'フォロワーの年齢・性別：{e}')
     with open(os.path.join(ROOT, 'state', 'ig_insights.json'), 'w') as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
     print(f"インスタ：フォロワー{acc.get('followers_count')}・投稿{acc.get('media_count')}件を記録しました")
