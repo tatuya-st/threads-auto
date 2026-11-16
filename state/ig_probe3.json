@@ -1,0 +1,54 @@
+{
+ "読む 18117153647132410 最近、自分のInstag": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（読む 18117153647132410 最近、自分のInstag）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (is_paid_partnership)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"Apmifc09mvknTaUx6CWWO-z\"}}"
+ },
+ "読む 18034007318856442 お知らせです🌸 末っ子の": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（読む 18034007318856442 お知らせです🌸 末っ子の）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (is_paid_partnership)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"Aarr3KDHlRQbIpVLWdcfu6G\"}}"
+ },
+ "読む 18128390896932223 【PR】 夜の仕上げは、": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（読む 18128390896932223 【PR】 夜の仕上げは、）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (is_paid_partnership)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"AZKLfdhve98pBVqPIZl73hU\"}}"
+ },
+ "読む 18121856206962416 【PR】 帰ってすぐ落と": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（読む 18121856206962416 【PR】 帰ってすぐ落と）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (is_paid_partnership)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"Aj2ScaElT1gPmcPzuoejBXT\"}}"
+ },
+ "読む 18419116948087619 日光で3姉妹ランチ。今回": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（読む 18419116948087619 日光で3姉妹ランチ。今回）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (is_paid_partnership)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"AWHz9Pbo0piLIUYOjPZx0ZW\"}}"
+ },
+ "読む 17973471057191739 三姉妹で日光・大猷院へ行": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（読む 17973471057191739 三姉妹で日光・大猷院へ行）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (is_paid_partnership)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"Am2eHnZ0_DLdNZFZpDyJVYR\"}}"
+ },
+ "読む 18024775883937326 末っ子が会社に遊びに来ま": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（読む 18024775883937326 末っ子が会社に遊びに来ま）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (is_paid_partnership)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"AklMHUWHGQZYaf-GJ98GCUu\"}}"
+ },
+ "読む 18036079178699472 モニュメント編 新潟駅前": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（読む 18036079178699472 モニュメント編 新潟駅前）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (is_paid_partnership)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"AJ2DOY_CwdoRu29qEhEX99A\"}}"
+ },
+ "読む 18107528837288872 お昼ごはん編 お買い物の": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（読む 18107528837288872 お昼ごはん編 お買い物の）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (is_paid_partnership)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"AVbSldKWHkzYMtcQPKvF-jh\"}}"
+ },
+ "読む 17958701343282140 新潟市でお買い物編 たま": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（読む 17958701343282140 新潟市でお買い物編 たま）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (is_paid_partnership)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"Augp7aju9DnfLMTCZHXJGsX\"}}"
+ },
+ "読む 18120405368009670 楓です。説教中です。 京": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（読む 18120405368009670 楓です。説教中です。 京）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (is_paid_partnership)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"AKANFmGJ5g0TwlnRNbm0FSS\"}}"
+ },
+ "読む 17917397976547227 楓です。休みの日の秋さん": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（読む 17917397976547227 楓です。休みの日の秋さん）：400 {\"error\":{\"message\":\"Tried accessing nonexisting field (is_paid_partnership)\",\"type\":\"IGApiException\",\"code\":100,\"fbtrace_id\":\"ACE0wmZzptzFmDaiCu-si4f\"}}"
+ },
+ "付けて入れ物を作る（公開しない）": {
+  "ok": false,
+  "error": "インスタの返事がエラーでした（付けて入れ物を作る（公開しない））：400 {\"error\":{\"message\":\"Invalid parameter\",\"type\":\"OAuthException\",\"code\":100,\"error_subcode\":2207109,\"is_transient\":false,\"error_user_title\":\"Unsupported Param for Media Creation\",\"error_user_msg\":\"is_paid_partnership is not a supported parameter for the Content Pu"
+ }
+}

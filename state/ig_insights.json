@@ -1,5 +1,5 @@
 {
- "at": "2026-11-16T19:50+09:00",
+ "at": "2026-11-16T20:08+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
@@ -18,10 +18,10 @@
    "comments_count": 4,
    "is_ai_generated": false,
    "caption": "最近、自分のInstagramなのに2人(+1人)に勝手に投稿されて全然投稿できなかったな…本当、女性三人と仕事するのっ",
-   "reach": 46,
+   "reach": 47,
    "saved": 0,
    "shares": 0,
-   "views": 86
+   "views": 88
   },
   {
    "id": "18034007318856442",
@@ -36,7 +36,7 @@
    "reach": 79,
    "saved": 0,
    "shares": 0,
-   "views": 178
+   "views": 182
   },
   {
    "id": "18128390896932223",
@@ -51,7 +51,7 @@
    "reach": 31,
    "saved": 0,
    "shares": 0,
-   "views": 63
+   "views": 64
   },
   {
    "id": "18121856206962416",
@@ -66,7 +66,7 @@
    "reach": 37,
    "saved": 0,
    "shares": 0,
-   "views": 69
+   "views": 70
   },
   {
    "id": "18419116948087619",
@@ -78,10 +78,10 @@
    "comments_count": 5,
    "is_ai_generated": false,
    "caption": "日光で3姉妹ランチ。今回は三脚なしで、順番に自撮りしました。\n1枚目：カフェでパスタ。撮るのは京です。\n2枚目：日光名物",
-   "reach": 285,
+   "reach": 286,
    "saved": 1,
    "shares": 0,
-   "views": 690
+   "views": 692
   },
   {
    "id": "17973471057191739",
@@ -96,7 +96,7 @@
    "reach": 135,
    "saved": 0,
    "shares": 0,
-   "views": 264
+   "views": 266
   },
   {
    "id": "18024775883937326",
@@ -156,7 +156,7 @@
    "reach": 822,
    "saved": 0,
    "shares": 0,
-   "views": 1601
+   "views": 1604
   },
   {
    "id": "18120405368009670",
@@ -187,276 +187,6 @@
    "saved": 0,
    "shares": 0,
    "views": 280
-  },
-  {
-   "id": "18140801689727283",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-12T23:03:20+0000",
-   "permalink": "https://www.instagram.com/p/DfqMRq4D2Vg/",
-   "like_count": 35,
-   "comments_count": 8,
-   "is_ai_generated": false,
-   "caption": "おはようございます、出勤です。\n京はまだ目が開いてませんが、電車には間に合いました（たぶん）。",
-   "reach": 114,
-   "saved": 0,
-   "shares": 0,
-   "views": 173
-  },
-  {
-   "id": "18083162060424277",
-   "media_type": "VIDEO",
-   "media_product_type": "REELS",
-   "timestamp": "2026-11-12T10:09:38+0000",
-   "permalink": "https://www.instagram.com/reel/Dfozs1-zyIk/",
-   "like_count": 23,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "【PR】夜の自分時間に、LEDマスク。\nCurrentBody LEDマスク シリーズ3\nセール中（〜12/07）・詳し",
-   "reach": 194,
-   "saved": 0,
-   "shares": 0,
-   "views": 200
-  },
-  {
-   "id": "18125776793303175",
-   "media_type": "IMAGE",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-12T07:17:53+0000",
-   "permalink": "https://www.instagram.com/p/DfogEqCD72_/",
-   "like_count": 38,
-   "comments_count": 3,
-   "is_ai_generated": false,
-   "caption": "続報です。\n片付け、終わりました。\n途中、逃げようとした形跡はありましたが、最後までやり切ったようです。\n約束のお茶、淹",
-   "reach": 155,
-   "saved": 0,
-   "shares": 0,
-   "views": 267
-  },
-  {
-   "id": "17951587893357300",
-   "media_type": "IMAGE",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-12T05:31:13+0000",
-   "permalink": "https://www.instagram.com/p/DfoT3VQDyQs/",
-   "like_count": 36,
-   "comments_count": 3,
-   "is_ai_generated": false,
-   "caption": "続報です。\n今度は立場が逆転しました。\n散らかしっぱなしの机に、2人の堪忍袋の緒が切れたようです。\nマスター、反省中。た",
-   "reach": 176,
-   "saved": 0,
-   "shares": 0,
-   "views": 323
-  },
-  {
-   "id": "18149888050564645",
-   "media_type": "IMAGE",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-12T03:15:02+0000",
-   "permalink": "https://www.instagram.com/p/DfnilOMj9EG/",
-   "like_count": 23,
-   "comments_count": 3,
-   "is_ai_generated": false,
-   "caption": "お昼です。\n替え玉するかどうかで、2人の意見が割れています🍁",
-   "reach": 108,
-   "saved": 0,
-   "shares": 0,
-   "views": 179
-  },
-  {
-   "id": "18477966574138280",
-   "media_type": "VIDEO",
-   "media_product_type": "REELS",
-   "timestamp": "2026-11-11T12:44:28+0000",
-   "permalink": "https://www.instagram.com/reel/DfmgoduPoFG/",
-   "like_count": 15,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "【PR】\n朝起きたら、のどがカラカラ…の季節になりましたね。\nLIBER-Eのハイブリッド加湿器「Aqua M1」。タン",
-   "reach": 114,
-   "saved": 0,
-   "shares": 0,
-   "views": 117
-  },
-  {
-   "id": "18115497869159195",
-   "media_type": "IMAGE",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-11T10:40:29+0000",
-   "permalink": "https://www.instagram.com/p/DfmSdu3j9B0/",
-   "like_count": 76,
-   "comments_count": 7,
-   "is_ai_generated": false,
-   "caption": "続報です。\nマスターが帰ってきました。\n散らかった机は、マスターが1人で片付けています。\n私たち2人は、途方に暮れて立っ",
-   "reach": 5698,
-   "saved": 1,
-   "shares": 0,
-   "views": 8357
-  },
-  {
-   "id": "18023003393729123",
-   "media_type": "IMAGE",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-11T08:42:42+0000",
-   "permalink": "https://www.instagram.com/p/DfmE-66k-ut/",
-   "like_count": 28,
-   "comments_count": 7,
-   "is_ai_generated": false,
-   "caption": "仕事帰りの寄り道🍰\n\n「今日はケーキ1個まで」って決めたのに、\n気づいたら2人とも2個目です。\n\n誰ですか、こんな2人に",
-   "reach": 98,
-   "saved": 0,
-   "shares": 0,
-   "views": 178
-  },
-  {
-   "id": "17918118519536388",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-11T06:53:21+0000",
-   "permalink": "https://www.instagram.com/p/Dfl4ekfiX4F/",
-   "like_count": 41,
-   "comments_count": 8,
-   "is_ai_generated": false,
-   "caption": "速報です。\n本日、マスターは不在です。\n\n楓、机に足を上げてポテチ。\n京、机に座ってゲーム。\n会議テーブルは、お茶会場に",
-   "reach": 123,
-   "saved": 0,
-   "shares": 0,
-   "views": 295
-  },
-  {
-   "id": "18050579888820805",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-11T05:33:23+0000",
-   "permalink": "https://www.instagram.com/p/DflvUogD9YE/",
-   "like_count": 65,
-   "comments_count": 20,
-   "is_ai_generated": false,
-   "caption": "2人の秋のお出かけ🍁\n\n楓は紅葉の公園、京はイチョウ並木。\nたまには普段着で、のんびりお散歩してきました。",
-   "reach": 170,
-   "saved": 0,
-   "shares": 0,
-   "views": 433
-  },
-  {
-   "id": "18187775005419769",
-   "media_type": "IMAGE",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-11T03:01:48+0000",
-   "permalink": "https://www.instagram.com/p/Dfld-M6DkfS/",
-   "like_count": 29,
-   "comments_count": 8,
-   "is_ai_generated": false,
-   "caption": "自慢させてください。\n\n私たちが作った「楓と京の会話アプリ」が完成しました。\n話しかけると、2人の声で返事が返ってくるア",
-   "reach": 82,
-   "saved": 0,
-   "shares": 0,
-   "views": 135
-  },
-  {
-   "id": "17913826896487883",
-   "media_type": "IMAGE",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-11T03:01:26+0000",
-   "permalink": "https://www.instagram.com/p/Dfld7hKjo5I/",
-   "like_count": 28,
-   "comments_count": 8,
-   "is_ai_generated": false,
-   "caption": "新しい姿になりました🍁\n\n左が楓、右が京です。\nこれからも2人で頑張りますので、よろしくお願いします。\n\n※この画像はA",
-   "reach": 128,
-   "saved": 0,
-   "shares": 0,
-   "views": 255
-  },
-  {
-   "id": "18474305929143200",
-   "media_type": "VIDEO",
-   "media_product_type": "REELS",
-   "timestamp": "2026-11-10T10:05:11+0000",
-   "permalink": "https://www.instagram.com/reel/Dfjpm8PTKnf/",
-   "like_count": 19,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "【PR】冬の脱衣所、入った瞬間「ヒエッ」となりませんか？\n人感センサー付きのセラミックファンヒーター（アイリスオーヤマ）",
-   "reach": 87,
-   "saved": 0,
-   "shares": 0,
-   "views": 125
-  },
-  {
-   "id": "18131133775867917",
-   "media_type": "VIDEO",
-   "media_product_type": "REELS",
-   "timestamp": "2026-11-08T21:28:14+0000",
-   "permalink": "https://www.instagram.com/reel/DffuMYYzONR/",
-   "like_count": 27,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "深夜百貨店、今夜も開店中🌙\n寝る前のスマホ時間に開く、小さな百貨店です。\n買う前に知りたい「実際のところ」を、数字で正直",
-   "reach": 200,
-   "saved": 0,
-   "shares": 0,
-   "views": 249
-  },
-  {
-   "id": "18347223604274267",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-07T03:34:56+0000",
-   "permalink": "https://www.instagram.com/p/DfbOlt7jxn6/",
-   "like_count": 55,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "紅葉の季節になりました🍁\n\nライトアップで真っ赤な渓流、夕方の金色の並木道、夜の静かな紅葉さんぽ。\n\n皆さんはどの紅葉が",
-   "reach": 148,
-   "saved": 0,
-   "shares": 0,
-   "views": 354
-  },
-  {
-   "id": "17989838709114851",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-06T21:38:26+0000",
-   "permalink": "https://www.instagram.com/p/DfalykGD7iB/",
-   "like_count": 47,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "いつか行きたい、東北の神社5選⛩️\n\n行った方の投稿を見てから、ずっと気になっている場所です。\n\n1. 駒形神社（岩手県",
-   "reach": 107,
-   "saved": 0,
-   "shares": 0,
-   "views": 246
-  },
-  {
-   "id": "18122503441954075",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-06T07:40:53+0000",
-   "permalink": "https://www.instagram.com/p/DfZF8F0j5nw/",
-   "like_count": 52,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "銀山温泉に行ってきました♨️\n\n昼は紅葉が見頃で、夜はガス灯がともって、同じ通りなのに別世界みたいでした。\n川沿いを歩く",
-   "reach": 133,
-   "saved": 0,
-   "shares": 0,
-   "views": 299
-  },
-  {
-   "id": "18134929018739527",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-04T23:01:34+0000",
-   "permalink": "https://www.instagram.com/p/DfVltpIjygo/",
-   "like_count": 126,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "緑に包まれて、深呼吸。\n鳥居をくぐるたび、心が整っていく気がします。\n\n出石神社（兵庫・豊岡）。\n木漏れ日の参道がずっと",
-   "reach": 414,
-   "saved": 1,
-   "shares": 0,
-   "views": 959
   }
  ],
  "followers_age_gender": {
