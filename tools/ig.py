@@ -111,6 +111,13 @@ def insights():
         read_comments(tok, media)
     except SystemExit as e:
         print(f'インスタのコメント読み取り：{e}')
+    req3 = os.path.join(ROOT, 'state', 'ig_probe3.request')
+    if os.path.exists(req3):
+        os.remove(req3)
+        try:
+            probe3(tok, media)
+        except Exception as e:
+            print(f'タイアップ確認：{e}')
     req2 = os.path.join(ROOT, 'state', 'ig_probe2.request')
     if os.path.exists(req2):
         os.remove(req2)
@@ -208,6 +215,25 @@ def probe2(tok, media):
     with open(os.path.join(ROOT, 'state', 'ig_probe2.json'), 'w') as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
     print('インスタの全部試す：' + '・'.join(f"{k}={'OK' if v['ok'] else 'NG'}" for k, v in out.items() if k != 'at'))
+
+
+def probe3(tok, media):
+    """タイアップ投稿ラベル（is_paid_partnership）が読めるか・付けられるか。公開はしない。結果は state/ig_probe3.json。"""
+    G = 'https://graph.instagram.com/v25.0/'
+    out = {}
+    def t(name, method, path, params):
+        try:
+            r = call(method, G + path, {**params, 'access_token': tok}, name)
+            out[name] = {'ok': True, 'sample': json.dumps(r, ensure_ascii=False)[:400]}
+            return r
+        except SystemExit as e:
+            out[name] = {'ok': False, 'error': str(e)[:300]}
+    for m in media[:12]:
+        t('読む ' + m['id'] + ' ' + (m.get('caption') or '')[:12].replace('\n', ' '), 'GET', m['id'], {'fields': 'id,is_paid_partnership'})
+    t('付けて入れ物を作る（公開しない）', 'POST', 'me/media', {'image_url': 'https://tatuya-st.github.io/threads-auto/assets/photos/ready/takumihonpo-kyo-final.jpg',
+                                                    'caption': 'テスト（公開しません）', 'is_paid_partnership': 'true'})
+    with open(os.path.join(ROOT, 'state', 'ig_probe3.json'), 'w') as f:
+        json.dump(out, f, ensure_ascii=False, indent=1)
 
 
 def read_comments(tok, media):
