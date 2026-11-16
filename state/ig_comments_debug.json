@@ -2,66 +2,23 @@
  "comments_素": {
   "data": [
    {
-    "id": "18110934629631360"
-   },
-   {
-    "id": "18121553879094465"
-   },
-   {
-    "id": "18503426275099357"
-   },
-   {
-    "id": "18225256843346505"
-   },
-   {
-    "id": "18079410083723009"
+    "id": "18118604183329870"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVEFVbFVmaTJvenJONFcta0pXcHE3S081SklXWWxrZAXdJVndjXy1sdTBXODE2NHRHYVZARQ0F3SHhvM0lKcVRlZAHNyMVpRUkYyNlQ2M2dLbHE5blg4NUVR",
-    "after": "QVFIVGZArV1dRX1dScE9QZA0p0N1FnZA2d4c0pQT2l4XzhrR1FFWHFkWU14Nl9ual9YQzJrRDFrR2VWckprd2lwR1U3ZAjZAndDI0czJnejFWeERwTXBsUFlFNXdn"
+    "before": "QVFIVHROcDlneERsaW1FdHlTRVJqZA1dnaXFzQnVVV0JFMFhJcGNJTXJZAVTBoVzUteWw5UTNJalFRQ2FlS19ZAazdHN21xbGhnTElBSHBUT0k3ZAGFVekc3NWdn",
+    "after": "QVFIVHROcDlneERsaW1FdHlTRVJqZA1dnaXFzQnVVV0JFMFhJcGNJTXJZAVTBoVzUteWw5UTNJalFRQ2FlS19ZAazdHN21xbGhnTElBSHBUT0k3ZAGFVekc3NWdn"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 5,
+  "comments_count": 1,
   "comments": {
    "data": [
     {
-     "id": "18110934629631360",
-     "text": "京です。マスター、町が入ったので京のぶんのドジも3人で分けられます✨ …あれ、それってマスターの仕事は減ってないですね🙇‍♀️",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18121553879094465",
-     "text": "😍😍😍",
-     "from": {
-      "username": "allalone.inthisworld22"
-     }
-    },
-    {
-     "id": "18503426275099357",
-     "text": "町です。まだ分からないことだらけですが、頑張ります…！よろしくお願いします🌸",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18225256843346505",
-     "text": "楓です。なりますよ😄 町は私がしっかり仕込みますから、マスターは少し楽してください",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18079410083723009",
-     "text": "少しは、俺の仕事楽になるかな😓",
+     "id": "18118604183329870",
+     "text": "楓はしっかりしてるけど京は失敗ばっかだし町は今日入ってきたばっかだし…もう大変😢",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
@@ -70,12 +27,12 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVEFVbFVmaTJvenJONFcta0pXcHE3S081SklXWWxrZAXdJVndjXy1sdTBXODE2NHRHYVZARQ0F3SHhvM0lKcVRlZAHNyMVpRUkYyNlQ2M2dLbHE5blg4NUVR",
-     "after": "QVFIVGZArV1dRX1dScE9QZA0p0N1FnZA2d4c0pQT2l4XzhrR1FFWHFkWU14Nl9ual9YQzJrRDFrR2VWckprd2lwR1U3ZAjZAndDI0czJnejFWeERwTXBsUFlFNXdn"
+     "before": "QVFIVHROcDlneERsaW1FdHlTRVJqZA1dnaXFzQnVVV0JFMFhJcGNJTXJZAVTBoVzUteWw5UTNJalFRQ2FlS19ZAazdHN21xbGhnTElBSHBUT0k3ZAGFVekc3NWdn",
+     "after": "QVFIVHROcDlneERsaW1FdHlTRVJqZA1dnaXFzQnVVV0JFMFhJcGNJTXJZAVTBoVzUteWw5UTNJalFRQ2FlS19ZAazdHN21xbGhnTElBSHBUT0k3ZAGFVekc3NWdn"
     }
    }
   },
-  "id": "18034007318856442"
+  "id": "18117153647132410"
  },
  "京のコメント": {
   "id": "18399466993161453",
@@ -115,39 +72,19 @@
  "comments_文字だけ": {
   "data": [
    {
-    "id": "18110934629631360",
-    "text": "京です。マスター、町が入ったので京のぶんのドジも3人で分けられます✨ …あれ、それってマスターの仕事は減ってないですね🙇‍♀️",
-    "timestamp": "2026-11-16T02:39:15+0000"
-   },
-   {
-    "id": "18121553879094465",
-    "text": "😍😍😍",
-    "timestamp": "2026-11-16T01:28:30+0000"
-   },
-   {
-    "id": "18503426275099357",
-    "text": "町です。まだ分からないことだらけですが、頑張ります…！よろしくお願いします🌸",
-    "timestamp": "2026-11-15T22:34:16+0000"
-   },
-   {
-    "id": "18225256843346505",
-    "text": "楓です。なりますよ😄 町は私がしっかり仕込みますから、マスターは少し楽してください",
-    "timestamp": "2026-11-15T22:34:07+0000"
-   },
-   {
-    "id": "18079410083723009",
-    "text": "少しは、俺の仕事楽になるかな😓",
-    "timestamp": "2026-11-15T22:25:56+0000"
+    "id": "18118604183329870",
+    "text": "楓はしっかりしてるけど京は失敗ばっかだし町は今日入ってきたばっかだし…もう大変😢",
+    "timestamp": "2026-11-16T08:28:42+0000"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVEFVbFVmaTJvenJONFcta0pXcHE3S081SklXWWxrZAXdJVndjXy1sdTBXODE2NHRHYVZARQ0F3SHhvM0lKcVRlZAHNyMVpRUkYyNlQ2M2dLbHE5blg4NUVR",
-    "after": "QVFIVGZArV1dRX1dScE9QZA0p0N1FnZA2d4c0pQT2l4XzhrR1FFWHFkWU14Nl9ual9YQzJrRDFrR2VWckprd2lwR1U3ZAjZAndDI0czJnejFWeERwTXBsUFlFNXdn"
+    "before": "QVFIVHROcDlneERsaW1FdHlTRVJqZA1dnaXFzQnVVV0JFMFhJcGNJTXJZAVTBoVzUteWw5UTNJalFRQ2FlS19ZAazdHN21xbGhnTElBSHBUT0k3ZAGFVekc3NWdn",
+    "after": "QVFIVHROcDlneERsaW1FdHlTRVJqZA1dnaXFzQnVVV0JFMFhJcGNJTXJZAVTBoVzUteWw5UTNJalFRQ2FlS19ZAazdHN21xbGhnTElBSHBUT0k3ZAGFVekc3NWdn"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18034007318856442\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"ADFSs8y4b9ieD-XDKst__5v\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18117153647132410\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"ASnFWkC9DERCofJRtSRJzU7\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
