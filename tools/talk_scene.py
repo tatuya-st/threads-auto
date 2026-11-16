@@ -281,24 +281,19 @@ def make(q, out):
     im = Image.new('RGB', (W, H), (252, 250, 246))
     PH = H  # 画面いっぱいに場面
     ph = None
-    # 11/16 楓の報告（マスター指示）：つぶやきの画像は実写の固定画像 state/tsubuyaki-kaede-night.jpg を使う（3:4 は中央で4:5に切る）
-    fixed = os.path.join(HERE, '..', 'state', 'tsubuyaki-kaede-night.jpg')
-    if os.path.exists(fixed):
-        try:
-            ph = Image.open(fixed).convert('RGB')
-            scene = 'fixed_night'
-        except Exception:
+    # 11/16 マスター命令：「つぶやきと画像が全く違う」「つぶやき画像は京がモデル」。
+    # 固定画像（楓の夜の写真）と共通の場面写真はやめ、投稿ごとに楓が作る「京がモデル・本文と同じ場面」の実写風写真だけを使う。
+    # 置き場所：assets/photos/ready/talk-<id>.jpg|png|webp（4:5以内）。無ければ hold で楓の写真を待つ。
+    fs = sorted(glob.glob(os.path.join(HERE, '..', 'assets', 'photos', 'ready', 'talk-' + q.get('id', '') + '.*')))
+    fs = [f for f in fs if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp'))]
+    if fs:
+        ph = Image.open(fs[0]).convert('RGB')
+        if ph.size[1] / ph.size[0] > 1.26:
             ph = None
+        else:
+            scene = 'kyo:' + os.path.basename(fs[0])
     if ph is None:
-        ph = _photo(scene, seed)
-    if ph is None:  # 11/16 楓の警告：イラスト・イメージ図は禁止。ほかの場面の実写風の写真で代える
-        for alt in ('night', 'morning', 'winter', 'shopping', 'desk', 'cafe'):
-            ph = _photo(alt, seed)
-            if ph is not None:
-                scene = alt
-                break
-    if ph is None:
-        raise NoPhoto('実写風の場面写真が assets/scenes_talk/ にありません（イラストは禁止）')
+        raise NoPhoto('京モデルの写真 assets/photos/ready/talk-' + q.get('id', '') + '.* がありません（イラスト・固定画像は禁止）')
     if ph is not None:
         r = max(W / ph.size[0], PH / ph.size[1])
         ph = ph.resize((int(ph.size[0] * r + 1), int(ph.size[1] * r + 1)), Image.LANCZOS)
@@ -329,7 +324,7 @@ def attach(repo, q):
         q['scene_talk'] = sc
     except NoPhoto as e:
         # 画像なしでは出さない（11/15 場面画像は必須）・イラストでも出さない（11/16）。楓の写真を待つ
-        q['hold'] = '楓の実写風の場面写真待ち（assets/scenes_talk/。イラスト禁止）'
+        q['hold'] = '楓の写真待ち（京がモデル・本文と同じ場面の実写風・4:5。assets/photos/ready/talk-' + q['id'] + '.jpg に置く。京が検品して hold を外す）'
         print('場面写真がないので hold：', e)
     except Exception as e:
         print('場面の画像を作れませんでした：', e)
