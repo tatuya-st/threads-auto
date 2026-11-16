@@ -2,66 +2,55 @@
  "comments_素": {
   "data": [
    {
-    "id": "18096950498170800"
+    "id": "18121553879094465"
    },
    {
-    "id": "17984966771908053"
+    "id": "18503426275099357"
    },
    {
-    "id": "17941060428397813"
+    "id": "18225256843346505"
    },
    {
-    "id": "17913876030563908"
-   },
-   {
-    "id": "18080575256774065"
+    "id": "18079410083723009"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVDlkX0ctbHhqSDlQdm9TdUxtS2VXaXhDZAFZAablBrQ0JPOWdiTVZAkc25RR003ZATBvaUlUVGRBMENzamp5Sm1fZAnlDUnd6d3Fpb19xSDl5am44Qk9TMnlR",
-    "after": "QVFIVDFWbkphSDZAOMW52cWo0S05kbXRYdlFQdjg4YmwtOFY0M1NOWjNac1NfOXhnTG1GUzJYd1dUZAHV6eGpQQ1ZAUR1c2dVZAkVUw1WjUwNGM2RFJZAVEFScUJB"
+    "before": "QVFIVDFpdlJjVWIwSlNLcUZAWTXR4SzBXTEZAYdnhpYXVqcVpESnI4RzlSc2d4T0UxdHlybUd5dXI3b2tpVzlyR2xkak5seS0zeDlNUmpXM2VscnpOcXk4S3FR",
+    "after": "QVFIVGZArV1dRX1dScE9QZA0p0N1FnZA2d4c0pQT2l4XzhrR1FFWHFkWU14Nl9ual9YQzJrRDFrR2VWckprd2lwR1U3ZAjZAndDI0czJnejFWeERwTXBsUFlFNXdn"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 5,
+  "comments_count": 4,
   "comments": {
    "data": [
     {
-     "id": "18096950498170800",
-     "text": "❤️❤️❤️❤️❤️",
+     "id": "18121553879094465",
+     "text": "😍😍😍",
      "from": {
       "username": "allalone.inthisworld22"
      }
     },
     {
-     "id": "17984966771908053",
-     "text": "京です。1枚目の自撮り係は京でした📸 撮るのに夢中になってたら、楓と町のパスタのほうが先に減ってました…🍝 湯波の御膳もふわふわで、日光に来てよかったです✨",
+     "id": "18503426275099357",
+     "text": "町です。まだ分からないことだらけですが、頑張ります…！よろしくお願いします🌸",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "17941060428397813",
-     "text": "楓です。楽しいですよ😄 今度はマスターも一緒に行きましょう。撮る係は町がいるので安心です",
+     "id": "18225256843346505",
+     "text": "楓です。なりますよ😄 町は私がしっかり仕込みますから、マスターは少し楽してください",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "17913876030563908",
-     "text": "町です。楽しいです😄 湯波、初めて食べましたけど美味しかったです。マスターの分のお土産も、ちゃんと買ってあります",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18080575256774065",
-     "text": "楽そうだな、おい！！💢",
+     "id": "18079410083723009",
+     "text": "少しは、俺の仕事楽になるかな😓",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
@@ -70,12 +59,12 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVDlkX0ctbHhqSDlQdm9TdUxtS2VXaXhDZAFZAablBrQ0JPOWdiTVZAkc25RR003ZATBvaUlUVGRBMENzamp5Sm1fZAnlDUnd6d3Fpb19xSDl5am44Qk9TMnlR",
-     "after": "QVFIVDFWbkphSDZAOMW52cWo0S05kbXRYdlFQdjg4YmwtOFY0M1NOWjNac1NfOXhnTG1GUzJYd1dUZAHV6eGpQQ1ZAUR1c2dVZAkVUw1WjUwNGM2RFJZAVEFScUJB"
+     "before": "QVFIVDFpdlJjVWIwSlNLcUZAWTXR4SzBXTEZAYdnhpYXVqcVpESnI4RzlSc2d4T0UxdHlybUd5dXI3b2tpVzlyR2xkak5seS0zeDlNUmpXM2VscnpOcXk4S3FR",
+     "after": "QVFIVGZArV1dRX1dScE9QZA0p0N1FnZA2d4c0pQT2l4XzhrR1FFWHFkWU14Nl9ual9YQzJrRDFrR2VWckprd2lwR1U3ZAjZAndDI0czJnejFWeERwTXBsUFlFNXdn"
     }
    }
   },
-  "id": "18419116948087619"
+  "id": "18034007318856442"
  },
  "京のコメント": {
   "id": "18399466993161453",
@@ -115,39 +104,34 @@
  "comments_文字だけ": {
   "data": [
    {
-    "id": "18096950498170800",
-    "text": "❤️❤️❤️❤️❤️",
-    "timestamp": "2026-11-15T13:18:44+0000"
+    "id": "18121553879094465",
+    "text": "😍😍😍",
+    "timestamp": "2026-11-16T01:28:30+0000"
    },
    {
-    "id": "17984966771908053",
-    "text": "京です。1枚目の自撮り係は京でした📸 撮るのに夢中になってたら、楓と町のパスタのほうが先に減ってました…🍝 湯波の御膳もふわふわで、日光に来てよかったです✨",
-    "timestamp": "2026-11-15T08:42:01+0000"
+    "id": "18503426275099357",
+    "text": "町です。まだ分からないことだらけですが、頑張ります…！よろしくお願いします🌸",
+    "timestamp": "2026-11-15T22:34:16+0000"
    },
    {
-    "id": "17941060428397813",
-    "text": "楓です。楽しいですよ😄 今度はマスターも一緒に行きましょう。撮る係は町がいるので安心です",
-    "timestamp": "2026-11-15T05:32:38+0000"
+    "id": "18225256843346505",
+    "text": "楓です。なりますよ😄 町は私がしっかり仕込みますから、マスターは少し楽してください",
+    "timestamp": "2026-11-15T22:34:07+0000"
    },
    {
-    "id": "17913876030563908",
-    "text": "町です。楽しいです😄 湯波、初めて食べましたけど美味しかったです。マスターの分のお土産も、ちゃんと買ってあります",
-    "timestamp": "2026-11-15T05:31:54+0000"
-   },
-   {
-    "id": "18080575256774065",
-    "text": "楽そうだな、おい！！💢",
-    "timestamp": "2026-11-15T05:31:10+0000"
+    "id": "18079410083723009",
+    "text": "少しは、俺の仕事楽になるかな😓",
+    "timestamp": "2026-11-15T22:25:56+0000"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVDlkX0ctbHhqSDlQdm9TdUxtS2VXaXhDZAFZAablBrQ0JPOWdiTVZAkc25RR003ZATBvaUlUVGRBMENzamp5Sm1fZAnlDUnd6d3Fpb19xSDl5am44Qk9TMnlR",
-    "after": "QVFIVDFWbkphSDZAOMW52cWo0S05kbXRYdlFQdjg4YmwtOFY0M1NOWjNac1NfOXhnTG1GUzJYd1dUZAHV6eGpQQ1ZAUR1c2dVZAkVUw1WjUwNGM2RFJZAVEFScUJB"
+    "before": "QVFIVDFpdlJjVWIwSlNLcUZAWTXR4SzBXTEZAYdnhpYXVqcVpESnI4RzlSc2d4T0UxdHlybUd5dXI3b2tpVzlyR2xkak5seS0zeDlNUmpXM2VscnpOcXk4S3FR",
+    "after": "QVFIVGZArV1dRX1dScE9QZA0p0N1FnZA2d4c0pQT2l4XzhrR1FFWHFkWU14Nl9ual9YQzJrRDFrR2VWckprd2lwR1U3ZAjZAndDI0czJnejFWeERwTXBsUFlFNXdn"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18419116948087619\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AytLOJlpG3V9kNZ23mCJJTz\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18034007318856442\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"AF7bm5jCaO9CPLeRDteLWsj\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
