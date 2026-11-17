@@ -309,7 +309,7 @@ MORNING_TALKS = [
 # 11/05 レイのA8案件の呼び込み用（TALKS・MORNING_TALKS にあるもののうち、この語を含むもの）
 WARM_A8 = [t for t in TALKS + MORNING_TALKS if any(k in t for k in ('通勤中にスマホ', '通勤中、スマホ', '家計簿アプリ', '貯まったポイント', 'お金まわりのアプリ'))]
 
-TOPIC_MAP = [('大掃除', '年末大掃除'), ('結露', '結露対策'), ('目覚まし|スヌーズ|布団から', '冬の朝'), ('脱衣所|寒い場所|暖房', '寒さ対策'),
+TOPIC_MAP = [('大掃除', '年末大掃除'), ('結露', '結露対策'), ('目覚まし|スヌーズ|布団から', '冬の朝'), ('脱衣所|寒い場所|暖房|気温|もう冬', '寒さ対策'),
              ('顔洗い', '冬の朝'), ('朝ごはん', '朝ごはん'), ('飲み物|コーヒー|お茶', '朝の飲み物'), ('買い替え', '買い替え'),
              ('忘れ', '忘れ物'), ('マラソン|5と0|カート|お気に入り|セール|ブラックフライデー', '楽天市場'), ('神社|お守り', '神社巡り'), ('ラーメン', 'ご当地ラーメン'),
              ('冬支度', '冬支度'), ('乾燥', '乾燥対策'), ('充電|電池|バッテリー', 'スマホの電池')]
@@ -415,12 +415,17 @@ def talk(repo, slot='noon'):
             left = [t for t in left if shape_of(t) not in same_tp_shapes] or left
         # 11/05：朝『顔洗い、お湯派？水派？』コメント42、昼『加湿器のお手入れ何日に1回？』反応0。
         # 1秒で答えられる二択（〜派？）と数字で答える問いを優先し、答えにくい自由回答の問いは使わない（残りが無いときだけ）
-        easy = [t for t in left if shape_of(t) in ('ha', 'num') and shape_of(t) not in shp]  # 11/10：直前2本と同じ形しか残らないときは、ひと言で答えられる自由回答（どこ？など）に回す
+        ha_over = last_shapes(repo, 6).count('ha') >= 2  # 11/17：二択（〜派？）は全体の3分の1以下
+        shp2 = set(last_shapes(repo, 1)) if ha_over else shp  # 二択が多いときは、直前1本と違う形なら自由回答・数字も使う
+        easy_shapes = ('num', 'open') if ha_over else ('ha', 'num')
+        easy = [t for t in left if shape_of(t) in easy_shapes and shape_of(t) not in shp2]  # 11/10：直前2本と同じ形しか残らないときは、ひと言で答えられる自由回答（どこ？など）に回す
         left = easy or left
         ha = [t for t in left if shape_of(t) == 'ha']
-        if ha and 'ha' not in set(last_shapes(repo, 1)):
+        if ha and 'ha' not in set(last_shapes(repo, 1)) and not ha_over:
             left = ha  # 直前が二択でなければ、二択を出す
-        left = [t for t in left if shape_of(t) not in shp] or left
+        left = [t for t in left if shape_of(t) not in shp2] or left
+        if ha_over:  # 二択が多いときは、ほかの形を優先する
+            left = [t for t in left if shape_of(t) != 'ha'] or left
         return left
     left = _narrow(base, True)
     # 11/06：A8向けの問いかけが二択ばかり残り、朝の二択に昼の二択が続いた → 形がかぶるときは一般の会話ネタから選び直す
