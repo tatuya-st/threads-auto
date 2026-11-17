@@ -1360,6 +1360,15 @@ def main():
     if not a.force and slot_done(a.repo, a.slot):
         print('なし（今日のこの時間帯はもう投稿済み）')
         return
+    # 11/18 楓の担当変更通達（マスター指示）：三姉妹の日常投稿（つぶやき＝朝・昼・深夜）は楓が作って投稿する。京は state/talk_handover.json の from 以降は出さない（重複防止）
+    if a.slot in ('morning', 'noon', 'late'):
+        try:
+            th = json.load(open(os.path.join(a.repo, 'state', 'talk_handover.json'), encoding='utf-8'))
+        except Exception:
+            th = {}
+        if th.get('from') and datetime.now(JST).strftime('%Y-%m-%dT%H:%M') >= th['from']:
+            print('なし（つぶやきは楓の担当）')
+            return
     if a.slot == 'late':
         return late(a)
     if a.slot == 'night':  # 11/09：合図ページで夜の商品投稿をレイに渡した日（state/handover.json）は、ルイは夜を出さない（二重を防ぐ）
