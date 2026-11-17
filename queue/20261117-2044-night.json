@@ -1,0 +1,25 @@
+{
+ "id": "20261117-2044-night",
+ "slot": "night",
+ "form": "basic",
+ "kind": "single",
+ "created": "2026-11-17T20:44+09:00",
+ "title": "今夜の1品",
+ "footer": "▶ 見るだけでもどうぞ。プロフィールのリンクから楽天ROOMへ",
+ "topic": "楽天ROOM",
+ "text": "【PR】結論：充電器で迷ったら、これ👉 UGREEN MagFlow 3-in-1 ワイヤレス充電器 25W Qi2 水色\n💰 16,980円\n色・容量・今の価格は、この商品ページで見られます👇\nhttps://hb.afl.rakuten.co.jp/ichiba/5922d1d2.3399bc73.5922d1d3.9a2e2310/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fugreen-gear%2F55964%2F&link_type=hybrid_url",
+ "reply": "iPhoneとイヤホンと腕時計を、寝る前に1か所で充電したい人に\n✅ 推しの理由：3台まとめて枕元で給電\n同じ人いますか？",
+ "items": [
+  {
+   "itemcode": "ugreen-gear:10001490",
+   "name": "UGREEN MagFlow 3-in-1 ワイヤレス充電器 25W Qi2 水色",
+   "hook": "iPhoneとイヤホンと腕時計を、寝る前に1か所で充電したい人に",
+   "price": "16,980円",
+   "quip": "3台まとめて枕元で給電",
+   "points": [
+    "25W"
+   ]
+  }
+ ],
+ "hold": "楓の画像チェック待ち（images/20261117-2044-night.png を見て合格なら hold を消して push）"
+}
