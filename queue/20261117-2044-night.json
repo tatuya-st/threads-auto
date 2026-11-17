@@ -12,7 +12,7 @@
  "items": [
   {
    "itemcode": "ugreen-gear:10001490",
-   "name": "UGREEN MagFlow 3-in-1 ワイヤレス充電器 25W Qi2 水色",
+   "name": "UGREEN MagFlow 3-in-1 充電器 25W Qi2 水色",
    "hook": "iPhoneとイヤホンと腕時計を、寝る前に1か所で充電したい人に",
    "price": "16,980円",
    "quip": "3台まとめて枕元で給電",
@@ -21,5 +21,7 @@
    ]
   }
  ],
- "hold": "楓の画像チェック待ち（images/20261117-2044-night.png を見て合格なら hold を消して push）"
+ "photo": "assets/photos/20261117-2044-night.jpg",
+ "released": "2026-11-17T21:27+09:00",
+ "photo2": "assets/photos/20261117-2044-night_2.jpg"
 }
