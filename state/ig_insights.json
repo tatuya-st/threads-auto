@@ -1,10 +1,10 @@
 {
- "at": "2026-11-17T17:39+09:00",
+ "at": "2026-11-17T20:24+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
   "followers_count": 1250,
-  "follows_count": 2437,
+  "follows_count": 2438,
   "media_count": 97
  },
  "posts": [
@@ -14,15 +14,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-17T06:30:51+0000",
    "permalink": "https://www.instagram.com/p/Df1SqmACWPn/",
-   "like_count": 34,
-   "comments_count": 8,
+   "like_count": 57,
+   "comments_count": 14,
    "is_ai_generated": false,
    "caption": "楓です📸\n今日の会社風景、休憩中に3人で自撮りしました。\n仕事は真面目に、笑いは本気で。\n面白おかしく働くのが、うちの会",
    "is_paid_partnership": null,
-   "reach": 127,
+   "reach": 214,
    "saved": 0,
    "shares": 0,
-   "views": 309
+   "views": 499
   },
   {
    "id": "18139918975655035",
@@ -30,15 +30,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-17T01:59:36+0000",
    "permalink": "https://www.instagram.com/p/Df0zoP3DlAB/",
-   "like_count": 17,
+   "like_count": 20,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "【PR】仕事メイクの朝、色選びで迷う時間をなくしたい方へ💄\n\nexcel スキニーリッチシャドウ N SK01 トゥルー",
    "is_paid_partnership": null,
-   "reach": 27,
+   "reach": 32,
    "saved": 0,
    "shares": 0,
-   "views": 49
+   "views": 61
   },
   {
    "id": "18119825504585872",
@@ -46,15 +46,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-17T01:59:08+0000",
    "permalink": "https://www.instagram.com/p/Df0zky3Dhy0/",
-   "like_count": 15,
+   "like_count": 18,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "【PR】朝の鏡の前、ピンクは甘すぎて、ブラウンは地味で、手が止まる日があります💄\n\nexcel スキニーリッチシャドウ ",
    "is_paid_partnership": null,
-   "reach": 25,
+   "reach": 30,
    "saved": 0,
    "shares": 0,
-   "views": 44
+   "views": 49
   },
   {
    "id": "17916907176516609",
@@ -62,15 +62,15 @@
    "media_product_type": "REELS",
    "timestamp": "2026-11-16T23:14:54+0000",
    "permalink": "https://www.instagram.com/reel/Df0gwfRPkaG/",
-   "like_count": 20,
+   "like_count": 21,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "【PR】BARTH 中性重炭酸入浴剤\n\nお湯に3錠入れるだけの、薬用（医薬部外品）の入浴剤です。無香料・無着色で、お湯は",
    "is_paid_partnership": null,
-   "reach": 175,
+   "reach": 182,
    "saved": 0,
    "shares": 0,
-   "views": 227
+   "views": 235
   },
   {
    "id": "17969253006216716",
@@ -78,15 +78,15 @@
    "media_product_type": "REELS",
    "timestamp": "2026-11-16T12:35:37+0000",
    "permalink": "https://www.instagram.com/reel/DfzXjgzstVE/",
-   "like_count": 18,
+   "like_count": 19,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "【PR】今年のおせちは、作らないと決めました🎍\n京都祇園 料亭「岩元」監修の六段重「極」。73品目・約7〜8人前、盛り付",
    "is_paid_partnership": null,
-   "reach": 58,
+   "reach": 61,
    "saved": 0,
    "shares": 0,
-   "views": 68
+   "views": 69
   },
   {
    "id": "18082196240455144",
@@ -94,15 +94,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-16T12:04:38+0000",
    "permalink": "https://www.instagram.com/p/DfzUEmyjJDC/",
-   "like_count": 21,
+   "like_count": 22,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "【PR】乾燥が気になる季節、寝る前のリップケアを始めました💄\nBARTHのプレミアムリップクリーム。夜用のナイトリップで",
    "is_paid_partnership": null,
-   "reach": 38,
+   "reach": 40,
    "saved": 0,
    "shares": 0,
-   "views": 85
+   "views": 86
   },
   {
    "id": "18134383561701220",
@@ -110,15 +110,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-16T12:04:15+0000",
    "permalink": "https://www.instagram.com/p/DfzUB1nDIZD/",
-   "like_count": 18,
+   "like_count": 19,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "【PR】仕事でクタクタの日は、ぬるめのお湯に15分が私の回復ルールです🛁\nBARTHの中性重炭酸入浴剤。薬用（医薬部外品",
    "is_paid_partnership": null,
-   "reach": 33,
+   "reach": 35,
    "saved": 0,
    "shares": 0,
-   "views": 72
+   "views": 74
   },
   {
    "id": "18117153647132410",
@@ -126,15 +126,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-16T08:23:18+0000",
    "permalink": "https://www.instagram.com/p/Dfy6QfFuupl/",
-   "like_count": 40,
+   "like_count": 45,
    "comments_count": 4,
    "is_ai_generated": false,
    "caption": "最近、自分のInstagramなのに2人(+1人)に勝手に投稿されて全然投稿できなかったな…本当、女性三人と仕事するのっ",
    "is_paid_partnership": null,
-   "reach": 70,
+   "reach": 77,
    "saved": 0,
    "shares": 0,
-   "views": 132
+   "views": 143
   },
   {
    "id": "18034007318856442",
@@ -142,15 +142,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-15T22:13:43+0000",
    "permalink": "https://www.instagram.com/p/Dfx0-91E869/",
-   "like_count": 41,
+   "like_count": 42,
    "comments_count": 5,
    "is_ai_generated": false,
    "caption": "お知らせです🌸\n末っ子の町が、今週から入社します。\nまずは雑用係からスタート。撮影はいつも通り、町の担当です📷\n3人で、",
    "is_paid_partnership": null,
-   "reach": 95,
+   "reach": 97,
    "saved": 0,
    "shares": 0,
-   "views": 222
+   "views": 225
   },
   {
    "id": "18128390896932223",
@@ -158,15 +158,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-15T10:33:24+0000",
    "permalink": "https://www.instagram.com/p/Dfwk1hek4in/",
-   "like_count": 18,
+   "like_count": 19,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "【PR】\n夜の仕上げは、開けたての1枚で🌙\n\nCICIBELLAのミルキーシートマスクは、1枚ずつ個包装のタイプです。\n",
    "is_paid_partnership": null,
-   "reach": 39,
+   "reach": 41,
    "saved": 0,
    "shares": 0,
-   "views": 75
+   "views": 77
   },
   {
    "id": "18121856206962416",
@@ -174,15 +174,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-15T07:09:27+0000",
    "permalink": "https://www.instagram.com/p/DfwNfz3Ex4g/",
-   "like_count": 15,
+   "like_count": 16,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "【PR】\n帰ってすぐ落としたい夜に、洗顔まで一気に済ませたい方へ🌙\n\nLala Vie クレンジングバームEX\n\nW洗顔",
    "is_paid_partnership": null,
-   "reach": 45,
+   "reach": 47,
    "saved": 0,
    "shares": 0,
-   "views": 81
+   "views": 83
   },
   {
    "id": "18419116948087619",
@@ -190,15 +190,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-15T05:29:23+0000",
    "permalink": "https://www.instagram.com/p/DfwCC9jD4w2/",
-   "like_count": 67,
+   "like_count": 69,
    "comments_count": 5,
    "is_ai_generated": false,
    "caption": "日光で3姉妹ランチ。今回は三脚なしで、順番に自撮りしました。\n1枚目：カフェでパスタ。撮るのは京です。\n2枚目：日光名物",
    "is_paid_partnership": null,
-   "reach": 298,
+   "reach": 302,
    "saved": 1,
    "shares": 0,
-   "views": 710
+   "views": 714
   }
  ],
  "followers_age_gender": {
