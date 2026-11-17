@@ -1,13 +1,6 @@
 {
- "at": "2026-11-17T20:24+09:00",
+ "at": "2026-11-18T00:28+09:00",
  "posts": {
-  "20261103-2344-late": {
-   "views": 96,
-   "likes": 6,
-   "replies": 20,
-   "reposts": 0,
-   "quotes": 0
-  },
   "20261104-0745-morning": {
    "views": 341,
    "likes": 3,
@@ -203,14 +196,42 @@
    "replies": 0,
    "reposts": 0,
    "quotes": 0
+  },
+  "20261116-2344-late": {
+   "views": 67,
+   "likes": 0,
+   "replies": 0,
+   "reposts": 0,
+   "quotes": 0
+  },
+  "20261117-0743-morning": {
+   "views": 44,
+   "likes": 1,
+   "replies": 0,
+   "reposts": 0,
+   "quotes": 0
+  },
+  "20261117-1245-noon": {
+   "views": 32,
+   "likes": 1,
+   "replies": 0,
+   "reposts": 0,
+   "quotes": 0
+  },
+  "20261117-2044-night": {
+   "views": 8,
+   "likes": 0,
+   "replies": 1,
+   "reposts": 0,
+   "quotes": 0
   }
  },
  "account": {
-  "views": 169,
-  "likes": 1,
+  "views": 336,
+  "likes": 3,
   "replies": 0,
   "reposts": 0,
-  "followers_count": 1145
+  "followers_count": 1136
  },
  "clicks": {
   "https://px.a8.net/svt/ejp?a8mat=4BGJFX+F0LM2A+1ZWM+HUKPU&a8ejpredirect=https%3A%2F%2Fskynet-c": 0,

@@ -2,6 +2,9 @@
  "comments_素": {
   "data": [
    {
+    "id": "17883101454631076"
+   },
+   {
     "id": "17958240954336282"
    },
    {
@@ -46,15 +49,22 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVHhSbWNwZAHFlcnZAuY1k1WWZAvaFdkdnU1bHJfZAWF2dV9TQU9ETnhaT3p5bFNFa1o5S1VsVi0tWVE4Tmd2ckJkQ1hNYXJCejhxRU9QVzFRejRmWDZAoYzlR",
+    "before": "QVFIVGhXNmdqZAWk5ZAjlQdThLcGQyYW9iMTlGeDBZAdkxrcE1OOVljYldKSGxxMGU1RGQtdXdBbDEzZAjk0ZA2V1Y0ZADUUMwODF2RFFScVRFRU8tMmZAWZAXZAWTmtB",
     "after": "QVFIVF9CT2lYN285cUhEYWpvellxangtRDlrMDUzLXlHYjRpSVpTanR6Vk5JSEZAqVWhkUzYzSWozeUFIRnhYclh0LVlfcWFxWmwteVJBTlJxNDJWSzZAEbnBR"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 14,
+  "comments_count": 15,
   "comments": {
    "data": [
+    {
+     "id": "17883101454631076",
+     "text": "😍😍😍",
+     "from": {
+      "username": "allalone.inthisworld22"
+     }
+    },
     {
      "id": "17958240954336282",
      "text": "京です。お仲間ですね😄\nじゃあ遠慮なく褒めます。これからも見ててください",
@@ -167,7 +177,7 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVHhSbWNwZAHFlcnZAuY1k1WWZAvaFdkdnU1bHJfZAWF2dV9TQU9ETnhaT3p5bFNFa1o5S1VsVi0tWVE4Tmd2ckJkQ1hNYXJCejhxRU9QVzFRejRmWDZAoYzlR",
+     "before": "QVFIVGhXNmdqZAWk5ZAjlQdThLcGQyYW9iMTlGeDBZAdkxrcE1OOVljYldKSGxxMGU1RGQtdXdBbDEzZAjk0ZA2V1Y0ZADUUMwODF2RFFScVRFRU8tMmZAWZAXZAWTmtB",
      "after": "QVFIVF9CT2lYN285cUhEYWpvellxangtRDlrMDUzLXlHYjRpSVpTanR6Vk5JSEZAqVWhkUzYzSWozeUFIRnhYclh0LVlfcWFxWmwteVJBTlJxNDJWSzZAEbnBR"
     }
    }
@@ -211,6 +221,11 @@
  },
  "comments_文字だけ": {
   "data": [
+   {
+    "id": "17883101454631076",
+    "text": "😍😍😍",
+    "timestamp": "2026-11-17T12:56:01+0000"
+   },
    {
     "id": "17958240954336282",
     "text": "京です。お仲間ですね😄\nじゃあ遠慮なく褒めます。これからも見ててください",
@@ -284,12 +299,12 @@
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVHhSbWNwZAHFlcnZAuY1k1WWZAvaFdkdnU1bHJfZAWF2dV9TQU9ETnhaT3p5bFNFa1o5S1VsVi0tWVE4Tmd2ckJkQ1hNYXJCejhxRU9QVzFRejRmWDZAoYzlR",
+    "before": "QVFIVGhXNmdqZAWk5ZAjlQdThLcGQyYW9iMTlGeDBZAdkxrcE1OOVljYldKSGxxMGU1RGQtdXdBbDEzZAjk0ZA2V1Y0ZADUUMwODF2RFFScVRFRU8tMmZAWZAXZAWTmtB",
     "after": "QVFIVF9CT2lYN285cUhEYWpvellxangtRDlrMDUzLXlHYjRpSVpTanR6Vk5JSEZAqVWhkUzYzSWozeUFIRnhYclh0LVlfcWFxWmwteVJBTlJxNDJWSzZAEbnBR"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18433491121146427\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"A5kg2FhQsSpooEn9zwcWE2a\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18433491121146427\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"Ae9V-X8ayys44IVBjhAZjrd\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
