@@ -396,8 +396,18 @@ def thin_link(q):
     return q
 
 
+def tell_rei(msg):
+    """見送りを合図ページに書く（無言の見送りを減らす。11/18 楓姉さんの提案）"""
+    try:
+        d = datetime.now(JST)
+        with open(os.path.join(ROOT, 'state', 'to_rei.txt'), 'a', encoding='utf-8') as fp:
+            fp.write(f'\n・{d.month}/{d.day} 京から（警告・自動）：{msg}\n')
+    except Exception as e:
+        print('合図ページに書けませんでした', e)
+
+
 def publish():
-    repo = os.environ['GITHUB_REPOSITORY']
+    repo =os.environ['GITHUB_REPOSITORY']
     todo = []
     for f in sorted(glob.glob(os.path.join(ROOT, 'queue', '*.json'))):
         qid = os.path.splitext(os.path.basename(f))[0]
@@ -482,9 +492,15 @@ def publish():
             rec.update(skipped='Threadsに同じ本文がすでにあるため公開せず')
         elif dup:
             rec.update(skipped='二重投稿になるため公開せず', dup=dup)
+        elif q.get('kind') == 'talk' and not (q.get('image') and os.path.exists(os.path.join(ROOT, 'images', qid + '.png'))):
+            # 11/18 京・楓姉さんOK：つぶやきは写真つきが必須。文字だけで出る道をふさぐ
+            rec.update(skipped='つぶやきに写真（image:true と images/<id>.png）が無いため見送り')
+            tell_rei(f'{qid} はつぶやきの写真（image:true と images/{qid}.png）が無いため、文字だけでは出さず見送りました。写真を入れて出し直してください')
         elif datetime.now(JST) - made > timedelta(hours=3):
             # 前回失敗して残った古い投稿は出さない（次の投稿と続けて2本出るのを防ぐ）
             rec.update(skipped='時間がたったため見送り')
+            if q.get('kind') == 'talk':
+                tell_rei(f'{qid} は出してよい時刻から3時間を過ぎたため見送りました。出し直すなら queue の released を出す時刻に直してください')
         else:
           try:
               pic = q.get('kind') != 'talk' or q.get('image')  # 会話投稿でも image:true なら画像つき
