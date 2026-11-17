@@ -101,3 +101,6 @@ date,time,platform,metric,value,unit,source,note
 2026-11-17,10:46,Threads,followers,1473,人,threads-cli accounts（定時調査）,08:46の1471から+2
 2026-11-17,10:46,ROOM,likes_total,9810,件,定時調査メモ（公開ページ確認）,08:46の9815から-5・京の判定基準9100超で維持圏
 2026-11-17,10:46,ROOM,items,1882,件,定時調査メモ（公開ページ確認）,08:46から変わらず
+2026-11-17,16:46,Threads,followers,1479,人,threads-cli accounts（定時調査）,14:46の1476から+3
+2026-11-17,16:46,Instagram,followers,1254,人,state/ig_insights.json 14:34収集版,±0（会社風景投稿Df1SqmACWPnは収集後に公開・次回反映）
+2026-11-17,16:46,Instagram,posts,96,件,state/ig_insights.json 14:34収集版,収集後に会社風景1件が新規公開され実質97件相当
