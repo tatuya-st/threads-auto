@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ROOM投稿へ</title>
+<style>
+body{margin:0;padding:24px 16px;font:16px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#222;line-height:1.6}
+h1{font-size:18px;margin:0 0 12px}
+a.btn,button{display:block;width:100%;box-sizing:border-box;margin:10px 0;padding:14px;border-radius:12px;border:0;font-size:16px;font-weight:700;text-align:center;text-decoration:none;background:#bf0000;color:#fff}
+button.sub{background:#eee;color:#222}
+.u{word-break:break-all;font-size:12px;color:#666;background:#f6f6f6;padding:8px;border-radius:8px}
+.n{font-size:13px;color:#555}
+</style></head><body>
+<h1>楽天ROOMの投稿画面を開きます…</h1>
+<p class="n" id="msg">自動で開かないときは下のボタンを押してください。</p>
+<a class="btn" id="go" href="#">ROOMの投稿画面を開く</a>
+<button class="sub" id="cp" type="button">URLをコピー（Safariのアドレス欄に貼る用）</button>
+<p class="n">ROOMアプリが開いて「my ROOM」に飛ばされるときは、「URLをコピー」を押して Safari のアドレス欄に貼り付けて開いてください。ブラウザ版ROOMの投稿画面がそのまま開きます。</p>
+<p class="u" id="u"></p>
+<script>
+(function(){
+  var p=new URLSearchParams(location.search), code=p.get('itemcode')||'';
+  var ok=/^[A-Za-z0-9_.\-]+:[A-Za-z0-9_\-]+$/.test(code);
+  var url=ok?'https://room.rakuten.co.jp/mix?itemcode='+code+'&scid=we_room_upc60':'';
+  if(!ok){document.getElementById('msg').textContent='商品コードが読めませんでした。投稿ノートに戻ってやり直してください。';document.getElementById('go').hidden=true;document.getElementById('cp').hidden=true;return}
+  document.getElementById('u').textContent=url;
+  document.getElementById('go').href=url;
+  document.getElementById('cp').onclick=function(){
+    var done=function(){document.getElementById('cp').textContent='コピーしました（Safariのアドレス欄に貼り付け）'};
+    try{navigator.clipboard.writeText(url).then(done,fb)}catch(e){fb()}
+    function fb(){var t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(e){}t.remove()}
+  };
+  // タップではない自動の移動にすると、アプリではなくブラウザで開きやすい
+  setTimeout(function(){location.replace(url)},400);
+})();
+</script>
+</body></html>
