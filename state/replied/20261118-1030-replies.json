@@ -1,0 +1,21 @@
+{
+ "id": "20261118-1030-replies",
+ "kind": "replies",
+ "done": [
+  {
+   "to": "18171000664478405",
+   "reply_id": "18110466449213829"
+  },
+  {
+   "to": "17923121217242524",
+   "reply_id": "18125983318879345"
+  }
+ ],
+ "ng": [
+  {
+   "to": "18130919041878394",
+   "error": "400 {\"error\":{\"message\":\"The requested resource does not exist\",\"code\":24,\"type\":\"OAuthException\",\"error_subcode\":4279009,\"is_transient\":false,\"error_user_msg\":\"The media with id 18130919041878394 can"
+  }
+ ],
+ "at": "2026-11-19T08:32+09:00"
+}
