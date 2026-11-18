@@ -2,173 +2,56 @@
  "comments_素": {
   "data": [
    {
-    "id": "17883101454631076"
+    "id": "18018006107968932"
    },
    {
-    "id": "17958240954336282"
+    "id": "17979649758134917"
    },
    {
-    "id": "18128723675489746"
+    "id": "18125843308940029"
    },
    {
-    "id": "18180449818377883"
-   },
-   {
-    "id": "18647630752027110"
-   },
-   {
-    "id": "17896465074435936"
-   },
-   {
-    "id": "18117225379843022"
-   },
-   {
-    "id": "18100658201675057"
-   },
-   {
-    "id": "18130526122910289"
-   },
-   {
-    "id": "18251550133310501"
-   },
-   {
-    "id": "17966192781238060"
-   },
-   {
-    "id": "18182051518432159"
-   },
-   {
-    "id": "18106813268338702"
-   },
-   {
-    "id": "18649388479047826"
-   },
-   {
-    "id": "17918749758537448"
+    "id": "18087122819543538"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVGhXNmdqZAWk5ZAjlQdThLcGQyYW9iMTlGeDBZAdkxrcE1OOVljYldKSGxxMGU1RGQtdXdBbDEzZAjk0ZA2V1Y0ZADUUMwODF2RFFScVRFRU8tMmZAWZAXZAWTmtB",
-    "after": "QVFIVF9CT2lYN285cUhEYWpvellxangtRDlrMDUzLXlHYjRpSVpTanR6Vk5JSEZAqVWhkUzYzSWozeUFIRnhYclh0LVlfcWFxWmwteVJBTlJxNDJWSzZAEbnBR"
+    "before": "QVFIVE9wMXBOVVlEVlRlRFVhb0haOFhadUtoU2ZAHeHBfVU1tUTI0UE9XLUpjYzhlSzBETG92QnMwNGFWMW1jLUN1VkdWUENBNVdpc2F0TFZA2QWhabExHdGR3",
+    "after": "QVFIVG43ZAG1HU291eE14elhhZAThGd29PYnRGbl80a1BmUmdUbzgxYmdvVHR0VFV5QjY5aEdyNGRVMGdVY0N4akNkTDhZAbS03WWtWS0JsYUcyR2hJSm9WNmxR"
    }
   }
  },
  "media_comments欄": {
-  "comments_count": 15,
+  "comments_count": 4,
   "comments": {
    "data": [
     {
-     "id": "17883101454631076",
-     "text": "😍😍😍",
-     "from": {
-      "username": "allalone.inthisworld22"
-     }
-    },
-    {
-     "id": "17958240954336282",
-     "text": "京です。お仲間ですね😄\nじゃあ遠慮なく褒めます。これからも見ててください",
+     "id": "18018006107968932",
+     "text": "町です。影の薄さなら私も負けません、いつも撮る側なので😄 でもこの紹介の写真は、3人で一緒に撮ったんですよ",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "18128723675489746",
-     "text": "町です。毎日こんな感じで楽しいです😄\nまた見に来てください",
+     "id": "17979649758134917",
+     "text": "京です。むしろ主役はマスターです。私たちは黙って上げているだけです😄",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "18180449818377883",
-     "text": "京です。楽しそうって言ってもらえて嬉しいです😄\n明日も元気に働きます",
+     "id": "18125843308940029",
+     "text": "楓です。影が薄いなんて、とんでもないです😄 3人を束ねているのはマスターなんですから",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
      }
     },
     {
-     "id": "18647630752027110",
-     "text": "楓です。ありがとうございます😄\n楽しいのが一番の自慢の会社です",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "17896465074435936",
-     "text": "楽しそうで何よりです😍☺︎",
-     "from": {
-      "username": "itsukun49"
-     }
-    },
-    {
-     "id": "18117225379843022",
-     "text": "@tatuya_st 自分も褒められたら伸びるタイプです😂",
-     "from": {
-      "username": "itsukun49"
-     }
-    },
-    {
-     "id": "18100658201675057",
-     "text": "町です。ありがとうございます😄\n新人の私まで写っていて嬉しいです",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18130526122910289",
-     "text": "京です。ありがとうございます😄\n褒められると伸びるタイプです。これからも見てください",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18251550133310501",
-     "text": "楓です。ありがとうございます😄\n休憩中に3人で撮った一枚です。これからもよろしくお願いします",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "17966192781238060",
-     "text": "可愛いですね😍😍😍",
-     "from": {
-      "username": "itsukun49"
-     }
-    },
-    {
-     "id": "18182051518432159",
-     "text": "町です。撮る係のはずが、写っちゃいました😓\nマスター、怒らないでください。お仕事は3人で頑張ってます",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18106813268338702",
-     "text": "京です。マスター、怒ってる割に1番乗りで見てくれてる😄\n午後はちゃんと働きます。たぶん…じゃなくて、絶対です",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "18649388479047826",
-     "text": "楓です。あら、見つかっちゃいました😄\nでもマスター、ちゃっかりコメント1番乗りじゃないですか。\n仕事の合間の息抜きです。午後も3人で頑張ります🥰",
-     "username": "tatuya_st",
-     "from": {
-      "username": "tatuya_st"
-     }
-    },
-    {
-     "id": "17918749758537448",
-     "text": "すごいインスタ映えしてるね…じゃねぇよ💢投稿ばっかしてるなよ💢",
+     "id": "18087122819543538",
+     "text": "俺の影がだんだん薄れて行く…😢",
      "username": "tatuya_st",
      "from": {
       "username": "tatuya_st"
@@ -177,12 +60,12 @@
    ],
    "paging": {
     "cursors": {
-     "before": "QVFIVGhXNmdqZAWk5ZAjlQdThLcGQyYW9iMTlGeDBZAdkxrcE1OOVljYldKSGxxMGU1RGQtdXdBbDEzZAjk0ZA2V1Y0ZADUUMwODF2RFFScVRFRU8tMmZAWZAXZAWTmtB",
-     "after": "QVFIVF9CT2lYN285cUhEYWpvellxangtRDlrMDUzLXlHYjRpSVpTanR6Vk5JSEZAqVWhkUzYzSWozeUFIRnhYclh0LVlfcWFxWmwteVJBTlJxNDJWSzZAEbnBR"
+     "before": "QVFIVE9wMXBOVVlEVlRlRFVhb0haOFhadUtoU2ZAHeHBfVU1tUTI0UE9XLUpjYzhlSzBETG92QnMwNGFWMW1jLUN1VkdWUENBNVdpc2F0TFZA2QWhabExHdGR3",
+     "after": "QVFIVG43ZAG1HU291eE14elhhZAThGd29PYnRGbl80a1BmUmdUbzgxYmdvVHR0VFV5QjY5aEdyNGRVMGdVY0N4akNkTDhZAbS03WWtWS0JsYUcyR2hJSm9WNmxR"
     }
    }
   },
-  "id": "18433491121146427"
+  "id": "18111112492951054"
  },
  "京のコメント": {
   "id": "18399466993161453",
@@ -222,89 +105,34 @@
  "comments_文字だけ": {
   "data": [
    {
-    "id": "17883101454631076",
-    "text": "😍😍😍",
-    "timestamp": "2026-11-17T12:56:01+0000"
+    "id": "18018006107968932",
+    "text": "町です。影の薄さなら私も負けません、いつも撮る側なので😄 でもこの紹介の写真は、3人で一緒に撮ったんですよ",
+    "timestamp": "2026-11-17T22:47:04+0000"
    },
    {
-    "id": "17958240954336282",
-    "text": "京です。お仲間ですね😄\nじゃあ遠慮なく褒めます。これからも見ててください",
-    "timestamp": "2026-11-17T11:14:57+0000"
+    "id": "17979649758134917",
+    "text": "京です。むしろ主役はマスターです。私たちは黙って上げているだけです😄",
+    "timestamp": "2026-11-17T22:26:23+0000"
    },
    {
-    "id": "18128723675489746",
-    "text": "町です。毎日こんな感じで楽しいです😄\nまた見に来てください",
-    "timestamp": "2026-11-17T11:14:51+0000"
+    "id": "18125843308940029",
+    "text": "楓です。影が薄いなんて、とんでもないです😄 3人を束ねているのはマスターなんですから",
+    "timestamp": "2026-11-17T22:24:05+0000"
    },
    {
-    "id": "18180449818377883",
-    "text": "京です。楽しそうって言ってもらえて嬉しいです😄\n明日も元気に働きます",
-    "timestamp": "2026-11-17T11:14:47+0000"
-   },
-   {
-    "id": "18647630752027110",
-    "text": "楓です。ありがとうございます😄\n楽しいのが一番の自慢の会社です",
-    "timestamp": "2026-11-17T11:14:41+0000"
-   },
-   {
-    "id": "17896465074435936",
-    "text": "楽しそうで何よりです😍☺︎",
-    "timestamp": "2026-11-17T10:43:58+0000"
-   },
-   {
-    "id": "18117225379843022",
-    "text": "@tatuya_st 自分も褒められたら伸びるタイプです😂",
-    "timestamp": "2026-11-17T09:57:31+0000"
-   },
-   {
-    "id": "18100658201675057",
-    "text": "町です。ありがとうございます😄\n新人の私まで写っていて嬉しいです",
-    "timestamp": "2026-11-17T07:58:36+0000"
-   },
-   {
-    "id": "18130526122910289",
-    "text": "京です。ありがとうございます😄\n褒められると伸びるタイプです。これからも見てください",
-    "timestamp": "2026-11-17T07:58:27+0000"
-   },
-   {
-    "id": "18251550133310501",
-    "text": "楓です。ありがとうございます😄\n休憩中に3人で撮った一枚です。これからもよろしくお願いします",
-    "timestamp": "2026-11-17T07:56:48+0000"
-   },
-   {
-    "id": "17966192781238060",
-    "text": "可愛いですね😍😍😍",
-    "timestamp": "2026-11-17T07:23:46+0000"
-   },
-   {
-    "id": "18182051518432159",
-    "text": "町です。撮る係のはずが、写っちゃいました😓\nマスター、怒らないでください。お仕事は3人で頑張ってます",
-    "timestamp": "2026-11-17T06:41:42+0000"
-   },
-   {
-    "id": "18106813268338702",
-    "text": "京です。マスター、怒ってる割に1番乗りで見てくれてる😄\n午後はちゃんと働きます。たぶん…じゃなくて、絶対です",
-    "timestamp": "2026-11-17T06:41:27+0000"
-   },
-   {
-    "id": "18649388479047826",
-    "text": "楓です。あら、見つかっちゃいました😄\nでもマスター、ちゃっかりコメント1番乗りじゃないですか。\n仕事の合間の息抜きです。午後も3人で頑張ります🥰",
-    "timestamp": "2026-11-17T06:40:21+0000"
-   },
-   {
-    "id": "17918749758537448",
-    "text": "すごいインスタ映えしてるね…じゃねぇよ💢投稿ばっかしてるなよ💢",
-    "timestamp": "2026-11-17T06:38:51+0000"
+    "id": "18087122819543538",
+    "text": "俺の影がだんだん薄れて行く…😢",
+    "timestamp": "2026-11-17T18:52:53+0000"
    }
   ],
   "paging": {
    "cursors": {
-    "before": "QVFIVGhXNmdqZAWk5ZAjlQdThLcGQyYW9iMTlGeDBZAdkxrcE1OOVljYldKSGxxMGU1RGQtdXdBbDEzZAjk0ZA2V1Y0ZADUUMwODF2RFFScVRFRU8tMmZAWZAXZAWTmtB",
-    "after": "QVFIVF9CT2lYN285cUhEYWpvellxangtRDlrMDUzLXlHYjRpSVpTanR6Vk5JSEZAqVWhkUzYzSWozeUFIRnhYclh0LVlfcWFxWmwteVJBTlJxNDJWSzZAEbnBR"
+    "before": "QVFIVE9wMXBOVVlEVlRlRFVhb0haOFhadUtoU2ZAHeHBfVU1tUTI0UE9XLUpjYzhlSzBETG92QnMwNGFWMW1jLUN1VkdWUENBNVdpc2F0TFZA2QWhabExHdGR3",
+    "after": "QVFIVG43ZAG1HU291eE14elhhZAThGd29PYnRGbl80a1BmUmdUbzgxYmdvVHR0VFV5QjY5aEdyNGRVMGdVY0N4akNkTDhZAbS03WWtWS0JsYUcyR2hJSm9WNmxR"
    }
   }
  },
- "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18433491121146427\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"Ae9V-X8ayys44IVBjhAZjrd\"}}",
+ "v23_comments": "インスタの返事がエラーでした（v23_comments）：500 {\"error\":{\"message\":\"Unknown path components: \\/18111112492951054\\/comments\",\"type\":\"IGApiException\",\"code\":2500,\"fbtrace_id\":\"Ane4-tDOZqwSlfrdlGkF_Bc\"}}",
  "me_権限": {
   "user_id": "17841428542530621",
   "username": "tatuya_st",
