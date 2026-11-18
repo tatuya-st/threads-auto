@@ -635,8 +635,20 @@ def boost(tok, me, posts):
         hand = json.load(open(os.path.join(ROOT, 'state', 'handover.json'), encoding='utf-8'))
     except Exception:
         hand = {}
-    last = last_link_at()
-    link_ok = now.day % 2 == 1 and today not in off and today not in hand and (not last or now - last >= timedelta(hours=LINK_GAP_H))
+    # 11/19 楓OK：あとがけ返信は今後URLを付けない（プロフィール案内だけ）。リンク枠は本体の商品投稿に残す
+    link_ok = False
+    # 11/19 楓OK：429明けの日は、再開の確認（state/resume_ok.json に今日の日付）が済むまで止める
+    try:
+        lim = json.load(open(os.path.join(ROOT, 'state', 'limit.json'), encoding='utf-8')).get('date', '')
+    except Exception:
+        lim = ''
+    try:
+        rok = json.load(open(os.path.join(ROOT, 'state', 'resume_ok.json'), encoding='utf-8')).get('date', '')
+    except Exception:
+        rok = ''
+    if lim == (now - timedelta(days=1)).strftime('%Y-%m-%d') and rok != today:
+        print('::notice::429明けの日なので、再開の確認が済むまであとがけ返信は止めます')
+        return
     best = None
     for f, r in recs:
         if not r.get('media_id') or not r.get('at') or r.get('boost') or r.get('reply') == 'ok' or r.get('link') == 'ok':
@@ -671,6 +683,7 @@ def boost(tok, me, posts):
         print(f"::warning::伸びた投稿への返信は付けられませんでした: {str(e).replace(tok, '***')[:150]}")
         return
     r['boost'] = 'link' if link_ok else 'profile'
+    r['boost_id'] = rid
     r['boost_at'] = now.isoformat(timespec='minutes')
     if link_ok:
         r['link_at'] = r['boost_at']
@@ -842,9 +855,37 @@ def search():
 def delete():
     """DELETE_ID の投稿を Threads から削除する（言葉選びが悪かった投稿の出し直し用）"""
     mid = os.environ.get('DELETE_ID', '').strip()
+    tok, me = token()
+    parent = None
+    if mid and not mid.isdigit():
+        # 11/19：あとがけ返信は id を記録していなかったので、permalink の短いコード（例 Df41SBBEeCQ）からも探せるようにする
+        code = mid.rstrip('/').split('/')[-1]
+        found = None
+        for f in glob.glob(os.path.join(ROOT, 'state', 'posted', '*.json')):
+            rec = read_rec(f)
+            if not rec or not rec.get('media_id') or not rec.get('boost'):
+                continue
+            try:
+                for x in call('GET', f"{API}/{rec['media_id']}/replies", {'fields': 'id,permalink', 'access_token': tok}).get('data', []):
+                    if code in (x.get('permalink') or ''):
+                        found, parent = x['id'], f
+            except Exception:
+                pass
+            if found:
+                break
+        if not found:
+            try:
+                for x in call('GET', f"{API}/{me['id']}/replies", {'fields': 'id,permalink', 'limit': 100, 'access_token': tok}).get('data', []):
+                    if code in (x.get('permalink') or ''):
+                        found = x['id']
+            except Exception as e:
+                print(f"::warning::返信の一覧を読めませんでした: {str(e).replace(tok, '***')[:150]}")
+        if not found:
+            raise SystemExit(f'{code} の投稿idが見つかりません')
+        print(f'{code} → {found}')
+        mid = found
     if not mid.isdigit():
         raise SystemExit('削除する投稿のidがありません')
-    tok, _ = token()
     try:
         call('DELETE', f'{API}/{mid}', {'access_token': tok})
     except Exception as e:
@@ -854,6 +895,11 @@ def delete():
         rec = read_rec(f)
         if rec and rec.get('media_id') == mid:
             rec['deleted'] = datetime.now(JST).isoformat(timespec='minutes')
+            save_json(f, rec)
+        if rec and (rec.get('boost_id') == mid or f == parent) and rec.get('boost') == 'link':
+            # 消したあとがけ返信のリンクは、その日のリンク1回分に数えない（枠を戻す）
+            rec['boost'] = 'link-deleted'
+            rec.pop('link_at', None)
             save_json(f, rec)
     print(f'{mid} を削除しました')
 
