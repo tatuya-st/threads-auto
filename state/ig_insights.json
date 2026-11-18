@@ -1,28 +1,76 @@
 {
- "at": "2026-11-18T14:37+09:00",
+ "at": "2026-11-18T17:40+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
-  "followers_count": 1250,
+  "followers_count": 1252,
   "follows_count": 2439,
-  "media_count": 99
+  "media_count": 102
  },
  "posts": [
+  {
+   "id": "18101129585552477",
+   "media_type": "VIDEO",
+   "media_product_type": "REELS",
+   "timestamp": "2026-11-18T07:10:16+0000",
+   "permalink": "https://www.instagram.com/reel/Df379BGJOqA/",
+   "like_count": 7,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "【PR】楓です。乾燥が気になる日の、お守りミスト。\nAnua PDRNヒアルロン酸ハイドレイティングミスト（100mL）",
+   "is_paid_partnership": null,
+   "reach": 11,
+   "saved": 0,
+   "shares": 0,
+   "views": 21
+  },
+  {
+   "id": "18497052358106547",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-18T07:09:43+0000",
+   "permalink": "https://www.instagram.com/p/Df376iSCYh6/",
+   "like_count": 7,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "【PR】楓です。朝の仕込みに置きたい美容液。\nAnua PDRNヒアルロン酸カプセル100セラム（30mL）\n確認ポイン",
+   "is_paid_partnership": null,
+   "reach": 8,
+   "saved": 0,
+   "shares": 0,
+   "views": 18
+  },
+  {
+   "id": "18131649533485122",
+   "media_type": "IMAGE",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-18T07:09:23+0000",
+   "permalink": "https://www.instagram.com/p/Df373kticKd/",
+   "like_count": 6,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "【PR】楓です。今夜のクレンジング選び、迷ったらこの1本。\nアテニア スキンクリア クレンズ オイル（175mL・約2ヵ",
+   "is_paid_partnership": null,
+   "reach": 7,
+   "saved": 0,
+   "shares": 0,
+   "views": 9
+  },
   {
    "id": "18111112492951054",
    "media_type": "CAROUSEL_ALBUM",
    "media_product_type": "FEED",
    "timestamp": "2026-11-17T13:33:17+0000",
    "permalink": "https://www.instagram.com/p/Df2DAzLiSgU/",
-   "like_count": 39,
+   "like_count": 40,
    "comments_count": 4,
    "is_ai_generated": false,
    "caption": "はじめまして、早乙女三姉妹です🌹\n\n新潟・上越の直江津にある、小さな会社の3姉妹。\nマスターに内緒で、こっそり投稿してい",
    "is_paid_partnership": null,
-   "reach": 173,
+   "reach": 228,
    "saved": 0,
    "shares": 0,
-   "views": 395
+   "views": 510
   },
   {
    "id": "18024967598925501",
@@ -35,10 +83,10 @@
    "is_ai_generated": false,
    "caption": "今日は3人とも、髪を縛る日\n\n町はウェーブを残して、ふんわり低めに\n京はボブでも、ちゃんと縛れるんです\n楓は眼鏡を外して",
    "is_paid_partnership": null,
-   "reach": 73,
+   "reach": 83,
    "saved": 0,
    "shares": 0,
-   "views": 140
+   "views": 158
   },
   {
    "id": "18433491121146427",
@@ -46,15 +94,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-17T06:30:51+0000",
    "permalink": "https://www.instagram.com/p/Df1SqmACWPn/",
-   "like_count": 83,
+   "like_count": 87,
    "comments_count": 16,
    "is_ai_generated": false,
    "caption": "楓です📸\n今日の会社風景、休憩中に3人で自撮りしました。\n仕事は真面目に、笑いは本気で。\n面白おかしく働くのが、うちの会",
    "is_paid_partnership": null,
-   "reach": 355,
+   "reach": 375,
    "saved": 0,
    "shares": 0,
-   "views": 822
+   "views": 877
   },
   {
    "id": "18139918975655035",
@@ -67,7 +115,7 @@
    "is_ai_generated": false,
    "caption": "【PR】仕事メイクの朝、色選びで迷う時間をなくしたい方へ💄\n\nexcel スキニーリッチシャドウ N SK01 トゥルー",
    "is_paid_partnership": null,
-   "reach": 43,
+   "reach": 44,
    "saved": 0,
    "shares": 0,
    "views": 85
@@ -83,7 +131,7 @@
    "is_ai_generated": false,
    "caption": "【PR】朝の鏡の前、ピンクは甘すぎて、ブラウンは地味で、手が止まる日があります💄\n\nexcel スキニーリッチシャドウ ",
    "is_paid_partnership": null,
-   "reach": 41,
+   "reach": 42,
    "saved": 0,
    "shares": 0,
    "views": 74
@@ -99,10 +147,10 @@
    "is_ai_generated": false,
    "caption": "【PR】BARTH 中性重炭酸入浴剤\n\nお湯に3錠入れるだけの、薬用（医薬部外品）の入浴剤です。無香料・無着色で、お湯は",
    "is_paid_partnership": null,
-   "reach": 193,
+   "reach": 195,
    "saved": 0,
    "shares": 0,
-   "views": 248
+   "views": 249
   },
   {
    "id": "17969253006216716",
@@ -115,7 +163,7 @@
    "is_ai_generated": false,
    "caption": "【PR】今年のおせちは、作らないと決めました🎍\n京都祇園 料亭「岩元」監修の六段重「極」。73品目・約7〜8人前、盛り付",
    "is_paid_partnership": null,
-   "reach": 189,
+   "reach": 190,
    "saved": 0,
    "shares": 0,
    "views": 206
@@ -151,54 +199,6 @@
    "saved": 0,
    "shares": 0,
    "views": 95
-  },
-  {
-   "id": "18117153647132410",
-   "media_type": "IMAGE",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-16T08:23:18+0000",
-   "permalink": "https://www.instagram.com/p/Dfy6QfFuupl/",
-   "like_count": 45,
-   "comments_count": 4,
-   "is_ai_generated": false,
-   "caption": "最近、自分のInstagramなのに2人(+1人)に勝手に投稿されて全然投稿できなかったな…本当、女性三人と仕事するのっ",
-   "is_paid_partnership": null,
-   "reach": 88,
-   "saved": 0,
-   "shares": 0,
-   "views": 158
-  },
-  {
-   "id": "18034007318856442",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-15T22:13:43+0000",
-   "permalink": "https://www.instagram.com/p/Dfx0-91E869/",
-   "like_count": 44,
-   "comments_count": 6,
-   "is_ai_generated": false,
-   "caption": "お知らせです🌸\n末っ子の町が、今週から入社します。\nまずは雑用係からスタート。撮影はいつも通り、町の担当です📷\n3人で、",
-   "is_paid_partnership": null,
-   "reach": 109,
-   "saved": 0,
-   "shares": 0,
-   "views": 242
-  },
-  {
-   "id": "18128390896932223",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-15T10:33:24+0000",
-   "permalink": "https://www.instagram.com/p/Dfwk1hek4in/",
-   "like_count": 19,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "【PR】\n夜の仕上げは、開けたての1枚で🌙\n\nCICIBELLAのミルキーシートマスクは、1枚ずつ個包装のタイプです。\n",
-   "is_paid_partnership": null,
-   "reach": 49,
-   "saved": 0,
-   "shares": 0,
-   "views": 84
   }
  ],
  "followers_age_gender": {
