@@ -313,6 +313,25 @@ def replied_ids():
     return ids
 
 
+def no_reply_ids():
+    """11/19 楓OK：subcode 4279016（そのコメントには返信できない）が出たコメントのid。二度と自動で送らない"""
+    ids, vias = set(), set()
+    for f in glob.glob(os.path.join(ROOT, 'state', 'replied', '*.json')):
+        try:
+            r = json.load(open(f, encoding='utf-8'))
+        except Exception:
+            continue
+        for x in r.get('ng', []):
+            if x.get('via'):
+                vias.add((str(x.get('to')), str(x.get('via'))))
+            if '4279016' in str(x.get('error', '')):
+                ids.add(str(x.get('to')))
+        for x in r.get('done', []):
+            if x.get('via'):
+                vias.add((str(x.get('to')), str(x.get('via'))))
+    return ids, vias
+
+
 def send_replies(tok, me):
     """queue/replies/<id>.json（ルイが決めたコメントへの返信）を出し、結果を state/replied/<id>.json に残す。
     中身: {"kind":"replies","items":[{"to":コメントのid,"user":名前,"text":返信文}]}"""
@@ -323,6 +342,7 @@ def send_replies(tok, me):
         return True
     os.makedirs(outd, exist_ok=True)
     done_to = replied_ids()
+    blocked, tried_via = no_reply_ids()
     ok_all = True
     for f in todo:
         rid_ = os.path.splitext(os.path.basename(f))[0]
@@ -335,6 +355,15 @@ def send_replies(tok, me):
             if str(it.get('to')) in done_to:
                 print(f"{it.get('user', '')} さんにはもう返信済みなので出しません")
                 continue
+            via = str(it.get('via') or '')
+            if via:
+                # 11/19 楓OK：返信できないコメントは、元のコメント（via）側から1回だけ試す。失敗しても再挑戦しない
+                if (str(it.get('to')), via) in tried_via:
+                    print(f"{it.get('user', '')} さんへの元コメント側からの返信は試し済みなので出しません")
+                    continue
+            elif str(it.get('to')) in blocked:
+                print(f"{it.get('user', '')} さんのこのコメントは返信できない記録があるので出しません")
+                continue
             if n:
                 time.sleep(random.randint(45, 90))
             try:
@@ -346,14 +375,14 @@ def send_replies(tok, me):
                             call('DELETE', f"{API}/{x['id']}", {'access_token': tok})
                             print('古いリンク返信を消しました')
                     time.sleep(5)
-                cid = call('POST', f"{API}/{me['id']}/threads", {'media_type': 'TEXT', 'text': it['text'], 'reply_to_id': it['to'], 'access_token': tok})['id']
+                cid = call('POST', f"{API}/{me['id']}/threads", {'media_type': 'TEXT', 'text': it['text'], 'reply_to_id': via or it['to'], 'access_token': tok})['id']
                 time.sleep(3)
                 mid = call('POST', f"{API}/{me['id']}/threads_publish", {'creation_id': cid, 'access_token': tok})['id']
-                rec['done'].append({'to': it['to'], 'reply_id': mid})
+                rec['done'].append({'to': it['to'], 'reply_id': mid, **({'via': via} if via else {})})
                 done_to.add(str(it['to']))
             except Exception as e:
                 msg = str(e).replace(tok, '***')[:200]
-                rec['ng'].append({'to': it.get('to'), 'error': msg})
+                rec['ng'].append({'to': it.get('to'), 'error': msg, **({'via': via} if via else {})})
                 if isinstance(e, LimitHit):
                     print('::error::書き込み上限が出たため、今日の返信はここで止めます')
                     break
@@ -826,6 +855,8 @@ def scan_comment(tok, mine, skip, todo, post_id, c, thread, depth):
         item = {'id': c['id'], 'post': post_id, 'user': c.get('username'), 'text': c.get('text', ''), 'at': c.get('timestamp'), 'link': c.get('permalink')}
         if thread:
             item['thread'] = thread
+        if str(c['id']) in no_reply_ids()[0]:
+            item['cannot_reply'] = True  # 11/19 楓OK：返信不可（4279016）。drafts に残すが自動で送らない
         todo.append(item)
 
 
