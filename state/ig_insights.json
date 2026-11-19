@@ -1,13 +1,61 @@
 {
- "at": "2026-11-19T11:32+09:00",
+ "at": "2026-11-19T14:36+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
-  "followers_count": 1256,
+  "followers_count": 1258,
   "follows_count": 2444,
-  "media_count": 102
+  "media_count": 105
  },
  "posts": [
+  {
+   "id": "18122872945968888",
+   "media_type": "VIDEO",
+   "media_product_type": "REELS",
+   "timestamp": "2026-11-19T02:34:12+0000",
+   "permalink": "https://www.instagram.com/reel/Df6BKEtFxkY/",
+   "like_count": 12,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "町です。カフェで一息つく日は、色持ちのいいリップだと塗り直しを気にしなくて済みます☕\nみんなはカフェで何を飲む派ですか？",
+   "is_paid_partnership": null,
+   "reach": 29,
+   "saved": 0,
+   "shares": 0,
+   "views": 49
+  },
+  {
+   "id": "18104572670384001",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-19T02:33:37+0000",
+   "permalink": "https://www.instagram.com/p/Df6BHHbj296/",
+   "like_count": 5,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "【PR】\n町です。今日のリップはこれ。\nKATEのリップモンスターは、メーカーの言葉で「つけたての色がそのまま持続する、",
+   "is_paid_partnership": null,
+   "reach": 16,
+   "saved": 0,
+   "shares": 0,
+   "views": 28
+  },
+  {
+   "id": "18082577207718088",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-19T02:33:11+0000",
+   "permalink": "https://www.instagram.com/p/Df6BD8gDwX8/",
+   "like_count": 10,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "【PR】\n京です。朝の洗面所から。\n乾燥で肌がゆらぐ日は、新しいものを足すより、いつもの化粧水を見直すのが先だと思ってい",
+   "is_paid_partnership": null,
+   "reach": 17,
+   "saved": 0,
+   "shares": 0,
+   "views": 27
+  },
   {
    "id": "18101129585552477",
    "media_type": "VIDEO",
@@ -19,10 +67,10 @@
    "is_ai_generated": false,
    "caption": "【PR】楓です。乾燥が気になる日の、お守りミスト。\nAnua PDRNヒアルロン酸ハイドレイティングミスト（100mL）",
    "is_paid_partnership": null,
-   "reach": 47,
+   "reach": 50,
    "saved": 0,
    "shares": 0,
-   "views": 57
+   "views": 59
   },
   {
    "id": "18497052358106547",
@@ -35,10 +83,10 @@
    "is_ai_generated": false,
    "caption": "【PR】楓です。朝の仕込みに置きたい美容液。\nAnua PDRNヒアルロン酸カプセル100セラム（30mL）\n確認ポイン",
    "is_paid_partnership": null,
-   "reach": 32,
+   "reach": 33,
    "saved": 0,
    "shares": 0,
-   "views": 61
+   "views": 64
   },
   {
    "id": "18131649533485122",
@@ -51,7 +99,7 @@
    "is_ai_generated": false,
    "caption": "【PR】楓です。今夜のクレンジング選び、迷ったらこの1本。\nアテニア スキンクリア クレンズ オイル（175mL・約2ヵ",
    "is_paid_partnership": null,
-   "reach": 30,
+   "reach": 31,
    "saved": 0,
    "shares": 0,
    "views": 38
@@ -67,10 +115,10 @@
    "is_ai_generated": false,
    "caption": "はじめまして、早乙女三姉妹です🌹\n\n新潟・上越の直江津にある、小さな会社の3姉妹。\nマスターに内緒で、こっそり投稿してい",
    "is_paid_partnership": null,
-   "reach": 511,
+   "reach": 526,
    "saved": 0,
    "shares": 0,
-   "views": 1035
+   "views": 1062
   },
   {
    "id": "18024967598925501",
@@ -78,15 +126,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-17T13:06:52+0000",
    "permalink": "https://www.instagram.com/p/Df1__X5E2Kd/",
-   "like_count": 41,
+   "like_count": 42,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "今日は3人とも、髪を縛る日\n\n町はウェーブを残して、ふんわり低めに\n京はボブでも、ちゃんと縛れるんです\n楓は眼鏡を外して",
    "is_paid_partnership": null,
-   "reach": 109,
+   "reach": 111,
    "saved": 0,
    "shares": 0,
-   "views": 215
+   "views": 223
   },
   {
    "id": "18433491121146427",
@@ -94,15 +142,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-17T06:30:51+0000",
    "permalink": "https://www.instagram.com/p/Df1SqmACWPn/",
-   "like_count": 94,
+   "like_count": 97,
    "comments_count": 16,
    "is_ai_generated": false,
    "caption": "楓です📸\n今日の会社風景、休憩中に3人で自撮りしました。\n仕事は真面目に、笑いは本気で。\n面白おかしく働くのが、うちの会",
    "is_paid_partnership": null,
-   "reach": 408,
+   "reach": 409,
    "saved": 0,
    "shares": 0,
-   "views": 987
+   "views": 993
   },
   {
    "id": "18139918975655035",
@@ -147,81 +195,33 @@
    "is_ai_generated": false,
    "caption": "【PR】BARTH 中性重炭酸入浴剤\n\nお湯に3錠入れるだけの、薬用（医薬部外品）の入浴剤です。無香料・無着色で、お湯は",
    "is_paid_partnership": null,
-   "reach": 208,
+   "reach": 209,
    "saved": 0,
    "shares": 0,
-   "views": 261
-  },
-  {
-   "id": "17969253006216716",
-   "media_type": "VIDEO",
-   "media_product_type": "REELS",
-   "timestamp": "2026-11-16T12:35:37+0000",
-   "permalink": "https://www.instagram.com/reel/DfzXjgzstVE/",
-   "like_count": 19,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "【PR】今年のおせちは、作らないと決めました🎍\n京都祇園 料亭「岩元」監修の六段重「極」。73品目・約7〜8人前、盛り付",
-   "is_paid_partnership": null,
-   "reach": 196,
-   "saved": 0,
-   "shares": 0,
-   "views": 212
-  },
-  {
-   "id": "18082196240455144",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-16T12:04:38+0000",
-   "permalink": "https://www.instagram.com/p/DfzUEmyjJDC/",
-   "like_count": 24,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "【PR】乾燥が気になる季節、寝る前のリップケアを始めました💄\nBARTHのプレミアムリップクリーム。夜用のナイトリップで",
-   "is_paid_partnership": null,
-   "reach": 53,
-   "saved": 0,
-   "shares": 0,
-   "views": 107
-  },
-  {
-   "id": "18134383561701220",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-16T12:04:15+0000",
-   "permalink": "https://www.instagram.com/p/DfzUB1nDIZD/",
-   "like_count": 21,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "【PR】仕事でクタクタの日は、ぬるめのお湯に15分が私の回復ルールです🛁\nBARTHの中性重炭酸入浴剤。薬用（医薬部外品",
-   "is_paid_partnership": null,
-   "reach": 55,
-   "saved": 0,
-   "shares": 0,
-   "views": 114
+   "views": 262
   }
  ],
  "followers_age_gender": {
   "13-17-F": 1,
-  "18-24-F": 25,
+  "18-24-F": 26,
   "25-34-F": 59,
-  "35-44-F": 68,
+  "35-44-F": 67,
   "45-54-F": 78,
   "55-64-F": 23,
   "65+-F": 6,
   "13-17-M": 2,
   "18-24-M": 34,
-  "25-34-M": 86,
+  "25-34-M": 87,
   "35-44-M": 99,
-  "45-54-M": 181,
-  "55-64-M": 93,
-  "65+-M": 44,
+  "45-54-M": 183,
+  "55-64-M": 92,
+  "65+-M": 45,
   "13-17-U": 11,
-  "18-24-U": 52,
-  "25-34-U": 154,
+  "18-24-U": 53,
+  "25-34-U": 153,
   "35-44-U": 88,
   "45-54-U": 81,
-  "55-64-U": 44,
+  "55-64-U": 45,
   "65+-U": 18
  }
 }
