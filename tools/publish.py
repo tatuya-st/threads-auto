@@ -56,6 +56,21 @@ def limited_today():
         return False
 
 
+def resume_pending():
+    """11/19 楓OK：429明けの日（limit.json が昨日）で、state/resume_ok.json が今日でない間は True。
+    この間は返信（send_replies）だけ止め、queue の投稿（再開確認のカルーセル）は出す"""
+    now = datetime.now(JST)
+    try:
+        lim = json.load(open(LIMIT_P, encoding='utf-8')).get('date', '')
+    except Exception:
+        lim = ''
+    try:
+        rok = json.load(open(os.path.join(ROOT, 'state', 'resume_ok.json'), encoding='utf-8')).get('date', '')
+    except Exception:
+        rok = ''
+    return lim == (now - timedelta(days=1)).strftime('%Y-%m-%d') and rok != now.strftime('%Y-%m-%d')
+
+
 STATUS_P = os.path.join(ROOT, 'state', 'status.txt')
 
 
@@ -425,8 +440,13 @@ def publish():
     if limited_today():
         print('今日はThreadsの書き込み上限が出たため、投稿も返信もしません（明日から再開）')
         return
+    hold_rep = has_rep and resume_pending()
+    if hold_rep:
+        print('::notice::429明けの日なので、再開の確認（state/resume_ok.json）が済むまで返信は出しません（投稿は出します）')
+        if not todo:
+            return
     tok, me = token()
-    rep_ok = send_replies(tok, me) if has_rep and not limited_today() else True
+    rep_ok = send_replies(tok, me) if has_rep and not hold_rep and not limited_today() else True
     if not todo:
         if not rep_ok:
             raise SystemExit(1)
