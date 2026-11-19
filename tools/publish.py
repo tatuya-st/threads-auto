@@ -71,6 +71,25 @@ def resume_pending():
     return lim == (now - timedelta(days=1)).strftime('%Y-%m-%d') and rok != now.strftime('%Y-%m-%d')
 
 
+def frozen(kind):
+    """11/19 楓OK：state/freeze_writes.json は「止める」専用のフラグ。
+    形は {"date":"日付","paths":["replies" か "posts"],"by":"京/楓","why":"理由"}。
+    ファイルがあり paths に kind が入っている間は、日付に関係なくその書き込みを止める（外すのは2人の合意のあと）"""
+    try:
+        fz = json.load(open(os.path.join(ROOT, 'state', 'freeze_writes.json'), encoding='utf-8'))
+    except FileNotFoundError:
+        return False
+    except Exception:
+        return True  # 壊れていたら安全側で止める
+    paths = fz.get('paths') or []
+    if isinstance(paths, str):
+        paths = [paths]
+    if kind in paths:
+        print(f'::notice::state/freeze_writes.json で {kind} が凍結中なので出しません（{fz.get("by", "")}：{fz.get("why", "")}）')
+        return True
+    return False
+
+
 STATUS_P = os.path.join(ROOT, 'state', 'status.txt')
 
 
@@ -437,6 +456,13 @@ def publish():
     if not todo and not has_rep:
         print('公開待ちなし')
         return
+    # 11/19 楓OK：凍結フラグ（state/freeze_writes.json）が置かれている種類は出さない
+    if todo and frozen('posts'):
+        todo = []
+    if has_rep and frozen('replies'):
+        has_rep = False
+    if not todo and not has_rep:
+        return
     if limited_today():
         print('今日はThreadsの書き込み上限が出たため、投稿も返信もしません（明日から再開）')
         return
@@ -635,6 +661,8 @@ def boost(tok, me, posts):
     ・ルイのリンクの日（奇数日）で20時間あいていれば、URL付き（その日のリンク1回分に数える）
     ・それ以外の日はURLなしで「プロフィールの楽天ROOM」へ案内（レイのリンク枠は使わない）。1日1本まで"""
     if limited_today():
+        return
+    if frozen('replies'):  # 11/19 楓OK：あとがけは返信なので replies の凍結で止める
         return
     now = datetime.now(JST)
     today = now.strftime('%Y-%m-%d')
