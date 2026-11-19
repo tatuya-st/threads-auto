@@ -1,0 +1,21 @@
+{
+ "id": "20261119-1031-replies",
+ "kind": "replies",
+ "done": [
+  {
+   "to": "18096158003688844",
+   "reply_id": "18252338059312545"
+  },
+  {
+   "to": "18443015581180646",
+   "reply_id": "18132381535861127"
+  }
+ ],
+ "ng": [
+  {
+   "to": "18346391311262559",
+   "error": "400 {\"error\":{\"message\":\"Application does not have permission for this action\",\"code\":10,\"type\":\"OAuthException\",\"error_subcode\":4279016,\"is_transient\":false,\"error_user_msg\":\"You are not allowed to r"
+  }
+ ],
+ "at": "2026-11-19T12:33+09:00"
+}
