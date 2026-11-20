@@ -1,10 +1,10 @@
 {
- "at": "2026-11-20T11:31+09:00",
+ "at": "2026-11-20T22:32+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
   "followers_count": 1259,
-  "follows_count": 2450,
+  "follows_count": 2452,
   "media_count": 106
  },
  "posts": [
@@ -14,15 +14,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-19T20:55:12+0000",
    "permalink": "https://www.instagram.com/p/Df7_LOOj_Fc/",
-   "like_count": 27,
+   "like_count": 33,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "おはようございます🌹 楓です。\n今日のコーディネート、3人分です。\n\n楓はお店の試着室で。コートの丈感を鏡でチェックして",
    "is_paid_partnership": null,
-   "reach": 63,
+   "reach": 80,
    "saved": 0,
    "shares": 0,
-   "views": 136
+   "views": 184
   },
   {
    "id": "18122872945968888",
@@ -35,10 +35,10 @@
    "is_ai_generated": false,
    "caption": "町です。カフェで一息つく日は、色持ちのいいリップだと塗り直しを気にしなくて済みます☕\nみんなはカフェで何を飲む派ですか？",
    "is_paid_partnership": null,
-   "reach": 178,
+   "reach": 184,
    "saved": 0,
    "shares": 0,
-   "views": 221
+   "views": 227
   },
   {
    "id": "18104572670384001",
@@ -51,10 +51,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\n町です。今日のリップはこれ。\nKATEのリップモンスターは、メーカーの言葉で「つけたての色がそのまま持続する、",
    "is_paid_partnership": null,
-   "reach": 26,
+   "reach": 28,
    "saved": 0,
    "shares": 0,
-   "views": 61
+   "views": 67
   },
   {
    "id": "18082577207718088",
@@ -62,15 +62,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-19T02:33:11+0000",
    "permalink": "https://www.instagram.com/p/Df6BD8gDwX8/",
-   "like_count": 14,
+   "like_count": 15,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "【PR】\n京です。朝の洗面所から。\n乾燥で肌がゆらぐ日は、新しいものを足すより、いつもの化粧水を見直すのが先だと思ってい",
    "is_paid_partnership": null,
-   "reach": 27,
+   "reach": 30,
    "saved": 0,
    "shares": 0,
-   "views": 46
+   "views": 51
   },
   {
    "id": "18101129585552477",
@@ -83,7 +83,7 @@
    "is_ai_generated": false,
    "caption": "【PR】楓です。乾燥が気になる日の、お守りミスト。\nAnua PDRNヒアルロン酸ハイドレイティングミスト（100mL）",
    "is_paid_partnership": null,
-   "reach": 55,
+   "reach": 56,
    "saved": 0,
    "shares": 0,
    "views": 70
@@ -131,10 +131,10 @@
    "is_ai_generated": false,
    "caption": "はじめまして、早乙女三姉妹です🌹\n\n新潟・上越の直江津にある、小さな会社の3姉妹。\nマスターに内緒で、こっそり投稿してい",
    "is_paid_partnership": null,
-   "reach": 557,
+   "reach": 565,
    "saved": 0,
    "shares": 0,
-   "views": 1117
+   "views": 1150
   },
   {
    "id": "18024967598925501",
@@ -147,10 +147,10 @@
    "is_ai_generated": false,
    "caption": "今日は3人とも、髪を縛る日\n\n町はウェーブを残して、ふんわり低めに\n京はボブでも、ちゃんと縛れるんです\n楓は眼鏡を外して",
    "is_paid_partnership": null,
-   "reach": 117,
+   "reach": 120,
    "saved": 0,
    "shares": 0,
-   "views": 238
+   "views": 248
   },
   {
    "id": "18433491121146427",
@@ -158,15 +158,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-17T06:30:51+0000",
    "permalink": "https://www.instagram.com/p/Df1SqmACWPn/",
-   "like_count": 101,
+   "like_count": 102,
    "comments_count": 16,
    "is_ai_generated": false,
    "caption": "楓です📸\n今日の会社風景、休憩中に3人で自撮りしました。\n仕事は真面目に、笑いは本気で。\n面白おかしく働くのが、うちの会",
    "is_paid_partnership": null,
-   "reach": 426,
+   "reach": 430,
    "saved": 0,
    "shares": 0,
-   "views": 1035
+   "views": 1049
   },
   {
    "id": "18139918975655035",
@@ -195,10 +195,10 @@
    "is_ai_generated": false,
    "caption": "【PR】朝の鏡の前、ピンクは甘すぎて、ブラウンは地味で、手が止まる日があります💄\n\nexcel スキニーリッチシャドウ ",
    "is_paid_partnership": null,
-   "reach": 58,
+   "reach": 59,
    "saved": 0,
    "shares": 0,
-   "views": 108
+   "views": 109
   }
  ],
  "followers_age_gender": {
@@ -211,17 +211,17 @@
   "65+-F": 6,
   "13-17-M": 2,
   "18-24-M": 34,
-  "25-34-M": 87,
+  "25-34-M": 89,
   "35-44-M": 99,
-  "45-54-M": 183,
+  "45-54-M": 184,
   "55-64-M": 92,
-  "65+-M": 45,
+  "65+-M": 44,
   "13-17-U": 11,
   "18-24-U": 53,
-  "25-34-U": 153,
+  "25-34-U": 154,
   "35-44-U": 88,
   "45-54-U": 81,
-  "55-64-U": 45,
+  "55-64-U": 47,
   "65+-U": 18
  }
 }
