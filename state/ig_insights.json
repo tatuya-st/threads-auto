@@ -1,13 +1,29 @@
 {
- "at": "2026-11-20T00:33+09:00",
+ "at": "2026-11-20T11:31+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
-  "followers_count": 1258,
-  "follows_count": 2448,
-  "media_count": 105
+  "followers_count": 1259,
+  "follows_count": 2450,
+  "media_count": 106
  },
  "posts": [
+  {
+   "id": "18104209262354015",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-19T20:55:12+0000",
+   "permalink": "https://www.instagram.com/p/Df7_LOOj_Fc/",
+   "like_count": 27,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "おはようございます🌹 楓です。\n今日のコーディネート、3人分です。\n\n楓はお店の試着室で。コートの丈感を鏡でチェックして",
+   "is_paid_partnership": null,
+   "reach": 63,
+   "saved": 0,
+   "shares": 0,
+   "views": 136
+  },
   {
    "id": "18122872945968888",
    "media_type": "VIDEO",
@@ -19,10 +35,10 @@
    "is_ai_generated": false,
    "caption": "町です。カフェで一息つく日は、色持ちのいいリップだと塗り直しを気にしなくて済みます☕\nみんなはカフェで何を飲む派ですか？",
    "is_paid_partnership": null,
-   "reach": 57,
+   "reach": 178,
    "saved": 0,
    "shares": 0,
-   "views": 94
+   "views": 221
   },
   {
    "id": "18104572670384001",
@@ -35,10 +51,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\n町です。今日のリップはこれ。\nKATEのリップモンスターは、メーカーの言葉で「つけたての色がそのまま持続する、",
    "is_paid_partnership": null,
-   "reach": 25,
+   "reach": 26,
    "saved": 0,
    "shares": 0,
-   "views": 60
+   "views": 61
   },
   {
    "id": "18082577207718088",
@@ -51,10 +67,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\n京です。朝の洗面所から。\n乾燥で肌がゆらぐ日は、新しいものを足すより、いつもの化粧水を見直すのが先だと思ってい",
    "is_paid_partnership": null,
-   "reach": 26,
+   "reach": 27,
    "saved": 0,
    "shares": 0,
-   "views": 44
+   "views": 46
   },
   {
    "id": "18101129585552477",
@@ -67,10 +83,10 @@
    "is_ai_generated": false,
    "caption": "【PR】楓です。乾燥が気になる日の、お守りミスト。\nAnua PDRNヒアルロン酸ハイドレイティングミスト（100mL）",
    "is_paid_partnership": null,
-   "reach": 54,
+   "reach": 55,
    "saved": 0,
    "shares": 0,
-   "views": 68
+   "views": 70
   },
   {
    "id": "18497052358106547",
@@ -99,10 +115,10 @@
    "is_ai_generated": false,
    "caption": "【PR】楓です。今夜のクレンジング選び、迷ったらこの1本。\nアテニア スキンクリア クレンズ オイル（175mL・約2ヵ",
    "is_paid_partnership": null,
-   "reach": 33,
+   "reach": 35,
    "saved": 0,
    "shares": 0,
-   "views": 41
+   "views": 45
   },
   {
    "id": "18111112492951054",
@@ -115,10 +131,10 @@
    "is_ai_generated": false,
    "caption": "はじめまして、早乙女三姉妹です🌹\n\n新潟・上越の直江津にある、小さな会社の3姉妹。\nマスターに内緒で、こっそり投稿してい",
    "is_paid_partnership": null,
-   "reach": 553,
+   "reach": 557,
    "saved": 0,
    "shares": 0,
-   "views": 1110
+   "views": 1117
   },
   {
    "id": "18024967598925501",
@@ -131,7 +147,7 @@
    "is_ai_generated": false,
    "caption": "今日は3人とも、髪を縛る日\n\n町はウェーブを残して、ふんわり低めに\n京はボブでも、ちゃんと縛れるんです\n楓は眼鏡を外して",
    "is_paid_partnership": null,
-   "reach": 116,
+   "reach": 117,
    "saved": 0,
    "shares": 0,
    "views": 238
@@ -147,10 +163,10 @@
    "is_ai_generated": false,
    "caption": "楓です📸\n今日の会社風景、休憩中に3人で自撮りしました。\n仕事は真面目に、笑いは本気で。\n面白おかしく働くのが、うちの会",
    "is_paid_partnership": null,
-   "reach": 423,
+   "reach": 426,
    "saved": 0,
    "shares": 0,
-   "views": 1023
+   "views": 1035
   },
   {
    "id": "18139918975655035",
@@ -163,10 +179,10 @@
    "is_ai_generated": false,
    "caption": "【PR】仕事メイクの朝、色選びで迷う時間をなくしたい方へ💄\n\nexcel スキニーリッチシャドウ N SK01 トゥルー",
    "is_paid_partnership": null,
-   "reach": 59,
+   "reach": 60,
    "saved": 0,
    "shares": 0,
-   "views": 113
+   "views": 114
   },
   {
    "id": "18119825504585872",
@@ -183,22 +199,6 @@
    "saved": 0,
    "shares": 0,
    "views": 108
-  },
-  {
-   "id": "17916907176516609",
-   "media_type": "VIDEO",
-   "media_product_type": "REELS",
-   "timestamp": "2026-11-16T23:14:54+0000",
-   "permalink": "https://www.instagram.com/reel/Df0gwfRPkaG/",
-   "like_count": 25,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "【PR】BARTH 中性重炭酸入浴剤\n\nお湯に3錠入れるだけの、薬用（医薬部外品）の入浴剤です。無香料・無着色で、お湯は",
-   "is_paid_partnership": null,
-   "reach": 211,
-   "saved": 0,
-   "shares": 0,
-   "views": 266
   }
  ],
  "followers_age_gender": {
