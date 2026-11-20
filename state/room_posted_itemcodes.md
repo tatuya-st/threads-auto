@@ -2,7 +2,7 @@
 
 取得日時：2026-11-19 08:06（日本時間）
 取得方法：ROOM公開ページのAPI（未ログイン）で全ページ取得
-総件数：1,891件（重複なし。ROOM表示の商品数1,891件と一致）
+総件数：1,893件（重複なし。2026-11-21 05:11にROOM公開ページで総数1,893件と新着2件＝yamazenkaden:10002632／a-price:11223609 を確認し、先頭と対応表へ追記した）
 並び：新しい投稿順
 
 【大事な注意】ここに載るのはROOM内部のitemcode。楽天の商品ページURLの末尾（スラッグ）とは別物で、1,891件中1,794件が食い違っている。
@@ -10,6 +10,8 @@
 
 ## 投稿済み itemcode 一覧
 
+yamazenkaden:10002632
+a-price:11223609
 shoppingrhsecond:10000085
 a-price:10849818
 moosoo:10000614
@@ -3698,5 +3700,7 @@ tkstar:home704 = tkstar:10001304
 viewgarden:11209005 = viewgarden:10008793
 aulumu:g09 = aulumu:10000068
 aulumu:ac01 = aulumu:10000088
+yamazenkaden:63944 = yamazenkaden:10002632
+a-price:4580060598984 = a-price:11223609
 
-（対応表は1794件。残りはスラッグ＝itemcodeで一致）
+（対応表は1796件。残りはスラッグ＝itemcodeで一致）
