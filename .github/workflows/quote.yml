@@ -1,0 +1,33 @@
+name: 投稿の引用
+on:
+  workflow_dispatch:
+    inputs:
+      media_id:
+        description: 引用する投稿のid
+        required: true
+      text:
+        description: 引用投稿の文面
+        required: true
+permissions:
+  contents: write
+concurrency:
+  group: threads-quote
+  cancel-in-progress: false
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 引用する
+        env:
+          QUOTE_ID: ${{ inputs.media_id }}
+          QUOTE_TEXT: ${{ inputs.text }}
+          THREADS_TOKEN: ${{ secrets.THREADS || secrets.THREADS_ACCESS_TOKEN || secrets.TOKEN || secrets.THREADS_TOKEN }}
+          THREADS_APP_SECRET: ${{ secrets.THREADS_APP_SECRET || secrets.KEY }}
+          TOKEN2: ${{ secrets.TOKEN }}
+        run: python3 tools/publish.py quote
+      - name: 記録を保存
+        run: |
+          git config user.name "threads-bot"; git config user.email "threads-bot@users.noreply.github.com"
+          git add state
+          git diff --cached --quiet || (git commit -qm "引用の記録" && git pull -q --rebase && git push -q)

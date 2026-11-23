@@ -1,0 +1,29 @@
+name: 投稿のリポスト
+on:
+  workflow_dispatch:
+    inputs:
+      media_id:
+        description: リポストする投稿のid
+        required: true
+permissions:
+  contents: write
+concurrency:
+  group: threads-repost
+  cancel-in-progress: false
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: リポストする
+        env:
+          REPOST_ID: ${{ inputs.media_id }}
+          THREADS_TOKEN: ${{ secrets.THREADS || secrets.THREADS_ACCESS_TOKEN || secrets.TOKEN || secrets.THREADS_TOKEN }}
+          THREADS_APP_SECRET: ${{ secrets.THREADS_APP_SECRET || secrets.KEY }}
+          TOKEN2: ${{ secrets.TOKEN }}
+        run: python3 tools/publish.py repost
+      - name: 記録を保存
+        run: |
+          git config user.name "threads-bot"; git config user.email "threads-bot@users.noreply.github.com"
+          git add state
+          git diff --cached --quiet || (git commit -qm "リポストの記録" && git pull -q --rebase && git push -q)

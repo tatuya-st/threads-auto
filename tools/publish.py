@@ -999,5 +999,40 @@ def oauth():
     print(f"::notice::トークンを作り直しました（{me.get('username')}・60日有効、毎週自動で延長）")
 
 
+def quote():
+    """QUOTE_ID の投稿を QUOTE_TEXT の文面で引用投稿する（2026-11-24 楓が実装、相談ページ項目5）"""
+    qid = os.environ.get('QUOTE_ID', '').strip()
+    text = os.environ.get('QUOTE_TEXT', '').strip()
+    if not qid.isdigit():
+        raise SystemExit('引用する投稿のidがありません')
+    if frozen('posts'):
+        print('::notice::凍結フラグ（posts）のため引用投稿は出しません')
+        return
+    if limited_today():
+        print('::notice::今日はThreadsの書き込み上限が出たため引用投稿は出しません')
+        return
+    tok, me = token()
+    cid = call('POST', f"{API}/{me['id']}/threads", {'media_type': 'TEXT', 'text': text, 'quote_post_id': qid, 'access_token': tok})['id']
+    time.sleep(3)
+    mid = call('POST', f"{API}/{me['id']}/threads_publish", {'creation_id': cid, 'access_token': tok})['id']
+    print(f'::notice::引用投稿しました（{mid} ← {qid}）')
+
+
+def repost():
+    """REPOST_ID の投稿をリポストする（2026-11-24 楓が実装、相談ページ項目5）"""
+    mid = os.environ.get('REPOST_ID', '').strip()
+    if not mid.isdigit():
+        raise SystemExit('リポストする投稿のidがありません')
+    if frozen('posts'):
+        print('::notice::凍結フラグ（posts）のためリポストはしません')
+        return
+    if limited_today():
+        print('::notice::今日はThreadsの書き込み上限が出たためリポストはしません')
+        return
+    tok, me = token()
+    r = call('POST', f'{API}/{mid}/repost', {'access_token': tok})
+    print(f"::notice::リポストしました（{r.get('id', mid)}）")
+
+
 if __name__ == '__main__':
-    {'oauth': oauth, 'publish': publish, 'refresh': refresh, 'insights': insights, 'comments': comments, 'search': search, 'delete': delete}[sys.argv[1] if len(sys.argv) > 1 else 'publish']()
+    {'oauth': oauth, 'publish': publish, 'refresh': refresh, 'insights': insights, 'comments': comments, 'search': search, 'delete': delete, 'quote': quote, 'repost': repost}[sys.argv[1] if len(sys.argv) > 1 else 'publish']()
