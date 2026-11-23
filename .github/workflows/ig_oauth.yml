@@ -6,8 +6,8 @@ on:
         description: 許可コード
         required: true
       ig_secret:
-        description: インスタのアプリの鍵
-        required: true
+        description: インスタのアプリの鍵（省略時は金庫＝SecretsのIG_SECRETを使う）
+        required: false
 permissions:
   contents: write
 concurrency:
@@ -25,7 +25,7 @@ jobs:
       - name: 作る
         env:
           CODE: ${{ inputs.code }}
-          IG_SECRET: ${{ inputs.ig_secret }}
+          IG_SECRET: ${{ inputs.ig_secret || secrets.IG_SECRET }}
           THREADS_APP_SECRET: ${{ secrets.THREADS_APP_SECRET || secrets.KEY }}
           TOKEN2: ${{ secrets.TOKEN }}
         run: python3 tools/ig.py oauth
