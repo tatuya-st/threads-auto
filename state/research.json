@@ -1,30 +1,6 @@
 {
- "at": "2026-11-21T07:25+09:00",
+ "at": "2026-11-24T07:25+09:00",
  "notes": [
-  {
-   "what": "自分の成績：11/11朝『家で温まるなら、こたつ？電気毛布？』は約4時間で表示77・コメント6（朝の平均並み）。直近3日に新しい伸びなかった投稿なし",
-   "src": "state/insights.json",
-   "src2": "",
-   "done": "変更なし"
-  },
-  {
-   "what": "(b)楽天ブラックフライデー2026は10/19時点で公式未発表（攻略記事は予想のみ）。公式ページはエントリー必須・2025年は上限7000pt",
-   "src": "https://gamewith.jp/gaming-pc/530990",
-   "src2": "",
-   "done": "salesは予想のまま据え置き（公式ページは開く許可が得られず未確認）。TALKSにブラックフライデー前の問いかけを1つ・TALK_KEYSとTOPIC_MAPに追加"
-  },
-  {
-   "what": "公式(f)楽天アフィリエイト：10〜11月のお知らせは料率・規約・禁止事項の変更なし。11/01にSNSリンク別レポート11月分のエントリー開始（11月中・12/10頃メール）",
-   "src": "https://affiliate.rakuten.co.jp/info/",
-   "src2": "",
-   "done": "変更なし・official_turnを1へ"
-  },
-  {
-   "what": "海外③：Metaは2026年3月から商業広告にもAI開示を義務化（自社AIツールは自動ラベル、外部ツールは広告設定で手動開示）。有償の広告が対象で、Threadsへの言及なし",
-   "src": "https://www.contentgrip.com/meta-branded-content-rules-update/",
-   "src2": "",
-   "done": "記録のみ（有償広告は使っていない。AI画像には本文に『※画像はAIで作成したイメージです』を入れる今の決まりで足りる）"
-  },
   {
    "what": "自分の成績：11/11朝の特別投稿『深夜百貨店』開店あいさつは約11時間で表示22・コメント0（伸びなかった投稿）。昼の充電器は表示404・コメント9で並以上",
    "src": "state/insights.json",
@@ -240,6 +216,30 @@
    "src": "https://impact.com/affiliate/affiliate-marketing-benchmark/",
    "src2": "",
    "done": "新しいものなし・変更なし（Threadsは429で書き込み停止中）"
+  },
+  {
+   "what": "(a)楽天ROOMのBF期のThreads投稿は今回も検索に出ず（記事のみ）。成績：queueの投稿は11/18以降なく直近3日の確認対象0本",
+   "src": "https://appllio.com/rakuten-blackfriday-2026",
+   "src2": "",
+   "done": "なし（記録のみ）"
+  },
+  {
+   "what": "海外②：Threadsアフィは価値投稿3：宣伝1・連投で価値→返信で質問に答える・開示を明記（Outfy、11/12更新）。リンクはプロフ集約・返信に貼らない推奨は、本文1通目にリンクの現行の形（11/05方針）とぶつかる",
+   "src": "https://www.outfy.com/blog/threads-affiliate-marketing/",
+   "src2": "https://lbbonline.com/news/Black-Friday-Creators-Demand-Before-Discount-TSA",
+   "done": "見送り（リンク位置は現行ルール優先。宣伝比率は既にリンク1日1回で守れている）"
+  },
+  {
+   "what": "海外②：BFはセール数週間前から比較・使用例で認知を作るのが効く（LBB、9/4。効果4倍は出典不明でうのみにしない）",
+   "src": "https://lbbonline.com/news/Black-Friday-Creators-Demand-Before-Discount-TSA",
+   "src2": "",
+   "done": "記録のみ（スーパーSALE 12/03予想に向け、前倒しの考えは既にルール化済み）"
+  },
+  {
+   "what": "公式(f)楽天アフィリエイト：検索で公式お知らせページが出ず今回は未確認。official_turnは進めない",
+   "src": "",
+   "src2": "",
+   "done": "次回も楽天アフィリエイト公式から"
   }
  ],
  "hot_words": [
