@@ -632,7 +632,7 @@ SLOTS = ['morning', 'noon', 'night', 'late']
 FORMS = {
     'morning': ['talk', 'basic', 'discover', 'n1', 'n5', 'n2', 'n3', 'n4', 'n9'],  # 11/11 マスター指示：旧ROOMの「物欲会議」(n11)は使わない
     'noon': ['talk', 'n2'],
-    'night': ['basic', 'kuyou', 'n12', 'n9'],
+    'night': ['basic'],  # 11/24 楓検品不合格（n9で出た）→ 夜の商品投稿は合意型「決断宣言＋理由3つ＋実額」の basic だけ。kuyou・n12・n9 は夜に使わない
     'late': ['n15'],
 }
 ALL_FORMS = {f for v in FORMS.values() for f in v}
@@ -1126,6 +1126,27 @@ def ratio_ok(path):
         return False
 
 
+def night_gate_fails(repo, q):
+    """11/24 楓検品・plan-all④：夜の商品投稿の合意型を数える。実額の有無／理由の件数（3つ）／画像の枚数（2枚）と1枚目の商品実物の有無／【PR】1行目頭。
+    画像は q['images']（2枚のパス）と q['product_photo']（1枚目が公式の実物写真の切り抜き合成なら True）で見る。"""
+    fails = []
+    g = q.get('night_gate') or {}
+    if q.get('form') != 'basic':
+        fails.append(f"形が合意型でない（{q.get('form')}）")
+    if not g.get('real_price'):
+        fails.append('実額なし')
+    if len(g.get('why3') or []) < 3:
+        fails.append(f"理由{len(g.get('why3') or [])}つ（3つ必要）")
+    if not str(q.get('text', '')).startswith('【PR】'):
+        fails.append('【PR】が1行目頭にない')
+    imgs = [x for x in (q.get('images') or []) if os.path.exists(os.path.join(repo, x))]
+    if len(imgs) < 2:
+        fails.append(f'画像{len(imgs)}枚（2枚必要）')
+    if not q.get('product_photo'):
+        fails.append('1枚目に商品実物なし')
+    return fails
+
+
 def write_q(a, q, note):
     bad = banned(q.get('text', '') + str(q.get('reply') or ''))
     if bad:
@@ -1148,6 +1169,11 @@ def write_q(a, q, note):
         if not q.get('photo') and not q.get('full_image'):
             # 11/11 改：マスター待ちをやめ、2人の相互チェックで完結（完全基準④）。楓が images/<id>.png を見て合格なら、この hold を消して push する（push で投稿が動く）
             q['hold'] = '楓の画像チェック待ち（images/' + q['id'] + '.png を見て合格なら hold を消して push）'
+    if q.get('slot') == 'night' and q.get('kind') == 'single':
+        ng = night_gate_fails(a.repo, q)
+        if ng:  # 11/24 楓検品：合意型を生成時点で機械的に数える。1つでも欠けたら hold のまま（画像があっても外さない）
+            q['hold'] = '合意型の関門で停止：' + '／'.join(ng) + '（直してから楓の検品へ）'
+            note += '（関門停止：' + '／'.join(ng) + '）'
     if q.get('kind') == 'talk' and not q.get('items'):  # 11/15 マスター命令：つぶやき（深夜・発表会など）にも場面の画像
         import talk_scene
         talk_scene.attach(a.repo, q)
@@ -1322,6 +1348,7 @@ def single(a, form, it):
     link = aff_link(it.get('url'))
     head = '\n'.join(x for x in ['【PR】' + body[0]] + body[1:2] + [f'👉 {nm}', pl, flash] if x)
     tail = (f"色・容量・今の価格は、この商品ページで見られます👇\n{link}" if link else f"今の価格とレビューは、楽天ROOMで見られます👇\n{ROOM_URL}")
+    night_meta = {'why3': [], 'real_price': ''}
     if a.slot == 'night' and form == 'basic':
         # 11/09 2人で決定（docs/rei.md 購買心理の型）：夜の商品投稿は5行型。結論／根拠3つ以内／総額・送料・納期・デメリット1つ／リンク＋1行目の頭に【PR】。
         # 数字は商品データにあるものだけ。デメリットと納期は商品データの 'con'・'ship' に確かめた文があるときだけ書く（作らない）
@@ -1332,6 +1359,22 @@ def single(a, form, it):
         why = why[:2]  # 11/15 マスター決定（IGとThreadsの型統一・11/16から）：本文はフック＋ポイント1〜2、残りは2通目、ハッシュタグなし
         l3 = '／'.join(x for x in [pl, clip(str(it.get('ship') or ''), 24), ('気になる点：' + clip(str(it['con']), 30)) if it.get('con') else ''] if x)
         head = '\n'.join(x for x in [f'【PR】結論：{t}で迷ったら、これ👉 {nm}', ('根拠：' + '／'.join(why)) if why else '', l3, flash] if x)
+        # 11/24 楓検品の合意型（決断宣言＋理由3つ＋実額）。理由は商品データの確かめた事実だけ（★評価・レビュー件数・仕様）。足りなければ作らず関門で止める
+        why3 = []
+        if it.get('rating'):
+            why3.append(f"★{it.get('rating')}" + (f"（レビュー{it.get('reviews')}）" if rv else ''))
+        elif rv >= 30:
+            why3.append(f"レビュー{it.get('reviews')}")
+        why3 += [f for f in facts + pts if f and '送料無料' not in f and f not in nm and f not in why3]
+        why3 = why3[:3]
+        rp = str(it.get('real_price') or '').strip()  # 実額＝実際に使えるクーポンだけを引いた支払額（楓・京が確かめて商品データに入れたものだけ）
+        rnote = str(it.get('real_note') or '').strip()
+        head = '\n'.join(x for x in [
+            f'【PR】決めました。{t}は今夜これにします👉 {nm}',
+            *[f'{"①②③"[i]} {clip(w, 34)}' for i, w in enumerate(why3)],
+            (f'💰 実額{rp}' + (f'（{clip(rnote, 30)}）' if rnote else '')) if rp else '',
+            flash] if x)
+        night_meta = {'why3': why3, 'real_price': rp}
     text = clip(head, 490 - len(tail) - 1) + '\n' + tail
     # 返信（2通目）はリンクなしの会話用：つかみ＋推しの理由＋問いかけ
     # 11/05：返信の締めが「怒らないので教えてください」だけだと何を聞いているか分からないので、問いの形の締めにする。つかみが無い商品は hook を使う
@@ -1345,6 +1388,8 @@ def single(a, form, it):
          'title': title, 'footer': pick([x for x in FOOTERS if '番号' not in x], seed), 'topic': 'ガジェット' if cat_of(it, it.get('_gid', '')) in ('gadget', 'kaden') else '楽天ROOM',
          'text': text, 'reply': reply, **({'serif': line3} if form == 'n9' else {}),
          'items': [{'itemcode': it['itemcode'], 'name': it['name'], 'hook': it.get('hook', ''), 'price': price, 'quip': it.get('quip', ''), 'points': facts}]}
+    if a.slot == 'night':
+        q['night_gate'] = night_meta if form == 'basic' else {'why3': [], 'real_price': ''}
     write_q(a, q, f'{form} 1件')
 
 
