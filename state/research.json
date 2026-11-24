@@ -1,30 +1,6 @@
 {
- "at": "2026-11-24T07:25+09:00",
+ "at": "2026-11-25T07:25+09:00",
  "notes": [
-  {
-   "what": "自分の成績：11/11朝の特別投稿『深夜百貨店』開店あいさつは約11時間で表示22・コメント0（伸びなかった投稿）。昼の充電器は表示404・コメント9で並以上",
-   "src": "state/insights.json",
-   "src2": "state/board.txt",
-   "done": "weak に記録（名乗りで始める書き出しは使わない）。一回きりの特別投稿なので TALKS の変更なし"
-  },
-  {
-   "what": "海外④：TikTokで話題のガジェットに電動の毛玉取り（衣類のファブリックシェーバー）。冬のニットの季節で日本でも答えやすく、ROOMで保存されやすい種類（記事は2026/4/25でやや古い）",
-   "src": "https://bgr.com/2152115/trendy-tiktok-gadgets-worth-trying/",
-   "src2": "",
-   "done": "hot_words に『毛玉取り』を追加（夜の商品投稿で先に選ばれる）。具体的な型番は楽天で未確認のため売れ筋リサーチは実行せず"
-  },
-  {
-   "what": "(b)(e)：楽天ブラックフライデー2026は11/11時点でも公式未発表（見つかる記事は2025年版とお買い物マラソンのみ）。Threadsの伸びない原因の記事は開けず",
-   "src": "https://www.goal.com/jp/%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%B9/when-is-rakuten-black-friday/blt66245e20356341ca",
-   "src2": "https://www.phileweb.com/sp/news/hobby/202611/04/8676.html",
-   "done": "sales は予想のまま据え置き。公式(f)楽天ROOMは今回開く回数が足りず次回に回す（official_turn据え置き）"
-  },
-  {
-   "what": "自分の成績：直近3日に新しい伸びなかった投稿なし（11/11昼の充電器は表示436・コメント11で昼の平均並み）。朝の予約『朝ごはん何分』は新しい話題で weak と重ならない",
-   "src": "state/insights.json",
-   "src2": "",
-   "done": "変更なし"
-  },
   {
    "what": "(a)(b)：ROOMのフォロワーを増やす投稿は公開部分に具体策なし。楽天ブラックフライデー2026は11/12朝時点でも公式未発表（記事は2025年版のみ）",
    "src": "https://library.libecity.com/articles/01M3BRPQC5HPSK8HX9MQ0RNXAE",
@@ -240,6 +216,30 @@
    "src": "",
    "src2": "",
    "done": "次回も楽天アフィリエイト公式から"
+  },
+  {
+   "what": "(a)成績：直近3日は20261124-2044-night（ランドリン作り直し、22:17公開）の1本だけ。insights.jsonの最終更新が11/24 20:34で公開前のため数字なし、判定は次回へ",
+   "src": "state/insights.json",
+   "src2": "",
+   "done": "記録のみ（weak判定は次回）"
+  },
+  {
+   "what": "(a)楽天ROOMの12月向けThreads投稿は今回も検索に出ず（記事・リベシティのまとめのみ）",
+   "src": "https://netshop.impress.co.jp/g/room",
+   "src2": "",
+   "done": "新しいものなし・変更なし"
+  },
+  {
+   "what": "海外③：MetaのAIラベルのヘルプページは中身がJS描画で読めず、新しい決まりは確かめられなかった（検索上は2025年の広告向け開示拡大が最新）",
+   "src": "https://www.meta.com/en-gb/help/artificial-intelligence/1783222608822690/",
+   "src2": "https://about.fb.com/news/2025/02/gen-ai-transparency-metas-ads-products/",
+   "done": "記録のみ（未確認のため仕組みは変えない）"
+  },
+  {
+   "what": "公式(f)楽天アフィリエイト：今回も検索で公式お知らせページが出ず未確認",
+   "src": "",
+   "src2": "",
+   "done": "official_turnは進めない（次回も楽天アフィリエイト公式から）"
   }
  ],
  "hot_words": [
