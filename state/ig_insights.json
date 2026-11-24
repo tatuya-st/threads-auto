@@ -1,11 +1,11 @@
 {
- "at": "2026-11-24T20:34+09:00",
+ "at": "2026-11-25T08:37+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
-  "followers_count": 1250,
-  "follows_count": 2452,
-  "media_count": 119
+  "followers_count": 1249,
+  "follows_count": 2451,
+  "media_count": 117
  },
  "posts": [
   {
@@ -14,47 +14,15 @@
    "media_product_type": "REELS",
    "timestamp": "2026-11-24T08:55:42+0000",
    "permalink": "https://www.instagram.com/reel/DgHky2Yzsc7/",
-   "like_count": 5,
+   "like_count": 8,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "【PR】\nオルビス\nオルビス ザ クレンジング オイル（ボトル入り・120mL）\n┈┈┈┈┈┈┈┈┈┈\n毛穴汚れが気にな",
    "is_paid_partnership": null,
-   "reach": 12,
+   "reach": 19,
    "saved": 0,
    "shares": 0,
-   "views": 15
-  },
-  {
-   "id": "18118422968111051",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-24T08:18:30+0000",
-   "permalink": "https://www.instagram.com/p/DgHgjTHk_KK/",
-   "like_count": 10,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "【PR】\nd'Alba／ダルバ\nホワイトトリュフ ファーストスプレーセラム\n\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n\n夕方、鏡を",
-   "is_paid_partnership": null,
-   "reach": 17,
-   "saved": 0,
-   "shares": 0,
-   "views": 30
-  },
-  {
-   "id": "18138715048656927",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-24T08:17:54+0000",
-   "permalink": "https://www.instagram.com/p/DgHge3TE1KY/",
-   "like_count": 9,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "【PR】\nKATE／ケイト\nリップモンスター\n\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n\n朝つけた色が、夜のお出かけまでそのまま。",
-   "is_paid_partnership": null,
-   "reach": 15,
-   "saved": 0,
-   "shares": 0,
-   "views": 37
+   "views": 23
   },
   {
    "id": "18474727501191332",
@@ -62,15 +30,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-24T00:11:35+0000",
    "permalink": "https://www.instagram.com/p/DgGo1McExM3/",
-   "like_count": 26,
+   "like_count": 28,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "三姉妹に叱られている第二弾。\n\n楓は正論で畳みかけ、京は連射で追い込み、町は無言の圧で締める。\n言い訳の賞味期限は3秒。",
    "is_paid_partnership": null,
-   "reach": 83,
+   "reach": 93,
    "saved": 0,
    "shares": 0,
-   "views": 169
+   "views": 189
   },
   {
    "id": "18174685072466669",
@@ -78,15 +46,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-22T22:55:54+0000",
    "permalink": "https://www.instagram.com/p/DgD7YC6E25i/",
-   "like_count": 41,
+   "like_count": 43,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "今日は三姉妹そろって自撮りの日でした📱\n私はカフェで、京は銀杏並木で、町はおうちで撮りました。\nみなさんはどの一枚が好き",
    "is_paid_partnership": null,
-   "reach": 100,
+   "reach": 103,
    "saved": 0,
    "shares": 0,
-   "views": 239
+   "views": 248
   },
   {
    "id": "18127408549912408",
@@ -158,15 +126,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-22T00:07:34+0000",
    "permalink": "https://www.instagram.com/p/DgBexb8DGye/",
-   "like_count": 29,
+   "like_count": 32,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "楓です。今日はお休みで、町と近所のカフェに来ました☕\n写真は全部、町が撮ってくれたものです📷\n窓際の席でアイスティーとク",
    "is_paid_partnership": null,
-   "reach": 64,
+   "reach": 67,
    "saved": 0,
    "shares": 0,
-   "views": 151
+   "views": 159
   },
   {
    "id": "18488120980119716",
@@ -199,6 +167,38 @@
    "saved": 0,
    "shares": 0,
    "views": 50
+  },
+  {
+   "id": "17999802837028921",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-21T00:13:44+0000",
+   "permalink": "https://www.instagram.com/p/Df-6sVWEwO-/",
+   "like_count": 32,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "楓です。今日は商品の撮影日でした📷\n撮るのは町、持つのが京、私は横で「もうちょっと右」って言う係です😄\nこういう裏側も、",
+   "is_paid_partnership": null,
+   "reach": 86,
+   "saved": 0,
+   "shares": 0,
+   "views": 188
+  },
+  {
+   "id": "18104209262354015",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-19T20:55:12+0000",
+   "permalink": "https://www.instagram.com/p/Df7_LOOj_Fc/",
+   "like_count": 44,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "おはようございます🌹 楓です。\n今日のコーディネート、3人分です。\n\n楓はお店の試着室で。コートの丈感を鏡でチェックして",
+   "is_paid_partnership": null,
+   "reach": 106,
+   "saved": 0,
+   "shares": 0,
+   "views": 238
   }
  ],
  "followers_age_gender": {
