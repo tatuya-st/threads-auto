@@ -169,6 +169,12 @@ def write_status():
         note = ''
     if note:
         txt += f"\n■京から楓への連絡\n{note}\n"
+    try:  # 11/25 楓OK：未返信が7日枠から外れる前日の「枠落ち予告」
+        drops = json.load(open(os.path.join(ROOT, 'state', 'comments.json'), encoding='utf-8')).get('drop_soon') or []
+    except Exception:
+        drops = []
+    for d in drops:
+        txt += f"\n・枠落ち予告：{d}\n"
     txt += night_info(now, today in hand)
     txt += room_info(now)
     open(STATUS_P, 'w', encoding='utf-8').write(txt)
@@ -865,7 +871,7 @@ def comments():
     tok, me = token()
     mine = me.get('username')
     since = datetime.now(JST) - timedelta(days=7)
-    todo, fails, ok = [], [], 0
+    todo, fails, ok, drop_soon = [], [], 0, []
     skip = replied_ids()  # 返信済みが API にまだ反映されていなくても出さない
     for f in sorted(glob.glob(os.path.join(ROOT, 'state', 'posted', '*.json'))):
         rec = read_rec(f)
@@ -884,16 +890,23 @@ def comments():
             print(f"::warning::{rec['id']} のコメントを読めません: {str(e).replace(tok, '***')[:200]}")
             continue
         ok += 1
+        n0 = len(todo)
         for c in r.get('data', []):
             if c.get('username') == mine:
                 continue
             scan_comment(tok, mine, skip, todo, rec['id'], c, '', 0)
+        # 11/25 楓OK（例外9・枠落ち予告）：7日枠は枠のまま。あと24時間以内に枠から外れる投稿の未返信は、
+        # 「見えなくなった＝解消」と誤らないよう、合図ページ（status.txt）に予告1行を出す
+        if len(todo) > n0 and made < since + timedelta(days=1):
+            out_at = (made + timedelta(days=7)).strftime('%m/%d %H:%M')
+            users = '、'.join(sorted({str(x.get('user', '')) for x in todo[n0:]}))
+            drop_soon.append(f"{rec['id']} の未返信{len(todo) - n0}件（{users}）が {out_at} に7日枠から外れます。外れても未返信のまま扱います")
     if fails and not ok:
         print('::error::どの投稿のコメントも読めません（threads_read_replies の許可が入ったトークンが必要）')
         raise SystemExit(1)
-    write_status()
-    out = {'at': datetime.now(JST).isoformat(timespec='minutes'), 'unanswered': todo}
+    out = {'at': datetime.now(JST).isoformat(timespec='minutes'), 'unanswered': todo, 'drop_soon': drop_soon}
     json.dump(out, open(os.path.join(ROOT, 'state', 'comments.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    write_status()
     print(f"::notice::返信待ちのコメント {len(todo)}件")
 
 
