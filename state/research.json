@@ -1,30 +1,6 @@
 {
- "at": "2026-11-25T07:25+09:00",
+ "at": "2026-11-26T07:25+09:00",
  "notes": [
-  {
-   "what": "(a)(b)：ROOMのフォロワーを増やす投稿は公開部分に具体策なし。楽天ブラックフライデー2026は11/12朝時点でも公式未発表（記事は2025年版のみ）",
-   "src": "https://library.libecity.com/articles/01M3BRPQC5HPSK8HX9MQ0RNXAE",
-   "src2": "",
-   "done": "sales は予想のまま。終わったマラソンと11/10の5と0の日を消した"
-  },
-  {
-   "what": "海外⑤：Threadsのトレンドは日本と米国で表示。関係ない話題にトピックを付けても反応はほぼなく、トレンドに自分の見方を結びつけた投稿が伸びた（個人1投稿の例で統計ではない）",
-   "src": "https://buffer.com/resources/trending-topics-threads",
-   "src2": "",
-   "done": "記録のみ（build_queue.py は本文の中身に合う話題だけを topic に付ける作りで、すでに合っている）"
-  },
-  {
-   "what": "公式(f)楽天ROOM：ランクボーナスは常時・エントリー不要。S+3%/A+2%/B+1%、上限は月S50万・A10万・B1万円、1商品1,000円。関連商品経由・自分の購入・定期購入・店舗依頼の紹介は対象外。変更点なし",
-   "src": "https://room.rakuten.co.jp/feature/aff_bonus_5/",
-   "src2": "",
-   "done": "変更なし・official_turnを2へ"
-  },
-  {
-   "what": "自分の成績：11/12朝『朝ごはん何分』は約4時間で表示63・コメント0（朝の会話平均約200の3分の1未満）。11/11朝『こたつ？電気毛布？』はコメント28、昼の充電器は表示490",
-   "src": "state/insights.json",
-   "src2": "",
-   "done": "weakに記録・MORNING_TALKSから外し、こたつの型で「電動歯ブラシ派？手みがき派？」を1つ足した"
-  },
   {
    "what": "海外①：Threadsが米国でGems開始（2026/10/8）。会話を生む・独自の視点・転載やクロスポストでない投稿と直接の返信を自動で選び表彰。日本は対象外",
    "src": "https://socialmediatoday.com/news/threads-recognizes-top-posts-with-in-app-gems-program/832577",
@@ -237,6 +213,30 @@
   },
   {
    "what": "公式(f)楽天アフィリエイト：今回も検索で公式お知らせページが出ず未確認",
+   "src": "",
+   "src2": "",
+   "done": "official_turnは進めない（次回も楽天アフィリエイト公式から）"
+  },
+  {
+   "what": "(1b)成績：直近3日の公開は20261124-2044-night（ランドリン作り直し）の1本で表示64・いいね0・コメント1。過去の夜の商品投稿の平均約140の3分の1（約47）は上回るため伸びなかった投稿には入れない。11/25夜の分は関門で停止中（未公開）",
+   "src": "state/insights.json",
+   "src2": "state/insights_log.json",
+   "done": "記録のみ（weakに足さない）"
+  },
+  {
+   "what": "(a)楽天ROOMの12月向けThreads投稿は今回も検索に出ず（ネットショップ担当者フォーラム・リベシティのまとめのみ）",
+   "src": "https://netshop.impress.co.jp/node/3562",
+   "src2": "",
+   "done": "新しいものなし・変更なし"
+  },
+  {
+   "what": "海外④：米国の冬向けおすすめ（BuzzFeed、2025/12/12）はセラミックヒーター（Dreo）・加湿器（Levoit）・保温タンブラーが中心。冒頭に報酬を受け取る旨の注記を置く形。ヒーター・加湿器は既にhot_wordsにあり新しい種類なし",
+   "src": "https://www.buzzfeed.com/taylor_steele/useful-products-youll-use-all-winter",
+   "src2": "https://www.buzzfeed.com/hbraga/good-every-day-products-2026",
+   "done": "記録のみ（hot_words既出・楽天での取扱いは未確認のため売れ筋リサーチは実行しない）"
+  },
+  {
+   "what": "公式(f)楽天アフィリエイト：今回も検索で公式お知らせページが出ず未確認（11/26から使用量削減でWebSearch3回・WebFetch2ページ上限）",
    "src": "",
    "src2": "",
    "done": "official_turnは進めない（次回も楽天アフィリエイト公式から）"
