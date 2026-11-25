@@ -6314,20 +6314,13 @@
  },
  "2026-11-25": {
   "account": {
-   "views": 676,
-   "likes": 2,
-   "replies": 79,
+   "views": 225,
+   "likes": 0,
+   "replies": 0,
    "reposts": 0,
-   "followers_count": 1250
+   "followers_count": 1254
   },
   "posts": {
-   "20261111-1243-noon": {
-    "views": 872,
-    "likes": 8,
-    "replies": 11,
-    "reposts": 0,
-    "quotes": 0
-   },
    "20261112-0552-morning": {
     "views": 486,
     "likes": 6,
@@ -6413,7 +6406,7 @@
     "quotes": 0
    },
    "20261124-2044-night": {
-    "views": 41,
+    "views": 52,
     "likes": 0,
     "replies": 1,
     "reposts": 0,
@@ -6432,7 +6425,7 @@
    "https://px.a8.net/svt/ejp?a8mat=4BESU6+1RPEIA+4W8G+5Z6WY": 0,
    "https://px.a8.net/svt/ejp?a8mat=4BESU6+2EXB3M+4KJC+I0KRM": 0,
    "https://room.rakuten.co.jp/room_a9a129c5a9/collections": 0,
-   "https://room.rakuten.co.jp/room_a9a129c5a9/items": 0
+   "https://room.rakuten.co.jp/room_a9a129c5a9/items": 1
   }
  }
 }

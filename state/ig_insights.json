@@ -1,28 +1,76 @@
 {
- "at": "2026-11-25T08:37+09:00",
+ "at": "2026-11-25T19:25+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
-  "followers_count": 1249,
-  "follows_count": 2451,
-  "media_count": 117
+  "followers_count": 1248,
+  "follows_count": 2450,
+  "media_count": 119
  },
  "posts": [
+  {
+   "id": "18118819357859937",
+   "media_type": "VIDEO",
+   "media_product_type": "REELS",
+   "timestamp": "2026-11-25T02:33:41+0000",
+   "permalink": "https://www.instagram.com/reel/DgJd3S8vNXR/",
+   "like_count": 9,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "【PR】\nCOSRX／コスアールエックス\nアドバンスド スネイル96 ムチン パワー エッセンス（100ml）\n\n┈┈┈",
+   "is_paid_partnership": null,
+   "reach": 15,
+   "saved": 0,
+   "shares": 0,
+   "views": 27
+  },
+  {
+   "id": "18122043689069076",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-25T02:16:20+0000",
+   "permalink": "https://www.instagram.com/p/DgJb52GD28Z/",
+   "like_count": 9,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "【PR】\nロート製薬／メラノCC\n薬用しみ集中対策 プレミアム美容液\n\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n\n気に",
+   "is_paid_partnership": null,
+   "reach": 15,
+   "saved": 0,
+   "shares": 0,
+   "views": 22
+  },
+  {
+   "id": "18042028784854757",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-25T02:11:58+0000",
+   "permalink": "https://www.instagram.com/p/DgJbZ2rjy-F/",
+   "like_count": 11,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "【PR】\n資生堂／dプログラム\nモイストケア ローション EX\n\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n\n乾燥も肌荒",
+   "is_paid_partnership": null,
+   "reach": 18,
+   "saved": 0,
+   "shares": 0,
+   "views": 36
+  },
   {
    "id": "18440620072180331",
    "media_type": "VIDEO",
    "media_product_type": "REELS",
    "timestamp": "2026-11-24T08:55:42+0000",
    "permalink": "https://www.instagram.com/reel/DgHky2Yzsc7/",
-   "like_count": 8,
+   "like_count": 9,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "【PR】\nオルビス\nオルビス ザ クレンジング オイル（ボトル入り・120mL）\n┈┈┈┈┈┈┈┈┈┈\n毛穴汚れが気にな",
    "is_paid_partnership": null,
-   "reach": 19,
+   "reach": 22,
    "saved": 0,
    "shares": 0,
-   "views": 23
+   "views": 41
   },
   {
    "id": "18474727501191332",
@@ -30,15 +78,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-24T00:11:35+0000",
    "permalink": "https://www.instagram.com/p/DgGo1McExM3/",
-   "like_count": 28,
+   "like_count": 30,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "三姉妹に叱られている第二弾。\n\n楓は正論で畳みかけ、京は連射で追い込み、町は無言の圧で締める。\n言い訳の賞味期限は3秒。",
    "is_paid_partnership": null,
-   "reach": 93,
+   "reach": 98,
    "saved": 0,
    "shares": 0,
-   "views": 189
+   "views": 205
   },
   {
    "id": "18174685072466669",
@@ -46,15 +94,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-22T22:55:54+0000",
    "permalink": "https://www.instagram.com/p/DgD7YC6E25i/",
-   "like_count": 43,
+   "like_count": 44,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "今日は三姉妹そろって自撮りの日でした📱\n私はカフェで、京は銀杏並木で、町はおうちで撮りました。\nみなさんはどの一枚が好き",
    "is_paid_partnership": null,
-   "reach": 103,
+   "reach": 106,
    "saved": 0,
    "shares": 0,
-   "views": 248
+   "views": 251
   },
   {
    "id": "18127408549912408",
@@ -62,15 +110,15 @@
    "media_product_type": "REELS",
    "timestamp": "2026-11-22T02:30:12+0000",
    "permalink": "https://www.instagram.com/reel/DgBvFUNTYRM/",
-   "like_count": 10,
+   "like_count": 11,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "【PR】\n唇の乾燥、これ1本。\nTorriden ソリッドイン セラミド リップエッセンス 11ml\n┈┈┈┈┈┈┈┈┈",
    "is_paid_partnership": null,
-   "reach": 34,
+   "reach": 36,
    "saved": 0,
    "shares": 0,
-   "views": 42
+   "views": 44
   },
   {
    "id": "18184347364432510",
@@ -83,10 +131,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\nTorriden\nソリッドイン セラミド リップエッセンス 11ml\n┈┈┈┈┈┈┈┈┈┈\n唇の皮むけと乾燥が",
    "is_paid_partnership": null,
-   "reach": 26,
+   "reach": 27,
    "saved": 0,
    "shares": 0,
-   "views": 51
+   "views": 52
   },
   {
    "id": "18149300059588657",
@@ -99,10 +147,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\nアテニア\nスキンクリア クレンズ オイル 175mL\n┈┈┈┈┈┈┈┈┈┈\n「クレンジングのあと、肌がつっぱる",
    "is_paid_partnership": null,
-   "reach": 25,
+   "reach": 26,
    "saved": 0,
    "shares": 0,
-   "views": 70
+   "views": 71
   },
   {
    "id": "18201022540386417",
@@ -115,10 +163,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\nCICIBELLA\nプレミアムシートマスク 30枚入り\n┈┈┈┈┈┈┈┈┈┈\n三女の町が担当する、初めての商品",
    "is_paid_partnership": null,
-   "reach": 23,
+   "reach": 24,
    "saved": 0,
    "shares": 0,
-   "views": 54
+   "views": 55
   },
   {
    "id": "17980299552137648",
@@ -131,10 +179,10 @@
    "is_ai_generated": false,
    "caption": "楓です。今日はお休みで、町と近所のカフェに来ました☕\n写真は全部、町が撮ってくれたものです📷\n窓際の席でアイスティーとク",
    "is_paid_partnership": null,
-   "reach": 67,
+   "reach": 70,
    "saved": 0,
    "shares": 0,
-   "views": 159
+   "views": 164
   },
   {
    "id": "18488120980119716",
@@ -147,78 +195,30 @@
    "is_ai_generated": false,
    "caption": "【PR】\nシワ改善は、この1本。\nエリクシール レチノパワー リンクルクリーム ba L（医薬部外品）です。\n・有効成分",
    "is_paid_partnership": null,
-   "reach": 29,
+   "reach": 30,
    "saved": 0,
    "shares": 0,
-   "views": 37
-  },
-  {
-   "id": "18648851491037010",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-21T04:32:45+0000",
-   "permalink": "https://www.instagram.com/p/Df_YVUiDtk1/",
-   "like_count": 9,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "【PR】\nシワ改善の部分用クリーム、選ぶならまずこの1本です。\nエリクシール レチノパワー リンクルクリーム ba L（",
-   "is_paid_partnership": null,
-   "reach": 25,
-   "saved": 0,
-   "shares": 0,
-   "views": 50
-  },
-  {
-   "id": "17999802837028921",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-21T00:13:44+0000",
-   "permalink": "https://www.instagram.com/p/Df-6sVWEwO-/",
-   "like_count": 32,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "楓です。今日は商品の撮影日でした📷\n撮るのは町、持つのが京、私は横で「もうちょっと右」って言う係です😄\nこういう裏側も、",
-   "is_paid_partnership": null,
-   "reach": 86,
-   "saved": 0,
-   "shares": 0,
-   "views": 188
-  },
-  {
-   "id": "18104209262354015",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-19T20:55:12+0000",
-   "permalink": "https://www.instagram.com/p/Df7_LOOj_Fc/",
-   "like_count": 44,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "おはようございます🌹 楓です。\n今日のコーディネート、3人分です。\n\n楓はお店の試着室で。コートの丈感を鏡でチェックして",
-   "is_paid_partnership": null,
-   "reach": 106,
-   "saved": 0,
-   "shares": 0,
-   "views": 238
+   "views": 38
   }
  ],
  "followers_age_gender": {
   "13-17-F": 1,
   "18-24-F": 25,
   "25-34-F": 60,
-  "35-44-F": 67,
+  "35-44-F": 66,
   "45-54-F": 78,
   "55-64-F": 23,
   "65+-F": 6,
-  "13-17-M": 2,
-  "18-24-M": 33,
-  "25-34-M": 89,
+  "13-17-M": 3,
+  "18-24-M": 32,
+  "25-34-M": 91,
   "35-44-M": 99,
   "45-54-M": 184,
   "55-64-M": 94,
   "65+-M": 42,
   "13-17-U": 11,
   "18-24-U": 55,
-  "25-34-U": 153,
+  "25-34-U": 151,
   "35-44-U": 85,
   "45-54-U": 78,
   "55-64-U": 47,
