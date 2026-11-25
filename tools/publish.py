@@ -109,6 +109,13 @@ def night_info(now, handed):
             line = ('ボツ・削除しました' if r.get('deleted') else '投稿しました') + (f'（{nm}）' if nm else '')
         else:
             line = '楓の画像チェック待ち（合格なら queue の hold を消して push）' + (f'（{nm}）' if nm else '')
+            # 11/25 楓確認⑥：お休み確定の日は state/night_rest.json に {"YYYYMMDD": "理由"} を書き、表記を「お休み確定」にする
+            try:
+                rest = json.load(open(os.path.join(ROOT, 'state', 'night_rest.json'), encoding='utf-8'))
+            except Exception:
+                rest = {}
+            if day in rest:
+                line = 'お休み確定（' + str(rest[day]) + '・未使用）' + (f'（{nm}）' if nm else '')
     return f"\n■京の今夜の商品投稿\n・{line}\n"
 
 
