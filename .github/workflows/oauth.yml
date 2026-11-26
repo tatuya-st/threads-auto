@@ -8,6 +8,14 @@ on:
       app_id:
         description: アプリID
         required: true
+      slot:
+        description: 保存先（通常は primary、予備を作るときは backup）
+        required: false
+        default: primary
+        type: choice
+        options:
+          - primary
+          - backup
 permissions:
   contents: write
 concurrency:
@@ -22,6 +30,7 @@ jobs:
         env:
           CODE: ${{ inputs.code }}
           APP_ID: ${{ inputs.app_id }}
+          SLOT: ${{ inputs.slot }}
           THREADS_APP_SECRET: ${{ secrets.THREADS_APP_SECRET || secrets.KEY }}
           TOKEN2: ${{ secrets.TOKEN }}
         run: |

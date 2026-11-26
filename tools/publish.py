@@ -13,6 +13,7 @@ from datetime import datetime, timezone, timedelta
 API = 'https://graph.threads.net/v1.0'
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 ENC = os.path.join(ROOT, 'state', 'token.enc')
+ENC_B = os.path.join(ROOT, 'state', 'token_backup.enc')  # 予備トークン（本線とは別の許可で取得。2026-11-26 楓が対策として追加）
 JST = timezone(timedelta(hours=9))
 import re as _re
 
@@ -219,16 +220,18 @@ def call(method, url, params, tries=3):
         time.sleep(15 * (n + 1))
 
 
-def decrypt():
-    if not (os.path.exists(ENC) and SECRET):
+def decrypt(path=None):
+    path = path or ENC
+    if not (os.path.exists(path) and SECRET):
         return ''
-    r = subprocess.run(['openssl', 'enc', '-d', '-aes-256-cbc', '-pbkdf2', '-a', '-A', '-in', ENC, '-pass', 'env:THREADS_APP_SECRET'], capture_output=True, text=True)
+    r = subprocess.run(['openssl', 'enc', '-d', '-aes-256-cbc', '-pbkdf2', '-a', '-A', '-in', path, '-pass', 'env:THREADS_APP_SECRET'], capture_output=True, text=True)
     return r.stdout.strip() if r.returncode == 0 else ''
 
 
-def encrypt(tok):
-    os.makedirs(os.path.dirname(ENC), exist_ok=True)
-    r = subprocess.run(['openssl', 'enc', '-aes-256-cbc', '-pbkdf2', '-salt', '-a', '-A', '-out', ENC, '-pass', 'env:THREADS_APP_SECRET'], input=tok, text=True, capture_output=True)
+def encrypt(tok, path=None):
+    path = path or ENC
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    r = subprocess.run(['openssl', 'enc', '-aes-256-cbc', '-pbkdf2', '-salt', '-a', '-A', '-out', path, '-pass', 'env:THREADS_APP_SECRET'], input=tok, text=True, capture_output=True)
     if r.returncode != 0:
         raise RuntimeError('トークンを保存できませんでした')
 
@@ -257,6 +260,7 @@ def token():
         seen = h
     fresh = bool(h) and h != seen
     tries = [('secret', sec), ('saved', decrypt())] if fresh else [('saved', decrypt()), ('secret', sec)]
+    tries.append(('backup', decrypt(ENC_B)))  # 最後の砦：別の許可で取った予備トークン
     for src, tok in tries:
         if not tok:
             continue
@@ -273,6 +277,8 @@ def token():
                 pass
             if decrypt() != tok:
                 encrypt(tok)
+        if src == 'backup':
+            print('::warning::本線のトークンが使えないため、予備トークンで動いています')
         os.environ['TOKEN_SRC'] = src
         return tok, me
     _t = os.environ.get('THREADS_TOKEN', '').strip()
@@ -296,6 +302,15 @@ def refresh():
         print('延長は次回（発行から24時間たってから）:', e)
         if SECRET and decrypt() != tok:
             encrypt(tok)
+    # 予備トークンも生かし続ける（週1回の延長で60日期限を更新。失敗しても本線の延長は止めない）
+    bak = decrypt(ENC_B)
+    if bak:
+        try:
+            new_b = call('GET', 'https://graph.threads.net/refresh_access_token', {'grant_type': 'th_refresh_token', 'access_token': bak})['access_token']
+            encrypt(new_b, ENC_B)
+            print('予備トークンも延長しました')
+        except Exception as e:
+            print('予備トークンの延長は次回:', e)
 
 
 def wait_ready(cid, tok):
@@ -1018,8 +1033,12 @@ def oauth():
     me = works(tok)
     if not me:
         raise SystemExit('作ったトークンが使えません')
-    encrypt(tok)
-    print(f"::notice::トークンを作り直しました（{me.get('username')}・60日有効、毎週自動で延長）")
+    if os.environ.get('SLOT', '').strip() == 'backup':
+        encrypt(tok, ENC_B)
+        print(f"::notice::予備トークンを保存しました（{me.get('username')}・60日有効、毎週自動で延長）")
+    else:
+        encrypt(tok)
+        print(f"::notice::トークンを作り直しました（{me.get('username')}・60日有効、毎週自動で延長）")
 
 
 def quote():
