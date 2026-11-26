@@ -26,6 +26,7 @@ jobs:
           TOKEN2: ${{ secrets.TOKEN }}
         run: python3 tools/ig.py refresh
       - name: 保存
+        if: always()  # インスタ側が失敗しても、Threads側の延長結果は必ず保存する（2026-11-26 楓）
         run: |
           git config user.name "threads-bot"; git config user.email "threads-bot@users.noreply.github.com"
           git add state
