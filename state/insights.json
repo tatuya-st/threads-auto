@@ -1,78 +1,71 @@
 {
- "at": "2026-11-26T18:59+09:00",
+ "at": "2026-11-27T04:48+09:00",
  "posts": {
-  "20261112-2343-late": {
-   "views": 647,
-   "likes": 3,
-   "replies": 0,
-   "reposts": 0,
-   "quotes": 0
-  },
   "20261113-0743-morning": {
-   "views": 706,
+   "views": 707,
    "likes": 1,
    "replies": 1,
    "reposts": 0,
    "quotes": 0
   },
   "20261113-1243-noon": {
-   "views": 819,
+   "views": 820,
    "likes": 6,
    "replies": 12,
    "reposts": 0,
    "quotes": 0
   },
   "20261113-2343-late": {
-   "views": 800,
+   "views": 801,
    "likes": 4,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261115-1243-noon": {
-   "views": 768,
+   "views": 769,
    "likes": 2,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261116-1105-redo": {
-   "views": 1193,
+   "views": 1194,
    "likes": 2,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261116-2344-late": {
-   "views": 1491,
+   "views": 1492,
    "likes": 5,
    "replies": 0,
    "reposts": 0,
    "quotes": 0
   },
   "20261117-0743-morning": {
-   "views": 1777,
+   "views": 1778,
    "likes": 11,
    "replies": 15,
    "reposts": 0,
    "quotes": 0
   },
   "20261117-1245-noon": {
-   "views": 1979,
+   "views": 1980,
    "likes": 7,
    "replies": 8,
    "reposts": 0,
    "quotes": 0
   },
   "20261117-2344-late": {
-   "views": 2109,
+   "views": 2110,
    "likes": 9,
    "replies": 1,
    "reposts": 0,
    "quotes": 0
   },
   "20261124-2044-night": {
-   "views": 84,
+   "views": 112,
    "likes": 0,
    "replies": 1,
    "reposts": 0,
@@ -80,11 +73,11 @@
   }
  },
  "account": {
-  "views": 132,
+  "views": 242,
   "likes": 0,
   "replies": 0,
   "reposts": 0,
-  "followers_count": 1260
+  "followers_count": 1262
  },
  "clicks": {
   "https://px.a8.net/svt/ejp?a8mat=4BGJFX+F0LM2A+1ZWM+HUKPU&a8ejpredirect=https%3A%2F%2Fskynet-c": 0,

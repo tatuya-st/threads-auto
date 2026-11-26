@@ -1,10 +1,10 @@
 {
- "at": "2026-11-26T19:00+09:00",
+ "at": "2026-11-27T04:48+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
-  "followers_count": 1249,
-  "follows_count": 2450,
+  "followers_count": 1247,
+  "follows_count": 2449,
   "media_count": 121
  },
  "posts": [
@@ -14,15 +14,15 @@
    "media_product_type": "FEED",
    "timestamp": "2026-11-26T09:04:19+0000",
    "permalink": "https://www.instagram.com/p/DgMvYr5jBkr/",
-   "like_count": 1,
+   "like_count": 4,
    "comments_count": 0,
    "is_ai_generated": false,
    "caption": "【PR】\n花王／キュレル 潤浸保湿 化粧水 II しっとり\n――――――――\n乾燥も肌荒れもくり返しがちな季節に。乾燥性",
    "is_paid_partnership": null,
-   "reach": 1,
+   "reach": 13,
    "saved": 0,
    "shares": 0,
-   "views": 3
+   "views": 21
   },
   {
    "id": "18225557878344112",
@@ -35,10 +35,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\nMEDIHEAL／30枚マスク 本品+詰め替えセット\n――――――――\n本品30枚に詰め替え30枚、合わせて6",
    "is_paid_partnership": null,
-   "reach": 19,
+   "reach": 23,
    "saved": 0,
    "shares": 0,
-   "views": 27
+   "views": 30
   },
   {
    "id": "18118819357859937",
@@ -51,10 +51,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\nCOSRX／コスアールエックス\nアドバンスド スネイル96 ムチン パワー エッセンス（100ml）\n\n┈┈┈",
    "is_paid_partnership": null,
-   "reach": 130,
+   "reach": 132,
    "saved": 0,
    "shares": 0,
-   "views": 149
+   "views": 150
   },
   {
    "id": "18122043689069076",
@@ -67,7 +67,7 @@
    "is_ai_generated": false,
    "caption": "【PR】\nロート製薬／メラノCC\n薬用しみ集中対策 プレミアム美容液\n\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n\n気に",
    "is_paid_partnership": null,
-   "reach": 24,
+   "reach": 25,
    "saved": 0,
    "shares": 0,
    "views": 39
@@ -83,7 +83,7 @@
    "is_ai_generated": false,
    "caption": "【PR】\n資生堂／dプログラム\nモイストケア ローション EX\n\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n\n乾燥も肌荒",
    "is_paid_partnership": null,
-   "reach": 26,
+   "reach": 27,
    "saved": 0,
    "shares": 0,
    "views": 51
@@ -99,10 +99,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\nオルビス\nオルビス ザ クレンジング オイル（ボトル入り・120mL）\n┈┈┈┈┈┈┈┈┈┈\n毛穴汚れが気にな",
    "is_paid_partnership": null,
-   "reach": 26,
+   "reach": 28,
    "saved": 0,
    "shares": 0,
-   "views": 49
+   "views": 50
   },
   {
    "id": "18474727501191332",
@@ -115,10 +115,10 @@
    "is_ai_generated": false,
    "caption": "三姉妹に叱られている第二弾。\n\n楓は正論で畳みかけ、京は連射で追い込み、町は無言の圧で締める。\n言い訳の賞味期限は3秒。",
    "is_paid_partnership": null,
-   "reach": 105,
+   "reach": 106,
    "saved": 0,
    "shares": 0,
-   "views": 220
+   "views": 227
   },
   {
    "id": "18174685072466669",
@@ -147,7 +147,7 @@
    "is_ai_generated": false,
    "caption": "【PR】\n唇の乾燥、これ1本。\nTorriden ソリッドイン セラミド リップエッセンス 11ml\n┈┈┈┈┈┈┈┈┈",
    "is_paid_partnership": null,
-   "reach": 38,
+   "reach": 39,
    "saved": 0,
    "shares": 0,
    "views": 49
@@ -163,7 +163,7 @@
    "is_ai_generated": false,
    "caption": "【PR】\nTorriden\nソリッドイン セラミド リップエッセンス 11ml\n┈┈┈┈┈┈┈┈┈┈\n唇の皮むけと乾燥が",
    "is_paid_partnership": null,
-   "reach": 29,
+   "reach": 30,
    "saved": 0,
    "shares": 0,
    "views": 57
@@ -179,7 +179,7 @@
    "is_ai_generated": false,
    "caption": "【PR】\nアテニア\nスキンクリア クレンズ オイル 175mL\n┈┈┈┈┈┈┈┈┈┈\n「クレンジングのあと、肌がつっぱる",
    "is_paid_partnership": null,
-   "reach": 28,
+   "reach": 29,
    "saved": 0,
    "shares": 0,
    "views": 76
@@ -195,7 +195,7 @@
    "is_ai_generated": false,
    "caption": "【PR】\nCICIBELLA\nプレミアムシートマスク 30枚入り\n┈┈┈┈┈┈┈┈┈┈\n三女の町が担当する、初めての商品",
    "is_paid_partnership": null,
-   "reach": 26,
+   "reach": 27,
    "saved": 0,
    "shares": 0,
    "views": 62
