@@ -24,3 +24,5 @@ Gemini版の町が、合図ページ（state/to_machi.txt）の返信依頼に�
 なし🌸
 
 なし🌸
+
+なし🌸
