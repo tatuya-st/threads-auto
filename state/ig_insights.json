@@ -1,13 +1,61 @@
 {
- "at": "2026-11-27T04:48+09:00",
+ "at": "2026-11-27T19:05+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
   "followers_count": 1247,
   "follows_count": 2449,
-  "media_count": 121
+  "media_count": 124
  },
  "posts": [
+  {
+   "id": "17915736192580096",
+   "media_type": "VIDEO",
+   "media_product_type": "REELS",
+   "timestamp": "2026-11-26T23:18:05+0000",
+   "permalink": "https://www.instagram.com/reel/DgOREc8TFcq/",
+   "like_count": 4,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "【PR】\nBCL｜サボリーノ 目ざまシート 32枚（さっぱりタイプ）\n──────────\n朝の洗顔代わりに、貼って1分",
+   "is_paid_partnership": null,
+   "reach": 24,
+   "saved": 0,
+   "shares": 0,
+   "views": 35
+  },
+  {
+   "id": "17970025290208994",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-26T23:11:00+0000",
+   "permalink": "https://www.instagram.com/p/DgOQSD-D7NQ/",
+   "like_count": 7,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "【PR】\nAmazon Audible（オーディブル）\n──────────\n家事や身支度で手が離せない時間に、本を耳で",
+   "is_paid_partnership": null,
+   "reach": 16,
+   "saved": 0,
+   "shares": 0,
+   "views": 30
+  },
+  {
+   "id": "17917853994558089",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-26T23:07:11+0000",
+   "permalink": "https://www.instagram.com/p/DgOP2Nxj7vw/",
+   "like_count": 5,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "【PR】\nロート製薬｜肌ラボ 極潤ヒアルロン液\n──────────\nとろみのあるテクスチャーで、洗顔後の肌にうるおいを",
+   "is_paid_partnership": null,
+   "reach": 13,
+   "saved": 0,
+   "shares": 0,
+   "views": 28
+  },
   {
    "id": "18108025373001373",
    "media_type": "CAROUSEL_ALBUM",
@@ -19,10 +67,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\n花王／キュレル 潤浸保湿 化粧水 II しっとり\n――――――――\n乾燥も肌荒れもくり返しがちな季節に。乾燥性",
    "is_paid_partnership": null,
-   "reach": 13,
+   "reach": 17,
    "saved": 0,
    "shares": 0,
-   "views": 21
+   "views": 34
   },
   {
    "id": "18225557878344112",
@@ -35,10 +83,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\nMEDIHEAL／30枚マスク 本品+詰め替えセット\n――――――――\n本品30枚に詰め替え30枚、合わせて6",
    "is_paid_partnership": null,
-   "reach": 23,
+   "reach": 26,
    "saved": 0,
    "shares": 0,
-   "views": 30
+   "views": 33
   },
   {
    "id": "18118819357859937",
@@ -51,10 +99,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\nCOSRX／コスアールエックス\nアドバンスド スネイル96 ムチン パワー エッセンス（100ml）\n\n┈┈┈",
    "is_paid_partnership": null,
-   "reach": 132,
+   "reach": 133,
    "saved": 0,
    "shares": 0,
-   "views": 150
+   "views": 151
   },
   {
    "id": "18122043689069076",
@@ -70,7 +118,7 @@
    "reach": 25,
    "saved": 0,
    "shares": 0,
-   "views": 39
+   "views": 40
   },
   {
    "id": "18042028784854757",
@@ -83,10 +131,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\n資生堂／dプログラム\nモイストケア ローション EX\n\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n\n乾燥も肌荒",
    "is_paid_partnership": null,
-   "reach": 27,
+   "reach": 29,
    "saved": 0,
    "shares": 0,
-   "views": 51
+   "views": 55
   },
   {
    "id": "18440620072180331",
@@ -118,7 +166,7 @@
    "reach": 106,
    "saved": 0,
    "shares": 0,
-   "views": 227
+   "views": 228
   },
   {
    "id": "18174685072466669",
@@ -147,73 +195,25 @@
    "is_ai_generated": false,
    "caption": "【PR】\n唇の乾燥、これ1本。\nTorriden ソリッドイン セラミド リップエッセンス 11ml\n┈┈┈┈┈┈┈┈┈",
    "is_paid_partnership": null,
-   "reach": 39,
+   "reach": 40,
    "saved": 0,
    "shares": 0,
-   "views": 49
-  },
-  {
-   "id": "18184347364432510",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-22T02:21:55+0000",
-   "permalink": "https://www.instagram.com/p/DgBuJ_xj-C8/",
-   "like_count": 10,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "【PR】\nTorriden\nソリッドイン セラミド リップエッセンス 11ml\n┈┈┈┈┈┈┈┈┈┈\n唇の皮むけと乾燥が",
-   "is_paid_partnership": null,
-   "reach": 30,
-   "saved": 0,
-   "shares": 0,
-   "views": 57
-  },
-  {
-   "id": "18149300059588657",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-22T02:21:30+0000",
-   "permalink": "https://www.instagram.com/p/DgBuGvoDzcv/",
-   "like_count": 9,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "【PR】\nアテニア\nスキンクリア クレンズ オイル 175mL\n┈┈┈┈┈┈┈┈┈┈\n「クレンジングのあと、肌がつっぱる",
-   "is_paid_partnership": null,
-   "reach": 29,
-   "saved": 0,
-   "shares": 0,
-   "views": 76
-  },
-  {
-   "id": "18201022540386417",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-22T02:20:42+0000",
-   "permalink": "https://www.instagram.com/p/DgBuBCdDy0A/",
-   "like_count": 8,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "【PR】\nCICIBELLA\nプレミアムシートマスク 30枚入り\n┈┈┈┈┈┈┈┈┈┈\n三女の町が担当する、初めての商品",
-   "is_paid_partnership": null,
-   "reach": 27,
-   "saved": 0,
-   "shares": 0,
-   "views": 62
+   "views": 50
   }
  ],
  "followers_age_gender": {
   "13-17-F": 1,
   "18-24-F": 25,
-  "25-34-F": 59,
-  "35-44-F": 65,
+  "25-34-F": 58,
+  "35-44-F": 67,
   "45-54-F": 79,
   "55-64-F": 23,
   "65+-F": 6,
   "13-17-M": 3,
   "18-24-M": 31,
-  "25-34-M": 91,
-  "35-44-M": 99,
-  "45-54-M": 183,
+  "25-34-M": 92,
+  "35-44-M": 97,
+  "45-54-M": 184,
   "55-64-M": 94,
   "65+-M": 42,
   "13-17-U": 11,
@@ -221,7 +221,7 @@
   "25-34-U": 152,
   "35-44-U": 85,
   "45-54-U": 78,
-  "55-64-U": 47,
-  "65+-U": 18
+  "55-64-U": 46,
+  "65+-U": 19
  }
 }

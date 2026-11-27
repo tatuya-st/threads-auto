@@ -1,20 +1,6 @@
 {
- "at": "2026-11-27T04:48+09:00",
+ "at": "2026-11-27T19:05+09:00",
  "posts": {
-  "20261113-0743-morning": {
-   "views": 707,
-   "likes": 1,
-   "replies": 1,
-   "reposts": 0,
-   "quotes": 0
-  },
-  "20261113-1243-noon": {
-   "views": 820,
-   "likes": 6,
-   "replies": 12,
-   "reposts": 0,
-   "quotes": 0
-  },
   "20261113-2343-late": {
    "views": 801,
    "likes": 4,
@@ -65,19 +51,19 @@
    "quotes": 0
   },
   "20261124-2044-night": {
-   "views": 112,
+   "views": 139,
    "likes": 0,
-   "replies": 1,
+   "replies": 8,
    "reposts": 0,
    "quotes": 0
   }
  },
  "account": {
-  "views": 242,
+  "views": 215,
   "likes": 0,
-  "replies": 0,
+  "replies": 1,
   "reposts": 0,
-  "followers_count": 1262
+  "followers_count": 1261
  },
  "clicks": {
   "https://px.a8.net/svt/ejp?a8mat=4BGJFX+F0LM2A+1ZWM+HUKPU&a8ejpredirect=https%3A%2F%2Fskynet-c": 0,
