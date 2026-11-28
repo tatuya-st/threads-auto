@@ -1,0 +1,9 @@
+{
+ "id": "20261128-2000-chloe",
+ "axis": null,
+ "theme": null,
+ "codes": [
+  "wish:1549445"
+ ],
+ "skipped": "エラー: 400 {\"error\":{\"message\":\"Param text must be at most 500 characters long.\",\"code\":100,\"type\":\"THApiException\",\"fbtrace_id\":\"AAEeJzVtT8ljG8TTtcJcsKB\"}}"
+}
