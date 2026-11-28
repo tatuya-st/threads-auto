@@ -1,13 +1,77 @@
 {
- "at": "2026-11-28T04:38+09:00",
+ "at": "2026-11-28T18:24+09:00",
  "account": {
   "username": "tatuya_st",
   "account_type": "MEDIA_CREATOR",
-  "followers_count": 1249,
-  "follows_count": 2449,
-  "media_count": 124
+  "followers_count": 1248,
+  "follows_count": 2451,
+  "media_count": 128
  },
  "posts": [
+  {
+   "id": "18088041296336624",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-28T07:16:00+0000",
+   "permalink": "https://www.instagram.com/p/DgRslJVj6pX/",
+   "like_count": 5,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "【PR】\nクロエ オードパルファム 50mL\n───\n定価12,650円の香水が、8,481円で買えました。\n差額は4,",
+   "is_paid_partnership": null,
+   "reach": 12,
+   "saved": 0,
+   "shares": 0,
+   "views": 28
+  },
+  {
+   "id": "18135870187745528",
+   "media_type": "VIDEO",
+   "media_product_type": "REELS",
+   "timestamp": "2026-11-28T02:42:21+0000",
+   "permalink": "https://www.instagram.com/reel/DgRNPzGvWrd/",
+   "like_count": 5,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "【PR】\nMOTON｜ヘア&ボディミスト フラワーガーデン\n──────────\n髪にも身体にもシュッとひと吹き。韓国コ",
+   "is_paid_partnership": null,
+   "reach": 25,
+   "saved": 0,
+   "shares": 0,
+   "views": 32
+  },
+  {
+   "id": "18111414089362995",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-28T02:40:27+0000",
+   "permalink": "https://www.instagram.com/p/DgRNDEwD-8H/",
+   "like_count": 5,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "【PR】SNSで話題の名品ミルクが、さらに進化しました\nカウブランド無添加 メイク落としミルク*¹\n──────────",
+   "is_paid_partnership": null,
+   "reach": 11,
+   "saved": 0,
+   "shares": 0,
+   "views": 28
+  },
+  {
+   "id": "17961077001257159",
+   "media_type": "CAROUSEL_ALBUM",
+   "media_product_type": "FEED",
+   "timestamp": "2026-11-28T02:40:05+0000",
+   "permalink": "https://www.instagram.com/p/DgRNAWlD7hh/",
+   "like_count": 4,
+   "comments_count": 0,
+   "is_ai_generated": false,
+   "caption": "【PR】\nMOTON｜ヘア&ボディミスト フラワーガーデン\n──────────\n髪にも身体にも使える、韓国コスメMOT",
+   "is_paid_partnership": null,
+   "reach": 10,
+   "saved": 0,
+   "shares": 0,
+   "views": 17
+  },
   {
    "id": "17915736192580096",
    "media_type": "VIDEO",
@@ -19,10 +83,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\nBCL｜サボリーノ 目ざまシート 32枚（さっぱりタイプ）\n──────────\n朝の洗顔代わりに、貼って1分",
    "is_paid_partnership": null,
-   "reach": 26,
+   "reach": 28,
    "saved": 0,
    "shares": 0,
-   "views": 38
+   "views": 44
   },
   {
    "id": "17970025290208994",
@@ -35,10 +99,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\nAmazon Audible（オーディブル）\n──────────\n家事や身支度で手が離せない時間に、本を耳で",
    "is_paid_partnership": null,
-   "reach": 18,
+   "reach": 20,
    "saved": 0,
    "shares": 0,
-   "views": 36
+   "views": 40
   },
   {
    "id": "17917853994558089",
@@ -51,10 +115,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\nロート製薬｜肌ラボ 極潤ヒアルロン液\n──────────\nとろみのあるテクスチャーで、洗顔後の肌にうるおいを",
    "is_paid_partnership": null,
-   "reach": 13,
+   "reach": 14,
    "saved": 0,
    "shares": 0,
-   "views": 28
+   "views": 30
   },
   {
    "id": "18108025373001373",
@@ -83,10 +147,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\nMEDIHEAL／30枚マスク 本品+詰め替えセット\n――――――――\n本品30枚に詰め替え30枚、合わせて6",
    "is_paid_partnership": null,
-   "reach": 27,
+   "reach": 29,
    "saved": 0,
    "shares": 0,
-   "views": 34
+   "views": 36
   },
   {
    "id": "18118819357859937",
@@ -99,10 +163,10 @@
    "is_ai_generated": false,
    "caption": "【PR】\nCOSRX／コスアールエックス\nアドバンスド スネイル96 ムチン パワー エッセンス（100ml）\n\n┈┈┈",
    "is_paid_partnership": null,
-   "reach": 134,
+   "reach": 136,
    "saved": 0,
    "shares": 0,
-   "views": 152
+   "views": 155
   },
   {
    "id": "18122043689069076",
@@ -135,84 +199,20 @@
    "saved": 0,
    "shares": 0,
    "views": 56
-  },
-  {
-   "id": "18440620072180331",
-   "media_type": "VIDEO",
-   "media_product_type": "REELS",
-   "timestamp": "2026-11-24T08:55:42+0000",
-   "permalink": "https://www.instagram.com/reel/DgHky2Yzsc7/",
-   "like_count": 10,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "【PR】\nオルビス\nオルビス ザ クレンジング オイル（ボトル入り・120mL）\n┈┈┈┈┈┈┈┈┈┈\n毛穴汚れが気にな",
-   "is_paid_partnership": null,
-   "reach": 29,
-   "saved": 0,
-   "shares": 0,
-   "views": 52
-  },
-  {
-   "id": "18474727501191332",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-24T00:11:35+0000",
-   "permalink": "https://www.instagram.com/p/DgGo1McExM3/",
-   "like_count": 32,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "三姉妹に叱られている第二弾。\n\n楓は正論で畳みかけ、京は連射で追い込み、町は無言の圧で締める。\n言い訳の賞味期限は3秒。",
-   "is_paid_partnership": null,
-   "reach": 108,
-   "saved": 0,
-   "shares": 0,
-   "views": 235
-  },
-  {
-   "id": "18174685072466669",
-   "media_type": "CAROUSEL_ALBUM",
-   "media_product_type": "FEED",
-   "timestamp": "2026-11-22T22:55:54+0000",
-   "permalink": "https://www.instagram.com/p/DgD7YC6E25i/",
-   "like_count": 45,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "今日は三姉妹そろって自撮りの日でした📱\n私はカフェで、京は銀杏並木で、町はおうちで撮りました。\nみなさんはどの一枚が好き",
-   "is_paid_partnership": null,
-   "reach": 111,
-   "saved": 0,
-   "shares": 0,
-   "views": 266
-  },
-  {
-   "id": "18127408549912408",
-   "media_type": "VIDEO",
-   "media_product_type": "REELS",
-   "timestamp": "2026-11-22T02:30:12+0000",
-   "permalink": "https://www.instagram.com/reel/DgBvFUNTYRM/",
-   "like_count": 13,
-   "comments_count": 0,
-   "is_ai_generated": false,
-   "caption": "【PR】\n唇の乾燥、これ1本。\nTorriden ソリッドイン セラミド リップエッセンス 11ml\n┈┈┈┈┈┈┈┈┈",
-   "is_paid_partnership": null,
-   "reach": 41,
-   "saved": 0,
-   "shares": 0,
-   "views": 51
   }
  ],
  "followers_age_gender": {
   "13-17-F": 1,
   "18-24-F": 25,
   "25-34-F": 58,
-  "35-44-F": 67,
+  "35-44-F": 66,
   "45-54-F": 79,
   "55-64-F": 23,
   "65+-F": 6,
   "13-17-M": 3,
   "18-24-M": 31,
-  "25-34-M": 92,
-  "35-44-M": 97,
+  "25-34-M": 91,
+  "35-44-M": 98,
   "45-54-M": 184,
   "55-64-M": 94,
   "65+-M": 42,
@@ -220,7 +220,7 @@
   "18-24-U": 55,
   "25-34-U": 152,
   "35-44-U": 85,
-  "45-54-U": 78,
+  "45-54-U": 77,
   "55-64-U": 46,
   "65+-U": 19
  }
